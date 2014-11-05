@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://getahead.org/dwr/dwr20.dtd">
+<dwr>
+	<allow>
+		<!-- 动作消息 -->
+		<create creator="spring" javascript="materialService">
+			<param name="beanName" value="materialService" />
+			<!-- 允许执行-->
+			<include method="loadMaterialContentByUrl"/> 
+			<!-- 禁止执行 
+            <exclude method="test" />-->
+		</create>
+		
+		<create creator="spring" javascript="sysUserService">
+			<param name="beanName" value="sysUserService" />
+			<!-- 允许执行-->
+			<include method="validUsername"/>
+			<include method="validEmail"/>
+			<!-- 禁止执行 
+            <exclude method="test" />-->
+		</create>
+		
+		
+		<!-- <convert converter="bean" match="com.wechat.busi.display.vo.TmpVo"/> -->
+		<convert converter="exception" match="java.lang.Exception"/>
+		<convert converter="bean" match="java.lang.StackTraceElement"/>
+	</allow>
+</dwr>

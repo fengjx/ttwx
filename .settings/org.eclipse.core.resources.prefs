@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/view/wechat/display/header.jsp=UTF-8
+encoding//config/config.properties=UTF-8
+encoding//config/mopaas/config.properties=UTF-8
+encoding//config/mopaas/db.properties=UTF-8
+encoding//config/sae/config.properties=UTF-8
+encoding//config/sae/db.properties=UTF-8
+encoding//config/test/config.properties=UTF-8
+encoding//config/test/db.properties=UTF-8
+encoding/<project>=UTF-8

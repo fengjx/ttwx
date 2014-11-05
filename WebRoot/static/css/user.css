@@ -1,0 +1,31 @@
+.group_list dt.inner_menu_item {
+	background-color: #d6d6d6;
+	border-bottom: 1px solid #ccc;
+}
+dt.inner_menu_item {
+	background-color: #d6d6d6;
+	border-bottom: 1px solid #ccc;
+}
+.inner_menu_link .num {
+	display: inline-block;
+	vertical-align: middle;
+	padding-left: 3px;
+	font-weight: 400;
+	font-style: normal;
+	color: #939393;
+	cursor: pointer;
+}
+
+.group_list .inner_menu_item.extra {
+    border-top: 1px solid #D3D3D3;
+    box-shadow: 0 1px 0 0 #F5F5F5 inset;
+    margin: 1em;
+}
+.inner_menu_item {
+    line-height: 32px;
+    position: relative;
+}
+
+.inner_menu_item .selected {
+	background-color: #f0f0f0;
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!-- jdbcTemplate -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="baseDao" class="com.fjx.common.framework.base.dao.impl.BaseDao">
+	</bean>
+
+
+	<!-- 微信->商户请求服务执行引擎 -->
+	<bean id="inServiceEngine" class="com.fjx.wechat.base.process.in.InServiceEngineImpl"/>
+
+	<!-- 微信->商户 请求服务处理工厂 -->
+	<bean id="inServiceExecutorFactory" class="com.fjx.wechat.base.process.in.executor.InServiceExecutorFactory">
+		<property name="executorList">
+			<list>
+				<ref local="inWechatTextMsgExecutor" />
+				<ref local="inWechatImageMsgExecutor" />
+				<ref local="inWechatEventClickMsgExecutor" />
+				<ref local="inWechatValidMsgExecutor" />
+			</list>
+		</property>
+	</bean>
+	<!-- 微信->商户 文本消息处理器 -->
+	<bean id="inWechatTextMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatTextMsgExecutor" />
+	<!-- 微信->商户 图片消息处理器 -->
+	<bean id="inWechatImageMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatImageMsgExecutor" />
+	<!-- 微信->商户 菜单点击事件消息处理器 -->
+	<bean id="inWechatEventClickMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatEventClickMsgExecutor" />
+	<!-- 微信->商户 验证码消息验证处理器 -->
+	<bean id="inWechatValidMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatValidMsgExecutor" />
+
+	<!-- 验证码组件 -->
+	<bean id="kaptchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.border">no</prop>
+						<prop key="kaptcha.border.color">105,179,90</prop>
+						<prop key="kaptcha.textproducer.font.color">red</prop>
+						<prop key="kaptcha.image.width">250</prop>
+						<prop key="kaptcha.textproducer.font.size">90</prop>
+						<prop key="kaptcha.image.height">100</prop>
+						<prop key="kaptcha.session.key">code</prop>
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<!-- /验证码组件 -->
+	
+	
+</beans>
