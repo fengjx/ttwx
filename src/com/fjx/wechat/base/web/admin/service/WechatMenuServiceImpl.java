@@ -85,14 +85,23 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 					 sql.append(" left join wechat_material c on a.material_id = c.id ");
 					 sql.append(" where m.user_id = ?");
 		
-//		StringBuffer sql = new StringBuffer("select new map( m.id as id, m.in_time as in_time, m.menu_key as menu_key, m.menu_level as menu_level, m.name as name, m.parent_id as parent_id, m.type as type, m.update_time as update_time, m.url as url, m.user_id as user_id,");
-//		sql.append(" m.action_id as action_id, m.action_type as action_type, m.action_time as action_time, ");
-//		sql.append(" m.app_id as app_id,m.app_name as app_name, m.app_description as app_description,");
-//		sql.append(" m.material_id as material_id,m.xml_data as xml_data) ");
-//		sql.append(" from WechatMenuDetailView m ");
+//		StringBuffer sql = new StringBuffer("select new map( ");
+//			sql.append(" m.id as id, m.in_time as in_time, m.menu_key as menu_key, m.menu_level as menu_level, m.name as name, m.parent.id as parent_id, m.type as type, m.update_time as update_time, m.url as url, m.sysUser.id as user_id,");
+//			sql.append(" a.id as action_id, a.action_type as action_type, a.in_time as action_time, ");
+//			sql.append(" e.id as app_id, e.name as app_name, e.description as app_description,");
+//			sql.append(" ma.id as material_id, ma.xml_data as xml_data) ");
+//			sql.append(" from WechatMenuEntity m, RespMsgActionEntity a, ExtAppEntity e, MaterialEntity ma");
+//			sql.append(" where m.sysUser.id = ? and m.menu_key = a.key_word and a.extApp.id = e.id and a.material.id = ma.id");
 		
-//		StringBuffer sql = new StringBuffer("select new map(m.id as id, m.in_time as in_time) from WechatMenuDetailView m");
-//					 sql.append(" where m.user_id = ?");
+//		StringBuffer sql = new StringBuffer("select new map( ");
+//			sql.append(" m.id as id, m.in_time as in_time, m.menu_key as menu_key, m.menu_level as menu_level, m.name as name, m.parent.id as parent_id, m.type as type, m.update_time as update_time, m.url as url, m.sysUser.id as user_id,");
+//			sql.append(" a.id as action_id, a.action_type as action_type, a.in_time as action_time, ");
+//			sql.append(" e.id as app_id, e.name as app_name, e.description as app_description,");
+//			sql.append(" ma.id as material_id, ma.xml_data as xml_data) ");
+//			sql.append(" from WechatMenuEntity m, RespMsgActionEntity a, ExtAppEntity e, MaterialEntity ma");
+//			sql.append(" where m.sysUser.id = ? and m.menu_key = a.key_word and a.extApp.id = e.id and a.material.id = ma.id");
+			
+			
 		if(StringUtils.isBlank(id)){
 			sql.append(" and (m.parent_id is null or m.parent_id = '') order by m.in_time asc");
 			res = findListMapBySql(sql.toString(),userId);

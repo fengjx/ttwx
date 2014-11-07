@@ -173,6 +173,9 @@ public class MessageUtil {
 	 * @return
 	 */
 	public static String replaceMsgParam(String msg, Map<String, String> reqMsgMap){
+		if(StringUtils.isBlank(msg)){
+			return "";
+		}
 		String res = "";
 		res = StringUtils.replaceEach(msg, 
 				new String[]{

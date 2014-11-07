@@ -12,20 +12,20 @@ public class FtlFilenameConstants {
 	/**
 	 * 接口验证成功返回消息
 	 */
-	public static final String URL_VALID_SUCCESS = "url-valid-success.ftl";
+	public static final String URL_VALID_SUCCESS = "api-valid-success.ftl";
 	
 	/**
 	 * 接口验证失败返回消息
 	 */
-	public static final String URL_VALID_FAIL = "url-valid-fail.ftl";
+	public static final String URL_VALID_FAIL = "api-valid-fail.ftl";
 
 	/**
-	 * 接口验证成功返回消息
+	 * 默认回复消息
 	 */
 	public static final String WECHAT_DEFAULT_MSG = "wechat-default-msg.ftl";
 	
 	/**
-	 * 接口验证成功返回消息
+	 * 邮箱验证成功返回消息
 	 */
 	public static final String REGISTER_VALID_MAIN = "register-valid-mail.ftl";
 	

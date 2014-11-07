@@ -1,6 +1,7 @@
 package com.fjx.wechat.base.web.admin.action;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,25 +66,26 @@ public class WechatApiAction extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/wechat/api", method=RequestMethod.POST)
-	@ResponseBody
-	public String responseMsg(HttpServletRequest request, String ticket) throws Exception{
+	public void responseMsg(HttpServletRequest request, HttpServletResponse response, String ticket) throws Exception{
 		logger.info("微信POST消息请求处理");
 		if(StringUtils.isBlank(ticket)){
 			logger.info("请求无效，ticket为空");
-			return "";
+			write("",response);
+			return;
 		}
 		String _ticket = PasswordUtil.decode(ticket);
 		WechatPublicAccountEntity accountEntity = wechatPublicAccountService.getWechatPublicAccountByTicket(_ticket);
 		if(null == accountEntity){
 			logger.info("请求无效，accountEntity为空");
-			return "";
+			write("",response);
+			return;
 		}
 		//将参数封装到Threadlocal作为上下文调用
 		WechatContext.setPublicAccount(accountEntity);
 		// 调用核心业务类接收消息、处理消息
 		String respMessage = inServiceEngine.processRequest();
 		logger.info("微信POST消息请求处理响应==>\n"+respMessage);
-		return respMessage;
+		write(respMessage,response);
 	}
 	
 }

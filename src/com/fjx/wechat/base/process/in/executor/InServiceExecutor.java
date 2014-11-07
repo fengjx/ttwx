@@ -6,13 +6,13 @@ import java.lang.reflect.Method;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fjx.common.framework.system.init.FreeMarkerUtil;
 import com.fjx.common.framework.system.init.SpringBeanFactoryUtil;
-import com.fjx.wechat.base.constants.FtlFilenameConstants;
+import com.fjx.wechat.base.constants.MsgTemplateConstants;
 import com.fjx.wechat.base.context.WechatContext;
 import com.fjx.wechat.base.process.ServiceExecutor;
 import com.fjx.wechat.base.process.ServiceExecutorNameWire;
 import com.fjx.wechat.base.web.admin.entity.RespMsgActionEntity;
+import com.fjx.wechat.base.web.admin.service.MsgTemplateService;
 import com.fjx.wechat.base.web.admin.service.RespMsgActionService;
 import com.fjx.wechat.base.web.admin.service.WechatPublicAccountService;
 
@@ -31,6 +31,10 @@ public abstract class InServiceExecutor implements ServiceExecutor,	ServiceExecu
 	@Autowired
 	protected WechatPublicAccountService wechatPublicAccountService;
 	
+	@Autowired
+	protected MsgTemplateService msgTemplateService;
+	
+	
 	/**
 	 * 执行消息动作
 	 * @param ext_type	自定义类型
@@ -40,10 +44,15 @@ public abstract class InServiceExecutor implements ServiceExecutor,	ServiceExecu
 	 * @throws Exception 
 	 */
 	protected String doAction(String ext_type, String req_type,String event_type,String key_word) throws Exception {
-		RespMsgActionEntity actionEntity = msgActionService.loadMsgAction(ext_type, req_type, event_type, key_word, WechatContext.getPublicAccount().getSysUser());
+		RespMsgActionEntity actionEntity = msgActionService.loadMsgAction(null,req_type, event_type, key_word, WechatContext.getPublicAccount().getSysUser());
+		
+		if(null == actionEntity){
+			actionEntity = msgActionService.loadMsgAction(MsgTemplateConstants.WECHAT_DEFAULT_MSG, null, null, null, WechatContext.getPublicAccount().getSysUser());
+		}
 		if(null == actionEntity){
 			//返回默认消息
-			return FreeMarkerUtil.process(null, FtlFilenameConstants.WECHAT_DEFAULT_MSG);
+//			return FreeMarkerUtil.process(null, FtlFilenameConstants.WECHAT_DEFAULT_MSG);
+			return "";
 		}
 		String res = null;
 		String actionType = actionEntity.getAction_type();

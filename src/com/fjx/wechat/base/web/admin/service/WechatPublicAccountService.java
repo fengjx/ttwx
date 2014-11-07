@@ -19,4 +19,10 @@ public interface WechatPublicAccountService extends IBaseAbstractService<WechatP
 	 */
 	public WechatPublicAccountEntity getWechatPublicAccountByTicket(String ticket);
 	
+	/**
+	 * 根据登陆用户查询公众账号信息
+	 * @param sysUserId
+	 * @return
+	 */
+	public WechatPublicAccountEntity getWechatPublicAccountBySysUserId(String sysUserId);
 }

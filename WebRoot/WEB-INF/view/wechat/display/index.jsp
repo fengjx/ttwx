@@ -22,7 +22,7 @@
 	    <div class="container">
 	      <ul class="bc-social-buttons">
 	        <li>
-	          <i class="fa fa-qq"></i>技术交流群：378248068
+	          <i class="fa fa-qq"></i>技术交流群：（未创建）
 	        </li>
 	        <li>
 	          <a href="http://fengjxblog.sinaapp.com" title="Bootstrap问答社区" target="_blank">
@@ -84,8 +84,9 @@
 	        </div>
       </div>
 	</div><!-- /.container -->
-
+	
 	<%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
 	<jsp:include page="/WEB-INF/view/common/inc/display.jsp"></jsp:include>
+	
 </body>
 </html>

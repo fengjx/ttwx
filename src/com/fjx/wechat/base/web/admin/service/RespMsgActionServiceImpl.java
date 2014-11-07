@@ -142,11 +142,22 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 //				sql.append(" on c.msg_type = d.dict_value");
 //				sql.append(" where d.group_code = 'resp_type' ");
 //				sql.append(" and a.user_id = ? ");
+		StringBuffer hql = new StringBuffer("select new com.fjx.wechat.base.web.admin.entity.KeyWordActionView( ");
+				hql.append(" a.id as id, a.req_type as req_type, a.action_type as action_type, a.key_word as key_word, a.in_time as in_time,");
+				hql.append(" b.id as app_id, b.beanName as beanName, b.methodName as methodName, b.name as app_name,");
+				hql.append(" c.id as material_id, c.xml_data as xml_data, c.msg_type as msg_type,");
+				hql.append(" d.dict_name as dict_name )");
+				hql.append(" from RespMsgActionEntity as a, DataDictEntity d");
+				hql.append(" left join a.extApp as b ");
+				hql.append(" left join a.material as c");
+				hql.append(" where c.msg_type = d.dict_value");
+				hql.append(" and d.group_code = 'resp_type' ");
+				hql.append(" and a.sysUser.id = ? ");
 //		StringBuffer sql = new StringBuffer("select a.id id, a.req_type req_type, a.action_type action_type, a.key_word key_word, a.material_id material_id, a.app_id app_id, a.in_time in_time, a.user_id user_id, a.beanName beanName, a.methodName methodName, a.app_name app_name, a.xml_data xml_data, a.msg_type msg_type, a.dict_name dict_name ");
 //		StringBuffer hql = new StringBuffer("select a.id as id, a.req_type as req_type, a.action_type as action_type, a.key_word as key_word, a.material_id as material_id, a.app_id as app_id, a.in_time as in_time, a.user_id as user_id, a.beanName as beanName, a.methodName as methodName, a.app_name as app_name, a.xml_data as xml_data, a.msg_type as msg_type, a.dict_name as dict_name ");
-		StringBuffer hql = new StringBuffer();
-			hql.append("from KeyWordActionView a");
-			hql.append(" where a.user_id = ? ");	
+//		StringBuffer hql = new StringBuffer();
+//			hql.append("from KeyWordActionView a");
+//			hql.append(" where a.user_id = ? ");	
 		parameters.add(sysUser.getId());
 		if(StringUtils.isNotBlank(param.get("req_type"))){
 			hql.append(" and a.req_type = ?");
@@ -171,8 +182,6 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 		if(StringUtils.isNotBlank(param.get("end_time"))){
 			hql.append(" and a.in_time < ?");
 			parameters.add(CommonUtils.String2SqlDate(param.get("end_time").trim() ));
-		}else{
-			
 		}
 		hql.append(" order by a.in_time desc");
 		return pageByHql(hql.toString(), parameters);

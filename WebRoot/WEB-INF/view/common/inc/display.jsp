@@ -18,3 +18,8 @@
     <script src="<%=resourceUrl%>/js/html5shiv.min.js"></script>
     <script src="<%=resourceUrl%>/js/respond.min.js"></script>
 <![endif]-->
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fc4913310078c3ed1cef09bf218b7066a' type='text/javascript'%3E%3C/script%3E"));
+</script>

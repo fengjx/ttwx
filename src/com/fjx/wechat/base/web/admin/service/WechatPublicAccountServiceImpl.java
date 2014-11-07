@@ -15,7 +15,11 @@ import com.fjx.wechat.base.web.admin.entity.WechatPublicAccountEntity;
  */
 @Service
 public class WechatPublicAccountServiceImpl extends BaseAbstractService<WechatPublicAccountEntity> implements WechatPublicAccountService {
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.fjx.wechat.base.web.admin.service.WechatPublicAccountService#getWechatPublicAccountByTicket(java.lang.String)
+	 */
 	@Override
 	public WechatPublicAccountEntity getWechatPublicAccountByTicket(String ticket) {
 		if(StringUtils.isBlank(ticket)){
@@ -23,6 +27,16 @@ public class WechatPublicAccountServiceImpl extends BaseAbstractService<WechatPu
 		}
 		String hql = " from WechatPublicAccountEntity a where a.ticket = ? ";
 		return findOneByHql(hql, ticket);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see com.fjx.wechat.base.web.admin.service.WechatPublicAccountService#getWechatPublicAccountBySysUserId(java.lang.String)
+	 */
+	@Override
+	public WechatPublicAccountEntity getWechatPublicAccountBySysUserId(String sysUserId) {
+		String hql = " from WechatPublicAccountEntity a where a.sysUser.id = ?";
+		return findOneByHql(hql, sysUserId);
 	}
 	
 	

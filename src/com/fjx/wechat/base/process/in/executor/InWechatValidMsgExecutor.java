@@ -3,8 +3,7 @@ package com.fjx.wechat.base.process.in.executor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fjx.common.framework.system.init.FreeMarkerUtil;
-import com.fjx.wechat.base.constants.FtlFilenameConstants;
+import com.fjx.wechat.base.constants.MsgTemplateConstants;
 import com.fjx.wechat.base.context.WechatContext;
 import com.fjx.wechat.base.tools.ServiceTool;
 import com.fjx.wechat.base.vo.req.ReqTextMessage;
@@ -34,9 +33,9 @@ public class InWechatValidMsgExecutor extends InServiceExecutor {
 			accountEntity.setValid_state(WechatPublicAccountEntity.VALID_STATE_ACTIVATE);
 			accountEntity.setAccount_id(textMessage.getFromUserName());
 			wechatPublicAccountService.update(accountEntity);
-			return FreeMarkerUtil.process(null, FtlFilenameConstants.URL_VALID_SUCCESS);
+			return msgTemplateService.getMsgTemplateByKey(MsgTemplateConstants.API_VALID_SUCCESS).getMsg_content();
 		}
-		return FreeMarkerUtil.process(null, FtlFilenameConstants.URL_VALID_FAIL);
+		return msgTemplateService.getMsgTemplateByKey(MsgTemplateConstants.API_VALID_FAIL).getMsg_content();
 	}
 
 	@Override

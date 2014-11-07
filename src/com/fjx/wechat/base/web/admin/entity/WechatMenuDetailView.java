@@ -2,13 +2,6 @@ package com.fjx.wechat.base.web.admin.entity;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.fjx.common.bean.ToStringBase;
 import com.fjx.common.utils.CommonUtils;
 
@@ -17,9 +10,6 @@ import com.fjx.common.utils.CommonUtils;
  * @author fengjx xd-fjx@qq.com
  * @date 2014年10月7日
  */
-@Entity
-@Table(name = "wechat_menu_detail_view")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class WechatMenuDetailView extends ToStringBase {
 
 	private static final long serialVersionUID = 1188493901821890963L;
@@ -54,7 +44,6 @@ public class WechatMenuDetailView extends ToStringBase {
 		this.id = id;
 	}
 
-	@Id
 	public String getId() {
 		return this.id;
 	}
@@ -199,17 +188,14 @@ public class WechatMenuDetailView extends ToStringBase {
 		this.xml_data = xml_data;
 	}
 
-	@Transient
 	public String getStr_in_time() {
 		return CommonUtils.date2String(in_time);
 	}
 	
-	@Transient
 	public String getStr_update_time() {
 		return CommonUtils.date2String(update_time);
 	}
 
-	@Transient
 	public String getStr_action_time() {
 		return CommonUtils.date2String(action_time);
 	}

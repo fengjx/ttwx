@@ -3,6 +3,7 @@ package com.fjx.common.action;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,4 +144,33 @@ public class BaseController {
 		}
 		return resMap;
 	}
+	
+	/**
+     * 写出数据
+     *
+     * @param res 输出的字符串
+     * @throws Exception
+     */
+    protected void write(String res, HttpServletResponse response) throws Exception {
+        Writer writer = null;
+        try {
+        	res = (null == res?"":res);
+        	response.setCharacterEncoding("UTF-8");
+    		response.setHeader("Content-type", "text/html;charset=UTF-8");  
+            writer = response.getWriter();
+            logger.debug("输出JSON字符串："+res);
+            writer.write(res);
+        } catch (IOException e) {
+            logger.error("输出JSON字符串异常");
+            throw new Exception("write json string error");
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    logger.error("关闭输出流异常,无法关闭会导致内存溢出");
+                }
+            }
+        }
+    }
 }

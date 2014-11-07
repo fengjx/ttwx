@@ -20,6 +20,7 @@ public interface RespMsgActionService extends IBaseAbstractService<RespMsgAction
 	
 	/**
 	 * 查询消息规则
+	 * @param ext_type 扩展类型
 	 * @param req_type 请求类型
 	 * @param event_type 事件类型
 	 * @param key_word 关键字/菜单key

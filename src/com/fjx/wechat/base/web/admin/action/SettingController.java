@@ -40,8 +40,7 @@ public class SettingController extends BaseController {
 	@RequestMapping(value="")
 	public String view (HttpServletRequest request, Map<String, Object> map){
 		SysUserEntity sysUser = getLoginSysUser(request);
-		sysUser.setWechatPublicAccount(publicAccountService.load(sysUser.getWechatPublicAccount().getId()));
-		WechatPublicAccountEntity accountEntity = sysUser.getWechatPublicAccount();
+		WechatPublicAccountEntity accountEntity = publicAccountService.getWechatPublicAccountBySysUserId(sysUser.getId());
 		if(null == accountEntity){
 			accountEntity = new WechatPublicAccountEntity();
 			accountEntity.setSysUser(sysUser);
@@ -58,6 +57,7 @@ public class SettingController extends BaseController {
 			sysUser.setWechatPublicAccount(publicAccountService.load(accountEntity.getId()));
 			request.getSession().setAttribute(AppConfig.LOGIN_FLAG, sysUser);
 		}
+		sysUser.setWechatPublicAccount(accountEntity);
 		map.put("wechatAccount", sysUser.getWechatPublicAccount());
 		return "/wechat/admin/setting/setting";
 	}
@@ -83,7 +83,7 @@ public class SettingController extends BaseController {
 				accountEntity.setIn_time(new Date());
 				accountEntity.setToken(token);
 				accountEntity.setTicket(ticket);
-				accountEntity.setUrl(AppConfig.DOMAIN_PAGE+"/wechat/callback?ticket="+PasswordUtil.encode(accountEntity.getTicket()));
+				accountEntity.setUrl(AppConfig.DOMAIN_PAGE+"/wechat/api?ticket="+PasswordUtil.encode(accountEntity.getTicket()));
 				publicAccountService.update(accountEntity);
 				//刷新session的用户登录信息
 				sysUser.setWechatPublicAccount(publicAccountService.load(accountEntity.getId()));

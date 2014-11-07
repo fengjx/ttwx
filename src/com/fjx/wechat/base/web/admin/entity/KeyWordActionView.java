@@ -1,16 +1,6 @@
 package com.fjx.wechat.base.web.admin.entity;
 
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
 import com.fjx.common.bean.ToStringBase;
 import com.fjx.common.utils.CommonUtils;
 
@@ -20,9 +10,6 @@ import com.fjx.common.utils.CommonUtils;
  * @author fengjx xd-fjx@qq.com
  * @date 2014年10月7日
  */
-@Entity
-@Table(name = "keyword_action_view")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class KeyWordActionView extends ToStringBase {
 	
 	private static final long serialVersionUID = -3453111249350855477L;
@@ -43,12 +30,32 @@ public class KeyWordActionView extends ToStringBase {
 	private String xml_data;
 	private String msg_type;
 	private String dict_name;
-
+	
 	// Constructors
 
 	/** default constructor */
 	public KeyWordActionView() {
 	}
+	
+	public KeyWordActionView(String id, String req_type, String action_type,String key_word, Date in_time,
+			String app_id, String beanName, String methodName,
+			String app_name,String material_id, String xml_data, String msg_type, String dict_name) {
+		super();
+		this.id = id;
+		this.req_type = req_type;
+		this.action_type = action_type;
+		this.key_word = key_word;
+		this.material_id = material_id;
+		this.app_id = app_id;
+		this.in_time = in_time;
+		this.beanName = beanName;
+		this.methodName = methodName;
+		this.app_name = app_name;
+		this.xml_data = xml_data;
+		this.msg_type = msg_type;
+		this.dict_name = dict_name;
+	}
+
 
 	/** minimal constructor */
 	public KeyWordActionView(String id) {
@@ -57,7 +64,6 @@ public class KeyWordActionView extends ToStringBase {
 
 	// Property accessors
 	
-	@Id
 	public String getId() {
 		return this.id;
 	}
@@ -106,7 +112,6 @@ public class KeyWordActionView extends ToStringBase {
 		this.app_id = app_id;
 	}
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getIn_time() {
 		return in_time;
 	}
@@ -114,7 +119,7 @@ public class KeyWordActionView extends ToStringBase {
 	public void setIn_time(Date in_time) {
 		this.in_time = in_time;
 	}
-	
+
 	public String getUser_id() {
 		return user_id;
 	}
@@ -172,8 +177,8 @@ public class KeyWordActionView extends ToStringBase {
 	}
 	
 	
-	@Transient
 	public String getStr_in_time() {
 		return CommonUtils.date2String(in_time);
 	}
+
 }
