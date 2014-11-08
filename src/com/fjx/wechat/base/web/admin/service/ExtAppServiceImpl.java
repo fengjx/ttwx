@@ -18,7 +18,7 @@ import com.fjx.wechat.base.web.admin.entity.ExtAppEntity;
 public class ExtAppServiceImpl extends BaseAbstractService<ExtAppEntity> implements ExtAppService {
 	
 	
-	public List<ExtAppEntity> listByType(String app_type){
+	public List<ExtAppEntity> listByType(String app_type, String msg_type, String event_type){
 		String hql = "from ExtAppEntity e where e.app_type = ?";
 		return findListByHql(hql, app_type);
 	}

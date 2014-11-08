@@ -2,12 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>业务配置</title>
+	<title>扩展接口配置</title>
 	<%@include file="/web/common/inc/admin.jsp"%>
-	<link href="<%=curUrl%>/web/wechat/admin/material/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
-	<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-	<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-	<script src="<%=curUrl %>/web/wechat/admin/busi/js/busiapp.js?v=20140416" type="text/javascript" charset="UTF-8"></script>
+	<script src="<%=resourceUrl %>/script/admin/busiapp.js?v=20140416" type="text/javascript" charset="UTF-8"></script>
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true">
@@ -24,7 +21,6 @@
 					</table>
 				</form>
 			</div>
-        	
         
 			<div class="group_list">
 				<div class="inner_menu_box" id="groupsList">

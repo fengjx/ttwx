@@ -28,17 +28,17 @@ public class ExtAppEntity extends ToStringBase {
 	private static final long serialVersionUID = 8840798984002669943L;
 
 	private String id;
-	private String name; //
-	private String description; // 描述
-	private String app_type; 	// 应用类型，枚举AppType（web、api）
-	private String beanName; // spring beanName
-	private String methodName; // 调用方法名
-	private String app_url; // 应用链接
-	private String order_no; // 排序字段
-	private Date in_time; //
-	private String group_id; // 应用分组ID
-	private String support_req_type; // 支持的请求类型
-	private String is_valid; // 是否显示
+	private String name; 			// 
+	private String description;		// 描述
+	private String app_type; 		// 应用类型，枚举AppType（web、api、restful）
+	private String bean_name; 		// spring beanName
+	private String method_name;		// 调用方法名
+	private String app_url; 		// 应用链接
+	private String restful_url; 	// restful远程接口
+	private String order_no; 		// 排序字段
+	private Date in_time; 			//
+	private String group_id; 		// 应用分组ID
+	private String is_valid; 		// 是否启用
 	
 	
 	@Id
@@ -77,20 +77,20 @@ public class ExtAppEntity extends ToStringBase {
 		this.app_type = app_type;
 	}
 
-	public String getBeanName() {
-		return beanName;
+	public String getBean_name() {
+		return bean_name;
 	}
 
-	public void setBeanName(String beanName) {
-		this.beanName = beanName;
+	public void setBean_name(String bean_name) {
+		this.bean_name = bean_name;
 	}
 
-	public String getMethodName() {
-		return methodName;
+	public String getMethod_name() {
+		return method_name;
 	}
 
-	public void setMethodName(String methodName) {
-		this.methodName = methodName;
+	public void setMethod_name(String method_name) {
+		this.method_name = method_name;
 	}
 
 	public String getApp_url() {
@@ -99,6 +99,14 @@ public class ExtAppEntity extends ToStringBase {
 
 	public void setApp_url(String app_url) {
 		this.app_url = app_url;
+	}
+	
+	public String getRestful_url() {
+		return restful_url;
+	}
+
+	public void setRestful_url(String restful_url) {
+		this.restful_url = restful_url;
 	}
 
 	public String getOrder_no() {
@@ -125,15 +133,8 @@ public class ExtAppEntity extends ToStringBase {
 	public void setGroup_id(String group_id) {
 		this.group_id = group_id;
 	}
-
-	public String getSupport_req_type() {
-		return support_req_type;
-	}
-
-	public void setSupport_req_type(String support_req_type) {
-		this.support_req_type = support_req_type;
-	}
-
+	
+	@Column(length=1)
 	public String getIs_valid() {
 		return is_valid;
 	}

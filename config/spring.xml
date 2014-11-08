@@ -34,7 +34,7 @@
 	<import resource="spring-beans.xml" />
 	<import resource="spring-db.xml" />
 	<import resource="spring-email.xml" />
-	<import resource="spring-interceptor.xml" />
+	<import resource="spring-mvc-interceptor.xml" />
 	<import resource="spring-aop.xml"/>	
 
 </beans>

@@ -16,9 +16,11 @@ public interface ExtAppService extends IBaseAbstractService<ExtAppEntity> {
 	
 	/**
 	 * 根据类型查询
-	 * @param type 应用类型
+	 * @param app_type 应用类型 web、api、restful
+	 * @param msg_type
+	 * @param event_type
 	 * @return
 	 */
-	public List<ExtAppEntity> listByType(String app_type);
+	public List<ExtAppEntity> listByType(String app_type, String msg_type, String event_type);
 	
 }
