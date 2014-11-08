@@ -130,7 +130,7 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 	public Pagination<KeyWordActionView> pageMsgAction(Map<String, String> param, SysUserEntity sysUser) {
 		List<Object> parameters = new ArrayList<Object>();
 //		StringBuffer sql = new StringBuffer("select a.id as id, a.req_type as req_type, a.action_type as action_type, a.key_word as key_word, a.material_id as material_id, a.app_id as app_id, a.in_time as in_time,");
-//				sql.append(" b.beanName as beanName, b.methodName as methodName, b.name as app_name,");
+//				sql.append(" b.bean_name as bean_name, b.method_name as method_name, b.name as app_name,");
 //				sql.append(" c.xml_data as xml_data, c.msg_type as msg_type,");
 //				sql.append(" d.dict_name as dict_name");
 //				sql.append(" from wechat_resp_msg_action a");
@@ -144,7 +144,7 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 //				sql.append(" and a.user_id = ? ");
 		StringBuffer hql = new StringBuffer("select new com.fjx.wechat.base.web.admin.entity.KeyWordActionView( ");
 				hql.append(" a.id as id, a.req_type as req_type, a.action_type as action_type, a.key_word as key_word, a.in_time as in_time,");
-				hql.append(" b.id as app_id, b.beanName as beanName, b.methodName as methodName, b.name as app_name,");
+				hql.append(" b.id as app_id, b.bean_name as method_name, b.method_name as method_name, b.name as app_name,");
 				hql.append(" c.id as material_id, c.xml_data as xml_data, c.msg_type as msg_type,");
 				hql.append(" d.dict_name as dict_name )");
 				hql.append(" from RespMsgActionEntity as a, DataDictEntity d");
@@ -172,16 +172,16 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 			parameters.add(param.get("action_type"));
 		}
 		if(StringUtils.isNotBlank(param.get("key_word"))){
-			hql.append(" and a.key_word = ?");
-			parameters.add(param.get("key_word"));
+			hql.append(" and a.key_word like ?");
+			parameters.add("%"+param.get("key_word")+"%");
 		}
 		if(StringUtils.isNotBlank(param.get("start_time"))){
 			hql.append(" and a.in_time >= ?");
-			parameters.add(CommonUtils.String2SqlDate(param.get("start_time").trim() ));
+			parameters.add(CommonUtils.String2Date(param.get("start_time").trim()+" 00:00:00"));
 		}
 		if(StringUtils.isNotBlank(param.get("end_time"))){
 			hql.append(" and a.in_time < ?");
-			parameters.add(CommonUtils.String2SqlDate(param.get("end_time").trim() ));
+			parameters.add(CommonUtils.String2Date(param.get("end_time").trim()+" 23:59:59"));
 		}
 		hql.append(" order by a.in_time desc");
 		return pageByHql(hql.toString(), parameters);

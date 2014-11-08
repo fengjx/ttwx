@@ -25,6 +25,8 @@ public class InWechatValidMsgExecutor extends InServiceExecutor {
 	@Override
 	public String execute() {
 		ReqTextMessage textMessage = new ReqTextMessage(WechatContext.getWechatPostMap());
+		logger.info("进入验证消息处理器fromUserName="+textMessage.getFromUserName());
+		
 		WechatPublicAccountEntity accountEntity = WechatContext.getPublicAccount();
 		String valid_code = accountEntity.getValid_code();
 		//文字消息与验证码相同

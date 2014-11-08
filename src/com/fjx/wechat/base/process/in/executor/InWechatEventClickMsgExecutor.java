@@ -17,6 +17,7 @@ public class InWechatEventClickMsgExecutor extends InServiceExecutor {
 	@Override
 	public String execute() throws Exception {
 		ReqEventMessage eventMessage = new ReqEventMessage(WechatContext.getWechatPostMap());
+		logger.info("进入菜单点击消息处理器fromUserName="+eventMessage.getFromUserName());
 		return doAction(null, eventMessage.getMsgType(), eventMessage.getEvent(), eventMessage.getEventKey());
 	}
 

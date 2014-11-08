@@ -4,6 +4,13 @@
 <html>
 <head>
 	<title>默认消息回复</title>
+	<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
+	<link href="<%=resourceUrl%>/css/menu.css?v=2014030801" rel="stylesheet" type="text/css"/>
+	<link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
+	<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="<%=resourceUrl %>/script/admin/default_action.js?v=2014052001" type="text/javascript" charset="UTF-8"></script>
+	
 	<style type="text/css">
 		.layout-sub-title {
 			padding: 26px 0 26px 30px;
@@ -43,12 +50,5 @@
 		</div>
 	</div>
 	
-	
-	<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
-	<link href="<%=resourceUrl%>/css/menu.css?v=2014030801" rel="stylesheet" type="text/css"/>
-	<link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
-	<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-	<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-	<script src="<%=resourceUrl %>/script/admin/default_action.js?v=2014052001" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html> 

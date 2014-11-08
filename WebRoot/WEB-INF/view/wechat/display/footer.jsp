@@ -4,7 +4,7 @@
     <div class="row footer-top">
      <div class="col-sm-6 col-lg-6">
         <h4>
-	        <p>本网站所列开源项目的文档全部由<a href="<%=curUrl %>/about">天天微信团队</a>成员整理。</p>
+	        <p>本网站所列开源项目的文档全部由<a href="<%=domain %>/about">天天微信团队</a>成员整理。</p>
         	<script type="text/javascript">
 				(function(){
 				var p = {

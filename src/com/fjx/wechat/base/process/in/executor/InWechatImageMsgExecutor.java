@@ -17,6 +17,7 @@ public class InWechatImageMsgExecutor extends InServiceExecutor {
 	public String execute() {
 		
 		ReqImageMessage imageMessage = new ReqImageMessage(WechatContext.getWechatPostMap());
+		logger.info("进入图片消息处理器fromUserName="+imageMessage.getFromUserName());
 		
 		return null;
 	}

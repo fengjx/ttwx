@@ -17,7 +17,6 @@
 	<bean id="baseDao" class="com.fjx.common.framework.base.dao.impl.BaseDao">
 	</bean>
 
-
 	<!-- 微信->商户请求服务执行引擎 -->
 	<bean id="inServiceEngine" class="com.fjx.wechat.base.process.in.InServiceEngineImpl"/>
 
@@ -26,21 +25,34 @@
 		<property name="executorList">
 			<list>
 				<ref local="inWechatTextMsgExecutor" />
+				<ref local="inWechatEventSubscribeMsgExecutor" />
 				<ref local="inWechatImageMsgExecutor" />
 				<ref local="inWechatEventClickMsgExecutor" />
 				<ref local="inWechatValidMsgExecutor" />
+				<ref local="inWechatLocationMsgExecutor" />
 			</list>
 		</property>
 	</bean>
 	<!-- 微信->商户 文本消息处理器 -->
 	<bean id="inWechatTextMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatTextMsgExecutor" />
+	<!-- 微信->商户 用户关注消息处理器 -->
+	<bean id="inWechatEventSubscribeMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatEventSubscribeMsgExecutor" />
 	<!-- 微信->商户 图片消息处理器 -->
 	<bean id="inWechatImageMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatImageMsgExecutor" />
 	<!-- 微信->商户 菜单点击事件消息处理器 -->
 	<bean id="inWechatEventClickMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatEventClickMsgExecutor" />
 	<!-- 微信->商户 验证码消息验证处理器 -->
 	<bean id="inWechatValidMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatValidMsgExecutor" />
-
+	<!-- 微信->商户 地理位置消息处理器 -->
+	<bean id="inWechatLocationMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatLocationMsgExecutor" />
+	
+	
+	<!-- 本地扩展接口start -->
+	<bean id="myExtService" class="com.fjx.wechat.extension.service.MyExtService"></bean>
+	<bean id="myTextExtService" class="com.fjx.wechat.extension.service.MyTextExtService"></bean>
+	
+	<!-- 本地扩展接口end -->
+	
 	<!-- 验证码组件 -->
 	<bean id="kaptchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
 		<property name="config">

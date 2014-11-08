@@ -87,6 +87,16 @@ public class RespMsgActionController extends BaseController {
 		return "/wechat/admin/msg_action/lbs_action";
 	}
 	
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> delete(HttpServletRequest request, final String ids){
+		return doResult(new MyExecuteCallback() {
+			@Override
+			public void execute() throws Exception {
+				actionService.deleteMsgActionById(ids);
+			}
+		}, null);
+	}
 	/**
 	 * 
 	 * @param request

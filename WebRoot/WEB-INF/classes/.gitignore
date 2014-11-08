@@ -11,12 +11,10 @@
 /spring-beans.xml
 /spring-db.xml
 /spring-email.xml
-/spring-interceptor.xml
+/spring-mvc-interceptor.xml
 /spring-mvc.xml
-/spring-quartz.xml
 /spring-timer.xml
 /spring-webservice.xml
 /spring.xml
 /test
 /ueditor
-/spring-mvc-interceptor.xml

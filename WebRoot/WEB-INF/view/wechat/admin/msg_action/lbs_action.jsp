@@ -31,8 +31,7 @@
 	<div id="resp-setting">
 		<!-- 文本消息动作 -->
 		<jsp:include page="/WEB-INF/view/wechat/admin/menu/action_inc.jsp">
-			<jsp:param name="req_type" value="event"/>
-			<jsp:param name="event_type" value="LOCATION"/>
+			<jsp:param name="req_type" value="location"/>
 			<jsp:param name="btn_return" value="hide"/>
 		</jsp:include>
 	</div>

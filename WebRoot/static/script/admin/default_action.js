@@ -13,7 +13,7 @@ function loadDefaultMsg(){
 	$.ajax({
 		url :  curUrl + '/admin/action/load',
 		data : {
-			"ext_type" : "default"
+			"ext_type" : "wechat_default_msg"
 		},
 		dataType : "json",
 		success : function(res) {
@@ -98,7 +98,7 @@ function submitMsgActionForm(respType){
 			}
 		},
 		onSubmit : function(){
-			$("#extType").val("default");		//默认消息
+			$("#extType").val("wechat_default_msg");		//默认消息
 			if(respType === 'text'){
 				$("#msgActionType").val("material");		//响应消息类型
 				var txtContent = $.trim($("#replyText").val());

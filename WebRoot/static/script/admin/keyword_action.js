@@ -33,7 +33,7 @@ function init(){
 	}).dialog('close');
 	
 	datagrid = $('#datagrid').datagrid({
-		url : curUrl + '/admin/action/pageList?req_type=text',
+		url : domain + '/admin/action/pageList?req_type=text',
 		toolbar : '#toolbar',
 		iconCls : 'icon-save',
 		pagination : true,
@@ -125,15 +125,15 @@ function append() {
  */
 function submitMsgActionForm(respType){
 	msgActionForm.form('submit', {
-		url : curUrl + '/admin/action/save',
+		url : domain + '/admin/action/save',
 		success : function(data) {
 			fjx.closeProgress();
 			var res = $.evalJSON(data);
 			if(res && '1' == res.code){
 				clearData();
-				fjx.showMsg('设置成功');
 				keywordDialog.dialog("close");
-				datagrid.datagrid("reload");
+				fjx.showMsg('设置成功');
+				datagrid.datagrid("myReload");
 			}else{
 				$.messager.alert('提示',	res?res.msg:'设置失败！','error');
 			}
@@ -205,14 +205,14 @@ function deleteMsgAction(ids, keywords){
 	$.messager.confirm('请确认', '你要删除关键字【'+keywords+'】的消息响应规则吗', function(r) {
 		if (r) {
 			$.ajax({
-				url :  curUrl + '/admin/action/delete',
+				url :  domain + '/admin/action/delete',
 				data : 'ids='+ids,
 				cache : false,
 				dataType : "json",
 				success : function(res) {
 					if(res && '1' === res.code){
 						fjx.showMsg('刪除成功');
-						datagrid.datagrid("reload");
+						datagrid.datagrid("myReload");
 					}else{
 						$.messager.alert('提示',res?res.msg:'刪除失败','error');
 					}
@@ -247,8 +247,8 @@ function editMsgAction(id){
 	msgActionForm.form("clear");
 	msgActionForm.form('load', {
 		"editType" : "edit",
-		"actionParam.id" : row.id,
-		"actionParam.key_word" : row.key_word
+		"id" : row.id,
+		"key_word" : row.key_word
 	});
 	var tabIndex;
 	if(row.action_type == 'material'){//数据源从素材读取

@@ -46,31 +46,31 @@ if ($.cookie('easyuiThemeName')) {
 
 // 扩展easyui 的tree组件方法，得到实心节点
 $.extend($.fn.tree.methods, {
-			getCheckedExt : function(jq) {
-				var checked = $(jq).tree("getChecked");
-				var checkbox2 = $(jq).find("span.tree-checkbox2").parent();
-				$.each(checkbox2, function() {
-							var node = $.extend({}, $.data(this, "tree-node"),
-									{
-										target : this
-									});
-							checked.push(node);
-						});
-				return checked;
-			},
-			getSolidExt : function(jq) {
-				var checked = [];
-				var checkbox2 = $(jq).find("span.tree-checkbox2").parent();
-				$.each(checkbox2, function() {
-							var node = $.extend({}, $.data(this, "tree-node"),
-									{
-										target : this
-									});
-							checked.push(node);
-						});
-				return checked;
-			}
-		});
+	getCheckedExt : function(jq) {
+		var checked = $(jq).tree("getChecked");
+		var checkbox2 = $(jq).find("span.tree-checkbox2").parent();
+		$.each(checkbox2, function() {
+					var node = $.extend({}, $.data(this, "tree-node"),
+							{
+								target : this
+							});
+					checked.push(node);
+				});
+		return checked;
+	},
+	getSolidExt : function(jq) {
+		var checked = [];
+		var checkbox2 = $(jq).find("span.tree-checkbox2").parent();
+		$.each(checkbox2, function() {
+					var node = $.extend({}, $.data(this, "tree-node"),
+							{
+								target : this
+							});
+					checked.push(node);
+				});
+		return checked;
+	}
+});
 
 $.fn.panel.defaults.onBeforeDestroy = function() {/* tab关闭时回收内存 */
 	var frame = $('iframe', this);
@@ -101,6 +101,12 @@ var easyuiErrorFunction = function(XMLHttpRequest) {
 };
 $.fn.datagrid.defaults.onLoadError = easyuiErrorFunction;
 $.fn.treegrid.defaults.onLoadError = easyuiErrorFunction;
+//扩展datagrid刷新方法myReload，刷新数据并取消选中
+$.extend($.fn.datagrid.methods, {
+	myReload : function(jq){
+		$(jq).datagrid("reload").datagrid("uncheckAll").datagrid("unselectAll");
+	}
+});
 $.fn.combogrid.defaults.onLoadError = easyuiErrorFunction;
 $.fn.combobox.defaults.onLoadError = easyuiErrorFunction;
 $.fn.form.defaults.onLoadError = easyuiErrorFunction;
@@ -122,13 +128,13 @@ $.fn.window.defaults.onMove = easyuiPanelOnMove;
 $.fn.dialog.defaults.onMove = easyuiPanelOnMove;
 
 $.extend($.fn.validatebox.defaults.rules, {
-			eqPassword : {/* 扩展验证两次密码 */
-				validator : function(value, param) {
-					return value == $(param[0]).val();
-				},
-				message : '密码不一致！'
-			}
-		});
+	eqPassword : {/* 扩展验证两次密码 */
+		validator : function(value, param) {
+			return value == $(param[0]).val();
+		},
+		message : '密码不一致！'
+	}
+});
 
 $.extend($.fn.datagrid.defaults.editors, {
 			combocheckboxtree : {

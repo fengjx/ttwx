@@ -24,8 +24,8 @@ public class KeyWordActionView extends ToStringBase {
 	private String app_id;
 	private Date in_time;
 	private String user_id;
-	private String beanName;
-	private String methodName;
+	private String bean_name;
+	private String method_name;
 	private String app_name;
 	private String xml_data;
 	private String msg_type;
@@ -38,7 +38,7 @@ public class KeyWordActionView extends ToStringBase {
 	}
 	
 	public KeyWordActionView(String id, String req_type, String action_type,String key_word, Date in_time,
-			String app_id, String beanName, String methodName,
+			String app_id, String bean_name, String method_name,
 			String app_name,String material_id, String xml_data, String msg_type, String dict_name) {
 		super();
 		this.id = id;
@@ -48,8 +48,8 @@ public class KeyWordActionView extends ToStringBase {
 		this.material_id = material_id;
 		this.app_id = app_id;
 		this.in_time = in_time;
-		this.beanName = beanName;
-		this.methodName = methodName;
+		this.bean_name = bean_name;
+		this.method_name = method_name;
 		this.app_name = app_name;
 		this.xml_data = xml_data;
 		this.msg_type = msg_type;
@@ -128,20 +128,20 @@ public class KeyWordActionView extends ToStringBase {
 		this.user_id = user_id;
 	}
 
-	public String getBeanName() {
-		return beanName;
+	public String getBean_name() {
+		return bean_name;
 	}
 
-	public void setBeanName(String beanName) {
-		this.beanName = beanName;
+	public void setBean_name(String bean_name) {
+		this.bean_name = bean_name;
 	}
 
-	public String getMethodName() {
-		return methodName;
+	public String getMethod_name() {
+		return method_name;
 	}
 
-	public void setMethodName(String methodName) {
-		this.methodName = methodName;
+	public void setMethod_name(String method_name) {
+		this.method_name = method_name;
 	}
 
 	public String getApp_name() {

@@ -51,8 +51,6 @@ public class InServiceEngineImpl implements InServiceEngine {
 				return "";
 			}
 			respMessage = executor.execute();
-			//替换参数
-			respMessage = MessageUtil.replaceMsgParam(respMessage, WechatContext.getWechatPostMap());
 		} catch (Exception e) {
 			logger.error("处理微信请求出现异常", e);
 			return "";	//返回空字符串，微信将不做处理，且不再消息重发

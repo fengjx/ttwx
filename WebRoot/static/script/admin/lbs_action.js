@@ -13,8 +13,7 @@ function loadDefaultMsg(){
 	$.ajax({
 		url :  curUrl + '/admin/action/load',
 		data : {
-			"req_type" : "event",
-			"event_type" : "LOCATION"
+			"req_type" : "location"
 		},
 		dataType : "json",
 		success : function(res) {

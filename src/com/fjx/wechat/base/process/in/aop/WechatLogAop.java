@@ -44,7 +44,7 @@ public class WechatLogAop {
 			reqMsgLog.setFrom_user_name(requestMap.get("FromUserName"));
 			reqMsgLog.setCreate_time(CommonUtils.String2Date(WeChatUtil.formatCreateTime(requestMap.get("CreateTime")), "yyyy-MM-dd HH:mm:ss"));
 			reqMsgLog.setReq_type(msgType);
-			reqMsgLog.setMsg_id(Long.parseLong(requestMap.get("MsgId")));
+			reqMsgLog.setMsg_id(Long.parseLong(StringUtils.defaultString(requestMap.get("MsgId"), "0")));
 			reqMsgLog.setReq_xml(requestMap.get("xml"));
 			reqMsgLog.setIn_time(new Date());
 			reqMsgLog.setWechatPublicAccount(WechatContext.getPublicAccount());
@@ -61,7 +61,7 @@ public class WechatLogAop {
 		try {
 			//微信发送的参数
 			ReqMsgLogEntoty reqMsgLog = WechatContext.getReqMsgLog();
-			reqMsgLog.setResp_xml(returnValue.toString());
+			reqMsgLog.setResp_xml(null == returnValue ? "":returnValue.toString());
 			reqMsgLog.setResp_time(new Date());
 			reqMsgLogService.update(reqMsgLog);
 		} catch (Exception e) {

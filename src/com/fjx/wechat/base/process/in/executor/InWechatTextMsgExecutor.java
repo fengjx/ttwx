@@ -17,6 +17,7 @@ public class InWechatTextMsgExecutor extends InServiceExecutor {
 	@Override
 	public String execute() throws Exception {
 		ReqTextMessage textMessage = new ReqTextMessage(WechatContext.getWechatPostMap());
+		logger.info("进入文本消息处理器fromUserName="+textMessage.getFromUserName());
 		return doAction(null, WechatReqMsgtypeConstants.REQ_MSG_TYPE_TEXT, null, textMessage.getContent());
 	}
 
