@@ -64,6 +64,9 @@ public class CommonUtils {
      * @return
      */
     public static String date2String(Date date, String... dateFmtArgs) {
+    	if(null == date){
+    		return null;
+    	}
         String dateFmt = DATA_FORMAT_ALL;
         if (dateFmtArgs.length != 0) {
             dateFmt = dateFmtArgs[0];

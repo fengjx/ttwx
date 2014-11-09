@@ -46,8 +46,8 @@ public class InServiceEngineImpl implements InServiceEngine {
 			}
 			//已激活状态，同时fromUserName与公众号ID不符，视为无效请求
 			if (WechatPublicAccountEntity.VALID_STATE_ACTIVATE.equals(accountEntity.getValid_state())
-					&& !requestMap.get("FromUserName").equals(accountEntity.getAccount_id())) {
-				logger.warn("fromUserName["+requestMap.get("FromUserName")+"]无效，返回空不做响应");
+					&& !requestMap.get("ToUserName").equals(accountEntity.getAccount_id())) {
+				logger.warn("ToUserName["+requestMap.get("ToUserName")+"]无效，返回空不做响应");
 				return "";
 			}
 			respMessage = executor.execute();

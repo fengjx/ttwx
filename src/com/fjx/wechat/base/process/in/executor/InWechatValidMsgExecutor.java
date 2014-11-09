@@ -23,7 +23,7 @@ public class InWechatValidMsgExecutor extends InServiceExecutor {
 	private WechatPublicAccountService publicAccountService;
 	
 	@Override
-	public String execute() {
+	public String execute() throws Exception {
 		ReqTextMessage textMessage = new ReqTextMessage(WechatContext.getWechatPostMap());
 		logger.info("进入验证消息处理器fromUserName="+textMessage.getFromUserName());
 		
@@ -33,11 +33,11 @@ public class InWechatValidMsgExecutor extends InServiceExecutor {
 		if(valid_code.equals(textMessage.getContent())){
 			//更新账号状态为激活
 			accountEntity.setValid_state(WechatPublicAccountEntity.VALID_STATE_ACTIVATE);
-			accountEntity.setAccount_id(textMessage.getFromUserName());
+			accountEntity.setAccount_id(textMessage.getToUserName());
 			wechatPublicAccountService.update(accountEntity);
-			return msgTemplateService.getMsgTemplateByKey(MsgTemplateConstants.API_VALID_SUCCESS).getMsg_content();
+			return doAction(msgTemplateService.getMsgTemplateByKey(MsgTemplateConstants.API_VALID_SUCCESS).getMsg_content());
 		}
-		return msgTemplateService.getMsgTemplateByKey(MsgTemplateConstants.API_VALID_FAIL).getMsg_content();
+		return doAction(msgTemplateService.getMsgTemplateByKey(MsgTemplateConstants.API_VALID_FAIL).getMsg_content());
 	}
 
 	@Override
