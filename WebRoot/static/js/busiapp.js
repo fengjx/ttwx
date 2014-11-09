@@ -17,7 +17,7 @@ $(function() {
 	// 加载用户分组
 	loadGroupList();
 	datagrid = $('#datagrid').datagrid({
-				url : curUrl + '/wechat/app/busiapp_pageBusiApp.action',
+				url : domain + '/wechat/app/busiapp_pageBusiApp.action',
 				toolbar : '#toolbar',
 				iconCls : 'icon-save',
 				pagination : true,
@@ -90,8 +90,7 @@ $(function() {
 			text : '確定',
 			handler : function() {
 				groupForm.form('submit', {
-							url : curUrl
-									+ '/wechat/app/user_saveOrUpdateGroup.action',
+							url : domain + '/wechat/app/user_saveOrUpdateGroup.action',
 							success : function(data) {
 								var res = $.evalJSON(data);
 								groupDialog.dialog('close');
@@ -163,7 +162,7 @@ function clearDatagrid() {
 
 function loadGroupList() {
 	$.ajax({
-		url : curUrl + '/wechat/app/user_groupList.action',
+		url : domain + '/wechat/app/user_groupList.action',
 		cache : false,
 		dataType : "json",
 		success : function(data) {
@@ -241,19 +240,19 @@ function groupSelect(record) {
 		"paramMap.group_id" : group_id
 	};
 	$.ajax({
-				url : curUrl + '/wechat/app/user_updateUser.action',
-				cache : false,
-				data : data,
-				dataType : "json",
-				success : function(res) {
-					if (res && res.status === 'success') {
-						fjx.showMsg('修改分组成功');
-						// $("com"+id).combobox("select",record.value);
-						datagrid.datagrid("reload");
-					} else {
-						$.messager.alert('提示', res ? res.msg : '修改分組失敗！',
-								'error');
-					}
-				}
-			});
+		url : domain + '/wechat/app/user_updateUser.action',
+		cache : false,
+		data : data,
+		dataType : "json",
+		success : function(res) {
+			if (res && res.status === 'success') {
+				fjx.showMsg('修改分组成功');
+				// $("com"+id).combobox("select",record.value);
+				datagrid.datagrid("reload");
+			} else {
+				$.messager.alert('提示', res ? res.msg : '修改分組失敗！',
+						'error');
+			}
+		}
+	});
 }

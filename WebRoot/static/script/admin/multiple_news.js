@@ -38,7 +38,7 @@ $(function(){
 	
 	//加载web应用列表
 	busiweb_combobox = $('#busiapp_url').combobox({   
-		url: curUrl+'/admin/extapp/list?app_type=web',
+		url: domain +'/admin/extapp/list?app_type=web',
         method: 'get',
         valueField:'app_url',
         textField:'name',
@@ -107,7 +107,7 @@ function init(){
 	
 	if(material_id && material_id != ''){
 		$.ajax({
-			url :  curUrl + '/admin/material/load',
+			url :  domain + '/admin/material/load',
 			data : "id="+material_id,
 			cache : false,
 			dataType : "json",
@@ -326,14 +326,14 @@ function settingInner(dataId){
  */
 function submitAppMsg(){
 	news_form.form('submit', {
-		url : curUrl + '/admin/material/save',
+		url : domain + '/admin/material/save',
 		success : function(data) {
 			fjx.closeProgress();
 			var res = $.evalJSON(data);
 			if(res && '1' == res.code){
 				//fjx.showMsg('保存成功！');
 				alert('保存成功！');
-				//window.location.href = curUrl + '/wechat/app/material_view.action';
+				//window.location.href = domain + '/wechat/app/material_view.action';
 				window.location.reload();
 			}else{
 				$.messager.alert('提示',	res?res.msg:'保存失败！','error');

@@ -12,7 +12,7 @@
 	<!-- container -->
 	<div class="container">
 		<ol class="breadcrumb">
-			<li><a href="<%=curUrl %>">首页</a></li>
+			<li><a href="<%=domain %>">首页</a></li>
 			<li class="active">激活成功</li>
 		</ol>
 		<div class="row">

@@ -12,7 +12,7 @@
 	<!-- container -->
 	<div class="container">
 		<ol class="breadcrumb">
-			<li><a href="<%=curUrl %>">首页</a></li>
+			<li><a href="<%=domain %>">首页</a></li>
 			<li class="active">联系我们</li>
 		</ol>
 		<div class="row">

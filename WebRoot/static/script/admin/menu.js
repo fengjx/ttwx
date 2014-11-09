@@ -24,7 +24,7 @@ $(function(){
 	init();
 	
 	menu_treegrid = $('#menu_treegrid').treegrid({
-		url : curUrl + '/admin/menu/load',
+		url : domain + '/admin/menu/load',
 		toolbar : [{
 		    text:'添加',
 		    iconCls:'icon-add',
@@ -153,7 +153,7 @@ function init(){
 			text : '确定',
 			handler : function() {
 				menuForm.form('submit', {
-					url : curUrl + '/admin/menu/save',
+					url : domain + '/admin/menu/save',
 					success : function(data) {
 						var res = $.evalJSON(data);
 						menuDialog.dialog('close');
@@ -182,7 +182,7 @@ function init(){
  */
 function release(){
 	$.ajax({
-		url :  curUrl + '/admin/menu/release',
+		url :  domain + '/admin/menu/release',
 		cache : false,
 		dataType : "json",
 		success : function(res) {
@@ -255,7 +255,7 @@ function removeMenu() {
 		$.messager.confirm('请确认', '您要刪除删除【'+selectNode.name+'】？', function(r) {
 			if (r) {
 				$.ajax({
-					url :  curUrl + '/admin/menu/delete',
+					url :  domain + '/admin/menu/delete',
 					data : 'id='+selectNode.id,
 					cache : false,
 					dataType : "json",
@@ -334,7 +334,7 @@ function showActionContent(id){
  */
 function submitMsgActionForm(respType){
 	msgActionForm.form('submit', {
-		url : curUrl + '/admin/action/save',
+		url : domain + '/admin/action/save',
 		success : function(data) {
 			fjx.closeProgress();
 			var res = $.evalJSON(data);
@@ -343,7 +343,7 @@ function submitMsgActionForm(respType){
 				fjx.showMsg('设置成功！');
 				var nodeId = selectNode.id;
 				$.ajax({
-					url :  curUrl + '/admin/menu/load',
+					url :  domain + '/admin/menu/load',
 					cache : false,
 					async : false,
 					dataType : "json",

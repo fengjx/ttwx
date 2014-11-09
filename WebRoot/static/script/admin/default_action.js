@@ -11,7 +11,7 @@ $(function(){
 
 function loadDefaultMsg(){
 	$.ajax({
-		url :  curUrl + '/admin/action/load',
+		url :  domain + '/admin/action/load',
 		data : {
 			"ext_type" : "wechat_default_msg"
 		},
@@ -85,7 +85,7 @@ function updateMsgView(){
  */
 function submitMsgActionForm(respType){
 	msgActionForm.form('submit', {
-		url : curUrl + '/admin/action/save',
+		url : domain + '/admin/action/save',
 		success : function(data) {
 			fjx.closeProgress();
 			var res = $.evalJSON(data);

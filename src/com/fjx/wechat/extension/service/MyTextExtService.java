@@ -38,7 +38,11 @@ public class MyTextExtService implements TextExtService {
 	 * @param request
 	 * @return
 	 */
-
+	
+	public static void main(String[] args) {
+		System.out.println(getMainUsage());
+	}
+	
 	//主菜单
     private static String getMainUsage(){
     	// 由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义

@@ -25,12 +25,12 @@ function userlogin(){
 		var inputUserId = $("#inputUserId").val();
 		var inputPwd = $("#inputPwd").val();
 		$.ajax({
-			url :  curUrl + '/wechat/busi/login_userLogin.action',
+			url :  domain + '/wechat/busi/login_userLogin.action',
 			data :"paramMap.userid="+inputUserId+"&paramMap.pwd="+inputPwd,
 			dataType : 'json',
 			success : function(res) {
 				if(res && res.state == 'success'){
-					window.location.href=curUrl + '/wechat/admin/main.action';
+					window.location.href=domain + '/wechat/admin/main.action';
 				}else{
 					alert(res.msg?res.msg:'登錄失敗');
 					$("#btn-login").button('reset');

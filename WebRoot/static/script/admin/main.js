@@ -24,7 +24,7 @@ function xml2NewsHtml(xmlStr,in_time,material_id,type){
 					'<div id="'+material_id+'" class="appmsg">' +
 						'<div class="appmsg_content">' +
 							'<h4 class="appmsg_title">' +
-								'<a target="_blank" href="'+getUrl(xml_data.Articles.item.Url,curUrl)+'">'+xml_data.Articles.item.Title+'</a>' +
+								'<a target="_blank" href="'+getUrl(xml_data.Articles.item.Url,domain)+'">'+xml_data.Articles.item.Title+'</a>' +
 							'</h4>' +
 							'<div class="appmsg_info">' +
 								'<em class="appmsg_date">'+in_time+'</em>' +
@@ -47,7 +47,7 @@ function xml2NewsHtml(xmlStr,in_time,material_id,type){
 		$.each(items, function(j,item){
 			if(j == 0){	//第一张图文
 				html += '<div class="cover_appmsg_item">' +
-							'<h4 class="appmsg_title"><a target="_blank" href="'+getUrl(item.Url,curUrl)+'">'+item.Title+'</a></h4>' +
+							'<h4 class="appmsg_title"><a target="_blank" href="'+getUrl(item.Url,domain)+'">'+item.Title+'</a></h4>' +
 							'<div class="appmsg_thumb_wrp">' +
 								'<img class="appmsg_thumb" alt="" src="'+item.PicUrl+'">' +
 							'</div>' +
@@ -55,7 +55,7 @@ function xml2NewsHtml(xmlStr,in_time,material_id,type){
 			}else{
 				html += '<div class="appmsg_item">' +
 							'<img class="appmsg_thumb" alt="" src="'+item.PicUrl+'">' +
-							'<h4 class="appmsg_title"><a target="_blank" href="'+getUrl(item.Url,curUrl)+'">'+item.Title+'</a></h4>' +
+							'<h4 class="appmsg_title"><a target="_blank" href="'+getUrl(item.Url,domain)+'">'+item.Title+'</a></h4>' +
 						'</div>';
 			}
 		});
@@ -68,7 +68,7 @@ function xml2NewsHtml(xmlStr,in_time,material_id,type){
 		html += '<div class="appmsg_opr">' +
 									'<ul>' +
 										'<li class="appmsg_opr_item grid_item size1of2">' +
-											'<a target="_blank" href="'+curUrl+'/admin/material/'+newsType+'?id='+material_id+'" class="js_edit" data-id="'+material_id+'">' +
+											'<a target="_blank" href="'+domain+'/admin/material/'+newsType+'?id='+material_id+'" class="js_edit" data-id="'+material_id+'">' +
 												'<i class="icon18_common edit_gray">編輯</i>' +
 											'</a>' +
 										'</li>'+

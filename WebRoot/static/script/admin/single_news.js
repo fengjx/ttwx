@@ -77,7 +77,7 @@ function init (){
 	
 	//加载web应用列表
 	busiweb_combobox = $('#busiapp_url').combobox({   
-		url: curUrl+'/admin/extapp/list?app_type=web',
+		url: domain+'/admin/extapp/list?app_type=web',
         method: 'get',
         valueField:'app_url',
         textField:'name',
@@ -86,7 +86,7 @@ function init (){
 	
 	if(material_id && material_id != ''){
 		$.ajax({
-			url :  curUrl + '/admin/material/load',
+			url :  domain + '/admin/material/load',
 			data : "id="+material_id,
 			cache : false,
 			dataType : "json",
@@ -160,7 +160,7 @@ function submitNewsForm(){
 			if(res && '1' == res.code){
 				//fjx.showMsg('保存成功！');
 				alert('保存成功！');
-				//window.location.href = curUrl + '/admin/material/view';
+				//window.location.href = domain + '/admin/material/view';
 				window.location.reload();
 			}else{
 				$.messager.alert('提示',	res?res.msg:'保存失败！','error');

@@ -12,7 +12,7 @@ $(function(){
 	
 	//加载业务接口列表
 	busiapi_combobox = $('#busiapp_id').combobox({   
-		url: curUrl+'/admin/extapp/list?app_type=api&support_req_type='+req_type,
+		url: domain+'/admin/extapp/list?app_type=api&support_req_type='+req_type,
         method: 'get',
         valueField:'id',
         textField:'name',
@@ -21,7 +21,7 @@ $(function(){
 	}); 
 	//加载web应用列表
 	busiweb_combobox = $('#busiapp_url').combobox({   
-		url: curUrl+'/admin/extapp/list?app_type=web',
+		url: domain+'/admin/extapp/list?app_type=web',
         method: 'get',
         valueField:'app_url',
         textField:'name',
@@ -96,7 +96,7 @@ function initMaterials(){
 function loadMaterials(page,rows){
 	
 	$.ajax({
-		url :  curUrl + '/admin/material/page?msg_type=news',
+		url :  domain + '/admin/material/page?msg_type=news',
 		data : "page="+page+"&rows="+rows,
 		cache : false,
 		dataType : "json",

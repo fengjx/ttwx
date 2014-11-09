@@ -5,7 +5,7 @@ $(function(){
 	
 	$("#form-auth").submit(function(){
 		$(this).ajaxSubmit({
-			url : curUrl + "/admin/setting/save",
+			url : domain + "/admin/setting/save",
 	        dataType : 'json', 
 	        beforeSubmit : validForm,
 	        success : function(res){

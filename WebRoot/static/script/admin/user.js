@@ -15,7 +15,7 @@ $(function() {
 	// 加载用户分组
 	loadGroupList();
 	datagrid = $('#datagrid').datagrid({
-		url : curUrl + '/admin/user/userList.action',
+		url : domain + '/admin/user/userList.action',
 		toolbar : '#toolbar',
 		iconCls : 'icon-save',
 		pagination : true,
@@ -160,7 +160,7 @@ function clearDatagrid() {
 
 function loadGroupList() {
 	$.ajax({
-		url : curUrl + '/admin/user/groupList.action',
+		url : domain + '/admin/user/groupList.action',
 		cache : false,
 		dataType : "json",
 		success : function(data) {
@@ -206,7 +206,7 @@ function deleteGroup(groupId, groupName) {
 	$.messager.confirm('请确认', '确认要删除分组【' + groupName + '】吗', function(r) {
 		if (r) {
 			$.ajax({
-				url : curUrl + '/admin/user/deleteGroup',
+				url : domain + '/admin/user/deleteGroup',
 				data : 'id=' + groupId,
 				dataType : "json",
 				success : function(data) {

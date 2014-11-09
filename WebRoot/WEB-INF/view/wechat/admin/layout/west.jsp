@@ -4,7 +4,7 @@
 	var tree ;
 	$(function(){
 		tree = $("#tree").tree({
-			url: "<%=curUrl%>"+'/static/config/admin-menu.json?id='+new Date(),
+			url: "<%=domain%>"+'/static/config/admin-menu.json?id='+new Date(),
 			method: "GET",
 			lines: true,
 			onClick: function(node){

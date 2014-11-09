@@ -39,15 +39,15 @@ function createJson(jsonObj, key, value) {
  * @param {}
  *            targetUrl
  * @param {}
- *            curUrl
+ *            domain
  * @return {}
  */
-function getUrl(targetUrl, curUrl) {
+function getUrl(targetUrl, domain) {
 	if (!targetUrl || targetUrl == '') {
 		return '';
 	}
 	if (/^\//.test(targetUrl)) { // 如果是/开头
-		return curUrl + targetUrl;
+		return domain + targetUrl;
 	}
 	return targetUrl;
 }

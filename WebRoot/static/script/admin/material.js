@@ -47,7 +47,7 @@ function init(){
 function loadMaterials(page,rows){
 	
 	$.ajax({
-		url :  curUrl + '/admin/material/page?msg_type=news',
+		url :  domain + '/admin/material/page?msg_type=news',
 		data : "page="+page+"&rows="+rows,
 		cache : false,
 		dataType : "json",
@@ -77,7 +77,7 @@ function deleteMaterial(id){
 	$.messager.confirm('请确认', '您要刪除素材？删除后无法恢复！', function(r) {
 		if (r) {
 			$.ajax({
-				url :  curUrl + '/admin/material/delete',
+				url :  domain + '/admin/material/delete',
 				data : "id="+id,
 				cache : false,
 				dataType : "json",

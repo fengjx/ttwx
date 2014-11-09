@@ -11,7 +11,7 @@
 	<!-- container -->
 	<div class="container">
 		<ol class="breadcrumb">
-			<li><a href="<%=curUrl %>">首页</a></li>
+			<li><a href="<%=domain %>">首页</a></li>
 			<li class="active">404找不到页面</li>
 		</ol>
 		<div class="row">
