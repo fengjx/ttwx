@@ -90,7 +90,7 @@ function submitMsgActionForm(respType){
 			fjx.closeProgress();
 			var res = $.evalJSON(data);
 			if(res && '1' == res.code){
-				parent.fjx.showMsg('設置成功');
+				parent.fjx.showMsg('设置成功');
 				window.location.reload();
 			}else{
 				$.messager.alert('提示',	res?res.msg:'设置失败！','error');

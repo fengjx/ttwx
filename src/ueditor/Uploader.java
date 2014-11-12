@@ -203,10 +203,10 @@ public class Uploader {
 	 * 上传sae storage
 	 */
 	public void saeStorageUpload(){
-		logger.debug("上传sae storage");
+		logger.info("上传sae storage");
 		// 使用SaeUserInfo拿到改请求可写的路径
 		String realPath = SaeUserInfo.getSaeTmpPath() + "/";
-		logger.debug("getSaeTmpPath = " + realPath);
+		logger.info("getSaeTmpPath = " + realPath);
 		boolean isMultipart = ServletFileUpload.isMultipartContent(this.request);
 		if (!isMultipart) {
 			this.state = this.errorInfo.get("NOFILE");
@@ -228,21 +228,25 @@ public class Uploader {
 			this.url = savePath + "/" + this.fileName;
 			
 			FileOutputStream fos = new FileOutputStream(realPath + "/" + this.fileName);
+			FileOutputStream outputStream = new FileOutputStream("saestor://ttwx/" + this.fileName);
 			BufferedInputStream bis = new BufferedInputStream(this.inputStream);
 			
 			byte[] buff = new byte[128];
 			int count = -1;
 			while ((count = bis.read(buff)) != -1) {
 				fos.write(buff, 0, count);
+				outputStream.write(buff, 0, count);
 			}
 			SaeStorage ss = new SaeStorage();
 			// 使用upload方法上传到域为image下
 			ss.upload(savePath, realPath + this.fileName, this.fileName);
 			bis.close();
 			fos.close();
+			outputStream.close();
 			this.state = this.errorInfo.get("SUCCESS");
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("上传SaeStorage失败", e);
 			this.state = this.errorInfo.get("IO");
 		}
 		
