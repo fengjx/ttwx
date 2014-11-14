@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1,user-scalable=no,maximum-scale=1,initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="简简单单 微信 订阅号 微官网">
+
+<link rel="stylesheet" href="../../static/resource/wechat/guanwang/common.css?v=20140208">
+<link rel="stylesheet" href="../../static/resource/wechat/guanwang/site.css?v=20140208">
+<script type="text/javascript" src="../../static/resource/wechat/guanwang/zepto.min.js"></script>
+<link rel="stylesheet" href="../../static/resource/wechat/guanwang/color1.css?v=20140208">
+<title>简简单单</title>
+<style>
+body {
+	-webkit-text-size-adjust: none;
+	-webkit-user-select: none;
+	margin: 0;
+	background: url(../../static/resource/wechat/guanwang/bg1.jpg);
+	background-size: cover;
+}
+#mainmenu{
+	background: none;
+	border: none;
+	margin: 10px 0px 0px 5px;
+	box-shadow: none;
+	border-radius: 0;
+}
+</style>
+<link type="text/css" rel="stylesheet" href="chrome-extension://cpngackimfmofbokmjmljamhdncknpmg/style.css">
+<script type="text/javascript" charset="utf-8" src="chrome-extension://cpngackimfmofbokmjmljamhdncknpmg/js/page_context.js"></script></head>
+<body screen_capture_injected="true">
+<div id="page">
+	<style>
+	#mainmenu .icon {
+	 	-webkit-background-size:35px auto;
+	    -o-background-size:35px auto;
+	}
+	#mainmenu{
+		width: 176px;
+		float: right;
+		margin-right: 8px;
+	}
+	#mainmenu li{
+		padding: 0;
+		list-style: none;
+		position: relative;
+		float: right;
+		background: rgba(0,0,0,0.7);
+		width: 80px;
+		height: 85px;
+		margin-left: 8px;
+		margin-bottom: 8px;
+	}
+	#mainmenu li a{
+		display: block;
+	}
+	#mainmenu li .title{
+		line-height: 30px;
+		text-align: center;
+		width: 95%;
+		margin: 0 auto;
+		color: #FFF;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		font-size: 0.9em;
+	}
+	#mainmenu li .icon{
+		width: 100%;
+		height: 40px;
+		display: block;
+		margin: 12px auto 0px;
+	}
+	</style>
+	<div id="mainmenu" class="fn-clear">
+		<ul>
+			<li>
+				<a href="http://2.fengjianxin.sinaapp.com/wechat/guanwang/demo.html">
+					<i class="icon icon-1"></i>
+					<p class="title">新闻</p>
+				</a>
+			</li>
+		
+			<li>
+				<a href="http://2.fengjianxin.sinaapp.com/wechat/guanwang/demo.html">
+					<i class="icon icon-2"></i>
+					<p class="title">产品</p>
+				</a>
+			</li>
+		
+			<li>
+				<a href="http://2.fengjianxin.sinaapp.com/wechat/guanwang/demo.html">
+					<i class="icon icon-3"></i>
+					<p class="title">服务</p>
+				</a>
+			</li>
+		
+			<li>
+				<a href="http://2.fengjianxin.sinaapp.com/wechat/guanwang/demo.html">
+					<i class="icon icon-4"></i>
+					<p class="title">成功案例</p>
+				</a>
+			</li>
+		
+			<li>
+				<a href="http://fengjxblog.sinaapp.com/?page_id=31">
+					<i class="icon icon-5"></i>
+					<p class="title">联系我们</p>
+				</a>
+			</li>
+		
+		</ul>
+	</div>
+</div>
+<div class="plug-div">
+    <div class="plug-phone">
+       	  <div class="plug-menu bgcolor"><span class="close"></span></div> 
+          <div class="bgcolor plug-btn plug-btn1 close"><a href="tel:18520226106"><span class="p-icon"></span></a></div>
+          <div class="bgcolor plug-btn plug-btn2 close"><a href="http://3.fengjianxin.sinaapp.com/wechat/map/navigation.html"><span class="p-icon"></span></a></div>
+          <div class="bgcolor plug-btn plug-btn3 close"><a href="javascript:;"><span class="p-icon"></span></a></div>
+          <script type="text/javascript">
+          	$(".plug-div .plug-btn3").click(function(){
+          		window.scrollTo(0,0);
+          		$(".plug-menu span").removeClass("open").addClass("close");
+          		$(".plug-btn").removeClass("open").addClass("close");
+          	});
+          </script>
+          
+          <div class="bgcolor plug-btn plug-btn4 close">
+          	<a href="http://2.fengjianxin.sinaapp.com/wechat/guanwang/index.html"><span class="p-icon"></span></a>
+          </div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+	// 	$(window).scroll(function(){
+	// 		if($(window).scrollTop() > 200){
+	// 			$(".plug-div").show();
+	// 		} else{
+	// 			$(".plug-div").hide();
+	// 		}
+	// 	});
+		
+		//path
+		$(".plug-menu").click(function(){
+		var span = $(this).find("span");
+		    if(span.attr("class") == "open"){
+	            span.removeClass("open");
+	            span.addClass("close");
+	            $(".plug-btn").removeClass("open");
+	            $(".plug-btn").addClass("close");
+		    }else{
+	            span.removeClass("close");
+	            span.addClass("open");
+	            $(".plug-btn").removeClass("close");
+	            $(".plug-btn").addClass("open");
+		    }
+		});
+		$(".plug-menu").on('touchmove',function(event){event.preventDefault();});
+	});
+</script>
+</body>
+</html>

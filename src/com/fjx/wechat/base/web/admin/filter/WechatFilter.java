@@ -11,11 +11,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.fjx.wechat.base.context.WechatContext;
 import com.fjx.wechat.base.tools.MessageUtil;
+import org.apache.log4j.Logger;
 
 /**
  * 微信请求拦截器
@@ -23,9 +21,8 @@ import com.fjx.wechat.base.tools.MessageUtil;
  * @date 2014年2月21日
  */
 public class WechatFilter implements Filter {
-	
-	protected final Log logger = LogFactory.getLog(this.getClass());
-	
+
+	private static final Logger logger = Logger.getLogger(WechatFilter.class);
 	
 	@Override
 	public void destroy() {
