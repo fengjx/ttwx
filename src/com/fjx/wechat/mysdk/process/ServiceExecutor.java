@@ -11,7 +11,6 @@ public interface ServiceExecutor {
 
     /**
      * 业务执行方法
-     * @param instruction
      */
     public String execute() throws Exception;
 

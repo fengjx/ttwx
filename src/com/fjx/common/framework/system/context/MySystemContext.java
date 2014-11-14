@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fjx.common.framework.system.exception.MyRuntimeException;
-import com.fjx.wechat.base.web.admin.entity.SysUserEntity;
+import com.fjx.wechat.base.admin.entity.SysUserEntity;
 import com.fjx.wechat.config.AppConfig;
 
 

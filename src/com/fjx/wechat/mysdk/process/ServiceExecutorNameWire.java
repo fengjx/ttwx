@@ -11,7 +11,6 @@ public interface ServiceExecutorNameWire {
 
     /**
      * 获取服务执行名称
-     * 
      * @return
      */
     public String getExecutorName();

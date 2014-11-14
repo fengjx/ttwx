@@ -18,7 +18,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.fjx.wechat.base.web.admin.entity.SysUserEntity;
+import com.fjx.wechat.base.admin.entity.SysUserEntity;
 import com.fjx.wechat.config.AppConfig;
 import com.sina.sae.storage.SaeStorage;
 import com.sina.sae.util.SaeUserInfo;

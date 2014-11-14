@@ -2,14 +2,12 @@ package com.fjx.wechat.mysdk.process.in;
 
 import java.util.Map;
 
-import com.fjx.wechat.base.process.in.*;
+import com.fjx.wechat.mysdk.context.WechatContext;
+import com.fjx.wechat.mysdk.process.in.executor.InServiceExecutor;
+import com.fjx.wechat.mysdk.process.in.executor.InServiceExecutorFactory;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fjx.wechat.base.context.WechatContext;
-import com.fjx.wechat.base.process.in.executor.InServiceExecutor;
-import com.fjx.wechat.base.process.in.executor.InServiceExecutorFactory;
-import com.fjx.wechat.base.tools.MessageUtil;
 import com.fjx.wechat.base.admin.entity.WechatPublicAccountEntity;
 
 /**
@@ -17,7 +15,7 @@ import com.fjx.wechat.base.admin.entity.WechatPublicAccountEntity;
  * @author fengjx
  * @date 
  */
-public class InServiceEngineImpl implements com.fjx.wechat.base.process.in.InServiceEngine {
+public class InServiceEngineImpl implements InServiceEngine {
 	
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
@@ -29,7 +27,6 @@ public class InServiceEngineImpl implements com.fjx.wechat.base.process.in.InSer
 	
 	/**
 	 * 处理微信发来的请求
-	 * @param request
 	 * @return
 	 */
 	@Override

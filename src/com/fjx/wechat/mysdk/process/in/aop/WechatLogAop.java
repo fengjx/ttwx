@@ -3,14 +3,14 @@ package com.fjx.wechat.mysdk.process.in.aop;
 import java.util.Date;
 import java.util.Map;
 
+import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
+import com.fjx.wechat.mysdk.context.WechatContext;
+import com.fjx.wechat.mysdk.tools.WeChatUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fjx.common.utils.CommonUtils;
-import com.fjx.wechat.base.constants.WechatReqMsgtypeConstants;
-import com.fjx.wechat.base.context.WechatContext;
-import com.fjx.wechat.base.tools.WeChatUtil;
 import com.fjx.wechat.base.admin.entity.ReqMsgLogEntoty;
 import com.fjx.wechat.base.admin.service.ReqMsgLogService;
 

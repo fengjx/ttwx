@@ -1,5 +1,21 @@
 package com.fjx.wechat.mysdk.tools;
 
+import com.fjx.wechat.mysdk.beans.resp.Article;
+import com.fjx.wechat.mysdk.beans.resp.RespMusicMessage;
+import com.fjx.wechat.mysdk.beans.resp.RespNewsMessage;
+import com.fjx.wechat.mysdk.beans.resp.RespTextMessage;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.core.util.QuickWriter;
+import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
+import com.thoughtworks.xstream.io.xml.XppDriver;
+import org.apache.commons.lang3.StringUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -8,24 +24,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang3.StringUtils;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-
-import com.fjx.wechat.base.vo.resp.Article;
-import com.fjx.wechat.base.vo.resp.RespMusicMessage;
-import com.fjx.wechat.base.vo.resp.RespNewsMessage;
-import com.fjx.wechat.base.vo.resp.RespTextMessage;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.core.util.QuickWriter;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
-import com.thoughtworks.xstream.io.xml.XppDriver;
 
 /**
  * 消息处理工具类

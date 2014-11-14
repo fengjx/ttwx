@@ -1,13 +1,11 @@
 package com.fjx.wechat.mysdk.process.in.executor;
 
-
-import com.fjx.wechat.base.process.in.executor.*;
+import com.fjx.wechat.mysdk.constants.MsgTemplateConstants;
+import com.fjx.wechat.mysdk.context.WechatContext;
+import com.fjx.wechat.mysdk.tools.ServiceTool;
+import com.fjx.wechat.mysdk.beans.req.ReqTextMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fjx.wechat.base.constants.MsgTemplateConstants;
-import com.fjx.wechat.base.context.WechatContext;
-import com.fjx.wechat.base.tools.ServiceTool;
-import com.fjx.wechat.base.vo.req.ReqTextMessage;
 import com.fjx.wechat.base.admin.entity.WechatPublicAccountEntity;
 import com.fjx.wechat.base.admin.service.WechatPublicAccountService;
 
@@ -16,7 +14,7 @@ import com.fjx.wechat.base.admin.service.WechatPublicAccountService;
  * @author fengjx xd-fjx@qq.com
  * @date 2014年9月11日
  */
-public class InWechatValidMsgExecutor extends com.fjx.wechat.base.process.in.executor.InServiceExecutor {
+public class InWechatValidMsgExecutor extends InServiceExecutor {
 	
 	public static final String EXECUTOR_NAME = "inWechatValidMsgExecutor";
 	

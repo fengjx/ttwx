@@ -2,12 +2,12 @@ package com.fjx.wechat.mysdk.process.in;
 
 import java.util.Map;
 
-import com.fjx.wechat.base.constants.WechatReqEventConstants;
-import com.fjx.wechat.base.constants.WechatReqMsgtypeConstants;
-import com.fjx.wechat.base.context.WechatContext;
-import com.fjx.wechat.base.process.in.executor.InWechatValidMsgExecutor;
-import com.fjx.wechat.base.tools.ServiceTool;
 import com.fjx.wechat.base.admin.entity.WechatPublicAccountEntity;
+import com.fjx.wechat.mysdk.constants.WechatReqEventConstants;
+import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
+import com.fjx.wechat.mysdk.context.WechatContext;
+import com.fjx.wechat.mysdk.process.in.executor.InWechatValidMsgExecutor;
+import com.fjx.wechat.mysdk.tools.ServiceTool;
 
 /**
  * 业务动作分发器
@@ -18,9 +18,8 @@ public class Dispatcher {
 
 	/**
 	 * 根据业务参数获取业务执行器
-	 * @param params
+	 * @param requestMap
 	 * @return
-	 * @throws com.fjx.common.framework.system.exception.MyException
 	 */
 	public static String getExecutorName(Map<String, String> requestMap){
 		// String msgId = requestMap.get("MsgId");

@@ -1,17 +1,14 @@
 package com.fjx.wechat.mysdk.tools;
 
+import com.fjx.common.framework.system.exception.MyRuntimeException;
+import com.fjx.wechat.mysdk.constants.WechatRespMsgtypeConstants;
+import com.fjx.wechat.mysdk.beans.resp.Article;
+import com.fjx.wechat.mysdk.beans.resp.RespNewsMessage;
+import com.fjx.wechat.mysdk.beans.resp.RespTextMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import com.fjx.common.framework.system.exception.MyRuntimeException;
-import com.fjx.wechat.base.constants.WechatRespMsgtypeConstants;
-import com.fjx.wechat.base.tools.*;
-import com.fjx.wechat.base.vo.resp.Article;
-import com.fjx.wechat.base.vo.resp.RespNewsMessage;
-import com.fjx.wechat.base.vo.resp.RespTextMessage;
-
-
 
 /**
  * 素材工具类
@@ -44,7 +41,7 @@ public class MaterialUtil {
 			//消息内容
 			textMessage.setContent(materialList.get(0).get("txt_content"));
 			// 将文本消息对象转换成xml字符串
-			respMessage = com.fjx.wechat.base.tools.MessageUtil.textMessageToXml(textMessage);
+			respMessage = MessageUtil.textMessageToXml(textMessage);
 			
 		}else if(msg_type.equals(WechatRespMsgtypeConstants.RESP_MESSAGE_TYPE_NEWS)){
 			// 创建图文消息
@@ -65,7 +62,7 @@ public class MaterialUtil {
 			}
 			newsMessage.setArticleCount(size);
 			newsMessage.setArticles(articleList);
-			respMessage = com.fjx.wechat.base.tools.MessageUtil.newsMessageToXml(newsMessage);
+			respMessage = MessageUtil.newsMessageToXml(newsMessage);
 		}else if(msg_type.equals(WechatRespMsgtypeConstants.RESP_MESSAGE_TYPE_MUSIC)){
 			
 			

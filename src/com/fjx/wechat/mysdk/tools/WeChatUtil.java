@@ -1,11 +1,22 @@
 package com.fjx.wechat.mysdk.tools;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import com.alibaba.fastjson.JSONException;
+import com.fjx.wechat.mysdk.constants.WechatApiConstants;
+import com.fjx.wechat.mysdk.beans.menu.Menu;
+import com.fjx.wechat.mysdk.beans.security.AccessToken;
+import com.fjx.wechat.mysdk.beans.security.Oauth2AccessToken;
+import com.fjx.wechat.mysdk.beans.user.UserInfo;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.util.JSONUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,26 +24,6 @@ import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-
-import com.fjx.wechat.base.tools.MyX509TrustManager;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.util.JSONUtils;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-
-import com.alibaba.fastjson.JSONException;
-import com.fjx.wechat.base.constants.WechatApiConstants;
-import com.fjx.wechat.base.vo.menu.Menu;
-import com.fjx.wechat.base.vo.security.AccessToken;
-import com.fjx.wechat.base.vo.security.Oauth2AccessToken;
-import com.fjx.wechat.base.vo.user.UserInfo;
 
 public class WeChatUtil {
 	
@@ -62,9 +53,6 @@ public class WeChatUtil {
 	
 	/**
 	 * 菜单创建（POST） 限100（次/天）
-	 * @param menuJson
-	 * @param accessToken
-	 * @return
 	 * 返回结果
 	 * 正确时的返回JSON数据包如下：
 	 * {"errcode":0,"errmsg":"ok"}
@@ -113,7 +101,7 @@ public class WeChatUtil {
 	/**
 	* 获取access_token
 	* @param appid 凭证
-	* @param appsecret 密钥
+	* @param appSecret 密钥
 	* @return
 	*/
 	public static AccessToken getAccessToken(String appid, String appSecret)throws Exception {
@@ -142,7 +130,7 @@ public class WeChatUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static Oauth2AccessToken  getOauth2AccessToken(String code,String appid, String appSecret) throws Exception{
+	public static Oauth2AccessToken getOauth2AccessToken(String code,String appid, String appSecret) throws Exception{
 		Oauth2AccessToken token = null;
 		try {
 			String url = WechatApiConstants.WECHAT_OAUTH2_ACCESS_TOKEN_URL.replace("#APPID#", appid)

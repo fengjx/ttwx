@@ -4,10 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fjx.wechat.base.process.in.executor.*;
+import com.fjx.wechat.mysdk.process.in.Dispatcher;
 import org.apache.log4j.Logger;
-
-import com.fjx.wechat.base.process.in.Dispatcher;
 
 /**
  * 
@@ -21,7 +19,7 @@ public class InServiceExecutorFactory {
     /**
      * 服务映射
      */
-    private Map<String, com.fjx.wechat.base.process.in.executor.InServiceExecutor> executorMaps = new HashMap<String, com.fjx.wechat.base.process.in.executor.InServiceExecutor>();
+    private Map<String, InServiceExecutor> executorMaps = new HashMap<String, InServiceExecutor>();
 
     /**
      * 根据name查询服务执行器
@@ -29,18 +27,18 @@ public class InServiceExecutorFactory {
      * @param name
      * @return
      */
-    public com.fjx.wechat.base.process.in.executor.InServiceExecutor getExecutorByName(String name) {
+    public InServiceExecutor getExecutorByName(String name) {
         return executorMaps.get(name);
 
     }
-    
-    
+
+
     /**
      * 根据name查询服务执行器
-     * @param name
+     * @param requestMap
      * @return
      */
-    public com.fjx.wechat.base.process.in.executor.InServiceExecutor getExecutorByName(Map<String, String> requestMap) {
+    public InServiceExecutor getExecutorByName(Map<String, String> requestMap) {
     	String executorName = Dispatcher.getExecutorName(requestMap);
     	logger.info("executorName = "+executorName);
         return executorMaps.get(executorName);
@@ -50,11 +48,11 @@ public class InServiceExecutorFactory {
      *  设置服务执行器
      * @param executors
      */
-    public void setExecutorList(List<com.fjx.wechat.base.process.in.executor.InServiceExecutor> executors) {
+    public void setExecutorList(List<InServiceExecutor> executors) {
         if (executors == null || executors.isEmpty()) {
             return;
         }
-        for (com.fjx.wechat.base.process.in.executor.InServiceExecutor executor : executors) {
+        for (InServiceExecutor executor : executors) {
             executorMaps.put(executor.getExecutorName(), executor);
         }
     }

@@ -3,18 +3,18 @@ package com.fjx.wechat.mysdk.process.in.executor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import com.fjx.wechat.mysdk.constants.MsgTemplateConstants;
+import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
+import com.fjx.wechat.mysdk.context.WechatContext;
+import com.fjx.wechat.mysdk.process.ServiceExecutor;
+import com.fjx.wechat.mysdk.process.ServiceExecutorNameWire;
+import com.fjx.wechat.mysdk.process.ext.TextExtService;
+import com.fjx.wechat.mysdk.tools.MessageUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fjx.common.framework.system.init.SpringBeanFactoryUtil;
-import com.fjx.wechat.base.constants.MsgTemplateConstants;
-import com.fjx.wechat.base.constants.WechatReqMsgtypeConstants;
-import com.fjx.wechat.base.context.WechatContext;
-import com.fjx.wechat.base.process.ServiceExecutor;
-import com.fjx.wechat.base.process.ServiceExecutorNameWire;
-import com.fjx.wechat.base.process.ext.TextExtService;
-import com.fjx.wechat.base.tools.MessageUtil;
 import com.fjx.wechat.base.admin.entity.RespMsgActionEntity;
 import com.fjx.wechat.base.admin.service.MsgTemplateService;
 import com.fjx.wechat.base.admin.service.RespMsgActionService;
@@ -25,7 +25,7 @@ import com.fjx.wechat.base.admin.service.WechatPublicAccountService;
  * @author fengjx xd-fjx@qq.com
  * @date 2014年9月11日
  */
-public abstract class InServiceExecutor implements ServiceExecutor,	ServiceExecutorNameWire {
+public abstract class InServiceExecutor implements ServiceExecutor, ServiceExecutorNameWire {
 	
 	protected final Logger logger = Logger.getLogger(this.getClass());
 	
@@ -71,7 +71,7 @@ public abstract class InServiceExecutor implements ServiceExecutor,	ServiceExecu
 	
 	/**
 	 * 执行消息动作
-	 * @param respMsgActionEntity
+	 * @param actionEntity
 	 * @return
 	 * @throws Exception
 	 */
@@ -89,7 +89,7 @@ public abstract class InServiceExecutor implements ServiceExecutor,	ServiceExecu
 	
 	/**
 	 * 执行消息动作
-	 * @param msg
+	 * @param respMessage
 	 * @return
 	 * @throws Exception
 	 */
