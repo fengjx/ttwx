@@ -15,7 +15,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/admin" />
 			<mvc:mapping path="/admin/**" />
-			<bean class="com.fjx.wechat.base.web.admin.interceptor.AdminInterceptor"></bean>
+			<bean class="com.fjx.wechat.base.admin.interceptor.AdminInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	
