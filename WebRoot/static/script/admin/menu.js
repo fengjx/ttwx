@@ -1,4 +1,3 @@
-
 /**
  * 菜单管理
  */
@@ -178,7 +177,7 @@ function init(){
 }
 
 /**
- * 发布菜单
+ * 发布菜单，同步菜单数据到微信
  */
 function release(){
 	$.ajax({
@@ -186,12 +185,22 @@ function release(){
 		cache : false,
 		dataType : "json",
 		success : function(res) {
+			fjx.closeProgress();
 			if(res && '1' == res.code){
 				fjx.showMsg(msg.b);
 			}else{
 				$.messager.alert('提示',	res?res.msg:'发布失败！','error');
 			}
 		}
+		//beforeSend : function () {
+		//	fjx.progress("正在发布，请稍等！");
+		//},
+		//complete : function(){
+		//	fjx.closeProgress();
+		//},
+		//error : function(){
+		//	fjx.closeProgress();
+		//}
 	});
 }
 

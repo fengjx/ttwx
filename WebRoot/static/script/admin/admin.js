@@ -355,10 +355,13 @@ $.ajaxSetup({
 		}
 		return data // 返回处理后的数据
 	},
-	error : function(XMLHttpRequest, textStatus, errorThrown) {
+	beforeSend : function () {
+		fjx.progress("正在处理，请稍等。。。");
 	},
-	beforeSend : function(XMLHttpRequest) {
+	complete : function(){
+		fjx.closeProgress();
 	},
-	complete : function() {
+	error : function(){
+		fjx.closeProgress();
 	}
 });
