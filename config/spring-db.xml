@@ -30,7 +30,12 @@
 		<property name="removeAbandoned" value="${removeAbandoned}" />
 		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
 	</bean>
-	
+
+	<!-- jdbcTemplate -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
     	<property name="dataSource" ref="dataSource"/>
         <property name="hibernateProperties">
@@ -83,8 +88,8 @@
 		<aop:pointcut id="bussinessService"
 			expression="
 				(execution (public * com.fjx.common.framework.base.service..*.*(..))) or 
-				(execution (public * com.fjx.wechat.base.web.admin.service..*.*(..))) or 
-				(execution (public * com.fjx.wechat.base.web.display.service..*.*(..)))"/>
+				(execution (public * com.fjx.wechat.base.admin.service..*.*(..))) or
+				(execution (public * com.fjx.wechat.base.display.service..*.*(..)))"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="bussinessService" />
 	</aop:config>
   	

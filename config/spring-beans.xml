@@ -9,19 +9,14 @@
 	http://www.springframework.org/schema/tx
 	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-	<!-- jdbcTemplate -->
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
 	<bean id="baseDao" class="com.fjx.common.framework.base.dao.impl.BaseDao">
 	</bean>
 
 	<!-- 微信->商户请求服务执行引擎 -->
-	<bean id="inServiceEngine" class="com.fjx.wechat.base.process.in.InServiceEngineImpl"/>
+	<bean id="inServiceEngine" class="com.fjx.wechat.mysdk.process.in.InServiceEngineImpl"/>
 
 	<!-- 微信->商户 请求服务处理工厂 -->
-	<bean id="inServiceExecutorFactory" class="com.fjx.wechat.base.process.in.executor.InServiceExecutorFactory">
+	<bean id="inServiceExecutorFactory" class="com.fjx.wechat.mysdk.process.in.executor.InServiceExecutorFactory">
 		<property name="executorList">
 			<list>
 				<ref local="inWechatTextMsgExecutor" />
@@ -34,17 +29,17 @@
 		</property>
 	</bean>
 	<!-- 微信->商户 文本消息处理器 -->
-	<bean id="inWechatTextMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatTextMsgExecutor" />
+	<bean id="inWechatTextMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatTextMsgExecutor" />
 	<!-- 微信->商户 用户关注消息处理器 -->
-	<bean id="inWechatEventSubscribeMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatEventSubscribeMsgExecutor" />
+	<bean id="inWechatEventSubscribeMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatEventSubscribeMsgExecutor" />
 	<!-- 微信->商户 图片消息处理器 -->
-	<bean id="inWechatImageMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatImageMsgExecutor" />
+	<bean id="inWechatImageMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatImageMsgExecutor" />
 	<!-- 微信->商户 菜单点击事件消息处理器 -->
-	<bean id="inWechatEventClickMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatEventClickMsgExecutor" />
+	<bean id="inWechatEventClickMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatEventClickMsgExecutor" />
 	<!-- 微信->商户 验证码消息验证处理器 -->
-	<bean id="inWechatValidMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatValidMsgExecutor" />
+	<bean id="inWechatValidMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatValidMsgExecutor" />
 	<!-- 微信->商户 地理位置消息处理器 -->
-	<bean id="inWechatLocationMsgExecutor" class="com.fjx.wechat.base.process.in.executor.InWechatLocationMsgExecutor" />
+	<bean id="inWechatLocationMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatLocationMsgExecutor" />
 	
 	
 	<!-- 本地扩展接口start -->
