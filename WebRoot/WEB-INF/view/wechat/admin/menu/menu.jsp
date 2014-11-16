@@ -5,11 +5,11 @@
 <head>
 	<title>菜单管理</title>
 	<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
-	<link href="<%=resourceUrl%>/css/menu.css?v=2014030801" rel="stylesheet" type="text/css"/>
+	<link href="<%=resourceUrl%>/css/menu.css?v=2014111501" rel="stylesheet" type="text/css"/>
 	<link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
 	<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 	<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-	<script src="<%=resourceUrl %>/script/admin/menu.js?v=2014092601" type="text/javascript" charset="UTF-8"></script>
+	<script src="<%=resourceUrl %>/script/admin/menu.js?v=2014111503" type="text/javascript" charset="UTF-8"></script>
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true">

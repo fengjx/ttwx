@@ -27,9 +27,7 @@
 	 		<input type="hidden" id="menuType" name="menuType" value="">
 	 		<input type="hidden" id="menuUrl" name="menuUrl" value="">
  		</c:if>
- 		
  		<input type="hidden" id="txtContent" name="materiaContent" value="">
- 		
  	</form>
       		
 	<div id="edit_tabs" class="easyui-tabs" data-options="fit:true" style="height:390px">

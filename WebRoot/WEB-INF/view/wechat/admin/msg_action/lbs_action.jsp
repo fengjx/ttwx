@@ -22,9 +22,9 @@
 <body>
 
 	<div class="layout-sub-title alert alert-info">
-		<h2>LBS地理位置消息回复<span id="set-tip" style="color: #2e7dc6"> （尚未設置）</span></h2>
+		<h2>LBS地理位置消息回复<span id="set-tip" style="color: #2e7dc6"> （尚未设置）</span></h2>
 		<p>
-			粉絲在關注您的公眾號時，系統會自動發送您設置回复內容給粉絲。
+			用户向你的公众号发送地理位置时，系统会自动发送你设置的回复内容给用户。
 		</p>
 	</div>
 
@@ -36,9 +36,10 @@
 		</jsp:include>
 	</div>
 	
-	<div class="action_content sended jsMain" id="view" style="display: none; height: 500px;">
+	<div class="action_content sended jsMain" id="view" style="display: none;">
 		<div style="float: left; width: 100%">
-			<div class="action_tips" style="float: left;">用戶關注時會收到一下信息
+			<div class="action_tips" style="float: left;">
+				用户向公众号发送地理位置时，会收到以下信息
 			</div>
 			<div style="float:right;">
 				<a class="easyui-linkbutton" onclick="updateMsgView();"

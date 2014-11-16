@@ -24,7 +24,7 @@
 	<div class="layout-sub-title alert alert-info">
 		<h2>默认消息回复<span id="set-tip" style="color: #2e7dc6"> （尚未设置）</span></h2>
 		<p>
-			当匹配不到用户发送的消息指令时，回复次内容
+			当匹配不到用户发送的消息指令时，回复此内容
 		</p>
 	</div>
 
@@ -35,9 +35,10 @@
 		</jsp:include>
 	</div>
 	
-	<div class="action_content sended jsMain" id="view" style="display: none; height: 500px;">
+	<div class="action_content sended jsMain" id="view" style="display: none;">
 		<div style="float: left; width: 100%">
-			<div class="action_tips" style="float: left;">没有匹配不到用户发送的消息指令时，回复次内容
+			<div class="action_tips" style="float: left;">
+				没有匹配不到用户发送的消息指令时，回复此内容
 			</div>
 			<div style="float:right;">
 				<a class="easyui-linkbutton" onclick="updateMsgView();"

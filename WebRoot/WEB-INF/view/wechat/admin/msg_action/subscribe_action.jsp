@@ -23,7 +23,7 @@
 	<div class="layout-sub-title alert alert-info">
 		<h2>粉丝关注回复<span id="set-tip" style="color: #2e7dc6"> （尚未设置）</span></h2>
 		<p>
-			粉丝在关注你的公众号时，系统会自动发送你设置回复內容给粉丝。
+			用户在关注你的公众号时，系统会自动发送你设置的回复内容给用户。
 		</p>
 	</div>
 
@@ -36,9 +36,10 @@
 		</jsp:include>
 	</div>
 	
-	<div class="action_content sended jsMain" id="view" style="display: none; height: 500px;">
+	<div class="action_content sended jsMain" id="view" style="display: none;">
 		<div style="float: left; width: 100%">
-			<div class="action_tips" style="float: left;">用户关注时会收到以下信息
+			<div class="action_tips" style="float: left;">
+				用户关注时会收到以下信息
 			</div>
 			<div style="float:right;">
 				<a class="easyui-linkbutton" onclick="updateMsgView();"
