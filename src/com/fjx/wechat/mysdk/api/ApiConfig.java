@@ -4,6 +4,7 @@ package com.fjx.wechat.mysdk.api;
 import com.fjx.wechat.mysdk.constants.WechatApiConstants;
 
 /**
+ *
  * 微信api配置类
  */
 public class ApiConfig {
@@ -15,7 +16,12 @@ public class ApiConfig {
 	public void init(AccessToken accessToken) {
 		setAccessToken(accessToken);
 	}
-	
+
+	public void init(String appId, String appSecret) {
+		setAppId(appId);
+		setAppSecret(appSecret);
+	}
+
 	public void init(AccessToken accessToken, String appId, String appSecret) {
 		setAccessToken(accessToken);
 		setAppId(appId);

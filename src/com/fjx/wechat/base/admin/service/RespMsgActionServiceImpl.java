@@ -10,6 +10,9 @@ import com.fjx.wechat.base.admin.entity.KeyWordActionView;
 import com.fjx.wechat.base.admin.entity.MaterialEntity;
 import com.fjx.wechat.base.admin.entity.RespMsgActionEntity;
 import com.fjx.wechat.base.admin.entity.WechatMenuEntity;
+import com.fjx.wechat.mysdk.constants.WechatMenuConstants;
+import com.fjx.wechat.mysdk.constants.WechatRespMsgtypeConstants;
+import com.fjx.wechat.mysdk.tools.MaterialUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -18,9 +21,6 @@ import com.fjx.common.framework.base.service.impl.BaseAbstractService;
 import com.fjx.common.framework.system.exception.MyRuntimeException;
 import com.fjx.common.framework.system.pagination.Pagination;
 import com.fjx.common.utils.CommonUtils;
-import com.fjx.wechat.base.constants.WechatMenuConstants;
-import com.fjx.wechat.base.constants.WechatRespMsgtypeConstants;
-import com.fjx.wechat.base.tools.MaterialUtil;
 import com.fjx.wechat.base.admin.entity.SysUserEntity;
 
 
@@ -38,7 +38,7 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 	/*
 	 * 保存消息动作规则
 	 * (non-Javadoc)
-	 * @see com.fjx.wechat.base.web.admin.service.RespMsgActionService#saveAction(com.fjx.wechat.base.web.admin.entity.RespMsgActionEntity, com.fjx.wechat.base.web.admin.entity.WechatMenuEntity, com.fjx.wechat.base.web.admin.entity.MaterialEntity)
+	 * @see com.fjx.wechat.base.admin.service.RespMsgActionService#saveAction(com.fjx.wechat.base.admin.entity.RespMsgActionEntity, com.fjx.wechat.base.admin.entity.WechatMenuEntity, com.fjx.wechat.base.admin.entity.MaterialEntity)
 	 */
 	@Override
 	public void saveAction(RespMsgActionEntity actionEntity, WechatMenuEntity menuEntity, MaterialEntity materialEntity){
@@ -52,7 +52,7 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 	/*
 	 * 更新消息动作规则
 	 * (non-Javadoc)
-	 * @see com.fjx.wechat.base.web.admin.service.RespMsgActionService#updateAction(com.fjx.wechat.base.web.admin.entity.RespMsgActionEntity, com.fjx.wechat.base.web.admin.entity.WechatMenuEntity, com.fjx.wechat.base.web.admin.entity.MaterialEntity)
+	 * @see com.fjx.wechat.base.admin.service.RespMsgActionService#updateAction(com.fjx.wechat.base.admin.entity.RespMsgActionEntity, com.fjx.wechat.base.admin.entity.WechatMenuEntity, com.fjx.wechat.base.admin.entity.MaterialEntity)
 	 */
 	@Override
 	public void updateAction(RespMsgActionEntity actionEntity, WechatMenuEntity menuEntity, MaterialEntity materialEntity){
@@ -66,7 +66,7 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 	
 	/*
 	 * (non-Javadoc)
-	 * @see com.fjx.wechat.base.web.admin.service.RespMsgActionService#loadMsgAction(java.lang.String, java.lang.String, java.lang.String)
+	 * @see com.fjx.wechat.base.admin.service.RespMsgActionService#loadMsgAction(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public RespMsgActionEntity loadMsgAction(String ext_type, String req_type, String event_type, String key_word, SysUserEntity sysUser){
@@ -97,7 +97,7 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 	
 	/*
 	 * (non-Javadoc)
-	 * @see com.fjx.wechat.base.web.admin.service.RespMsgActionService#deleteMsgActionById(java.lang.String)
+	 * @see com.fjx.wechat.base.admin.service.RespMsgActionService#deleteMsgActionById(java.lang.String)
 	 */
 	@Override
 	public void deleteMsgActionById(String ids) {
@@ -117,7 +117,7 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 	/*
 	 * 根据关键字删除消息规则
 	 * (non-Javadoc)
-	 * @see com.fjx.wechat.base.web.admin.service.RespMsgActionService#deleteMsgActionByKey(java.lang.String)
+	 * @see com.fjx.wechat.base.admin.service.RespMsgActionService#deleteMsgActionByKey(java.lang.String)
 	 */
 	@Override
 	public void deleteMsgActionByKey(String key_word){
@@ -142,7 +142,7 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 //				sql.append(" on c.msg_type = d.dict_value");
 //				sql.append(" where d.group_code = 'resp_type' ");
 //				sql.append(" and a.user_id = ? ");
-		StringBuffer hql = new StringBuffer("select new com.fjx.wechat.base.web.admin.entity.KeyWordActionView( ");
+		StringBuffer hql = new StringBuffer("select new com.fjx.wechat.base.admin.entity.KeyWordActionView( ");
 				hql.append(" a.id as id, a.req_type as req_type, a.action_type as action_type, a.key_word as key_word, a.in_time as in_time,");
 				hql.append(" b.id as app_id, b.bean_name as method_name, b.method_name as method_name, b.name as app_name,");
 				hql.append(" c.id as material_id, c.xml_data as xml_data, c.msg_type as msg_type,");
@@ -186,13 +186,12 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 		hql.append(" order by a.in_time desc");
 		return pageByHql(hql.toString(), parameters);
 	}
-	
+
 	/**
 	 * 保存菜单动作
-	 * @param actionParam
-	 * @param menuParam
-	 * @param materiaParam
-	 * @throws Exception
+	 * @param actionEntity
+	 * @param menuEntity
+	 * @param materialEntity
 	 */
 	private void saveMenuAction(RespMsgActionEntity actionEntity, WechatMenuEntity menuEntity, MaterialEntity materialEntity){
 		Date now = new Date();
@@ -238,13 +237,12 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 		}
 		update(menuEntity);
 	}
-	
-	
+
+
 	/**
 	 * 保存其他（除菜单外）消息动作
-	 * @param actionParam
-	 * @param materiaParam
-	 * @throws Exception
+	 * @param actionEntity
+	 * @param materialEntity
 	 */
 	private void saveMsgAction(RespMsgActionEntity actionEntity, MaterialEntity materialEntity){
 

@@ -1,9 +1,3 @@
-/**
- * Copyright (c) 2011-2014, James Zhan 詹波 (jfinal@126.com).
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
-
 package com.fjx.wechat.mysdk.tools;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +17,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class HttpUtil {
-	
+
+	private static final String GET  = "GET";
+	private static final String POST = "POST";
+	private static final String CHARSET = "UTF-8";
+
 	private HttpUtil() {}
 	
 	/**
@@ -47,10 +45,6 @@ public class HttpUtil {
 		public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
 		}
 	}
-	
-	private static final String GET  = "GET";
-	private static final String POST = "POST";
-	private static final String CHARSET = "UTF-8";
 	
 	private static final SSLSocketFactory sslSocketFactory = initSSLSocketFactory();
 	private static final TrustAnyHostnameVerifier trustAnyHostnameVerifier = new HttpUtil().new TrustAnyHostnameVerifier();

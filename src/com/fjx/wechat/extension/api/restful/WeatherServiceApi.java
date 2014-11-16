@@ -1,12 +1,11 @@
 package com.fjx.wechat.extension.api.restful;
 
+import com.fjx.common.utils.WebUtil;
+import com.fjx.wechat.mysdk.tools.WeChatUtil;
 import org.apache.log4j.Logger;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
-import com.fjx.wechat.base.tools.WeChatUtil;
-
 
 /**
  * 天气预报接口
@@ -34,7 +33,7 @@ public class WeatherServiceApi {
 		String requestUrl = "http://api.map.baidu.com/telematics/v3/weather?location={LOCATION}&output=json&ak=899166509d1c7898bbad044a910bffa0";
 		// 查询并解析结果
 		try {
-			requestUrl = requestUrl.replace("{LOCATION}", WeChatUtil.urlEncode(location, "UTF-8"));
+			requestUrl = requestUrl.replace("{LOCATION}", WebUtil.urlEncode(location, "UTF-8"));
 			logger.info("天气查询URL="+requestUrl);
 			// 查询并获取返回结果
 			String json = WeChatUtil.httpRequest(requestUrl,"GET",null);

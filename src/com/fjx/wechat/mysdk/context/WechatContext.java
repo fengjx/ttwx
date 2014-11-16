@@ -3,9 +3,9 @@ package com.fjx.wechat.mysdk.context;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fjx.wechat.base.vo.user.UserInfo;
 import com.fjx.wechat.base.admin.entity.ReqMsgLogEntoty;
 import com.fjx.wechat.base.admin.entity.WechatPublicAccountEntity;
+import com.fjx.wechat.mysdk.beans.user.UserInfo;
 
 /**
  * 微信请求参数容器

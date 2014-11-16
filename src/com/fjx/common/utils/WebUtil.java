@@ -1,6 +1,8 @@
 package com.fjx.common.utils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -52,6 +54,13 @@ public class WebUtil {
         if (null == accessIP)
             return request.getRemoteAddr();
         return accessIP;
+    }
+
+
+    public static String urlEncode(String source, String chartset) throws UnsupportedEncodingException {
+        String res = source;
+        res = URLEncoder.encode(source, chartset);
+        return res;
     }
 
 }

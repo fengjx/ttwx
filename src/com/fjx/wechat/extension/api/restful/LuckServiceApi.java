@@ -3,16 +3,12 @@ package com.fjx.wechat.extension.api.restful;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fjx.wechat.mysdk.tools.WeChatUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-
-import com.fjx.wechat.base.tools.WeChatUtil;
-
-
-
 
 
 /**
@@ -64,7 +60,7 @@ public class LuckServiceApi {
 	
 	/**
 	 * 星座今日运势
-	 * @param source
+	 * @param xingzhuoName
 	 * @return
 	 */
 	public static String luckyDay(String xingzhuoName) {
@@ -85,7 +81,7 @@ public class LuckServiceApi {
 			// 查询并解析结果
 			try {
 				// 查询并获取返回结果
-				String json = WeChatUtil.httpRequest(requestUrl,"GET",null);
+				String json = WeChatUtil.httpRequest(requestUrl, "GET", null);
 				System.out.println("json result {} "+ json);
 				JSONArray jsonArray = JSONArray.fromObject(json);
 				if(null != jsonArray && jsonArray.size()>0){

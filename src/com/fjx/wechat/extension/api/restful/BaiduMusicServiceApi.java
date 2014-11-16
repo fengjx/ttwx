@@ -4,15 +4,12 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import com.fjx.wechat.mysdk.beans.resp.Music;
+import com.fjx.wechat.mysdk.tools.WeChatUtil;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-
-import com.fjx.wechat.base.tools.WeChatUtil;
-import com.fjx.wechat.base.vo.resp.Music;
-
-
 
 /**
  * 百度音乐搜索API操作类

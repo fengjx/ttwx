@@ -8,8 +8,9 @@ public abstract class AbstractClient {
 
     protected ApiConfig apiConfig;
 
-    void init(ApiConfig apiConfig) {
+    protected <T extends AbstractClient> T init(ApiConfig apiConfig) {
         this.apiConfig = apiConfig;
+        return (T)this;
     }
 
 

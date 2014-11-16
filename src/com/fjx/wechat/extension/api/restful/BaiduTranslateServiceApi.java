@@ -2,10 +2,9 @@ package com.fjx.wechat.extension.api.restful;
 
 import java.io.UnsupportedEncodingException;
 
+import com.fjx.wechat.mysdk.tools.MessageUtil;
+import com.fjx.wechat.mysdk.tools.WeChatUtil;
 import org.apache.log4j.Logger;
-
-import com.fjx.wechat.base.tools.MessageUtil;
-import com.fjx.wechat.base.tools.WeChatUtil;
 
 import net.sf.json.JSONObject;
 
@@ -56,7 +55,7 @@ public class BaiduTranslateServiceApi {
 		// 查询并解析结果
 		try {
 			// 查询并获取返回结果
-			String json = WeChatUtil.httpRequest(requestUrl,WeChatUtil.TYPE_GET,null);
+			String json = WeChatUtil.httpRequest(requestUrl, WeChatUtil.TYPE_GET, null);
 			// 通过Gson工具将json转换成TranslateResult对象
 			JSONObject jsonObject = JSONObject.fromObject(json);
 			// 取出translateResult中的译文
@@ -76,7 +75,7 @@ public class BaiduTranslateServiceApi {
      */  
     public static String getTranslateUsage() {  
         StringBuffer buffer = new StringBuffer();  
-        buffer.append(MessageUtil.emoji(0xe148)).append("翻译译通使用指南").append("\n\n");  
+        buffer.append(MessageUtil.emoji(0xe148)).append("翻译译通使用指南").append("\n\n");
         buffer.append("目前支持以下翻译方向：").append("\n");  
         buffer.append("    中 -> 英").append("\n");  
         buffer.append("    英 -> 中").append("\n");  

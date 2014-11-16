@@ -1,16 +1,14 @@
 package com.fjx.wechat.extension.api.restful;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import com.fjx.wechat.mysdk.beans.resp.Article;
+import com.fjx.wechat.mysdk.tools.WeChatUtil;
 import org.apache.log4j.Logger;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import com.fjx.wechat.base.tools.WeChatUtil;
-import com.fjx.wechat.base.vo.resp.Article;
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 优酷视频搜索
@@ -41,7 +39,7 @@ public class YoukuVideoServiceApi {
 		// 查询并解析结果
 		try {
 			// 查询并获取返回结果
-			String json = WeChatUtil.httpRequest(requestUrl,WeChatUtil.TYPE_GET,null);
+			String json = WeChatUtil.httpRequest(requestUrl, WeChatUtil.TYPE_GET, null);
 			// 将json字符串转换成json对象
 			JSONObject jsonObject = JSONObject.fromObject(json);
 			// 取出视频列表

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fjx.wechat.config.FtlFilenameConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,6 @@ import com.fjx.common.mail.vo.SendMailVo;
 import com.fjx.common.utils.CommonUtils;
 import com.fjx.common.utils.MD5Utils;
 import com.fjx.common.utils.PasswordUtil;
-import com.fjx.wechat.base.constants.FtlFilenameConstants;
 import com.fjx.wechat.base.admin.entity.SysUserEntity;
 import com.fjx.wechat.config.AppConfig;
 

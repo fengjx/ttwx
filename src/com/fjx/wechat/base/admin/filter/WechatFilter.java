@@ -11,8 +11,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import com.fjx.wechat.base.context.WechatContext;
-import com.fjx.wechat.base.tools.MessageUtil;
+import com.fjx.wechat.mysdk.context.WechatContext;
+import com.fjx.wechat.mysdk.tools.MessageUtil;
 import org.apache.log4j.Logger;
 
 /**

@@ -5,18 +5,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fjx.wechat.mysdk.beans.resp.*;
+import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
+import com.fjx.wechat.mysdk.constants.WechatRespMsgtypeConstants;
+import com.fjx.wechat.mysdk.context.WechatContext;
+import com.fjx.wechat.mysdk.process.ext.TextExtService;
+import com.fjx.wechat.mysdk.tools.MessageUtil;
 import org.apache.log4j.Logger;
 
-import com.fjx.wechat.base.constants.WechatReqMsgtypeConstants;
-import com.fjx.wechat.base.constants.WechatRespMsgtypeConstants;
-import com.fjx.wechat.base.context.WechatContext;
-import com.fjx.wechat.base.process.ext.TextExtService;
-import com.fjx.wechat.base.tools.MessageUtil;
-import com.fjx.wechat.base.vo.resp.Article;
-import com.fjx.wechat.base.vo.resp.Music;
-import com.fjx.wechat.base.vo.resp.RespMusicMessage;
-import com.fjx.wechat.base.vo.resp.RespNewsMessage;
-import com.fjx.wechat.base.vo.resp.RespTextMessage;
 import com.fjx.wechat.extension.api.restful.BaiduMusicServiceApi;
 import com.fjx.wechat.extension.api.restful.BaiduTranslateServiceApi;
 import com.fjx.wechat.extension.api.restful.DreamServiceApi;
@@ -32,34 +28,6 @@ import com.fjx.wechat.extension.api.restful.YoukuVideoServiceApi;
 public class MyTextExtService implements TextExtService {
 	
 	private final Logger logger = Logger.getLogger(this.getClass());
-	
-	/**
-	 * 处理微信发来的请求
-	 * @param request
-	 * @return
-	 */
-	
-	public static void main(String[] args) {
-		System.out.println(getMainUsage());
-	}
-	
-	//主菜单
-    private static String getMainUsage(){
-    	// 由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义
-    	StringBuffer contentMsg = new StringBuffer();  
-    	contentMsg.append("使用指南").append("\n\n");  
-		contentMsg.append("回复：1，查看歌曲搜索指南").append("\n");
-		contentMsg.append("回复：2，查看视频搜索指南").append("\n");
-		contentMsg.append("回复：3，查看星座运势指南").append("\n");
-		contentMsg.append("回复：4，查看天气预报指南").append("\n");
-        contentMsg.append("回复：5，查看翻译通指南").append("\n");
-        contentMsg.append("回复：6，查看周公解梦指南").append("\n");
-        contentMsg.append("回复：0，进入在线客服").append("\n");
-        contentMsg.append("了解更多可进入我们<a href=\"http://3.fengjianxin.sinaapp.com/wechat/guanwang/index.html\">官方网站</a>  。\n更多功能敬请期待，您的支持是我们前进的最大动力").append("\n");
-        contentMsg.append("如您有任何疑问、建议、吐槽，可联系QQ：466516623 或 TEL：18520226106").append("\n");
-        contentMsg.append("点击这里给我<a href=\"http://fengjxblog.sinaapp.com/?page_id=31\">留言</a>");
-        return contentMsg.toString();
-    }
 
 	@Override
 	public String execute() {
@@ -115,19 +83,19 @@ public class MyTextExtService implements TextExtService {
                         	musicAuthor = kwArr[1];  
                         }
                         // 搜索音乐  
-                        Music music = BaiduMusicServiceApi.searchMusic(musicTitle, musicAuthor);  
+                        Music music = BaiduMusicServiceApi.searchMusic(musicTitle, musicAuthor);
                         // 未搜索到音乐  
                         if (null == music) {  
                             respContent = "对不起，没有找到你想听的歌曲<" + musicTitle + ">。";  
                         } else {  
                             // 音乐消息  
-                            RespMusicMessage musicMessage = new RespMusicMessage();  
+                            RespMusicMessage musicMessage = new RespMusicMessage();
                             musicMessage.setToUserName(fromUserName);  
                             musicMessage.setFromUserName(toUserName);  
                             musicMessage.setCreateTime(new Date().getTime());  
                             musicMessage.setMsgType(WechatRespMsgtypeConstants.RESP_MESSAGE_TYPE_MUSIC);  
                             musicMessage.setMusic(music);  
-                            respMessage = MessageUtil.musicMessageToXml(musicMessage);  
+                            respMessage = MessageUtil.musicMessageToXml(musicMessage);
                         }
                         //没有搜索结果
                         if (null != respContent){

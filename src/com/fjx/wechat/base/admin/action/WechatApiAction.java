@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fjx.wechat.base.admin.entity.WechatPublicAccountEntity;
 import com.fjx.wechat.base.admin.service.WechatPublicAccountService;
+import com.fjx.wechat.mysdk.context.WechatContext;
+import com.fjx.wechat.mysdk.process.in.InServiceEngine;
+import com.fjx.wechat.mysdk.tools.SignUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fjx.common.action.BaseController;
 import com.fjx.common.utils.PasswordUtil;
-import com.fjx.wechat.base.context.WechatContext;
-import com.fjx.wechat.base.process.in.InServiceEngine;
-import com.fjx.wechat.base.tools.SignUtil;
 
 
 /**

@@ -1,14 +1,13 @@
 package com.fjx.wechat.mysdk.tools;
 
 import com.alibaba.fastjson.JSONException;
+import com.fjx.common.utils.JsonUtil;
 import com.fjx.wechat.mysdk.constants.WechatApiConstants;
 import com.fjx.wechat.mysdk.beans.menu.Menu;
 import com.fjx.wechat.mysdk.beans.security.AccessToken;
 import com.fjx.wechat.mysdk.beans.security.Oauth2AccessToken;
 import com.fjx.wechat.mysdk.beans.user.UserInfo;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import net.sf.json.util.JSONUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -20,7 +19,6 @@ import java.io.*;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -79,7 +77,7 @@ public class WeChatUtil {
 		String token = accessToken.getToken();
 		String url = WechatApiConstants.WECHAT_MENU_CREATE_URL.replace("#ACCESS_TOKEN#", token);
 		logger.info("创建菜单 请求URL："+url);
-		JSONObject json = JSONObject.fromObject(httpRequest(url,"POST",getJson(menu)));
+		JSONObject json = JSONObject.fromObject(httpRequest(url,"POST", JsonUtil.getJson(menu)));
 		logger.info("菜单创建返回值：{}"+json.toString());
 		return json;
 	}
@@ -357,33 +355,8 @@ public class WeChatUtil {
 		return String.valueOf(Character.toChars(hexEmoji));
 	}
 	
-	 /**
-     * 将对象转成json字符串
-     * @return
-	 * @throws Exception 
-     */
-    public static String getJson(Object object) throws Exception {
-    	if(null == object){
-    		return "";
-    	}
-    	String tmp;
-    	if(JSONUtils.isArray(object)){
-    		tmp = JSONArray.fromObject(object).toString();
-    	}else if(JSONUtils.isObject(object)){
-    		tmp = JSONObject.fromObject(object).toString();
-    	}else{
-    		throw new Exception("非法的json对象");
-    	}
-    	return tmp;
-    }
-    
-    public static String urlEncode(String source, String chartset) throws UnsupportedEncodingException{
-    	String res = source;
-    	res = URLEncoder.encode(source,chartset);
-    	return res;
-    }
-    
-    /** 
+
+    /**
      * 将微信消息中的CreateTime转换成标准格式的时间（yyyy-MM-dd HH:mm:ss） 
      * CreateTime，表示1970年1月1日0时0分0秒至消息创建时所间隔的秒数，不是毫秒数！
      * @param createTime 消息创建时间 

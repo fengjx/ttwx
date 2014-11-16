@@ -1,6 +1,6 @@
 package com.fjx.wechat.mysdk.process.in.executor;
 
-import com.fjx.wechat.mysdk.constants.MsgTemplateConstants;
+import com.fjx.wechat.config.MsgTemplateConstants;
 import com.fjx.wechat.mysdk.context.WechatContext;
 import com.fjx.wechat.mysdk.tools.ServiceTool;
 import com.fjx.wechat.mysdk.beans.req.ReqTextMessage;

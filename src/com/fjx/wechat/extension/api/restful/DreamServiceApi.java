@@ -3,13 +3,11 @@ package com.fjx.wechat.extension.api.restful;
 import java.io.InputStream;
 import java.util.List;
 
+import com.fjx.wechat.mysdk.tools.WeChatUtil;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-
-import com.fjx.wechat.base.tools.WeChatUtil;
-
 
 
 /**
@@ -28,7 +26,7 @@ public class DreamServiceApi {
 	
 	/**
 	 * 星座今日运势
-	 * @param source
+	 * @param keyword
 	 * @return
 	 */
 	public static String explain(String keyword) {

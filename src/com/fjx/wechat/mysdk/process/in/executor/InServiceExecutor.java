@@ -3,7 +3,7 @@ package com.fjx.wechat.mysdk.process.in.executor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import com.fjx.wechat.mysdk.constants.MsgTemplateConstants;
+import com.fjx.wechat.config.MsgTemplateConstants;
 import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
 import com.fjx.wechat.mysdk.context.WechatContext;
 import com.fjx.wechat.mysdk.process.ServiceExecutor;

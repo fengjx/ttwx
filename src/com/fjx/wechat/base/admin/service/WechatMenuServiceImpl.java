@@ -6,6 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.fjx.wechat.mysdk.api.ApiConfig;
+import com.fjx.wechat.mysdk.api.ApiResult;
+import com.fjx.wechat.mysdk.api.ClientFactory;
+import com.fjx.wechat.mysdk.api.MenuClient;
+import com.fjx.wechat.mysdk.beans.menu.ClickButton;
+import com.fjx.wechat.mysdk.beans.menu.ComplexButton;
+import com.fjx.wechat.mysdk.beans.menu.Menu;
+import com.fjx.wechat.mysdk.beans.menu.ViewButton;
+import com.fjx.wechat.mysdk.constants.WechatMenuConstants;
+import com.fjx.wechat.mysdk.tools.WeChatUtil;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
@@ -14,12 +24,6 @@ import org.springframework.stereotype.Service;
 
 import com.fjx.common.framework.base.service.impl.BaseAbstractService;
 import com.fjx.common.framework.system.exception.MyRuntimeException;
-import com.fjx.wechat.base.constants.WechatMenuConstants;
-import com.fjx.wechat.base.tools.WeChatUtil;
-import com.fjx.wechat.base.vo.menu.ClickButton;
-import com.fjx.wechat.base.vo.menu.ComplexButton;
-import com.fjx.wechat.base.vo.menu.Menu;
-import com.fjx.wechat.base.vo.menu.ViewButton;
 import com.fjx.wechat.base.admin.entity.SysUserEntity;
 import com.fjx.wechat.base.admin.entity.WechatMenuEntity;
 
@@ -140,19 +144,18 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 		String appid = sysUser.getWechatPublicAccount().getApp_id();
 		String appsecret = sysUser.getWechatPublicAccount().getApp_secret();
 		Menu menu = loadMenu(sysUser);
-		JSONObject res = WeChatUtil.createMenu(menu, appid, appsecret);
-		String errcode = res.getString("errcode");
-		if(!"0".equals(errcode)){
-			throw new MyRuntimeException("菜单发布失败：errcode="+errcode+" and errmsg="+res.getString("errmsg"));
+		MenuClient client = ClientFactory.createMenuClient(appid, appsecret);
+		ApiResult result = client.createMenu(menu);
+		if(!result.isSucceed()){
+			throw new MyRuntimeException("菜单发布失败：errcode="+result.getErrorCode()+" and errmsg="+result.getErrorMsg());
 		}
 	}
-	
-	
+
+
 	/**
 	 * 查询树形菜单列表(只包含菜单数据)
-	 * @param id
+	 * @param sysUser
 	 * @return
-	 * @throws Exception
 	 */
 	@Override
 	public Menu loadMenu(SysUserEntity sysUser) {

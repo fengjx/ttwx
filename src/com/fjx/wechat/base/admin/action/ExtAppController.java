@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fjx.common.framework.system.pagination.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fjx.common.action.BaseController;
 import com.fjx.wechat.base.admin.entity.ExtAppEntity;
 import com.fjx.wechat.base.admin.service.ExtAppService;
-
 
 
 /**
@@ -45,6 +45,19 @@ public class ExtAppController extends BaseController {
 		List<ExtAppEntity> list = extAppService.listByType(app_type,msg_type,event_type);
 		return list;
 	}
-	
-	
+
+
+	/**
+	 * 分页查询
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/pageList")
+	@ResponseBody
+	public Pagination<ExtAppEntity> pageList(HttpServletRequest request){
+		return extAppService.page();
+	}
+
+
+
 }

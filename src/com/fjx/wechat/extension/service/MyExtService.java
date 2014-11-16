@@ -3,13 +3,13 @@ package com.fjx.wechat.extension.service;
 import java.util.Date;
 import java.util.Map;
 
+import com.fjx.wechat.mysdk.beans.resp.RespTextMessage;
+import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
+import com.fjx.wechat.mysdk.constants.WechatRespMsgtypeConstants;
+import com.fjx.wechat.mysdk.context.WechatContext;
+import com.fjx.wechat.mysdk.tools.MessageUtil;
 import org.apache.log4j.Logger;
 
-import com.fjx.wechat.base.constants.WechatReqMsgtypeConstants;
-import com.fjx.wechat.base.constants.WechatRespMsgtypeConstants;
-import com.fjx.wechat.base.context.WechatContext;
-import com.fjx.wechat.base.tools.MessageUtil;
-import com.fjx.wechat.base.vo.resp.RespTextMessage;
 import com.fjx.wechat.extension.api.restful.WeatherServiceApi;
 
 /**
@@ -20,7 +20,6 @@ import com.fjx.wechat.extension.api.restful.WeatherServiceApi;
 public class MyExtService {
 	
 	private final Logger logger = Logger.getLogger(this.getClass());
-	
 	
 	/**
 	 * 天气查询

@@ -3,8 +3,7 @@ package com.fjx.wechat.mysdk.beans.req;
 import java.util.Map;
 
 import com.fjx.common.framework.system.exception.MyRuntimeException;
-import com.fjx.wechat.base.constants.WechatReqMsgtypeConstants;
-import com.fjx.wechat.base.vo.req.*;
+import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
 
 
 /**
@@ -12,11 +11,8 @@ import com.fjx.wechat.base.vo.req.*;
  * @author fengjx
  * @date 2014年9月8日
  */
-public class ReqVoiceMessage extends com.fjx.wechat.base.vo.req.ReqBaseMessage {
+public class ReqVoiceMessage extends ReqBaseMessage {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3189396975357523895L;
 	
 	//语音消息媒体id，可以调用多媒体文件下载接口拉取数据。

@@ -4,7 +4,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fjx.common.utils.WebUtil;
 import com.fjx.wechat.base.admin.service.WechatMenuService;
+import com.fjx.wechat.mysdk.constants.WechatRespMsgtypeConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,6 @@ import com.fjx.common.action.BaseController;
 import com.fjx.common.action.MyExecuteCallback;
 import com.fjx.common.framework.system.pagination.Pagination;
 import com.fjx.common.utils.CollectionUtil;
-import com.fjx.common.utils.RequestUtil;
-import com.fjx.wechat.base.constants.WechatRespMsgtypeConstants;
 import com.fjx.wechat.base.admin.entity.KeyWordActionView;
 import com.fjx.wechat.base.admin.entity.MaterialEntity;
 import com.fjx.wechat.base.admin.entity.RespMsgActionEntity;
@@ -105,7 +105,7 @@ public class RespMsgActionController extends BaseController {
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> save(final HttpServletRequest request, final RespMsgActionEntity actionEntity){
-		final Map<String, String> reqMap = RequestUtil.getRequestParams(request);
+		final Map<String, String> reqMap = WebUtil.getRequestParams(request);
 		final MaterialEntity materialEntity = getMaterial(reqMap);
 		final SysUserEntity sysUser = getLoginSysUser(request);
 		if(null != materialEntity){
@@ -134,7 +134,7 @@ public class RespMsgActionController extends BaseController {
 	@ResponseBody
 	public Pagination<KeyWordActionView> pageList(HttpServletRequest request){
 		SysUserEntity sysUser = getLoginSysUser(request);
-		Pagination<KeyWordActionView> pagination = actionService.pageMsgAction(RequestUtil.getRequestParams(request),sysUser);
+		Pagination<KeyWordActionView> pagination = actionService.pageMsgAction(WebUtil.getRequestParams(request),sysUser);
 		return pagination;
 	}
 	
