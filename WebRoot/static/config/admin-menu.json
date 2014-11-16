@@ -88,28 +88,10 @@
 	"text" : "系统管理",
 	"checked" : true,
 	"children" : [{
-				"text" : "API管理",
-				"checked" : false,
-				"attributes" : {
-					"src" : "/wechat/busi/menu_view.action"
-				}
-			},{
-				"text" : "添加商品",
-				"checked" : false,
-				"attributes" : {
-					"src" : "/wechat/busi/goods_view.action?view_name=add"
-				}
-			},{
-				"text" : "商品管理",
-				"checked" : false,
-				"attributes" : {
-					"src" : "/wechat/busi/goods_view.action"
-				}
-			},{
-				"text" : "首頁圖片管理",
-				"checked" : false,
-				"attributes" : {
-					"src" : "/wechat/busi/images_view.action"
-				}
-			}]
+		"text" : "API管理",
+		"checked" : false,
+		"attributes" : {
+			"src" : "/admin/extapp"
+		}
+	}]
 }]
