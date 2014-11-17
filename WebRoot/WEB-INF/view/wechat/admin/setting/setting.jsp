@@ -16,7 +16,7 @@
 			<p><strong>配置步骤：</strong></p>
 			<p id="step1">1、<span class="step-info">将授权信息配置到公众平台&nbsp;<a href="javascript:void(-1);"><span class="glyphicon glyphicon-question-sign"></span></a></span></p>
 			<p id="step2">2、<span class="step-info">从微信客户端向公众号发送：${wechatAccount.valid_code }&nbsp;<a href="javascript:void(-1);"><span class="glyphicon glyphicon-question-sign"></span></a></span></p>
-			<p id="step3">3、<span class="step-info">完成授权</p>
+			<p id="step3">3、<span class="step-info">完成授权</span></p>
 		</div>
 		
 		

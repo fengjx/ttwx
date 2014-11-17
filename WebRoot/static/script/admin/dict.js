@@ -4,7 +4,7 @@
 var datagrid;
 var apiDialog;
 var apiForm;
-
+var dictGroupCombobox;
 
 $(function() {
     //实例化form表单
@@ -18,8 +18,9 @@ $(function() {
 
     // 加载消息记录数据
     datagrid = $('#datagrid').datagrid({
-        url : domain + '/admin/extapp/pageList',
+        url : domain + '/dict/pageList',
         queryParams : {
+            group_code:$("#group_code").val()
         },
         toolbar : '#toolbar',
         pagination : true,
@@ -35,26 +36,38 @@ $(function() {
             field : 'id',
             width : 50,
             checkbox : true
+        },{
+            field : 'dict_name',
+            title : '字典名称',
+            width : 100
         }, {
-            field : 'name',
-            title : '接口名称',
+            field : 'dict_value',
+            title : '字典值',
             width : 100
         }]],
         columns : [[{
-            field : 'description',
-            title : '接口描述',
-            width : 200
+            field : 'dict_desc',
+            title : '字典描述',
+            width : 50
         }, {
-            field : 'app_type',
-            title : '接口类型',
-            width : 30
+            field : 'group_name',
+            title : '字典分组',
+            width : 50
+        }, {
+            field : 'group_code',
+            title : '分组编码',
+            width : 50
         }, {
             field : 'is_valid',
             title : '是否启用',
             width : 22
         }, {
-            field : 'str_in_time',
-            title : '接入时间',
+            field : 'order_num',
+            title : '排序',
+            width : 22
+        }, {
+            field : 'in_time',
+            title : '编辑时间',
             width : 49
         }, {
             field : 'OP',
@@ -72,8 +85,13 @@ $(function() {
         }
     });
 
-    loadMsgType();
-    loadEventType();
+
+    dictGroupCombobox = $("#dictGroup").combobox({
+        valueField : 'group_code',
+        textField : 'group_code',
+        url : domain + '/dict/group'
+    });
+
 });
 
 function searchDatagrid() {
@@ -113,6 +131,7 @@ function loadMsgType () {
                 $.each(data, function(i,row){
                     html += '<label><input type="checkbox" value="'+row.dict_name+'"></label>'+row.dict_name+'<p>';
                 });
+                alert(html);
                 $("#msgType").html(html);
             }
         },
@@ -139,6 +158,7 @@ function loadEventType () {
                 $.each(data, function (i, row) {
                     html += '<label><input type="checkbox" value="' + row.dict_name + '"></label>' + row.dict_name + '<p>';
                 });
+                alert(html);
                 $("#eventType").html(html);
             }
         },

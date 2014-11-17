@@ -33,12 +33,12 @@
 							<form id="form-login" method="post" class="login-form">
 								<div class="top-margin control-group">
 									<label>用户名<span class="text-danger">*</span></label>
-									<input id="username" name="username" type="text" class="form-control login-field" placeholder="输入用户名" />
+									<input id="username" name="username" type="text" class="form-control login-field" placeholder="输入用户名" value="fengjx" />
 									<label class="login-field-icon fui-user label-icon" for="username"></label>
 								</div>
 								<div class="top-margin control-group">
 									<label>密码<span class="text-danger">*</span></label>
-									<input id="pwd" name="pwd" type="password" class="form-control login-field" placeholder="输入密码" />
+									<input id="pwd" name="pwd" type="password" class="form-control login-field" placeholder="输入密码" value="1989" />
 									<label class="login-field-icon fui-lock label-icon" for="pwd"></label>
 								</div>
 								<div class="row top-margin control-group">

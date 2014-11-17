@@ -5,7 +5,7 @@
 <head>
 	<title>扩展接口配置</title>
 	<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
-	<script src="<%=resourceUrl %>/script/admin/busiapp.js?v=20141112" type="text/javascript" charset="UTF-8"></script>
+	<script src="<%=resourceUrl %>/script/admin/dict.js?v=20141117" type="text/javascript" charset="UTF-8"></script>
 	<script src="<%=resourceUrl %>/plugin/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
 </head>
 <body class="easyui-layout" fit="true">
@@ -14,13 +14,13 @@
 			<fieldset>
 				<table class="tableForm">
 					<tr>
-						<td>消息类型</td>
+						<td>字典分组</td>
 						<td width="152px">
-							<input id="resType" name="resType" style="width: 150px;"/>
+							<input id="dictGroup" name="dictGroup" style="width: 150px;"/>
 						</td>
-						<td>接口名称</td>
+						<td>字典值</td>
 						<td colspan="2">
-							<input name="key_word" style="width: 155px;" value="" />
+							<input name="dict_value" style="width: 155px;" value="" />
 						</td>
 						<td>接入时间</td>
 						<td colspan="2">
@@ -56,17 +56,21 @@
 			<table class="tableForm">
 				<input type="hidden" name="id" value=""/>
 				<tr>
-					<td>接口类型</td>
+					<td>接口类型：</td>
 					<td>
-						<input name="name" class="easyui-validatebox" required="true" />
+						<select class="easyui-combobox" name="language">
+							<option value="ar">Arabic</option>
+							<option value="bg">Bulgarian</option>
+							<option value="vi">Vietnamese</option>
+						</select>
 					</td>
-					<td>接口名称</td>
+					<td>接口名称：</td>
 					<td>
 						<input name="name" class="easyui-validatebox" required="true" />
 					</td>
 				</tr>
 				<tr>
-					<td>spring id</td>
+					<td>spring id：</td>
 					<td>
 						<input name="name" class="easyui-validatebox" required="true" />
 					</td>
@@ -76,13 +80,21 @@
 					</td>
 				</tr>
 				<tr>
-					<td>URL</td>
+					<td>URL：</td>
 					<td>
 						<input name="name" class="easyui-validatebox" required="true" />
 					</td>
-					<td>resful url</td>
+					<td>resful url：</td>
 					<td>
 						<input name="name" class="easyui-validatebox" required="true" />
+					</td>
+				</tr>
+				<tr>
+					<td>消息类型：</td>
+					<td id="msgType">
+					</td>
+					<td>事件类型：</td>
+					<td id="eventType">
 					</td>
 				</tr>
 			</table>

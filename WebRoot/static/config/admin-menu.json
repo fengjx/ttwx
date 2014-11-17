@@ -93,5 +93,11 @@
 		"attributes" : {
 			"src" : "/admin/extapp"
 		}
+	},{
+	  "text" : "字典管理",
+	  "checked" : false,
+	  "attributes" : {
+		"src" : "/admin/dict"
+	  }
 	}]
 }]
