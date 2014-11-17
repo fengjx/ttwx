@@ -1,8 +1,10 @@
 package com.fjx.wechat.base.admin.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fjx.common.framework.base.service.IBaseAbstractService;
+import com.fjx.common.framework.system.pagination.Pagination;
 import com.fjx.wechat.base.admin.entity.DataDictEntity;
 
 
@@ -25,10 +27,22 @@ public interface DataDictService extends IBaseAbstractService<DataDictEntity> {
 	
 	/**
 	 * 根据字典组，查询字典列表
-	 * @param group
+	 * @param group_code
 	 * @return
 	 */
 	public List<DataDictEntity> findDictList(String group_code);
-	
-	
+
+	/**
+	 * 返回已有分组
+	 * @return
+	 */
+	public List<Map<String, String>> findDictGroup();
+
+	/**
+	 * 分页查询
+	 * @param group_code
+	 * @return
+	 */
+	public Pagination<DataDictEntity> pageList(String group_code);
+
 }

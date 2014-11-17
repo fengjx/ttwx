@@ -3,6 +3,7 @@ package com.fjx.wechat.base.admin.service;
 import java.util.List;
 
 import com.fjx.common.framework.base.service.IBaseAbstractService;
+import com.fjx.common.framework.system.pagination.Pagination;
 import com.fjx.wechat.base.admin.entity.ExtAppEntity;
 
 
@@ -21,5 +22,13 @@ public interface ExtAppService extends IBaseAbstractService<ExtAppEntity> {
 	 * @return
 	 */
 	public List<ExtAppEntity> listByType(String app_type, String msg_type, String event_type);
-	
+
+	/**
+	 * 分页查询
+	 * @param extApp
+	 * @return
+	 */
+	public Pagination<ExtAppEntity> page(ExtAppEntity extApp);
+
+
 }

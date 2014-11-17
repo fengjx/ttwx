@@ -29,7 +29,7 @@ public class ExtAppController extends BaseController {
 	
 	@RequestMapping(value={"","/"})
 	public String view(HttpServletRequest request) {
-		return "/wechat/admin/busi/busiapp";
+		return "/wechat/admin/sys/busiapp";
 	}
 	
 	/**

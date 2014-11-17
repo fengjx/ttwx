@@ -1,14 +1,12 @@
 package com.fjx.wechat.base.admin.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fjx.common.bean.ToStringBase;
+
+import java.util.Date;
 
 /**
  * 数据字典表
@@ -23,12 +21,13 @@ public class DataDictEntity extends ToStringBase {
 
 	private String id;
 	private String group_code;			//分组代码
+	private String group_name;			//分组名称
 	private String dict_value;			//字典值
 	private String dict_name;			//字典名称
 	private String dict_desc;			//说明
 	private String parent_id;			//父级ID
 	private String order_num;			//排序
-	private String in_time;				//插入时间
+	private Date in_time;				//插入时间
 	private String is_valid;			//是否启用
 	
 	
@@ -51,6 +50,14 @@ public class DataDictEntity extends ToStringBase {
 
 	public void setGroup_code(String group_code) {
 		this.group_code = group_code;
+	}
+
+	public String getGroup_name() {
+		return group_name;
+	}
+
+	public void setGroup_name(String group_name) {
+		this.group_name = group_name;
 	}
 
 	public String getDict_value() {
@@ -93,11 +100,12 @@ public class DataDictEntity extends ToStringBase {
 		this.order_num = order_num;
 	}
 
-	public String getIn_time() {
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getIn_time() {
 		return in_time;
 	}
 
-	public void setIn_time(String in_time) {
+	public void setIn_time(Date in_time) {
 		this.in_time = in_time;
 	}
 
