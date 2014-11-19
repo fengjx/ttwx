@@ -49,18 +49,15 @@ public class WechatMenuController extends BaseController {
 	 */
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> addOrUpdate (final HttpServletRequest request, final WechatMenuEntity menu, final String parent_id) {
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				SysUserEntity sysUser = getLoginSysUser(request);
-				if(StringUtils.isBlank(menu.getId())){
-					wechatMenuService.saveMenu(menu, parent_id, sysUser);
-				}else{
-					wechatMenuService.updateMenu(menu, parent_id, sysUser);
-				}
-			}
-		}, "菜单编辑失败");
+	public Map<String, String> addOrUpdate (HttpServletRequest request, WechatMenuEntity menu, final String parent_id) {
+		setErrorMsg(request,"菜单编辑失败");
+		SysUserEntity sysUser = getLoginSysUser(request);
+		if(StringUtils.isBlank(menu.getId())){
+			wechatMenuService.saveMenu(menu, parent_id, sysUser);
+		}else{
+			wechatMenuService.updateMenu(menu, parent_id, sysUser);
+		}
+		return retSuccess();
 	}
 	
 	/**
@@ -70,44 +67,38 @@ public class WechatMenuController extends BaseController {
 	 */
 	@RequestMapping(value="/load")
 	@ResponseBody
-	public List<Map<String, Object>> load (final HttpServletRequest request){
+	public List<Map<String, Object>> load (HttpServletRequest request){
 		List<Map<String, Object>> tree = wechatMenuService.treeMenu(getLoginSysUser(request));
 		return tree;
 	}
-	
+
 	/**
 	 * 删除菜单
+	 * @param request
 	 * @param id
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/delete")
 	@ResponseBody
-	public Map<String, String> delete (final String id) throws Exception{
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				wechatMenuService.delete(id);
-			}
-		}, "菜单删除失败");
+	public Map<String, String> delete (HttpServletRequest request, String id) throws Exception{
+		setErrorMsg(request,"菜单删除失败");
+		wechatMenuService.delete(id);
+		return retSuccess();
 	}
-	
-	
+
+
 	/**
-	 * 删除菜单
-	 * @param id
+	 * 发布菜单
+	 * @param request
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/release")
 	@ResponseBody
 	public Map<String, String> release (HttpServletRequest request) throws Exception{
-		final SysUserEntity sysUser = getLoginSysUser(request);
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				wechatMenuService.release(sysUser);
-			}
-		}, null);
+		SysUserEntity sysUser = getLoginSysUser(request);
+		wechatMenuService.release(sysUser);
+		return retSuccess();
 	}
 }

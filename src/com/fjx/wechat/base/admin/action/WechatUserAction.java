@@ -54,49 +54,55 @@ public class WechatUserAction extends BaseController {
 		SysUserEntity sysUser = getLoginSysUser(request);
 		return wechatUserService.pageList(wechatUser,group_id, sysUser.getWechatPublicAccount());
 	}
-	
-	
+
+
+	/**
+	 * 保存粉丝分组
+	 * @param request
+	 * @param userGroup
+	 * @return
+	 */
 	@RequestMapping(value="/saveGroup")
 	@ResponseBody
-	public Map<String, String> saveGroup(HttpServletRequest request,final WechatUserGroupEntity userGroup){
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				userGroup.setIn_time(new Date());
-				if(StringUtils.isBlank(userGroup.getId())){
-					wechatUserGroupService.save(userGroup);
-				}else{
-					wechatUserGroupService.update(userGroup);
-				}
-			}
-		}, "操作失败");
+	public Map<String, String> saveGroup(HttpServletRequest request, WechatUserGroupEntity userGroup){
+		setErrorMsg(request,"操作失败");
+		userGroup.setIn_time(new Date());
+		if(StringUtils.isBlank(userGroup.getId())){
+			wechatUserGroupService.save(userGroup);
+		}else{
+			wechatUserGroupService.update(userGroup);
+		}
+		return retSuccess();
 	}
-	
+
+	/**
+	 * 删除粉丝分组
+	 * @param request
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value="/deleteGroup")
 	@ResponseBody
-	public Map<String, String> deleteGroup(HttpServletRequest request,final String id){
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				wechatUserGroupService.delete(id);
-			}
-		}, "操作失败");
+	public Map<String, String> deleteGroup(HttpServletRequest request,String id){
+		setErrorMsg(request,"操作失败");
+		wechatUserGroupService.delete(id);
+		return retSuccess();
 	}
-	
+
+	/**
+	 * 更新粉丝分组
+	 * @param request
+	 * @param user_id
+	 * @param group_id
+	 * @return
+	 */
 	@RequestMapping(value="/updateUser")
 	@ResponseBody
-	public Map<String, String> saveUser(HttpServletRequest request,final String user_id, final String group_id){
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				wechatUserService.updateGroup(user_id, group_id);
-			}
-		}, "操作失败");
+	public Map<String, String> saveUser(HttpServletRequest request,String user_id, String group_id){
+		setErrorMsg(request,"操作失败");
+		wechatUserService.updateGroup(user_id, group_id);
+		return retSuccess();
 	}
 	
-	
-	
-	
-	
-	
+
 }

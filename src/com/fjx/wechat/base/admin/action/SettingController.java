@@ -59,36 +59,34 @@ public class SettingController extends BaseController {
 		}
 		sysUser.setWechatPublicAccount(accountEntity);
 		map.put("wechatAccount", sysUser.getWechatPublicAccount());
-		return "/wechat/admin/setting/setting";
+		return "wechat/admin/setting/setting";
 	}
-	
+
 	/**
 	 * 更新 / 保存菜单
 	 * @param request
-	 * @param menu
+	 * @param accountEntity
 	 * @return
 	 */
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> addOrUpdate (final HttpServletRequest request, final WechatPublicAccountEntity accountEntity) {
+		setErrorMsg(request,"授权失败");
 		final SysUserEntity sysUser = getLoginSysUser(request);
 		accountEntity.setSysUser(sysUser);
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				String token = CommonUtils.getPrimaryKey();
-				String ticket = CommonUtils.getPrimaryKey();
-				accountEntity.setValid_code(CommonUtils.getRandomNum(5));
-				accountEntity.setValid_state(WechatPublicAccountEntity.VALID_STATE_NONACTIVATED);
-				accountEntity.setIn_time(new Date());
-				accountEntity.setToken(token);
-				accountEntity.setTicket(ticket);
-				accountEntity.setUrl(AppConfig.DOMAIN_PAGE+"/wechat/api?ticket="+PasswordUtil.encode(accountEntity.getTicket()));
-				publicAccountService.update(accountEntity);
-				//刷新session的用户登录信息
-				sysUser.setWechatPublicAccount(publicAccountService.load(accountEntity.getId()));
-				request.getSession().setAttribute(AppConfig.LOGIN_FLAG, sysUser);
-			}
-		}, "授权失败！");
+
+		String token = CommonUtils.getPrimaryKey();
+		String ticket = CommonUtils.getPrimaryKey();
+		accountEntity.setValid_code(CommonUtils.getRandomNum(5));
+		accountEntity.setValid_state(WechatPublicAccountEntity.VALID_STATE_NONACTIVATED);
+		accountEntity.setIn_time(new Date());
+		accountEntity.setToken(token);
+		accountEntity.setTicket(ticket);
+		accountEntity.setUrl(AppConfig.DOMAIN_PAGE+"/wechat/api?ticket="+PasswordUtil.encode(accountEntity.getTicket()));
+		publicAccountService.update(accountEntity);
+		//刷新session的用户登录信息
+		sysUser.setWechatPublicAccount(publicAccountService.load(accountEntity.getId()));
+		request.getSession().setAttribute(AppConfig.LOGIN_FLAG, sysUser);
+		return retSuccess();
 	}
 }

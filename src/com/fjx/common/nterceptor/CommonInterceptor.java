@@ -1,16 +1,15 @@
-package com.fjx.wechat.base.admin.interceptor;
+package com.fjx.common.nterceptor;
+
+import com.fjx.wechat.base.admin.entity.SysUserEntity;
+import com.fjx.wechat.config.AppConfig;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.fjx.wechat.base.admin.entity.SysUserEntity;
-import com.fjx.wechat.config.AppConfig;
-
-public class AdminInterceptor implements HandlerInterceptor {
+public class CommonInterceptor implements HandlerInterceptor {
 
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception e)
@@ -31,18 +30,6 @@ public class AdminInterceptor implements HandlerInterceptor {
 	 * 接着依旧是从最后一个拦截器往回执行所有拦截器的afterCompletion方法
 	 */
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		HttpSession session = request.getSession();
-		SysUserEntity user = (SysUserEntity) session.getAttribute(AppConfig.LOGIN_FLAG);
-		//登陆超时
-		if(null == user){		
-			String flag = request.getHeader("Request-Flag");
-			if(AppConfig.REQUEST_FLAG_AJAX.equals(flag)){
-				request.getRequestDispatcher("/common/loginTimeoutAjax").forward(request,response);
-			}else{
-				request.getRequestDispatcher("/common/loginTimeout").forward(request,response);
-			}
-			return false;
-		}
 		return true;
 	}
 }

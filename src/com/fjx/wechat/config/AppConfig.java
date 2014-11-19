@@ -14,7 +14,9 @@ public class AppConfig {
     
     //用户登录信息在session中的key
     public static final String LOGIN_FLAG = "sys_user_login_key";
-    
+    public static final String REQUEST_ERROE_MSG_KEY = "errorMsg";
+    public static final String REQUEST_FLAG_AJAX = "ajax";
+
     public static final String APP_NAME = GetPropertiesVal.getLabel("app_name");
     public static final String KEYWORDS = GetPropertiesVal.getLabel("keywords");
     public static final String DESCRIPTION = GetPropertiesVal.getLabel("description");

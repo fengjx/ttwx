@@ -2,6 +2,7 @@ package com.fjx.wechat.base.display.action;
 
 import java.util.Map;
 
+import com.fjx.common.framework.system.exception.MyRuntimeException;
 import com.fjx.wechat.base.admin.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class DisplayController extends BaseController {
 	
 	@RequestMapping(value={"","index"})
 	public String view (){
-		return "/wechat/display/index";
+		return "wechat/display/index";
 	}
 	
 	@RequestMapping("/contact")
@@ -41,7 +42,7 @@ public class DisplayController extends BaseController {
 	 */
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String registerView (){
-		return "/wechat/display/register";
+		return "wechat/display/register";
 	}
 	
 	

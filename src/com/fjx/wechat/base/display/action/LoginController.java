@@ -29,23 +29,18 @@ public class LoginController extends BaseController {
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> signin (final HttpServletRequest request, final SysUserEntity user,final String valid_code ){
+		setErrorMsg(request,"用户名或密码错误");
 		Map<String, String> res = compareValidCode(request, valid_code);
 		if("0".equals(res.get("code"))){
 			return res;
 		}
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				System.out.println("登陆用户："+user);
-				SysUserEntity sysUser = sysUserService.signin(user.getUsername(), user.getPwd());
-				System.out.println("查询到登陆用户："+sysUser);
-				if(null != sysUser){
-					request.getSession().setAttribute(AppConfig.LOGIN_FLAG, sysUser);
-					return;
-				}
-				throw new MyRuntimeException("用户名或密码错误");
-			}
-		}, "用户名或密码错误");
+		SysUserEntity sysUser = sysUserService.signin(user.getUsername(), user.getPwd());
+		System.out.println("查询到登陆用户："+sysUser);
+		if(null == sysUser){
+			throw new MyRuntimeException("用户名或密码错误");
+		}
+		request.getSession().setAttribute(AppConfig.LOGIN_FLAG, sysUser);
+		return retSuccess();
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)

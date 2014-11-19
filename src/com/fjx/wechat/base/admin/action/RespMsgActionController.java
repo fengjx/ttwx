@@ -88,13 +88,9 @@ public class RespMsgActionController extends BaseController {
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> delete(HttpServletRequest request, final String ids){
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				actionService.deleteMsgActionById(ids);
-			}
-		}, null);
+	public Map<String, String> delete(HttpServletRequest request, String ids){
+		actionService.deleteMsgActionById(ids);
+		return retSuccess();
 	}
 	/**
 	 * 
@@ -104,26 +100,24 @@ public class RespMsgActionController extends BaseController {
 	 */
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> save(final HttpServletRequest request, final RespMsgActionEntity actionEntity){
-		final Map<String, String> reqMap = WebUtil.getRequestParams(request);
-		final MaterialEntity materialEntity = getMaterial(reqMap);
-		final SysUserEntity sysUser = getLoginSysUser(request);
+	public Map<String, String> save(HttpServletRequest request, RespMsgActionEntity actionEntity){
+		setErrorMsg(request,"保存失败");
+		Map<String, String> reqMap = WebUtil.getRequestParams(request);
+		MaterialEntity materialEntity = getMaterial(reqMap);
+		SysUserEntity sysUser = getLoginSysUser(request);
 		if(null != materialEntity){
 			materialEntity.setSysUser(getLoginSysUser(request));
 			actionEntity.setMaterial(materialEntity);
 		}
 		actionEntity.setExtApp(extAppService.load(reqMap.get("extAppId")));
 		actionEntity.setSysUser(sysUser);
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				if(StringUtils.isNotBlank(actionEntity.getId())){
-					actionService.updateAction(actionEntity, getWechatMenu(reqMap), materialEntity);
-				}else{
-					actionService.saveAction(actionEntity, getWechatMenu(reqMap), materialEntity);
-				}
-			}
-		}, "保存失败！");
+
+		if(StringUtils.isNotBlank(actionEntity.getId())){
+			actionService.updateAction(actionEntity, getWechatMenu(reqMap), materialEntity);
+		}else{
+			actionService.saveAction(actionEntity, getWechatMenu(reqMap), materialEntity);
+		}
+		return retSuccess();
 	}
 	
 	/**

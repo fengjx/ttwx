@@ -55,21 +55,18 @@ public class MaterialController extends BaseController {
 	
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> addOrUpdate (final HttpServletRequest request, final MaterialEntity material,final String contentsJson) {
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				SysUserEntity sysUser = getLoginSysUser(request);
-				material.setSysUser(sysUser);
-				List<Map<String,String>> contents = StringUtils.isNotBlank(contentsJson) ? (List<Map<String,String>>) JSONUtil.deserialize(contentsJson) : null;
-				materialService.saveOrUpdate(material, contents);
-			}
-		}, "素材编辑失败");
+	public Map<String, String> addOrUpdate (HttpServletRequest request, MaterialEntity material, String contentsJson) throws Exception {
+		setErrorMsg(request,"素材编辑失败");
+		SysUserEntity sysUser = getLoginSysUser(request);
+		material.setSysUser(sysUser);
+		List<Map<String,String>> contents = StringUtils.isNotBlank(contentsJson) ? (List<Map<String,String>>) JSONUtil.deserialize(contentsJson) : null;
+		materialService.saveOrUpdate(material, contents);
+		return retSuccess();
 	}
 	
 	@RequestMapping(value="/page")
 	@ResponseBody
-	public Pagination<MaterialEntity> page (final HttpServletRequest request, String msg_type) throws Exception{
+	public Pagination<MaterialEntity> page (HttpServletRequest request, String msg_type) throws Exception{
 		Pagination<MaterialEntity> page = materialService.getListPageByType(msg_type, getLoginSysUser(request));
 		return page;
 	}
@@ -83,13 +80,10 @@ public class MaterialController extends BaseController {
 	
 	@RequestMapping(value="/delete")
 	@ResponseBody
-	public Map<String, String> delete (final String id) throws Exception{
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				materialService.delete(id);
-			}
-		}, "删除失败");
+	public Map<String, String> delete (HttpServletRequest request, String id) throws Exception{
+		setErrorMsg(request,"删除失败");
+		materialService.delete(id);
+		return retSuccess();
 	}
 	
 }

@@ -31,13 +31,9 @@ public class MsgTemplateController extends BaseController {
 	
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> save(HttpServletRequest request, final MsgTemplateEntity msgTemplate){
-		return doResult(new MyExecuteCallback() {
-			@Override
-			public void execute() throws Exception {
-				msgTemplateService.saveOrUpdate(msgTemplate);
-			}
-		}, null);
+	public Map<String, String> save(HttpServletRequest request, MsgTemplateEntity msgTemplate){
+		msgTemplateService.saveOrUpdate(msgTemplate);
+		return retSuccess();
 	}
 	
 }

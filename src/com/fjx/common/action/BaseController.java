@@ -43,7 +43,6 @@ public class BaseController {
 
 	/**
 	 * 当用户提交数据时，使用此模板方法，比如保存，更新操作 成功统一返回code=1，失败返回code=0
-	 * 
 	 * @param callack
 	 * @param exceptionInfo
 	 * @return
@@ -68,10 +67,29 @@ public class BaseController {
 	}
 
 	/**
+	 * 操作成功数据
+	 * @return
+	 */
+	protected Map<String, String> retSuccess(){
+		Map<String, String> res = new HashMap<String, String>();
+		res.put("code", "1");
+		res.put("msg", "操作成功");
+		return res;
+	}
+
+	/**
+	 * 设置异常信息
+	 * @return
+	 */
+	protected void setErrorMsg(HttpServletRequest request, String msg){
+		request.setAttribute(AppConfig.REQUEST_ERROE_MSG_KEY,msg);
+	}
+
+
+	/**
 	 * 校验验证码
-	 * 
 	 * @param request
-	 * @param validCode
+	 * @param valid_code
 	 * @return
 	 */
 	protected Map<String, String> compareValidCode(HttpServletRequest request,
@@ -147,7 +165,6 @@ public class BaseController {
 	
 	/**
      * 写出数据
-     *
      * @param res 输出的字符串
      * @throws Exception
      */

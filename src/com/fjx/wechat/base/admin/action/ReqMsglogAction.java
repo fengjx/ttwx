@@ -28,7 +28,7 @@ public class ReqMsglogAction extends BaseController {
     @RequestMapping(value="")
     public String view(HttpServletRequest request, String openid){
     	request.setAttribute("openid", openid);
-        return "/wechat/admin/msg_log/msg_log";
+        return "wechat/admin/msg_log/msg_log";
     }
 
     @RequestMapping(value="/pageList")

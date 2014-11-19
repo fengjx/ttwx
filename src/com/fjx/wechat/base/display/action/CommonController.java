@@ -10,6 +10,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fjx.wechat.config.AppConfig;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,6 +72,43 @@ public class CommonController extends BaseController {
         }  
         return null;  
     }
-	
-	
+
+    @RequestMapping("/error")
+    public String error(HttpServletRequest request){
+        String forward = "errorview";
+        String flag = request.getHeader("Request-Flag");
+        if(AppConfig.REQUEST_FLAG_AJAX.equals(flag)){
+            forward = "errorajax";
+        }
+        return "forward:/common/"+forward;
+    }
+
+    @RequestMapping("/errorview")
+    public String errorView(HttpServletRequest request,Map map){
+        String errorMsg = request.getAttribute(AppConfig.REQUEST_ERROE_MSG_KEY)+"";
+        if(StringUtils.isBlank(errorMsg)){
+            Exception e = (Exception)request.getAttribute("ex");
+            errorMsg = e.getMessage();
+        }
+        map.put("code", "-2");
+        map.put("statue", "500");
+        map.put("msg", errorMsg);
+        return "common/error/error-exception";
+    }
+
+    @RequestMapping("/errorajax")
+    @ResponseBody
+    public Map<String, String> errorAjax(HttpServletRequest request){
+        String errorMsg = request.getAttribute(AppConfig.REQUEST_ERROE_MSG_KEY)+"";
+        if(StringUtils.isBlank(errorMsg)){
+            Exception e = (Exception)request.getAttribute("ex");
+            errorMsg = e.getMessage();
+        }
+        Map<String , String> res = new HashMap<String , String>();
+        res.put("code", "-2");
+        res.put("statue", "500");
+        res.put("msg", errorMsg);
+        return res;
+    }
+
 }

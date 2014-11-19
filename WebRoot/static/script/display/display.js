@@ -10,7 +10,7 @@ $.ajaxSetup({
 		// 对Ajax返回的原始数据进行预处理
 		if (type === "json") {
 			var _data = $.parseJSON(data);
-			if (_data && _data.code == "-1") { // -1表示登陆超时
+			if (_data && "-1" == _data.code) { // -1表示登陆超时
 				app.alert("登陆超时，请重新登陆！",{
 					ok : function(){
 						window.location.href = domain + "/login";
