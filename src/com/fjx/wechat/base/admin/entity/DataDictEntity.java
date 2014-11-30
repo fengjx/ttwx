@@ -2,6 +2,7 @@ package com.fjx.wechat.base.admin.entity;
 
 import javax.persistence.*;
 
+import com.fjx.common.utils.CommonUtils;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fjx.common.bean.ToStringBase;
@@ -115,6 +116,11 @@ public class DataDictEntity extends ToStringBase {
 
 	public void setIs_valid(String is_valid) {
 		this.is_valid = is_valid;
+	}
+
+	@Transient
+	public String getStr_in_time() {
+		return CommonUtils.date2String(in_time);
 	}
 
 }

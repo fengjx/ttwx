@@ -20,6 +20,8 @@ import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fjx.common.bean.ToStringBase;
 import com.fjx.common.utils.CommonUtils;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 /**
  * 消息动作规则表
@@ -104,6 +106,7 @@ public class RespMsgActionEntity extends ToStringBase {
 	
 	@ManyToOne
 	@JoinColumn(name="material_id")
+	@NotFound(action= NotFoundAction.IGNORE)
 	public MaterialEntity getMaterial() {
 		return material;
 	}
@@ -112,8 +115,9 @@ public class RespMsgActionEntity extends ToStringBase {
 		this.material = material;
 	}
 	
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name="app_id")
+	@NotFound(action= NotFoundAction.IGNORE)
 	public ExtAppEntity getExtApp() {
 		return extApp;
 	}

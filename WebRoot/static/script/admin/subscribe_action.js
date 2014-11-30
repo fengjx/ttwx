@@ -45,7 +45,11 @@ function thowSetting(){
 			viewHtml = xml2NewsHtml(msgAction.material.xml_data, msgAction.material.str_in_time, msgAction.material.id);
 		}
 	}else if(msgAction.action_type == 'api'){
-		viewHtml = "从接口【"+msgAction.extApp.name+"】中获得数据";
+		if(!msgAction.extApp){
+			viewHtml = "插件已经被删除，请重新配置！";
+		}else{
+			viewHtml = "从接口【"+msgAction.extApp.name+"】中获得数据";
+		}
 	}
 	$("#viewDiv").html(viewHtml);
 	$.parser.parse('#viewDiv');
@@ -76,7 +80,9 @@ function updateMsgView(){
 		}
 	}else if(msgAction.action_type == 'api'){
 		tabIndex = 5;
-		busiapi_combobox.combobox("select",msgAction.extApp.id);
+		if (msgAction.extApp) {
+			busiapi_combobox.combobox("select",msgAction.extApp.id);
+		}
 	}
 	$("#edit_tabs").tabs("select",tabIndex);
 	$("#view").hide();
@@ -122,7 +128,7 @@ function submitMsgActionForm(respType){
 				}
 				$("#msgMaterialId").val(newsId);
 			}
-			if(respType === 'busiapp_api'){
+			if(respType === 'api'){
 				$("#msgActionType").val("api");				//响应消息类型
 				var app_id = busiapi_combobox.combobox("getValue");
 				if(!app_id){

@@ -25,7 +25,15 @@ public interface IBaseAbstractService<T> {
 	 * @param entity
 	 */
 	public <X> Serializable save (X entity) ;
-	
+
+	/**
+	 * 批量保存泛型指向的实体（只适合插入少量数据）
+	 * @param entitys
+	 * @param <X>
+	 * @return
+	 */
+	public <X> void saveList (List<X> entitys);
+
 	/**
 	 * 新增或保存实体
 	 * @param entity

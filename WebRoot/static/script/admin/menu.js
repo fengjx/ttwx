@@ -315,7 +315,11 @@ function thowSetting(node){
 				viewHtml = xml2NewsHtml(node.xml_data,node.action_time, node.material_id);
 			}
 		}else if(node.action_type == 'api'){
-			viewHtml = "从接口【"+node.app_name+"】中获得数据";
+			if(!node.app_name){
+				viewHtml = "插件已经被删除，请重新配置！";
+			}else{
+				viewHtml = "从接口【"+node.app_name+"】中获得数据";
+			}
 		}
 	}else if(node.type == 'view'){//菜单动作为点击链接
 		tips = msg.e;
@@ -393,7 +397,7 @@ function submitMsgActionForm(respType){
 				}
 				$("#msgMaterialId").val(newsId);
 			}
-			if(respType === 'busiapp_api'){
+			if(respType === 'api'){
 				$("#msgActionType").val("api");
 				var app_id = busiapi_combobox.combobox("getValue");
 				if(!app_id){
@@ -442,9 +446,11 @@ function updateMsgView(){
 				viewHtml = xml2NewsHtml(selectNode.xml_data,selectNode.action_time, selectNode.material_id);
 				$("#preview_news").html(viewHtml);				
 			}
-		}else if(selectNode.action_type == 'busiapp_api'){
+		}else if(selectNode.action_type == 'api'){
 			tabIndex = 5;
-			busiapi_combobox.combobox("select",selectNode.app_id);
+			if (selectNode.app_id) {
+				busiapi_combobox.combobox("select",selectNode.app_id);
+			}
 		}
 		$("#edit_tabs").tabs("select",tabIndex);
 		showActionContent("action_edit");

@@ -34,9 +34,8 @@ public class MySpringMvcServlet extends DispatcherServlet {
 		//正则表达式匹配，参数在web.xml配置
 		if(uri.matches(page_url)){		//分页请求
 			logger.debug("easyui组件分页参数 -- page:" + request.getParameter("page")+";  rows: " + request.getParameter("rows"));
-			
-			PaginationContext.setOffset(getOffset(request));
 			PaginationContext.setPagesize(getPageSize(request));
+			PaginationContext.setOffset(getOffset(request));
 			try{
 				super.doService(request, response);
 			}
@@ -56,8 +55,8 @@ public class MySpringMvcServlet extends DispatcherServlet {
 		String pageNowStr = request.getParameter("page");
 		if (pageNowStr != null && !pageNowStr.equals("")){
 			pageNow = Integer.valueOf(pageNowStr);
-			//offset = (pageNow - 1)*getPageSize(request);
-			offset = pageNow - 1;
+			offset = (pageNow - 1)*PaginationContext.getPagesize();
+			//offset = pageNow - 1;
 			
 		}
 		logger.debug("offset： "+offset);

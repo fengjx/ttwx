@@ -1,16 +1,12 @@
 package com.fjx.wechat.base.admin.entity;
 
 import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fjx.common.bean.ToStringBase;
@@ -23,9 +19,15 @@ import com.fjx.common.utils.CommonUtils;
  */
 @Table(name = "wechat_ext_app")
 @Entity
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","supportTypes"})
 public class ExtAppEntity extends ToStringBase {
-	
+
 	private static final long serialVersionUID = 8840798984002669943L;
+
+	public static final String TYPE_WEB = "web";
+	public static final String TYPE_API = "api";
+	public static final String TYPE_RESTFUL = "restful";
+
 
 	private String id;
 	private String name; 			// 
@@ -39,7 +41,11 @@ public class ExtAppEntity extends ToStringBase {
 	private Date in_time; 			//
 	private String group_id; 		// 应用分组ID
 	private String is_valid; 		// 是否启用
-	
+
+	private Set<ExtAppSupportTypeEntity> supportTypes;	//插件支持的类型
+
+	private String start_time;
+	private String end_time;
 	
 	@Id
 	@GeneratedValue(generator="system-uuid")
@@ -142,9 +148,69 @@ public class ExtAppEntity extends ToStringBase {
 	public void setIs_valid(String is_valid) {
 		this.is_valid = is_valid;
 	}
-	
+
+	@OneToMany(mappedBy = "extApp",fetch=FetchType.LAZY)
+	public Set<ExtAppSupportTypeEntity> getSupportTypes() {
+		return supportTypes;
+	}
+
+	public void setSupportTypes(Set<ExtAppSupportTypeEntity> supportTypes) {
+		this.supportTypes = supportTypes;
+	}
+
 	@Transient
 	public String getStr_in_time() {
 		return CommonUtils.date2String(in_time);
+	}
+
+	@Transient
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+
+	@Transient
+	public String getEnd_time() {
+		return end_time;
+	}
+
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
+	}
+
+	@Transient
+	public String getSupportMsgTypesStr() {
+		String msgTypes = "";
+		boolean first = true;
+		for(ExtAppSupportTypeEntity type : getSupportTypes()){
+			if(StringUtils.isNotBlank(type.getMsg_type())){
+				if (first) {
+					msgTypes += type.getMsg_type();
+					first = false;
+				}else{
+					msgTypes += ","+type.getMsg_type();
+				}
+			}
+		}
+		return msgTypes;
+	}
+	@Transient
+	public String getSupportEventTypesStr() {
+		String eventTypes = "";
+		boolean first = true;
+		for(ExtAppSupportTypeEntity type : getSupportTypes()){
+			if(StringUtils.isNotBlank(type.getEvent_type())){
+				if (first) {
+					eventTypes += type.getEvent_type();
+					first = false;
+				}else{
+					eventTypes += ","+type.getEvent_type();
+				}
+			}
+		}
+		return eventTypes;
 	}
 }

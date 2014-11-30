@@ -3,10 +3,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>扩展接口配置</title>
+	<title>系统字典配置</title>
 	<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
+	<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 	<script src="<%=resourceUrl %>/script/admin/dict.js?v=20141117" type="text/javascript" charset="UTF-8"></script>
 	<script src="<%=resourceUrl %>/plugin/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
+
+	<style>
+		input[type=text]{
+			width: 150px;
+		}
+	</style>
 </head>
 <body class="easyui-layout" fit="true">
 	<div region="center" border="false" style="overflow: hidden;">
@@ -16,7 +23,7 @@
 					<tr>
 						<td>字典分组</td>
 						<td width="152px">
-							<input id="dictGroup" name="dictGroup" style="width: 150px;"/>
+							<input type="text" id="dictGroup" name="dictGroup"/>
 						</td>
 						<td>字典值</td>
 						<td colspan="2">
@@ -25,23 +32,20 @@
 						<td>接入时间</td>
 						<td colspan="2">
 							<!-- <input name="paramMap.start_time" class="easyui-datetimebox" editable="false" style="width: 150px;" />-<input name="paramMap.end_time" class="easyui-datetimebox" editable="false" style="width: 150px;" /> -->
-							<input class="Wdate" onClick="WdatePicker()" name="start_time" data-options="dateFmt:'yyyy-M-d H:m:s',readOnly:true,skin:'twoer'" type="text" style="width: 148px;" />
+							<input class="Wdate" onClick="WdatePicker()" name="start_time" data-options="dateFmt:'yyyy-M-d H:m:s',readOnly:true,skin:'twoer'" type="text" />
 							-
-							<input class="Wdate" onClick="WdatePicker()" name="end_time" data-options="dateFmt:'yyyy-M-d H:m:s',readOnly:true,skin:'twoer'" type="text" style="width: 148px;" />
-							
+							<input class="Wdate" onClick="WdatePicker()" name="end_time" data-options="dateFmt:'yyyy-M-d H:m:s',readOnly:true,skin:'twoer'" type="text" />
 						</td>
 						<td>
-							<a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchDatagrid();" href="javascript:void(0);">查找</a><a class="easyui-linkbutton" iconCls="icon-filter" plain="true" onclick="clearDatagrid();" href="javascript:void(0);">重置</a>
+							<a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchDatagrid();" href="javascript:void(0);">查找</a>
+							<a class="easyui-linkbutton" iconCls="icon-filter" plain="true" onclick="clearDatagrid();" href="javascript:void(0);">重置</a>
 						</td>
 					</tr>
 				</table>
 			</fieldset>
 			<div>
-				<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="appApi();" plain="true" href="javascript:void(0);">添加</a>
-				<a class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="deleteApi();" plain="true" href="javascript:void(0);">刪除</a>
-				<a class="easyui-linkbutton" data-options="iconCls:'icon-edit'" onclick="updateApi();" plain="true" href="javascript:void(0);">编辑</a>
-				<a class="easyui-linkbutton" data-options="iconCls:'icon-tip'" onclick="view();" plain="true" href="javascript:void(0);">查看</a> 
-				<a class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="datagrid.datagrid('load');" plain="true" href="javascript:void(0);">刷新</a> 
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="appDict();" plain="true" href="javascript:void(0);">添加</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="datagrid.datagrid('load');" plain="true" href="javascript:void(0);">刷新</a>
 				<a class="easyui-linkbutton" data-options="iconCls:'icon-undo'" onclick="datagrid.datagrid('unselectAll');" plain="true" href="javascript:void(0);">取消选中</a>
 			</div>
 		</div>
@@ -50,51 +54,44 @@
 		</table>
 	</div>
 
-
-	<div id="apiDialog" style="display: none;overflow: hidden;width:450px;">
-		<form id="apiForm" method="post">
+	<div id="dictDialog" style="display: none;overflow: hidden;width:450px;">
+		<form id="dictForm" method="post">
 			<table class="tableForm">
 				<input type="hidden" name="id" value=""/>
 				<tr>
-					<td>接口类型：</td>
+					<td>字典分组：</td>
 					<td>
-						<select class="easyui-combobox" name="language">
-							<option value="ar">Arabic</option>
-							<option value="bg">Bulgarian</option>
-							<option value="vi">Vietnamese</option>
-						</select>
+						<input type="text" id="group_name" name="group_name" value=""/>
 					</td>
-					<td>接口名称：</td>
+					<td>分组代码：</td>
 					<td>
-						<input name="name" class="easyui-validatebox" required="true" />
+						<input type="text" id="group_code" name="group_code" class="easyui-validatebox" required="true" >
 					</td>
 				</tr>
 				<tr>
-					<td>spring id：</td>
+					<td>字典值</td>
 					<td>
-						<input name="name" class="easyui-validatebox" required="true" />
+						<input type="text" id="dict_value" name="dict_value" class="easyui-validatebox" required="true" />
 					</td>
-					<td>method name</td>
+					<td>字典名称</td>
 					<td>
-						<input name="name" class="easyui-validatebox" required="true" />
+						<input type="text" id="dict_name" name="dict_name" class="easyui-validatebox" required="true" />
 					</td>
 				</tr>
 				<tr>
-					<td>URL：</td>
+					<td>排序</td>
 					<td>
-						<input name="name" class="easyui-validatebox" required="true" />
+						<input type="text" id="order_num" name="order_num"></input>
 					</td>
-					<td>resful url：</td>
+					<td>是否启用</td>
 					<td>
-						<input name="name" class="easyui-validatebox" required="true" />
+						<input name="is_valid" type="checkbox" value="1">
 					</td>
 				</tr>
 				<tr>
-					<td>消息类型：</td>
-					<td id="msgType">
-					</td>
-					<td>事件类型：</td>
-					<td id="eventType">
+					<td>字典描述</td>
+					<td>
+						<textarea id="dict_desc" name="dict_desc"></textarea>
 					</td>
 				</tr>
 			</table>

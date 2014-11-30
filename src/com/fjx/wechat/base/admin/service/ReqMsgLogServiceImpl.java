@@ -25,7 +25,7 @@ public class ReqMsgLogServiceImpl extends BaseAbstractService<ReqMsgLogEntoty> i
 
     /**
      * 分页查询
-     * @param from_user_id        请求用户标识
+     * @param reqMsgLog 消息记录
      * @param wechatPublicAccount 公众账号
      * @return
      */

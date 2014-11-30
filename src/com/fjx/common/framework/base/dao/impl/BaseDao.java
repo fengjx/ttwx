@@ -20,9 +20,7 @@ import com.fjx.common.framework.system.pagination.Pagination;
 import com.fjx.common.framework.system.pagination.PaginationContext;
 
 /**
- * 
- * @author fengjianxin
- * @param <T>
+ * 基于hibernate的通用dao
  */
 public class BaseDao implements IBaseDao {
 	
@@ -107,8 +105,8 @@ public class BaseDao implements IBaseDao {
 		int total = getCount(hql, isHql, parameters);
 		logger.debug("查询的总记录数: " + total);
 		Query q = createMyQuery(hql, isHql,parameters);
-		q.setFirstResult(PaginationContext.getOffset()); // filter拦截到的分页参数
-		q.setMaxResults(PaginationContext.getPagesize()); // filter拦截到的分页参数
+		q.setFirstResult(PaginationContext.getOffset()); 	// 分页上下文的分页参数
+		q.setMaxResults(PaginationContext.getPagesize());	// 分页上下文的分页参数
 		if(isMap){
 			q.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);
 		}
@@ -122,6 +120,26 @@ public class BaseDao implements IBaseDao {
 		Serializable serializable = null;
 		serializable = getCurrentSession().save(entity);
 		return serializable;
+	}
+
+	/**
+	 * 批量保存泛型指向的实体
+	 * @param entitys
+	 * @return
+	 */
+	@Override
+	public <X> void saveList(List<X> entitys) {
+		Session session = getCurrentSession();
+		X x = null;
+		for (int i = 0; i < entitys.size(); i++) {
+			x = entitys.get(i);
+			session.save(x);
+			// 批插入的对象立即写入数据库并释放内存
+			if (i % 10 == 0) {
+				session.flush();
+				session.clear();
+			}
+		}
 	}
 
 	@Override

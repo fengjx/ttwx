@@ -1,11 +1,13 @@
 package com.fjx.wechat.base.admin.action;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import com.fjx.common.framework.system.pagination.Pagination;
 import com.fjx.wechat.base.admin.entity.DataDictEntity;
 import com.fjx.wechat.base.admin.service.DataDictService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +56,26 @@ public class DataDictController extends BaseController {
 	@ResponseBody
 	public List<Map<String, String>> getGroup(){
 		return dataDictService.findDictGroup();
+	}
+
+	@RequestMapping(value="/admin/dict/save")
+	@ResponseBody
+	public Map<String, String> save(HttpServletRequest request, DataDictEntity dict){
+		String id = dict.getId();
+		dict.setIn_time(new Date());
+		if (StringUtils.isBlank(id)) {
+			dataDictService.save(dict);
+		}else {
+			dataDictService.update(dict);
+		}
+		return retSuccess();
+	}
+
+	@RequestMapping(value="/admin/dict/delete")
+	@ResponseBody
+	public Map<String, String> delete(HttpServletRequest request, String id){
+		dataDictService.delete(id);
+		return retSuccess();
 	}
 
 }

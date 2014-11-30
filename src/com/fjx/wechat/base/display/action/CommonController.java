@@ -10,6 +10,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fjx.common.utils.WebUtil;
 import com.fjx.wechat.config.AppConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,8 +77,7 @@ public class CommonController extends BaseController {
     @RequestMapping("/error")
     public String error(HttpServletRequest request){
         String forward = "errorview";
-        String flag = request.getHeader("Request-Flag");
-        if(AppConfig.REQUEST_FLAG_AJAX.equals(flag)){
+        if(WebUtil.validAjax(request)){
             forward = "errorajax";
         }
         return "forward:/common/"+forward;
@@ -85,30 +85,36 @@ public class CommonController extends BaseController {
 
     @RequestMapping("/errorview")
     public String errorView(HttpServletRequest request,Map map){
-        String errorMsg = request.getAttribute(AppConfig.REQUEST_ERROE_MSG_KEY)+"";
-        if(StringUtils.isBlank(errorMsg)){
-            Exception e = (Exception)request.getAttribute("ex");
-            errorMsg = e.getMessage();
-        }
-        map.put("code", "-2");
-        map.put("statue", "500");
-        map.put("msg", errorMsg);
+        map = getErrorMap(request);
         return "common/error/error-exception";
     }
 
     @RequestMapping("/errorajax")
     @ResponseBody
     public Map<String, String> errorAjax(HttpServletRequest request){
-        String errorMsg = request.getAttribute(AppConfig.REQUEST_ERROE_MSG_KEY)+"";
+        return getErrorMap(request);
+    }
+
+
+    /**
+     * 获得错误信息，封装到map
+     * @param request
+     * @return
+     */
+    private Map<String, String> getErrorMap(HttpServletRequest request){
+        Map<String , String> map = new HashMap<String , String>();
+        String errorMsg = (String) request.getAttribute(AppConfig.REQUEST_ERROE_MSG_KEY);
         if(StringUtils.isBlank(errorMsg)){
-            Exception e = (Exception)request.getAttribute("ex");
-            errorMsg = e.getMessage();
+            errorMsg = "操作失败";
+            if (AppConfig.isTest()) {
+                Exception e = (Exception)request.getAttribute("ex");
+                errorMsg = e.getMessage();
+            }
         }
-        Map<String , String> res = new HashMap<String , String>();
-        res.put("code", "-2");
-        res.put("statue", "500");
-        res.put("msg", errorMsg);
-        return res;
+        map.put("code", "0");
+        map.put("statue", "500");
+        map.put("msg", errorMsg);
+        return map;
     }
 
 }

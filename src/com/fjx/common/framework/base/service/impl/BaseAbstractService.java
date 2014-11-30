@@ -19,7 +19,7 @@ import com.fjx.common.framework.system.pagination.Pagination;
  * @date 2014年9月12日
  * @param <T>
  */
-public abstract class BaseAbstractService<T> implements IBaseAbstractService<T> {
+public class BaseAbstractService<T> implements IBaseAbstractService<T> {
 
 	@Autowired
 	private IBaseDao baseDao;
@@ -36,6 +36,16 @@ public abstract class BaseAbstractService<T> implements IBaseAbstractService<T> 
 	@Override
 	public <X> Serializable save(X entity) {
 		return baseDao.save(entity);
+	}
+
+	/**
+	 * 批量保存泛型指向的实体（只适合插入少量数据）
+	 * @param entitys
+	 * @return
+	 */
+	@Override
+	public <X> void saveList(List<X> entitys) {
+		baseDao.saveList(entitys);
 	}
 
 	@Override

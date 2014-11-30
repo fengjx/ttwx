@@ -2,18 +2,28 @@
  * 扩展接口 2014-11-16
  */
 var datagrid;
-var apiDialog;
-var apiForm;
+var dictDialog;
+var dictForm;
+
+var dictGroupData;
 var dictGroupCombobox;
 
 $(function() {
+
     //实例化form表单
-    apiForm = $("#apiForm").form();
+    dictForm = $("#dictForm").form();
     //实例化窗口
-    apiDialog = $('#apiDialog').show().dialog({
+    dictDialog = $('#dictDialog').show().dialog({
+        title : '添加字典',
+        top : 50,
         width : 500,
         modal : true,
-        title : '添加接口'
+        buttons : [{
+            text : '确定',
+            handler : function() {
+               submitDict()
+            }
+        }]
     }).dialog('close');
 
     // 加载消息记录数据
@@ -24,6 +34,7 @@ $(function() {
         },
         toolbar : '#toolbar',
         pagination : true,
+        singleSelect:true,
         pageSize : 10,
         pageList : [10, 15, 20],
         fit : true,
@@ -34,8 +45,7 @@ $(function() {
         frozenColumns : [[{
             title : 'id',
             field : 'id',
-            width : 50,
-            checkbox : true
+            hidden:true
         },{
             field : 'dict_name',
             title : '字典名称',
@@ -48,15 +58,15 @@ $(function() {
         columns : [[{
             field : 'dict_desc',
             title : '字典描述',
-            width : 50
+            width : 80
         }, {
             field : 'group_name',
             title : '字典分组',
-            width : 50
+            width : 30
         }, {
             field : 'group_code',
             title : '分组编码',
-            width : 50
+            width : 30
         }, {
             field : 'is_valid',
             title : '是否启用',
@@ -64,19 +74,19 @@ $(function() {
         }, {
             field : 'order_num',
             title : '排序',
-            width : 22
+            width : 10
         }, {
-            field : 'in_time',
+            field : 'str_in_time',
             title : '编辑时间',
-            width : 49
+            width : 40
         }, {
             field : 'OP',
             title : '查看详细',
             width : 65,
             formatter : function(value, rowData, rowIndex) {
                 var html = '<a class="easyui-linkbutton" iconCls="icon-tip" plain="true" onclick="view(\''+rowData.id+'\');" href="javascript:void(0);">查看</a>';
-                html += '<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editMsgAction(\''+rowData.id+'\');" href="javascript:void(0);">修改</a>';
-                html += '<a class="easyui-linkbutton" iconCls="icon-no" plain="true" onclick="deleteMsgAction(\''+rowData.id+'\',\''+rowData.key_word+'\');" href="javascript:void(0);">刪除</a>';
+                html += '<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateDict(\''+rowData.id+'\');" href="javascript:void(0);">修改</a>';
+                html += '<a class="easyui-linkbutton" iconCls="icon-no" plain="true" onclick="deleteDict(\''+rowData.id+'\',\''+rowData.dict_name+'\');" href="javascript:void(0);">刪除</a>';
                 return html;
             }
         }]],
@@ -85,13 +95,7 @@ $(function() {
         }
     });
 
-
-    dictGroupCombobox = $("#dictGroup").combobox({
-        valueField : 'group_code',
-        textField : 'group_code',
-        url : domain + '/dict/group'
-    });
-
+    loadDictGroup();
 });
 
 function searchDatagrid() {
@@ -117,23 +121,29 @@ function clearDatagrid() {
     datagrid.datagrid('load', {});
 }
 
-function loadMsgType () {
+/**
+ * 加载字典分组
+ */
+function loadDictGroup () {
     $.ajax({
-        url : domain + '/dict/list?group_code=event_type',
+        url : domain + '/dict/group',
         type: 'post',
         data: {},
         dataType: "json",
         cache: false,
         async: true,
         success: function (data) {
-            if(data){
-                var html = '<label><input type="checkbox" value=""></label>全选<p>';
-                $.each(data, function(i,row){
-                    html += '<label><input type="checkbox" value="'+row.dict_name+'"></label>'+row.dict_name+'<p>';
-                });
-                alert(html);
-                $("#msgType").html(html);
-            }
+            dictGroupData = data;
+            dictGroupCombobox = $("#dictGroup").combobox({
+                valueField : 'group_code',
+                textField : 'group_name',
+                data:dictGroupData
+            });
+            $("#group_name").combobox({
+                valueField : 'group_name',
+                textField : 'group_name',
+                data:dictGroupData
+            });
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
         },
@@ -144,45 +154,76 @@ function loadMsgType () {
     });
 }
 
-function loadEventType () {
-    $.ajax({
-        url: domain + '/dict/list?group_code=event_type',
-        type: 'post',
-        data: {},
-        dataType: "json",
-        cache: false,
-        async: true,
-        success: function (data) {
-            if (data) {
-                var html = '<label><input type="checkbox" value=""></label>全选<p>';
-                $.each(data, function (i, row) {
-                    html += '<label><input type="checkbox" value="' + row.dict_name + '"></label>' + row.dict_name + '<p>';
-                });
-                alert(html);
-                $("#eventType").html(html);
+
+function appDict () {
+    dictDialog.dialog('open');
+}
+
+function updateDict (id) {
+    datagrid.datagrid('unselectAll');
+    datagrid.datagrid('selectRecord',id).datagrid("getSelected");
+    var selectNode = datagrid.datagrid("getSelected");
+    if (selectNode) {
+        dictForm.form('clear');
+        dictForm.form('load', {
+            'id' : selectNode.id,
+            'group_code' : selectNode.group_code,
+            'group_name' : selectNode.group_name,
+            'dict_value' : selectNode.dict_value,
+            'dict_name' : selectNode.dict_name,
+            'dict_desc' : selectNode.dict_desc,
+            'is_valid' : selectNode.is_valid,
+            'order_num' : selectNode.order_num
+        });
+        dictDialog.dialog('open').dialog({
+            title : '修改字典'
+        });
+    }else{
+        $.messager.alert('提示', '请选择要修改的字典！', 'warning');
+    }
+}
+
+function submitDict () {
+    dictForm.form('submit', {
+        url : domain + '/admin/dict/save',
+        success : function(res) {
+            fjx.closeProgress();
+            var data = $.evalJSON(res);
+            dictDialog.dialog('close');
+            if (data && '1' == data.code) {
+                fjx.showMsg(data.msg?data.msg:'操作成功！');
+                datagrid.datagrid("myReload");
+            } else {
+                $.messager.alert('提示', data? data.msg:'操作失败', 'error');
             }
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        onSubmit : function() {
+            $.messager.progress({
+                text : '数据提交中....',
+                interval : 100
+            });
         },
-        beforeSend: function (XMLHttpRequest) {
-        },
-        complete: function () {
+        onLoadError:function(){
+            fjx.closeProgress();
         }
     });
 }
 
-function appApi () {
-    apiDialog.dialog('open');
-}
-
-function updateApi () {
-
-}
-
-function submitApi () {
-
-}
-
-function deleteApi (id) {
-
+function deleteDict (id,dict_name) {
+    $.messager.confirm('请确认', '你要删除字典【'+dict_name+'】吗？', function(r) {
+        if (r) {
+            $.ajax({
+                url :  domain + '/admin/dict/delete',
+                data : 'id='+id,
+                success : function (res) {
+                    if(res && '1' === res.code){
+                        fjx.showMsg(res.msg?res.msg:'操作成功！');
+                        datagrid.datagrid("myReload");
+                    }else{
+                        $.messager.alert('提示',res?res.msg:'操作失败！','error');
+                    }
+                }
+            });
+        }
+    });
 }

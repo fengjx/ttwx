@@ -92,6 +92,7 @@ $.fn.panel.defaults.onBeforeDestroy = function() {/* tab关闭时回收内存 */
 	}
 };
 
+$.fn.form.defaults.ajax = true;
 $.fn.panel.defaults.loadingMessage = '数据加载中，请稍候....';
 $.fn.datagrid.defaults.loadMsg = '数据加载中，请稍候....';
 
@@ -119,8 +120,8 @@ var easyuiPanelOnMove = function(left, top) {/* 防止超出浏览器边界 */
 	}
 	if (top < 0) {
 		$(this).window('move', {
-					top : 1
-				});
+			top : 1
+		});
 	}
 };
 $.fn.panel.defaults.onMove = easyuiPanelOnMove;
@@ -182,12 +183,12 @@ $.fn.datebox.defaults.parser = function(s) {
 
 fjx.showMsg = function(msg) {
 	$.messager.show({
-				title : '提示',
-				msg : msg,
-				timeout : 5000,
-				showType : 'slide'
-			});
-}
+		title : '提示',
+		msg : msg,
+		timeout : 5000,
+		showType : 'slide'
+	});
+};
 
 fjx.progress = function(msg) {
 	var text = msg || "数据提交中....";
@@ -320,11 +321,17 @@ fjx.isLessThanIe8 = function() {/* 判断浏览器是否是IE并且版本小于8
 	return ($.browser.msie && $.browser.version < 8);
 };
 
+fjx.resHandler = function(res,successMsg,failMsg) {
+	if(res && '1' === res.code){
+		fjx.showMsg(res.msg?res.msg:successMsg?successMsg:'操作成功！');
+	}else{
+		$.messager.alert('提示',res?res.msg:failMsg?failMsg:'操作失败！','error');
+	}
+};
+
 /**
  * 格式化oracle返回的日期字符串(2013-12-26T10:14:14 --> 2013-12-26 10:14:14)
- * 
- * @param {}
- *            val
+ * @param {} val
  * @return {}
  */
 function formattime(val) {
@@ -337,6 +344,8 @@ function formattime(val) {
 $.ajaxSetup({
 	type : 'post',
 	dataType : "json",
+	cache : false,
+	async : true,
 	headers : {
 		"Request-Flag" : "ajax"
 	},
@@ -354,6 +363,9 @@ $.ajaxSetup({
 			}
 		}
 		return data // 返回处理后的数据
+	},
+	success : function(res) {
+		fjx.resHandler(res);
 	},
 	beforeSend : function () {
 		fjx.progress("正在处理，请稍等。。。");

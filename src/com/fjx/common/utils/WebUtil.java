@@ -1,5 +1,7 @@
 package com.fjx.common.utils;
 
+import com.fjx.wechat.config.AppConfig;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -61,6 +63,23 @@ public class WebUtil {
         String res = source;
         res = URLEncoder.encode(source, chartset);
         return res;
+    }
+
+    /**
+     * 判断是否是ajax请求
+     * @param request
+     * @return
+     */
+    public static boolean validAjax(HttpServletRequest request){
+        String flag = request.getHeader("Request-Flag");
+        if(AppConfig.REQUEST_FLAG_AJAX.equals(flag)){
+            return true;
+        }
+        String requestType = request.getHeader("X-Requested-With");
+        if("XMLHttpRequest".equals(requestType)){
+            return true;
+        }
+        return false;
     }
 
 }

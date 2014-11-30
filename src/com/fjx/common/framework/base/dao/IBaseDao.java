@@ -22,7 +22,15 @@ public interface IBaseDao {
 	 * @param entity
 	 */
 	public <X> Serializable save (X entity);
-	
+
+	/**
+	 * 批量保存泛型指向的实体
+	 * @param entitys
+	 * @param <X>
+	 * @return
+	 */
+	public <X> void saveList (List<X> entitys);
+
 	/**
 	 * 新增或保存
 	 * @param entity
@@ -39,10 +47,10 @@ public interface IBaseDao {
 	 * @param 
 	 */
 	public <X> void delete (X entity);
+
 	/**
 	 * 
 	 * @param entities
-	 * @throws DataAccessException
 	 */
 	public <X> void deleteAll(Collection<X> entities);
 	
@@ -51,14 +59,13 @@ public interface IBaseDao {
 	 * @param entity
 	 */
 	public <X> void update (X entity);
-	
+
 	/**
-	 * 
+	 *
 	 * @param entityClass
-	 * @param id
-	 * @return 泛型指向之外的实体
-	 * @throws HibernateException
-	 * @throws SQLException
+	 * @param pk
+	 * @param <X>
+	 * @return
 	 */
 	public <X> X load(Class<X> entityClass, Serializable pk);
 	
@@ -77,12 +84,12 @@ public interface IBaseDao {
 	 * @return 返回map
 	 */
 	public Map<String, Object> findOneBySql(String sql, Object... parameters);
-	
+
 	/**
 	 * 查询所有记录，根据泛型查询该对象纪录列表
-	 * @param hql
-	 * @param parameters
-	 * @return	
+	 * @param entityClass
+	 * @param <X>
+	 * @return
 	 */
 	public <X> List<X> findList(Class<X> entityClass);
 	
@@ -93,13 +100,12 @@ public interface IBaseDao {
 	 * @return 返回列表数据 X 可以是实体对象或者Map类型
 	 */
 	public <X> List<X> findListByHql (String hql, Object... parameters);
-	
+
 	/**
 	 * 根据sql查询多条记录
+	 * @param sql
 	 * @param parameters
-	 * @return 
-	 * @throws HibernateException
-	 * @throws SQLException
+	 * @return
 	 */
 	public List<Map<String, Object>> findListMapBySql(String sql, Object... parameters);
 	
@@ -126,58 +132,56 @@ public interface IBaseDao {
 	 * @return
 	 */
 	public int getCount(String ql, boolean isHql, Object... parameters);
-	
+
 	/**
 	 * 分页查询，根据泛型查询该对象纪录列表
-	 * @param parameters
-	 * @return 分页对象 
+	 * @param entityClass
+	 * @param <X>
+	 * @return
 	 */
 	public <X> Pagination<X> page(Class<X> entityClass);
-	
+
 	/**
-	 * 分页查询
+	 * * 分页查询
 	 * @param hql
 	 * @param parameters
-	 * @return	返回list分页数据 X 可以是实体对象或者Map类型
-	 * @throws HibernateException
-	 * @throws SQLException
+	 * @param <X>
+	 * @return 返回list分页数据 X 可以是实体对象或者Map类型
 	 */
 	public <X> Pagination<X> pageByHql (String hql, Object... parameters);
-	
+
 	/**
-	 * 分页查询
-	 * @param hql
+	 * * 分页查询
+	 * @param sql
 	 * @param parameters
-	 * @return	返回list分页数据
-	 * @throws HibernateException
-	 * @throws SQLException
+	 * @return 返回list分页数据
 	 */
 	public Pagination<Map<String, Object>> pageListMapBySql (String sql, Object... parameters);
-	
+
 	/**
 	 * 执行更新操作（修改、删除）
 	 * @param ql
+	 * @param isHql
 	 * @param parameters
 	 * @return
-	 * @throws HibernateException, SQLException
 	 */
 	public int bulkUpdate(String ql, boolean isHql, Object... parameters);
-	
+
 	/**
 	 * 批量执行更新操作（修改、删除）
 	 * @param qls
+	 * @param isHql
 	 * @param paramList
 	 * @return 只要不报错就返回true
-	 * @throws HibernateException, SQLException
 	 */
 	public boolean bulkUpdate(List<String> qls, boolean isHql, List<Object> paramList);
-	
+
 	/**
-	 * 批量执行更新操作（修改、删除）
+	 * * 批量执行更新操作（修改、删除）
 	 * @param qls
+	 * @param isHql
 	 * @param paramList
-	 * @return 只要其中一条语句没有跟新数据就返回false 
-	 * @throws HibernateException, SQLException
+	 * @return 只要其中一条语句没有跟新数据就返回false
 	 */
 	public boolean bulkUpdateInFetch(List<String> qls, boolean isHql, List<Object> paramList);
 	

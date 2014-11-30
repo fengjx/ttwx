@@ -28,7 +28,22 @@ public interface ExtAppService extends IBaseAbstractService<ExtAppEntity> {
 	 * @param extApp
 	 * @return
 	 */
-	public Pagination<ExtAppEntity> page(ExtAppEntity extApp);
+	public Pagination<ExtAppEntity> pageList(ExtAppEntity extApp);
+
+	/**
+	 * 添扩展应用
+	 * @param reqTypes 关联的消息类型（多个参数用,分隔）
+	 * @param eventTypes 关联的事件类型（多个参数用,分隔，当消息类型是event时此参数才生效）
+	 */
+	public void saveOrUpdateApp(ExtAppEntity extApp, String reqTypes, String eventTypes);
+
+	/**
+	 *删除扩展应用
+	 * @param id
+	 */
+	public void deleteApp(String id);
+
+
 
 
 }

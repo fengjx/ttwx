@@ -27,7 +27,10 @@ public class DataDictServiceImpl extends BaseAbstractService<DataDictEntity> imp
 
 	@Override
 	public List<DataDictEntity> findDictList(String group_code) {
-		String hql = " from DataDictEntity d where d.group_code = ?";
+		if(StringUtils.isBlank(group_code)){
+			throw new IllegalArgumentException("group_code不能为空");
+		}
+		String hql = " from DataDictEntity d where d.group_code = ? order by d.order_num";
 		return findListByHql(hql, group_code);
 	}
 
@@ -44,9 +47,9 @@ public class DataDictServiceImpl extends BaseAbstractService<DataDictEntity> imp
 	 */
 	@Override
 	public Pagination<DataDictEntity> pageList(String group_code) {
-		String hql = " from DataDictEntity d where d.group_code = ? order by d.group_code, d.group_code";
+		String hql = " from DataDictEntity d where d.group_code = ? order by d.group_code, d.order_num";
 		if(StringUtils.isBlank(group_code)){
-			hql = " from DataDictEntity d order by d.group_code, d.group_code";
+			hql = " from DataDictEntity d order by d.group_code, d.order_num";
 			return pageByHql(hql);
 		}
 		return pageByHql(hql, group_code);

@@ -9,11 +9,16 @@ var busiweb_combobox;
 var materialDialog;
 
 $(function(){
-	
+
+
+	var url = domain+'/admin/extapp/list?app_type=api&msg_type='+req_type;
+	if (extType !== '') {
+		url = domain+'/admin/extapp/list?app_type=restful';
+	}
 	//加载业务接口列表
-	busiapi_combobox = $('#busiapp_id').combobox({   
-		url: domain+'/admin/extapp/list?app_type=api&support_req_type='+req_type,
-        method: 'get',
+	busiapi_combobox = $('#busiapp_id').combobox({
+		url: url,
+        method: 'post',
         valueField:'id',
         textField:'name',
         groupField:'group_name',

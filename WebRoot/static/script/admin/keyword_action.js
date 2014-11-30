@@ -71,7 +71,7 @@ function init(){
 		} ] ],
 		columns : [[ {
 			field : 'dict_name',
-			title : '回复/类型',
+			title : '动作响应类型',
 			width : 150
 		}, {
 			field : 'str_in_time',
@@ -126,6 +126,7 @@ function append() {
 function submitMsgActionForm(respType){
 	msgActionForm.form('submit', {
 		url : domain + '/admin/action/save',
+		ajax : true,
 		success : function(data) {
 			fjx.closeProgress();
 			var res = $.evalJSON(data);
@@ -164,14 +165,14 @@ function submitMsgActionForm(respType){
 				}
 				$("#msgMaterialId").val(newsId);
 			}
-			if(respType === 'busiapp_api'){
+			if(respType === 'api'){
 				$("#msgActionType").val("api");
 				var app_id = busiapi_combobox.combobox("getValue");
 				if(!app_id){
 					$.messager.alert('提示', '请选择业务功能', 'warning');
 					return false;
 				}
-				$("#msgAppId").val(app_id);
+				$("#msgExtAppId").val(app_id);
 			}
 			$.messager.progress({
 				text : '数据提交中....',
@@ -261,9 +262,11 @@ function editMsgAction(id){
 			tabIndex = 4;
 		}
 		
-	}else if(row.action_type == 'busiapp_api'){
+	}else if(row.action_type == 'api'){
 		tabIndex = 5;
-		busiapi_combobox.combobox("select",row.app_id);
+		if (row.app_id) {
+			busiapi_combobox.combobox("select",row.app_id);
+		}
 	}
 	$("#edit_tabs").tabs("select",tabIndex);
 	$("#msgKeyWord").attr("readonly","readonly");
@@ -312,8 +315,12 @@ function view (id){
 		}else if(msgType == "news"){	//图文消息
 			viewHtml = xml2NewsHtml(row.xml_data,row.in_time,row.material_id);	//(wechat.js)
 		}
-	}else if(row.action_type == 'busiapp_api'){
-		viewHtml = "从接口【"+row.app_name+"】中获得响应数据";
+	}else if(row.action_type == 'api'){
+		if (row.app_name) {
+			viewHtml = "从接口【"+row.app_name+"】中获得响应数据";
+		}else{
+			viewHtml = "插件已经被删除，请重新配置";
+		}
 	}
 	$("#viewDiv").html(viewHtml);
 	

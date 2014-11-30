@@ -32,6 +32,7 @@
 		<!-- 文本消息动作 -->
 		<jsp:include page="/WEB-INF/view/wechat/admin/menu/action_inc.jsp">
 			<jsp:param name="btn_return" value="hide"/>
+			<jsp:param name="extType" value="default"/>
 		</jsp:include>
 	</div>
 	

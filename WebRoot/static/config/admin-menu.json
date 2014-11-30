@@ -88,7 +88,7 @@
 	"text" : "系统管理",
 	"checked" : true,
 	"children" : [{
-		"text" : "API管理",
+		"text" : "插件管理",
 		"checked" : false,
 		"attributes" : {
 			"src" : "/admin/extapp"

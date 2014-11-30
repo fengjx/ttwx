@@ -18,8 +18,9 @@ import com.fjx.wechat.base.admin.service.SysUserService;
 import com.fjx.wechat.config.AppConfig;
 
 
-
-
+/**
+ * 用户登录
+ */
 @Controller
 public class LoginController extends BaseController {
 	

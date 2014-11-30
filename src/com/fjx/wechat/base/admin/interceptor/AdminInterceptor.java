@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fjx.common.utils.WebUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,8 +36,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 		SysUserEntity user = (SysUserEntity) session.getAttribute(AppConfig.LOGIN_FLAG);
 		//登陆超时
 		if(null == user){		
-			String flag = request.getHeader("Request-Flag");
-			if(AppConfig.REQUEST_FLAG_AJAX.equals(flag)){
+			if(WebUtil.validAjax(request)){
 				request.getRequestDispatcher("/common/loginTimeoutAjax").forward(request,response);
 			}else{
 				request.getRequestDispatcher("/common/loginTimeout").forward(request,response);
@@ -45,4 +45,5 @@ public class AdminInterceptor implements HandlerInterceptor {
 		}
 		return true;
 	}
+
 }

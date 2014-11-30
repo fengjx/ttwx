@@ -71,11 +71,15 @@ public class BaseController {
 	 * @return
 	 */
 	protected Map<String, String> retSuccess(){
+		return retSuccess("操作成功");
+	}
+	protected Map<String, String> retSuccess(String msg){
 		Map<String, String> res = new HashMap<String, String>();
 		res.put("code", "1");
-		res.put("msg", "操作成功");
+		res.put("msg", msg);
 		return res;
 	}
+
 
 	/**
 	 * 设置异常信息

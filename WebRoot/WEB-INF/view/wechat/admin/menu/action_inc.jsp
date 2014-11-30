@@ -1,6 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/common/inc/path.jsp" %>
 <script type="text/javascript">
+	var extType = '${param.extType}';
 	var req_type = '${param.req_type}';
 	var event_type = '${param.event_type}';
 </script>
@@ -97,10 +98,10 @@
 			    </div> --%>
 		   </div>
         </div>
-        <div title="<span class='tt-inner tab_commondity_appmsg'><i class='icon_msg_sender'></i>业务模块</span>" style="padding:10px">
+        <div title="<span class='tt-inner tab_commondity_appmsg'><i class='icon_msg_sender'></i>扩展插件</span>" style="padding:10px">
 			<div style="width: 500px;">
 				<div>
-					數據接口：
+					选择插件：
 					<input class="field" type="text" id="busiapp_id" style="width:250px;">
 		    	</div>
 		    	<div style="height:200px;border: solid 1px #E0ECFF;">
@@ -113,7 +114,7 @@
 						 </span>
 					 </c:if>
 			    	 <span id="js_submit" class="btn btn_input btn_primary">
-			    	 	<button onclick="submitMsgActionForm('busiapp_api');">保存</button>
+			    	 	<button onclick="submitMsgActionForm('api');">保存</button>
 					 </span>
 			    </div>
 		    </div>

@@ -1,6 +1,7 @@
 package com.fjx.wechat.base.admin.action;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,10 +55,30 @@ public class ExtAppController extends BaseController {
 	 */
 	@RequestMapping(value="/pageList")
 	@ResponseBody
-	public Pagination<ExtAppEntity> pageList(HttpServletRequest request){
-		return extAppService.page();
+	public Pagination<ExtAppEntity> pageList(HttpServletRequest request, ExtAppEntity extApp){
+		return extAppService.pageList(extApp);
 	}
 
 
+	/**
+	 * 添加或修改
+	 * @param extApp
+	 * @param reqTypes
+	 * @param eventTypes
+	 * @return
+	 */
+	@RequestMapping(value="/save")
+	@ResponseBody
+	public Map<String,String> saveOrUpdate(ExtAppEntity extApp, String reqTypes, String eventTypes){
+		extAppService.saveOrUpdateApp(extApp, reqTypes, eventTypes);
+		return retSuccess();
+	}
 
+
+	@RequestMapping(value="/delete")
+	@ResponseBody
+	public Map<String,String> delete(String id){
+		extAppService.deleteApp(id);
+		return retSuccess();
+	}
 }
