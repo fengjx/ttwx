@@ -14,3 +14,5 @@ spring3.2 + springMVC + hibernate4 + freemarker<br />
 0：失败<br />
 1：成功<br />
 -1：登陆超时<br />
+
+![消息处理流程](http://fengjxblog-fjxstorage.stor.sinaapp.com/ttwx/%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png)
