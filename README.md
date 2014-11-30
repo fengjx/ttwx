@@ -10,9 +10,7 @@ E-mail：xd-fjx@qq.com<br />
 开发框架：<br />
 spring3.2 + springMVC + hibernate4 + freemarker<br />
 
-全局同意错误码<br />
+全局统一错误码<br />
 0：失败<br />
 1：成功<br />
 -1：登陆超时<br />
-
-
