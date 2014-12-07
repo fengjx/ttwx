@@ -2,7 +2,7 @@ package com.fjx.wechat.mysdk.process.in.executor;
 
 import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
 import com.fjx.wechat.mysdk.context.WechatContext;
-import com.fjx.wechat.mysdk.tools.ServiceTool;
+import com.fjx.wechat.mysdk.tools.NameTool;
 import com.fjx.wechat.mysdk.beans.req.ReqImageMessage;
 
 /**
@@ -23,7 +23,7 @@ public class InWechatImageMsgExecutor extends InServiceExecutor {
 
 	@Override
 	public String getExecutorName() {
-		return ServiceTool.buildInServiceName(WechatReqMsgtypeConstants.REQ_MSG_TYPE_IMAGE, null);
+		return NameTool.buildInServiceName(WechatReqMsgtypeConstants.REQ_MSG_TYPE_IMAGE, null);
 	}
 
 }

@@ -5,7 +5,7 @@ import com.fjx.wechat.config.MsgTemplateConstants;
 import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
 import com.fjx.wechat.mysdk.context.WechatContext;
 import com.fjx.wechat.mysdk.process.ext.TextExtService;
-import com.fjx.wechat.mysdk.tools.ServiceTool;
+import com.fjx.wechat.mysdk.tools.NameTool;
 import com.fjx.wechat.mysdk.beans.req.ReqTextMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class InWechatTextMsgExecutor extends InServiceExecutor {
 
 	@Override
 	public String getExecutorName() {
-		return ServiceTool.buildInServiceName(WechatReqMsgtypeConstants.REQ_MSG_TYPE_TEXT, null);
+		return NameTool.buildInServiceName(WechatReqMsgtypeConstants.REQ_MSG_TYPE_TEXT, null);
 	}
 
 }

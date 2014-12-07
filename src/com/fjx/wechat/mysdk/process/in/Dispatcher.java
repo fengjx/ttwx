@@ -7,7 +7,7 @@ import com.fjx.wechat.mysdk.constants.WechatReqEventConstants;
 import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
 import com.fjx.wechat.mysdk.context.WechatContext;
 import com.fjx.wechat.mysdk.process.in.executor.InWechatValidMsgExecutor;
-import com.fjx.wechat.mysdk.tools.ServiceTool;
+import com.fjx.wechat.mysdk.tools.NameTool;
 
 /**
  * 业务动作分发器
@@ -38,51 +38,51 @@ public class Dispatcher {
 		
 		if(WechatPublicAccountEntity.VALID_STATE_ACTIVATE.equals(valid_state)){	
 			if (WechatReqMsgtypeConstants.REQ_MSG_TYPE_TEXT.equals(msgType)) {// 文本消息
-				return ServiceTool.buildInServiceName(
+				return NameTool.buildInServiceName(
 						WechatReqMsgtypeConstants.REQ_MSG_TYPE_TEXT, null);
 			} else if (msgType
 					.equals(WechatReqMsgtypeConstants.REQ_MSG_TYPE_LOCATION)) {// 地理位置消息
-				return ServiceTool.buildInServiceName(
+				return NameTool.buildInServiceName(
 						WechatReqMsgtypeConstants.REQ_MSG_TYPE_LOCATION, null);
 			} else if (msgType.equals(WechatReqMsgtypeConstants.REQ_MSG_TYPE_IMAGE)) {// 图片消息
-				return ServiceTool.buildInServiceName(
+				return NameTool.buildInServiceName(
 						WechatReqMsgtypeConstants.REQ_MSG_TYPE_IMAGE, null);
 			} else if (msgType.equals(WechatReqMsgtypeConstants.REQ_MSG_TYPE_LINK)) {// 链接消息
-				return ServiceTool.buildInServiceName(
+				return NameTool.buildInServiceName(
 						WechatReqMsgtypeConstants.REQ_MSG_TYPE_LINK, null);
 			} else if (msgType.equals(WechatReqMsgtypeConstants.REQ_MSG_TYPE_VOICE)) {// 语音消息
-				return ServiceTool.buildInServiceName(
+				return NameTool.buildInServiceName(
 						WechatReqMsgtypeConstants.REQ_MSG_TYPE_VOICE, null);
 			} else if (msgType.equals(WechatReqMsgtypeConstants.REQ_MSG_TYPE_VIDEO)) {// 视频消息
-				return ServiceTool.buildInServiceName(
+				return NameTool.buildInServiceName(
 						WechatReqMsgtypeConstants.REQ_MSG_TYPE_VIDEO, null);
 			} else if (msgType.equals(WechatReqMsgtypeConstants.REQ_MSG_TYPE_EVENT)) {// 事件消息
 				String event = requestMap.get("Event");
 				// 自定义菜单事件
 				if (null != event
 						&& event.equals(WechatReqEventConstants.EVENT_TYPE_CLICK)) {// 菜单点击事件
-					return ServiceTool.buildInServiceName(
+					return NameTool.buildInServiceName(
 							WechatReqMsgtypeConstants.REQ_MSG_TYPE_EVENT,
 							WechatReqEventConstants.EVENT_TYPE_CLICK);
 				} else if (null != event
 						&& event.equals(WechatReqEventConstants.EVENT_TYPE_SUBSCRIBE)) {// 用户订阅事件
-					return ServiceTool.buildInServiceName(
+					return NameTool.buildInServiceName(
 							WechatReqMsgtypeConstants.REQ_MSG_TYPE_EVENT,
 							WechatReqEventConstants.EVENT_TYPE_SUBSCRIBE);
 				} else if (null != event
 						&& event.equals(WechatReqEventConstants.EVENT_TYPE_UNSUBSCRIBE)) {// 用户取消订阅
-					return ServiceTool.buildInServiceName(
+					return NameTool.buildInServiceName(
 							WechatReqMsgtypeConstants.REQ_MSG_TYPE_EVENT,
 							WechatReqEventConstants.EVENT_TYPE_UNSUBSCRIBE);
 				} else if (null != event
 						&& event.equals(WechatReqEventConstants.EVENT_TYPE_SCAN)) {// 二维码扫描事件（已关注用户）处理逻辑
-					return ServiceTool.buildInServiceName(
+					return NameTool.buildInServiceName(
 							WechatReqMsgtypeConstants.REQ_MSG_TYPE_EVENT,
 							WechatReqEventConstants.EVENT_TYPE_SCAN);
 				}
 			}
 		}else if(WechatPublicAccountEntity.VALID_STATE_EXCESS.equals(valid_state) && WechatReqMsgtypeConstants.REQ_MSG_TYPE_TEXT.equals(msgType) ){//消息类型是文本，当前账号状态是1，已配置URL到公众平台
-			return ServiceTool.buildInServiceName(InWechatValidMsgExecutor.EXECUTOR_NAME, null);
+			return NameTool.buildInServiceName(InWechatValidMsgExecutor.EXECUTOR_NAME, null);
 		}
 		return null;
 	}

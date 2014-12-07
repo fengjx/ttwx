@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fjx.common.framework.base.service.IBaseAbstractService;
+import com.fjx.common.framework.system.exception.MyException;
 import com.fjx.wechat.base.admin.entity.SysUserEntity;
 import com.fjx.wechat.base.admin.entity.WechatMenuEntity;
 import com.fjx.wechat.mysdk.beans.menu.Menu;
@@ -48,7 +49,7 @@ public interface WechatMenuService extends IBaseAbstractService<WechatMenuEntity
 	 * @param sysUser
 	 * @throws Exception 
 	 */
-	public void release(SysUserEntity sysUser) throws Exception;
+	public void release(SysUserEntity sysUser) throws MyException;
 
 	/**
 	 * 读取菜单数据

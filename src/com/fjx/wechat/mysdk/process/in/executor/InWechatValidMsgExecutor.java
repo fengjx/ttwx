@@ -2,7 +2,7 @@ package com.fjx.wechat.mysdk.process.in.executor;
 
 import com.fjx.wechat.config.MsgTemplateConstants;
 import com.fjx.wechat.mysdk.context.WechatContext;
-import com.fjx.wechat.mysdk.tools.ServiceTool;
+import com.fjx.wechat.mysdk.tools.NameTool;
 import com.fjx.wechat.mysdk.beans.req.ReqTextMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,7 +41,7 @@ public class InWechatValidMsgExecutor extends InServiceExecutor {
 
 	@Override
 	public String getExecutorName() {
-		return ServiceTool.buildInServiceName(EXECUTOR_NAME, null);
+		return NameTool.buildInServiceName(EXECUTOR_NAME, null);
 	}
 
 }

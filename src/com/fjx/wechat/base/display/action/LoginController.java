@@ -36,7 +36,7 @@ public class LoginController extends BaseController {
 			return res;
 		}
 		SysUserEntity sysUser = sysUserService.signin(user.getUsername(), user.getPwd());
-		System.out.println("查询到登陆用户："+sysUser);
+		logger.info("查询到登陆用户："+sysUser);
 		if(null == sysUser){
 			throw new MyRuntimeException("用户名或密码错误");
 		}

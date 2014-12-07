@@ -2,6 +2,7 @@ package com.fjx.wechat.mysdk.api;
 
 
 import com.fjx.wechat.mysdk.constants.WechatApiConstants;
+import com.fjx.wechat.mysdk.tools.NameTool;
 
 /**
  *
@@ -12,6 +13,8 @@ public class ApiConfig {
 	private AccessToken accessToken;
 	private String appId = null;
 	private String appSecret = null;
+	private static String encodingAesKey = null;
+	private static boolean messageEncrypt = false;	// 消息加密与否
 	
 	public void init(AccessToken accessToken) {
 		setAccessToken(accessToken);
@@ -26,6 +29,14 @@ public class ApiConfig {
 		setAccessToken(accessToken);
 		setAppId(appId);
 		setAppSecret(appSecret);
+	}
+
+	/**
+	 * 根据appId和appSecret生成key
+	 * @return
+	 */
+	public String createKey(){
+		return NameTool.createApiConfigKey(this.appId , this.appSecret);
 	}
 
 	public AccessToken getAccessToken() {

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
 import com.fjx.wechat.mysdk.context.WechatContext;
+import com.fjx.wechat.mysdk.tools.MessageUtil;
 import com.fjx.wechat.mysdk.tools.WeChatUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -42,7 +43,7 @@ public class WechatLogAop {
 			}
 			reqMsgLog.setTo_user_name(requestMap.get("ToUserName"));
 			reqMsgLog.setFrom_user_name(requestMap.get("FromUserName"));
-			reqMsgLog.setCreate_time(CommonUtils.String2Date(WeChatUtil.formatCreateTime(requestMap.get("CreateTime")), "yyyy-MM-dd HH:mm:ss"));
+			reqMsgLog.setCreate_time(CommonUtils.String2Date(MessageUtil.formatCreateTime(requestMap.get("CreateTime")), "yyyy-MM-dd HH:mm:ss"));
 			reqMsgLog.setReq_type(msgType);
 			reqMsgLog.setMsg_id(Long.parseLong(StringUtils.defaultString(requestMap.get("MsgId"), "0")));
 			reqMsgLog.setReq_xml(requestMap.get("xml"));

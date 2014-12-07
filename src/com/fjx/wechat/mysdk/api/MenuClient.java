@@ -1,6 +1,6 @@
 package com.fjx.wechat.mysdk.api;
 
-import com.fjx.common.utils.JsonUtil;
+import com.fjx.common.utils.JSONUtil;
 import com.fjx.wechat.mysdk.beans.menu.Menu;
 import com.fjx.wechat.mysdk.tools.HttpUtil;
 
@@ -19,40 +19,26 @@ public class MenuClient extends AbstractClient {
      * 查询菜单
      */
     public ApiResult getMenu() {
-        AccessToken accessToken = apiConfig.getAccessToken();
-        if(null == accessToken || !accessToken.isAvailable()){
-            AccessTokenClient accessTokenClient = ClientFactory.createAccessTokenClient(apiConfig);
-            accessToken = accessTokenClient.getAccessToken();
-        }
+        AccessToken accessToken = getAccessToken();
         String jsonResult = HttpUtil.get(getMenu + accessToken.getAccessToken());
-        return new ApiResult(jsonResult);
+        return proceResult(jsonResult);
     }
 
     /**
      * 创建菜单
      */
     public ApiResult createMenu(String jsonStr) {
-        AccessToken accessToken = apiConfig.getAccessToken();
-        if(null == accessToken || !accessToken.isAvailable()){
-            AccessTokenClient accessTokenClient = ClientFactory.createAccessTokenClient(apiConfig);
-            accessToken = accessTokenClient.getAccessToken();
-        }
+        AccessToken accessToken = getAccessToken();
         String jsonResult = HttpUtil.post(createMenu + accessToken.getAccessToken(), jsonStr);
-        return new ApiResult(jsonResult);
+        return proceResult(jsonResult);
     }
 
     /**
      * 创建菜单
      */
     public ApiResult createMenu(Menu menu) {
-        AccessToken accessToken = apiConfig.getAccessToken();
-        if(null == accessToken || !accessToken.isAvailable()){
-            AccessTokenClient accessTokenClient = ClientFactory.createAccessTokenClient(apiConfig);
-            accessToken = accessTokenClient.getAccessToken();
-        }
-        String jsonStr = JsonUtil.getJson(menu);
-        String jsonResult = HttpUtil.post(createMenu + accessToken.getAccessToken(), jsonStr);
-        return new ApiResult(jsonResult);
+        String jsonStr = JSONUtil.toJson(menu);
+        return createMenu(jsonStr);
     }
 
 }

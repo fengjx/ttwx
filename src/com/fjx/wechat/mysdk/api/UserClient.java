@@ -13,25 +13,18 @@ public class UserClient extends AbstractClient {
     private String getFollowers = "https://api.weixin.qq.com/cgi-bin/user/get";
 
     public ApiResult getUserInfo(String openId) {
-        AccessToken accessToken = apiConfig.getAccessToken();
-        if(null == accessToken || !accessToken.isAvailable()){
-            AccessTokenClient accessTokenClient = ClientFactory.createAccessTokenClient(apiConfig);
-            accessToken = accessTokenClient.getAccessToken();
-        }
+        AccessToken accessToken = getAccessToken();
         ParaMap pm = ParaMap.create("access_token", accessToken.getAccessToken()).put("openid", openId).put("lang", "zh_CN");
-        return new ApiResult(HttpUtil.get(getUserInfo, pm.getData()));
+        return proceResult(HttpUtil.get(getUserInfo, pm.getData()));
     }
 
     public  ApiResult getFollowers(String nextOpenid) {
-        AccessToken accessToken = apiConfig.getAccessToken();
-        if(null == accessToken || !accessToken.isAvailable()){
-            AccessTokenClient accessTokenClient = ClientFactory.createAccessTokenClient(apiConfig);
-            accessToken = accessTokenClient.getAccessToken();
-        }
+        AccessToken accessToken = getAccessToken();
         ParaMap pm = ParaMap.create("access_token", accessToken.getAccessToken());
-        if (nextOpenid != null)
+        if (nextOpenid != null){
             pm.put("next_openid", nextOpenid);
-        return new ApiResult(HttpUtil.get(getFollowers, pm.getData()));
+        }
+        return proceResult(HttpUtil.get(getFollowers, pm.getData()));
     }
 
     public  ApiResult getFollows() {

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fjx.common.framework.system.exception.MyException;
 import com.fjx.wechat.base.admin.entity.WechatMenuEntity;
 import com.fjx.wechat.base.admin.service.WechatMenuService;
 import org.apache.commons.lang3.StringUtils;
@@ -96,9 +97,14 @@ public class WechatMenuController extends BaseController {
 	 */
 	@RequestMapping(value="/release")
 	@ResponseBody
-	public Map<String, String> release (HttpServletRequest request) throws Exception{
+	public Map<String, String> release (HttpServletRequest request) throws MyException {
 		SysUserEntity sysUser = getLoginSysUser(request);
-		wechatMenuService.release(sysUser);
+		try {
+			wechatMenuService.release(sysUser);
+		} catch (MyException e) {
+			setErrorMsg(request,e.getMessage());
+			throw e;
+		}
 		return retSuccess();
 	}
 }

@@ -36,5 +36,6 @@
 	<import resource="spring-email.xml" />
 	<import resource="spring-mvc-interceptor.xml" />
 	<import resource="spring-aop.xml"/>	
+	<import resource="spring-scheduled.xml"/>
 
 </beans>

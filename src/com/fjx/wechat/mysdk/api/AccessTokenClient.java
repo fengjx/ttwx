@@ -14,7 +14,6 @@ public class AccessTokenClient extends AbstractClient {
 
     private String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
 
-
     public AccessToken getAccessToken() {
         final String appId = apiConfig.getAppId();
         final String appSecret = apiConfig.getAppSecret();

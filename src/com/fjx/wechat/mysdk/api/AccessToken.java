@@ -7,6 +7,7 @@
 package com.fjx.wechat.mysdk.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fjx.common.framework.system.exception.MyRuntimeException;
 
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class AccessToken {
 				expiredTime = System.currentTimeMillis() + ((expires_in - 5) * 1000);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new MyRuntimeException("创建AccessToken异常，jsonStr["+jsonStr+"]",e);
 		}
 	}
 	
@@ -74,5 +75,9 @@ public class AccessToken {
 				return result;
 		}
 		return errmsg;
+	}
+
+	public Long getExpiredTime() {
+		return expiredTime;
 	}
 }

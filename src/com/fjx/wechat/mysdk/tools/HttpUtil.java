@@ -1,6 +1,7 @@
 package com.fjx.wechat.mysdk.tools;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import javax.net.ssl.*;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class HttpUtil {
+
+	private static final Logger LOGGER = Logger.getLogger(HttpUtil.class);
 
 	private static final String GET  = "GET";
 	private static final String POST = "POST";
@@ -62,6 +65,7 @@ public class HttpUtil {
 	}
 	
 	private static HttpURLConnection getHttpConnection(String url, String method, Map<String, String> headers) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
+		LOGGER.info("getHttpConnection url=["+url+"], method=["+method+"], header=["+headers+"]");
 		URL _url = new URL(url);
 		HttpURLConnection conn = (HttpURLConnection)_url.openConnection();
 		if (conn instanceof HttpsURLConnection) {
@@ -126,6 +130,7 @@ public class HttpUtil {
 			
 			OutputStream out = conn.getOutputStream();
 			out.write(data.getBytes(CHARSET));
+			LOGGER.info("post write data:{"+data+"}");
 			out.flush();
 			out.close();
 			
@@ -163,6 +168,7 @@ public class HttpUtil {
 			while ((line = reader.readLine()) != null){
 				sb.append(line).append("\n");
 			}
+			LOGGER.info("readResponseString resStr=["+sb+"]");
 			return sb.toString();
 		}
 		catch (Exception e) {

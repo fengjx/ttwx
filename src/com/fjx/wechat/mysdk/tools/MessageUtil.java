@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -188,7 +190,7 @@ public class MessageUtil {
 				});
 		return res;
 	}
-	
+
 	/**
 	 * emoji表情转换(hex -> utf-16)
 	 * @param hexEmoji
@@ -197,5 +199,17 @@ public class MessageUtil {
 	public static String emoji(int hexEmoji) {
 		return String.valueOf(Character.toChars(hexEmoji));
 	}
-	
+
+	/**
+	 * 将微信消息中的CreateTime转换成标准格式的时间（yyyy-MM-dd HH:mm:ss）
+	 * CreateTime，表示1970年1月1日0时0分0秒至消息创建时所间隔的秒数，不是毫秒数！
+	 * @param createTime 消息创建时间
+	 * @return
+	 */
+	public static String formatCreateTime(String createTime) {
+		// 将微信传入的CreateTime转换成long类型，再乘以1000
+		long msgCreateTime = Long.parseLong(createTime) * 1000L;
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return format.format(new Date(msgCreateTime));
+	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.fjx.common.framework.system.exception.MyException;
 import com.fjx.wechat.mysdk.api.ApiConfig;
 import com.fjx.wechat.mysdk.api.ApiResult;
 import com.fjx.wechat.mysdk.api.ClientFactory;
@@ -140,14 +141,14 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 	 * @see com.fjx.wechat.base.web.admin.service.WechatMenuService#release(com.fjx.wechat.base.web.admin.entity.SysUser)
 	 */
 	@Override
-	public void release(SysUserEntity sysUser) throws Exception{
+	public void release(SysUserEntity sysUser) throws MyException {
 		String appid = sysUser.getWechatPublicAccount().getApp_id();
 		String appsecret = sysUser.getWechatPublicAccount().getApp_secret();
 		Menu menu = loadMenu(sysUser);
 		MenuClient client = ClientFactory.createMenuClient(appid, appsecret);
 		ApiResult result = client.createMenu(menu);
 		if(!result.isSucceed()){
-			throw new MyRuntimeException("菜单发布失败：errcode="+result.getErrorCode()+" and errmsg="+result.getErrorMsg());
+			throw new MyException("菜单发布失败：errcode="+result.getErrorCode()+" and errmsg="+result.getErrorMsg());
 		}
 	}
 

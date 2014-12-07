@@ -4,11 +4,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import com.fjx.wechat.config.MsgTemplateConstants;
-import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
 import com.fjx.wechat.mysdk.context.WechatContext;
 import com.fjx.wechat.mysdk.process.ServiceExecutor;
 import com.fjx.wechat.mysdk.process.ServiceExecutorNameWire;
-import com.fjx.wechat.mysdk.process.ext.TextExtService;
 import com.fjx.wechat.mysdk.tools.MessageUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;

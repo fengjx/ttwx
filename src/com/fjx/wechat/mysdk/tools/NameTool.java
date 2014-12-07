@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author jie.hua@alipay.com
  * @version $Id: ServiceTools.java, v 0.1 2014-1-6 下午4:44:19 jie.hua Exp $
  */
-public class ServiceTool {
+public final class NameTool {
 
     /**
      * 分隔符
@@ -24,6 +24,14 @@ public class ServiceTool {
     public static String buildInServiceName(String msgType, String eventType) {
         return StringUtils.defaultIfBlank(msgType, StringUtils.EMPTY) + SEPARATOR
                + StringUtils.defaultIfBlank(eventType, StringUtils.EMPTY);
+    }
+
+    /**
+     * 根据appId和appSecret生成key
+     * @return
+     */
+    public static String createApiConfigKey(String appId, String appSecret){
+        return appId + "_" + appSecret;
     }
 
 }
