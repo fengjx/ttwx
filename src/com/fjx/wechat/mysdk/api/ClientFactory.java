@@ -13,9 +13,9 @@ public class ClientFactory {
      * @param appSecret
      * @return
      */
-    public static AccessTokenClient createAccessTokenClient(String appId, String appSecret ){
+    public static AccessTokenClient createAccessTokenClient(String appId, String appSecret,String token ){
         ApiConfig apiConfig = new ApiConfig();
-        apiConfig.init(appId, appSecret);
+        apiConfig.init(appId, appSecret,token);
         return createAccessTokenClient(apiConfig);
     }
 
@@ -36,9 +36,9 @@ public class ClientFactory {
      * @param appSecret
      * @return
      */
-    public static MenuClient createMenuClient(String appId, String appSecret ){
+    public static MenuClient createMenuClient(String appId, String appSecret, String token ){
         ApiConfig apiConfig = new ApiConfig();
-        apiConfig.init(appId, appSecret);
+        apiConfig.init(appId, appSecret,token);
         return createMenuClient(apiConfig);
     }
 
@@ -58,9 +58,9 @@ public class ClientFactory {
      * @param appSecret
      * @return
      */
-    public static UserClient createUserClient(String appId, String appSecret ){
+    public static UserClient createUserClient(String appId, String appSecret,String token ){
         ApiConfig apiConfig = new ApiConfig();
-        apiConfig.init(appId, appSecret);
+        apiConfig.init(appId, appSecret, token);
         return createUserClient(apiConfig);
     }
 

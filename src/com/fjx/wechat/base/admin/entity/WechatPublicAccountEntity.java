@@ -47,7 +47,8 @@ public class WechatPublicAccountEntity extends ToStringBase {
 	private Date update_time;
 	private String username;
 	private String pwd;
-	
+	private String encodingAESKey;	//消息加解密密钥
+
 	private SysUserEntity sysUser;
 	
 	@Id
@@ -163,7 +164,15 @@ public class WechatPublicAccountEntity extends ToStringBase {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	
+
+	public String getEncodingAESKey() {
+		return encodingAESKey;
+	}
+
+	public void setEncodingAESKey(String encodingAESKey) {
+		this.encodingAESKey = encodingAESKey;
+	}
+
 	@OneToOne
 	@JoinColumn(name="sys_user_id")
 	public SysUserEntity getSysUser() {

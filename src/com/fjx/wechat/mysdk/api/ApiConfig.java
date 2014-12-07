@@ -1,7 +1,6 @@
 package com.fjx.wechat.mysdk.api;
 
 
-import com.fjx.wechat.mysdk.constants.WechatApiConstants;
 import com.fjx.wechat.mysdk.tools.NameTool;
 
 /**
@@ -13,6 +12,7 @@ public class ApiConfig {
 	private AccessToken accessToken;
 	private String appId = null;
 	private String appSecret = null;
+	private String token;			//公众账号配置的token
 	private static String encodingAesKey = null;
 	private static boolean messageEncrypt = false;	// 消息加密与否
 	
@@ -20,15 +20,17 @@ public class ApiConfig {
 		setAccessToken(accessToken);
 	}
 
-	public void init(String appId, String appSecret) {
+	public void init(String appId, String appSecret,String token) {
 		setAppId(appId);
 		setAppSecret(appSecret);
+		setToken(token);
 	}
 
-	public void init(AccessToken accessToken, String appId, String appSecret) {
+	public void init(AccessToken accessToken, String appId, String appSecret,String token) {
 		setAccessToken(accessToken);
 		setAppId(appId);
 		setAppSecret(appSecret);
+		setToken(token);
 	}
 
 	/**
@@ -70,6 +72,34 @@ public class ApiConfig {
 		if (appSecret == null)
 			throw new IllegalArgumentException("appSecret can not be null");
 		this.appSecret = appSecret;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		if (token == null)
+			throw new IllegalArgumentException("token can not be null");
+		this.token = token;
+	}
+
+	public static String getEncodingAesKey() {
+		return encodingAesKey;
+	}
+
+	public static void setEncodingAesKey(String encodingAesKey) {
+		if (encodingAesKey == null)
+			throw new IllegalArgumentException("encodingAesKey can not be null");
+		ApiConfig.encodingAesKey = encodingAesKey;
+	}
+
+	public static boolean isMessageEncrypt() {
+		return messageEncrypt;
+	}
+
+	public static void setMessageEncrypt(boolean messageEncrypt) {
+		ApiConfig.messageEncrypt = messageEncrypt;
 	}
 }
 

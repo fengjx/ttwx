@@ -144,8 +144,9 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 	public void release(SysUserEntity sysUser) throws MyException {
 		String appid = sysUser.getWechatPublicAccount().getApp_id();
 		String appsecret = sysUser.getWechatPublicAccount().getApp_secret();
+		String token = sysUser.getWechatPublicAccount().getToken();
 		Menu menu = loadMenu(sysUser);
-		MenuClient client = ClientFactory.createMenuClient(appid, appsecret);
+		MenuClient client = ClientFactory.createMenuClient(appid, appsecret,token);
 		ApiResult result = client.createMenu(menu);
 		if(!result.isSucceed()){
 			throw new MyException("菜单发布失败：errcode="+result.getErrorCode()+" and errmsg="+result.getErrorMsg());
