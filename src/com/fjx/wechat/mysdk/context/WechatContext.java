@@ -8,7 +8,7 @@ import com.fjx.wechat.base.admin.entity.WechatPublicAccountEntity;
 import com.fjx.wechat.mysdk.beans.user.UserInfo;
 
 /**
- * 微信请求参数容器
+ * 微信请求参数上下文
  * @author fengjx
  * @date 2014年2月15日
  */

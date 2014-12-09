@@ -8,7 +8,7 @@ import com.fjx.wechat.mysdk.process.in.Dispatcher;
 import org.apache.log4j.Logger;
 
 /**
- * 
+ * 服务执行器工厂
  * @author jie.hua@alipay.com
  * @version $Id: InServiceExecutorFactory.java, v 0.1 2014-1-6 下午9:46:12 jie.hua Exp $
  */
