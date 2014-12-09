@@ -10,6 +10,8 @@ E-mail：xd-fjx@qq.com<br />
 说明文档：doc目录下<br />
 数据库：db目录下，建表及初始化数据<br />
 
+界面预览：http://git.oschina.net/fengjx/ttwx/wikis/%E7%95%8C%E9%9D%A2%E6%95%88%E6%9E%9C%E9%A2%84%E8%A7%88<br />
+
 演示地址：http://ttwx.sinaapp.com(免费的SAE有时不太稳定)<br />
 
 开发环境：<br />
