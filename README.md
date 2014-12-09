@@ -5,14 +5,30 @@ E-mail：xd-fjx@qq.com<br />
 
 说明：免费、开源、支持二次开发扩展的微信发布平台，让你在微信开发中更专注于业务。<br />
 
-演示地址：http://ttwx.sinaapp.com<br />
+演示地址：http://ttwx.sinaapp.com(免费的SAE有时不太稳定)<br />
+
+开发环境：<br />
+JDK1.6 + jetty1.7 + myeclipse(IntelliJ IDEA)<br />
 
 开发框架：<br />
 spring3.2 + springMVC + hibernate4 + freemarker<br />
 
-全局统一错误码<br />
+前端：<br />
+jquery + jquery easyui1.4 + bootstrap3 + artDialog<br />
+
+设计思路：<br />
+微信基础功能（不与任何业务系统耦合） + 插件式扩展（根据不同业务在原来系统上不修改之前代码迭代功能）<br />
+
+java包结构：<br />
+基础功能包：com.fjx.wechat.base<br />
+扩展功能包：com.fjx.wechat.extension<br />
+开发SDK：com.fjx.wechat.mysdk(在jfinal-weixin基础上修改)<br />
+
+
+统一的异常信息处理，支持一般请求和ajax请求
+全局同意错误码<br />
 0：失败<br />
 1：成功<br />
 -1：登陆超时<br />
 
-![消息处理流程](http://fengjxblog-fjxstorage.stor.sinaapp.com/ttwx/%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png)
+![微信消息处理逻辑](http://fengjxblog-fjxstorage.stor.sinaapp.com/ttwx/%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png)
