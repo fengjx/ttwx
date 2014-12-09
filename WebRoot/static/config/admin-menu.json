@@ -63,25 +63,25 @@
 				"text" : "小店管理",
 				"checked" : false,
 				"attributes" : {
-					"src" : "/wechat/busi/menu_view.action"
+					"src" : ""
 				}
 			},{
 				"text" : "菜单管理",
 				"checked" : false,
 				"attributes" : {
-					"src" : "/wechat/busi/goods_view.action?view_name=add"
+					"src" : ""
 				}
 			},{
 				"text" : "订单管理",
 				"checked" : false,
 				"attributes" : {
-					"src" : "/wechat/busi/goods_view.action"
+					"src" : ""
 				}
 			},{
 				"text" : "统计报表",
 				"checked" : false,
 				"attributes" : {
-					"src" : "/wechat/busi/images_view.action"
+					"src" : ""
 				}
 			}]
 }, {
