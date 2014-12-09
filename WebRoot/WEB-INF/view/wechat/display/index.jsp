@@ -26,7 +26,7 @@
 	          <i class="fa fa-qq"></i>技术交流群：（未创建）
 	        </li>
 	        <li>
-	          <a href="http://fengjxblog.sinaapp.com" title="Bootstrap问答社区" target="_blank">
+	          <a href="http://git.oschina.net/fengjx/ttwx/wikis/pages" title="Bootstrap问答社区" target="_blank">
 	            <i class="fa fa-comments"></i> 问答社区
 	          </a>
 	        </li>
