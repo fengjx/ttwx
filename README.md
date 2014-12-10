@@ -10,9 +10,17 @@ E-mail：xd-fjx@qq.com<br />
 说明文档：doc目录下<br />
 数据库：db目录下，建表及初始化数据<br />
 
+安装说明：
+1、导入数据
+db/mysql/db-mysql.sql
+2、修改配置文件
+db.properties修改数据库配置
+3、打包部署
+部署tomcat或jetty，打开浏览器，访问http://yourhost:port/ttwx/
+
 界面预览：http://git.oschina.net/fengjx/ttwx/wikis/%E7%95%8C%E9%9D%A2%E6%95%88%E6%9E%9C%E9%A2%84%E8%A7%88<br />
 
-演示地址：http://ttwx.sinaapp.com(免费的SAE有时不太稳定)<br />
+演示地址：http://ttwx.sinaapp.com (免费的SAE有时不太稳定)<br />
 
 开发环境：<br />
 JDK1.6 + jetty1.7 + myeclipse(IntelliJ IDEA)<br />
