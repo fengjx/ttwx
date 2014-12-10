@@ -3,6 +3,7 @@ package com.fjx.wechat.mysdk.process.in.aop;
 import java.util.Date;
 import java.util.Map;
 
+import com.fjx.common.framework.system.exception.MyRuntimeException;
 import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
 import com.fjx.wechat.mysdk.context.WechatContext;
 import com.fjx.wechat.mysdk.tools.MessageUtil;
@@ -29,7 +30,7 @@ public class WechatLogAop {
 	@Autowired
 	private ReqMsgLogService reqMsgLogService;
 	
-	public void addReqLog() throws Exception{
+	public void addReqLog(){
 		
 		logger.info("记录微信请求发送数据日志addReqLog begin...");
 		try {
@@ -53,11 +54,11 @@ public class WechatLogAop {
 			WechatContext.setReqMsgLog(reqMsgLog);
 		} catch (Exception e) {
 			logger.error("记录微信请求发送数据日志出现异常", e);
-			throw e;
+			throw new MyRuntimeException("记录微信请求发送数据日志出现异常",e);
 		}
 	}
 	
-	public void addRespLog(Object returnValue) throws Exception{
+	public void addRespLog(Object returnValue){
 		logger.info("记录微信请求发送数据日志addRespLog begin...");
 		try {
 			//微信发送的参数
@@ -67,7 +68,7 @@ public class WechatLogAop {
 			reqMsgLogService.update(reqMsgLog);
 		} catch (Exception e) {
 			logger.error("记录微信请求响应数据日志出现异常", e);
-			throw e;
+			throw new MyRuntimeException("记录微信请求响应数据日志出现异常",e);
 		}
 	}
 	
