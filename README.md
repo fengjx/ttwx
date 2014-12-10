@@ -1,50 +1,53 @@
-#ttwx V1.0<br />
+# 天天微信平台 ttwx_v1.0.1<br />
+### 免费、开源、支持二次开发扩展的微信发布平台，让你在微信开发中更专注于业务。支持多公众账号管理。<br />
+
 作者：阿豆<br />
 qq：466516623（加Q请带备注信息）<br />
 E-mail：xd-fjx@qq.com<br />
 有疑问可以Q我或者给我发邮件，平时上班时间不登QQ<br />
+个人公众号<br>
+![简简单单](http://ttwx.sinaapp.com/static/img/qrcode_for_gh_d7680c37887b_430.jpg)
 
-免费、开源、支持二次开发扩展的微信发布平台，让你在微信开发中更专注于业务。支持多公众账号管理。<br />
+### 文档：<br />
+* 说明文档：doc目录下<br />
+* 数据库：db目录下，建表及初始化数据<br />
+* PS：都是下班时间搞的东西，平时没多少时间弄，如果想要什么文档，或者什么不明白的地方可以联系我<br>
 
-文档：<br />
-说明文档：doc目录下<br />
-数据库：db目录下，建表及初始化数据<br />
+### 安装说明：<br />
+* 1、导入数据<br />
+db/mysql/db-mysql.sql<br />
+* 2、修改配置文件<br />
+db.properties修改数据库配置<br />
+* 3、打包部署<br />
+部署tomcat或jetty，打开浏览器，访问http://yourhost:port/ttwx/<br />
 
-安装说明：
-1、导入数据
-db/mysql/db-mysql.sql
-2、修改配置文件
-db.properties修改数据库配置
-3、打包部署
-部署tomcat或jetty，打开浏览器，访问http://yourhost:port/ttwx/
-
-界面预览：http://git.oschina.net/fengjx/ttwx/wikis/%E7%95%8C%E9%9D%A2%E6%95%88%E6%9E%9C%E9%A2%84%E8%A7%88<br />
-
-演示地址：http://ttwx.sinaapp.com (免费的SAE有时不太稳定)<br />
-
-开发环境：<br />
-JDK1.6 + jetty1.7 + myeclipse(IntelliJ IDEA)<br />
-
-开发框架：<br />
-spring3.2 + springMVC + hibernate4 + freemarker<br />
-
-前端：<br />
-jquery + jquery easyui1.4 + bootstrap3 + artDialog<br />
-
-设计思路：<br />
-微信基础功能（不与任何业务系统耦合） + 插件式扩展（根据不同业务在原来系统上不修改之前代码迭代功能）<br />
-
-java包结构：<br />
-基础功能包：com.fjx.wechat.base<br />
-扩展功能包：com.fjx.wechat.extension<br />
-开发SDK：com.fjx.wechat.mysdk(在jfinal-weixin基础上修改)<br />
+### 界面预览<br>
+http://git.oschina.net/fengjx/ttwx/wikis/%E7%95%8C%E9%9D%A2%E6%95%88%E6%9E%9C%E9%A2%84%E8%A7%88<br />
 
 
-统一的异常信息处理，支持一般请求和ajax请求<br />
+### 开发环境：<br />
+* JDK1.6 + jetty1.7 + myeclipse(IntelliJ IDEA)<br />
+
+### 开发框架：<br />
+* spring3.2 + springMVC + hibernate4 + freemarker<br />
+
+### 前端：<br />
+* jquery + jquery easyui1.4 + bootstrap3 + artDialog<br />
+
+### 设计思路：<br />
+* 微信基础功能（不与任何业务系统耦合） + 插件式扩展（根据不同业务在原来系统上不修改之前代码迭代功能）<br />
+
+### java包结构：<br />
+* 基础功能包：com.fjx.wechat.base<br />
+* 扩展功能包：com.fjx.wechat.extension<br />
+* 开发SDK：com.fjx.wechat.mysdk(在jfinal-weixin基础上修改)<br />
+
+
+### 统一的异常信息处理，支持一般请求和ajax请求<br />
 全局同意错误码<br />
-0：失败<br />
-1：成功<br />
--1：登陆超时<br />
+* 0：失败<br />
+* 1：成功<br />
+* -1：登陆超时<br />
 
 消息处理流程<br />
 ![消息处理逻辑](http://fengjxblog-fjxstorage.stor.sinaapp.com/ttwx/%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png)
