@@ -3,7 +3,7 @@ package com.fjx.wechat.mysdk.tools;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParaMap {
+public final class ParaMap {
 	
 	private Map<String, String> data = new HashMap<String, String>();
 	private ParaMap() {}

@@ -13,7 +13,6 @@ public final class BeanUtil {
 
     /**
      * 判断对象是否为null
-     *
      * @param object 需要判断的对象
      * @return 是否为null
      */

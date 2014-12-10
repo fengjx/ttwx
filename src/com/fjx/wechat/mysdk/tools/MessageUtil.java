@@ -32,7 +32,7 @@ import java.util.Map;
  * @author fengjx
  * @date 2014年1月19日
  */
-public class MessageUtil {
+public final class MessageUtil {
 	
 	/**
 	 * 解析微信发来的请求（XML）

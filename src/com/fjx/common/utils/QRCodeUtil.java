@@ -16,7 +16,7 @@ import jp.sourceforge.qrcode.exception.DecodingFailedException;
 
 import com.swetake.util.Qrcode;
 
-public class QRCodeUtil {
+public final class QRCodeUtil {
 	
 	
 	class J2SEImage implements QRCodeImage {

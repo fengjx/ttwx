@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @author fengjx
  * @date 2014年2月16日
  */
-public class SignUtil {
+public final class SignUtil {
 
 	/**
 	 * 验证签名

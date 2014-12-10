@@ -13,7 +13,7 @@ import java.util.Set;
  * web相关工具类
  * Created by fengjx on 2014/11/14 0014.
  */
-public class WebUtil {
+public final class WebUtil {
 
     /**
      * 获取所有request请求参数key-value

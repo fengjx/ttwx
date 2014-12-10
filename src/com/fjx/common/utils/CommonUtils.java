@@ -18,7 +18,7 @@ import java.util.UUID;
 /**
  * @author peng
  */
-public class CommonUtils {
+public final class CommonUtils {
 	
 	
 	public static final String DATA_FORMAT_ALL = "yyyy-MM-dd HH:mm:ss";

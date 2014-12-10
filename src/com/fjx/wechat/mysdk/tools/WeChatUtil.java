@@ -15,7 +15,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class WeChatUtil {
+public final class WeChatUtil {
 	
 	private static final Logger logger = Logger.getLogger(WeChatUtil.class);
 	

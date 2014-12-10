@@ -15,7 +15,7 @@ import java.util.Map;
  * @author fengjx xd-fjx@qq.com
  * @version MaterialUtil.java 2014年10月4日
  */
-public class MaterialUtil {
+public final class MaterialUtil {
 	
 	/**
 	 * 将素材map数据转换成微信规范的xml数据

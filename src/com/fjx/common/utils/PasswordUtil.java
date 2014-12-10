@@ -3,7 +3,7 @@ package com.fjx.common.utils;
 import com.encryptcore.EnCryptCore;
 
 
-public class PasswordUtil {
+public final class PasswordUtil {
 
 	private static String  key="fengjx-wechat-!@#";
 	

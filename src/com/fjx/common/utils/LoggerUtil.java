@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
  * @author jie.hua@alipay.com
  * @version $Id: LoggerUtil.java, v 0.1 2014-1-8 下午8:29:48 jie.hua Exp $
  */
-public class LoggerUtil {
+public final class LoggerUtil {
 
     /**
      * info日志

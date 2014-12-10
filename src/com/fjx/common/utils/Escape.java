@@ -54,8 +54,7 @@ public class Escape {
 	/** */
 	/**   
 	 * 编码 
-	 *    
-	 * @param s   
+	 * @param s
 	 * @return   
 	 */
 	public static String escape(String s) {
@@ -89,8 +88,7 @@ public class Escape {
 	/** */
 	/**   
 	 * 解码 说明：本方法保证 不论参数s是否经过escape()编码，均能得到正确的“解码”结果 
-	 *    
-	 * @param s   
+	 * @param s
 	 * @return   
 	 */
 	public static String unescape(String s) {

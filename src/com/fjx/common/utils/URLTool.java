@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author jie.hua@alipay.com
  * @version $Id: URLTool.java, v 0.1 2014-1-8 下午10:47:40 jie.hua Exp $
  */
-public class URLTool {
+public final class URLTool {
 
     /**
      * 构建URL串

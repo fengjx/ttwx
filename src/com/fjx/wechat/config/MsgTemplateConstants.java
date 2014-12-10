@@ -6,7 +6,7 @@ package com.fjx.wechat.config;
  * @author fengjx xd-fjx@qq.com
  * @date 2014年11月7日
  */
-public class MsgTemplateConstants {
+public final class MsgTemplateConstants {
 	
 	/**
 	 * 微信默认回复消息

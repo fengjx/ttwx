@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * @author donglg 2013-03-20
  * @createDate 2013-3-15 上午08:20:00
  */
-public class GetPropertiesVal {
+public final class GetPropertiesVal {
 
     //该对象不支持实例化
     private GetPropertiesVal() {

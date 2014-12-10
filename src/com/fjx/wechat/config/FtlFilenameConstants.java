@@ -7,7 +7,7 @@ package com.fjx.wechat.config;
  * @author fengjx xd-fjx@qq.com
  * @date 2014年10月15日
  */
-public class FtlFilenameConstants {
+public final class FtlFilenameConstants {
 	
 	/**
 	 * 接口验证成功返回消息

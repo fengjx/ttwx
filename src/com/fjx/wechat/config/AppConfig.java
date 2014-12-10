@@ -7,7 +7,7 @@ import com.fjx.common.utils.GetPropertiesVal;
  * @author fengjx xd-fjx@qq.com
  * @version AppConfig.java 2014年9月16日
  */
-public class AppConfig {
+public final class AppConfig {
     //该对象不支持实例化
     private AppConfig() {
     }

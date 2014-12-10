@@ -7,7 +7,7 @@ package com.fjx.wechat.config;
  * @author fengjx xd-fjx@qq.com
  * @date 2014年11月4日
  */
-public class DataDictConstants {
+public final class DataDictConstants {
 	
 	/**
 	 * 请求类型分组

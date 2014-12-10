@@ -13,7 +13,7 @@ import java.io.UnsupportedEncodingException;
  * @author fengjx
  * 2014-04-09
  */
-public class SerializableUtil {
+public final class SerializableUtil {
 	
 	
 	public static String serObject2String(Object object) throws UnsupportedEncodingException, IOException {

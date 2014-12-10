@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fjx.wechat.mysdk.tools.HttpUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
@@ -14,7 +15,6 @@ import com.fjx.common.framework.system.exception.MyException;
 import com.fjx.common.framework.system.pagination.Pagination;
 import com.fjx.common.utils.CommonUtils;
 import com.fjx.common.utils.FileUtil;
-import com.fjx.common.utils.HttpConnectionUtil;
 import com.fjx.common.utils.MyFreemarker;
 import com.fjx.wechat.base.admin.entity.MaterialEntity;
 import com.fjx.wechat.base.admin.entity.SysUserEntity;
@@ -82,7 +82,7 @@ public class MaterialServiceImpl extends BaseAbstractService<MaterialEntity> imp
 		try {
 			String path = AppConfig.STATIC_PATH + url;
 			conten = "";
-			conten = HttpConnectionUtil.getHttpContent(path);
+			conten = HttpUtil.get(path);
 			conten = conten.substring(conten.indexOf("<!--###@content@###-->") + 22, conten.lastIndexOf("<!--###@content@###-->"));
 		} catch (Exception e) {
 			e.printStackTrace();

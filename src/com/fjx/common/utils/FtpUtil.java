@@ -12,7 +12,7 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
-public class FtpUtil {
+public final class FtpUtil {
 	/* Description: 向FTP服务器上传文件 
 	 * @Version1.0 Jul 27, 2013 19:31:09 PM by donglg
 	 * @param url FTP服务器hostname 
