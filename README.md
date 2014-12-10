@@ -21,6 +21,11 @@ db.properties修改数据库配置<br />
 * 3、打包部署<br />
 部署tomcat或jetty，打开浏览器，访问http://yourhost:port/ttwx/<br />
 
+### 公众号接入步骤
+* 1、将授权信息（URL、TOKEN，进入后台管理，在菜单“配置授权”中查看）配置到公众平台 
+* 2、从微信客户端向公众号发送验证码（系统生成，如：52731 ）
+* 3、完成授权
+
 ### 界面预览<br>
 http://git.oschina.net/fengjx/ttwx/wikis/%E7%95%8C%E9%9D%A2%E6%95%88%E6%9E%9C%E9%A2%84%E8%A7%88<br />
 
@@ -37,7 +42,7 @@ http://git.oschina.net/fengjx/ttwx/wikis/%E7%95%8C%E9%9D%A2%E6%95%88%E6%9E%9C%E9
 ### 设计思路：<br />
 * 微信基础功能（不与任何业务系统耦合） + 插件式扩展（根据不同业务在原来系统上不修改之前代码迭代功能）<br />
 
-### java包结构：<br />
+### java包结构约定：<br />
 * 基础功能包：com.fjx.wechat.base<br />
 * 扩展功能包：com.fjx.wechat.extension<br />
 * 开发SDK：com.fjx.wechat.mysdk(在jfinal-weixin基础上修改)<br />
