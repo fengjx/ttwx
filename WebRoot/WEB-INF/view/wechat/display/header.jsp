@@ -23,19 +23,13 @@
           <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">文档<b class="caret"></b></a>
           <ul class="dropdown-menu">
          	 <li>
-              <a href="javascript:void(-1);" onclick="unFabu()">关于微信</a>
-            </li>
-          	<li>
-              <a href="javascript:void(-1);" onclick="unFabu()">功能demo</a>
+              <a href="https://mp.weixin.qq.com" target="_blank">关于微信</a>
             </li>
             <li>
               <a href="javascript:void(-1);" onclick="unFabu()">开发框架</a>
             </li>
             <li>
-              <a href="javascript:void(-1);" onclick="unFabu()">架构设计</a>
-            </li>
-            <li>
-              <a href="javascript:void(-1);" onclick="unFabu()">二次开发</a>
+              <a href="http://git.oschina.net/fengjx/ttwx/wikis/home" target="_blank">二次开发</a>
             </li>
           </ul>
         </li>
