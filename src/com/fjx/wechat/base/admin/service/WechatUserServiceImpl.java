@@ -43,13 +43,11 @@ public class WechatUserServiceImpl extends BaseAbstractService<WechatUserEntity>
 			hql.append(" and u.subscribe_time < ?");
 			params.add(CommonUtils.String2Date(user.getEnd_time()+" 23:59:59"));
 		}
-		if(null != group_id){
-			if("" == group_id){
-				hql.append(" and (u.wechatUserGroupEntity.id = null or u.wechatUserGroupEntity.id = '') ");
-			}else{
-				hql.append(" and u.wechatUserGroupEntity.id = ?");
-				params.add(group_id);
-			}
+		if("".equals(group_id)){	//空字符串表示查未分组用户
+			hql.append(" and (u.wechatUserGroupEntity.id = null or u.wechatUserGroupEntity.id = '') ");
+		}else if(group_id != null){
+			hql.append(" and u.wechatUserGroupEntity.id = ?");
+			params.add(group_id);
 		}
 		return pageByHql(hql.toString(), params);
 	}
