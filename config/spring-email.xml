@@ -18,7 +18,7 @@
 		<property name="host" value="smtp.163.com" />
 		<property name="port" value="25" />
 		<property name="username" value="xd-fjx@163.com" />
-		<property name="password" value="fengjx1989" />
+		<property name="password" value="XXXX" />
 
 		<property name="javaMailProperties">
 			<props>
