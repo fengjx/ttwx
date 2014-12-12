@@ -79,7 +79,7 @@ public class BaiduMusicServiceApi {
 		try {
 			result = java.net.URLEncoder.encode(source, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return result;
 	}

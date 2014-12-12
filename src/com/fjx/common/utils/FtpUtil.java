@@ -173,13 +173,13 @@ public final class FtpUtil {
 			ftp.logout();
 			success = true;
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
 			if (ftp.isConnected()) {
 				try {
 					ftp.disconnect();
 				} catch (IOException ioe) {
-					ioe.printStackTrace();
+					throw new RuntimeException(ioe);
 				}
 			}
 		}

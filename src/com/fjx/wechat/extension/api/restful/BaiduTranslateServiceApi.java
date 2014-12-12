@@ -35,7 +35,7 @@ public class BaiduTranslateServiceApi {
 		try {
 			result = java.net.URLEncoder.encode(source, "utf-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		return result;
 	}
