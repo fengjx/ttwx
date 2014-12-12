@@ -23,11 +23,7 @@ public class BaiduMusicServiceApi {
 	// 测试方法
 	public static void main(String[] args) {
 		Music music = new Music();
-		try {
-			music = searchMusic("相信自己", "零点乐队");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		music = searchMusic("相信自己", "零点乐队");
 		System.out.println("音乐名称：" + music.getTitle());
 		System.out.println("音乐描述：" + music.getDescription());
 		System.out.println("普通品质链接：" + music.getMusicUrl());

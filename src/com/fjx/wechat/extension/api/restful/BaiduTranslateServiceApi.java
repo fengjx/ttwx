@@ -61,7 +61,7 @@ public class BaiduTranslateServiceApi {
 			// 取出translateResult中的译文
 			dst = jsonObject.getJSONArray("trans_result").getJSONObject(0).getString("dst");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		if (null == dst){
 			dst = "翻译系统异常，请稍候尝试！";

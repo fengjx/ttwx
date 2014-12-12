@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fjx.common.framework.system.exception.MyRuntimeException;
 import com.fjx.wechat.mysdk.tools.HttpUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -85,7 +86,7 @@ public class MaterialServiceImpl extends BaseAbstractService<MaterialEntity> imp
 			conten = HttpUtil.get(path);
 			conten = conten.substring(conten.indexOf("<!--###@content@###-->") + 22, conten.lastIndexOf("<!--###@content@###-->"));
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new MyRuntimeException(e);
 		}
 		return conten;
 	}

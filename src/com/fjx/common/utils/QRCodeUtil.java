@@ -111,10 +111,9 @@ public final class QRCodeUtil {
         	String decodedData = new String(decoder.decode(new J2SEImage(image)),"UTF-8");
             System.out.println(decodedData);
         } catch (DecodingFailedException dfe) {
-            System.out.println("Error: " + dfe.getMessage());
-            dfe.printStackTrace();
+			throw new RuntimeException(dfe);
         } catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 	

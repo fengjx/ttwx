@@ -77,7 +77,7 @@ public class DreamServiceApi {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("解梦API调用失败",e);
 		}
 		return msg;
 	}

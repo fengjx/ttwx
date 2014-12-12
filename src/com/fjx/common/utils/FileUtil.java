@@ -22,7 +22,7 @@ public final class FileUtil {
 			try {
 				file.mkdirs();
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
 	}
