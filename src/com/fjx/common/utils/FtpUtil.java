@@ -47,13 +47,13 @@ public final class FtpUtil {
 			ftp.logout();
 			success = true;
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
 			if (ftp.isConnected()) {
 				try {
 					ftp.disconnect();
 				} catch (IOException ioe) {
-					ioe.printStackTrace();
+					throw new RuntimeException(ioe);
 				}
 			}
 		}
@@ -96,26 +96,25 @@ public final class FtpUtil {
 			ftp.logout();
 			success = true;
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
 			if (ftp.isConnected()) {
 				try {
 					ftp.disconnect();
 				} catch (IOException ioe) {
-					ioe.printStackTrace();
+					throw new RuntimeException(ioe);
 				}
 			}
 		}
 		return success;
 	}
-	
+
 	/**
-	 * Description: 向FTP服务器删除文件 
+	 * 向FTP服务器删除文件
 	 * @param url
 	 * @param port
 	 * @param username
 	 * @param password
-	 * @param path
 	 * @param filename
 	 * @return
 	 */
@@ -136,13 +135,13 @@ public final class FtpUtil {
 			ftp.logout();
 			success = true;
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
 			if (ftp.isConnected()) {
 				try {
 					ftp.disconnect();
 				} catch (IOException ioe) {
-					ioe.printStackTrace();
+					throw new RuntimeException(ioe);
 				}
 			}
 		}
