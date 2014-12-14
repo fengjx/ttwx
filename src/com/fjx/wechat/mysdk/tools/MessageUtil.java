@@ -98,6 +98,22 @@ public final class MessageUtil {
 	}
 
 	/**
+	 * 文本消息转换成xml
+	 * @return xml
+	 */
+	public static String textMessageToXml(String text) {
+		RespTextMessage textMessage = new RespTextMessage();
+		textMessage.setContent(text);
+		if(getByteSize(text) > 2047){
+			textMessage.setContent(new String(text.getBytes(), 0, 2040));
+		}
+		xstream.alias("xml", textMessage.getClass());
+		return xstream.toXML(textMessage);
+	}
+
+
+
+	/**
 	 * 音乐消息对象转换成xml
 	 * @param musicMessage 音乐消息对象
 	 * @return xml
@@ -182,7 +198,7 @@ public final class MessageUtil {
 					"{#ToUserName#}",
 					"{#FromUserName#}",
 					"{#CreateTime#}"
-				}, 
+				},
 				new String[]{
 					reqMsgMap.get("FromUserName"),
 					reqMsgMap.get("ToUserName"),
@@ -190,6 +206,26 @@ public final class MessageUtil {
 				});
 		return res;
 	}
+
+	/**
+	 * 替换响应消息中的参数(正在表达式来处理)
+	 * @param msg
+	 * @param reqMsgMap
+	 * @return
+	 */
+	public static String replaceMsgByReg(String msg, Map<String, String> reqMsgMap){
+		if(StringUtils.isBlank(msg)){
+			return "";
+		}
+		String res = "";
+		res = msg.replaceAll("\\<ToUserName>(.*?)\\</ToUserName>", "<ToUserName><![CDATA[" + reqMsgMap.get("FromUserName") + "]]></ToUserName>")
+				.replaceAll("\\<FromUserName>(.*?)\\</FromUserName>", "<FromUserName><![CDATA[" + reqMsgMap.get("ToUserName") + "]]></FromUserName>")
+				.replaceAll("\\<CreateTime>(.*?)\\</CreateTime>", "<CreateTime><![CDATA[" + new Date().getTime() + "]]></CreateTime>");
+		return res;
+	}
+
+
+
 
 	/**
 	 * emoji表情转换(hex -> utf-16)
