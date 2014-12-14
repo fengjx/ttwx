@@ -8,6 +8,7 @@ import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
 import com.fjx.wechat.mysdk.context.WechatContext;
 import com.fjx.wechat.mysdk.process.in.executor.InWechatValidMsgExecutor;
 import com.fjx.wechat.mysdk.tools.NameTool;
+import org.apache.log4j.Logger;
 
 /**
  * 业务动作分发器
@@ -15,6 +16,8 @@ import com.fjx.wechat.mysdk.tools.NameTool;
  * @date 2014年9月8日
  */
 public class Dispatcher {
+
+	private static final Logger LOGGER = Logger.getLogger(Dispatcher.class);
 
 	/**
 	 * 根据业务参数获取业务执行器
@@ -84,6 +87,7 @@ public class Dispatcher {
 		}else if(WechatPublicAccountEntity.VALID_STATE_EXCESS.equals(valid_state) && WechatReqMsgtypeConstants.REQ_MSG_TYPE_TEXT.equals(msgType) ){//消息类型是文本，当前账号状态是1，已配置URL到公众平台
 			return NameTool.buildInServiceName(InWechatValidMsgExecutor.EXECUTOR_NAME, null);
 		}
+		LOGGER.warn("接口未配置到公众平台，此消息不做处理");
 		return null;
 	}
 }
