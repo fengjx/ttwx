@@ -83,13 +83,13 @@ public class MyFreemarker {
 			myFreemarkers.put(basePath, this);	//缓存到map
 		}
 	}
-	
+
 	/**
 	 * 获得实例
 	 * 为支持不同的模板路径，此处不采用单例模式，单为了节约资源，将不同模板路径的实例缓存起来
-	 * @param _basePath
+	 * @param basePath
 	 * @return
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	public static MyFreemarker getInstance(String basePath)throws Exception{
 		return getInstance(basePath, null);
