@@ -168,7 +168,7 @@ public class HttpUtil {
 			while ((line = reader.readLine()) != null){
 				sb.append(line).append("\n");
 			}
-			LOGGER.info("readResponseString resStr=["+sb+"]");
+			LOGGER.info("readResponseString resStr="+sb+"");
 			return sb.toString();
 		}
 		catch (Exception e) {
