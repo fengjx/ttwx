@@ -10,7 +10,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
- *
+ * 接口申请地址
+ * http://tuling123.com/
  * 请求方式
  * Api 地址： http://www.tuling123.com/openapi/api
  * 请求方式： http get
@@ -21,8 +22,8 @@ import java.util.Map;
  */
 public class TulingApiClient {
 
-    private static final String API_KEY = "d455f0e53877e9d7b5d428ef2f5ba0e3";
-    public static final String URL = "http://www.tuling123.com/openapi/api?key=d455f0e53877e9d7b5d428ef2f5ba0e3";
+    private static final String API_KEY = "790125ff1b12295b6f914e0b2688b429";
+    public static final String URL = "http://www.tuling123.com/openapi/api?key=790125ff1b12295b6f914e0b2688b429";
 
     public static BaseRespBean call2Bean(RequestBean request){
         return MsgConvert.strJson2Bean(call2String(request));
