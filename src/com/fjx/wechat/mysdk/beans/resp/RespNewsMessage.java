@@ -1,5 +1,7 @@
 package com.fjx.wechat.mysdk.beans.resp;
 
+import com.fjx.wechat.mysdk.constants.WechatRespMsgtypeConstants;
+
 import java.util.List;
 
 /**
@@ -15,6 +17,11 @@ public class RespNewsMessage extends RespBaseMessage {
 	private int ArticleCount;
 	// 多条图文消息信息，默认第一个item为大图
 	private List<Article> Articles;
+
+	public RespNewsMessage(){
+		super.setMsgType(WechatRespMsgtypeConstants.RESP_MESSAGE_TYPE_NEWS);
+	}
+
 
 	public int getArticleCount() {
 		return ArticleCount;
