@@ -62,6 +62,20 @@ public final class JSONUtil {
         return JSON.parseObject(jo.toJSONString(), beanClass);
     }
 
+
+    /**
+     * 将json对象，转换成指定java bean
+     * @param jsonObj
+     * @param beanClass
+     * @param <T>
+     * @return
+     */
+    public static <T> T toBean(JSONObject jsonObj, Class<T> beanClass) {
+        requireNonNull(jsonObj, "jsonObj is null");
+        jsonObj.put(JSON.DEFAULT_TYPE_KEY, beanClass.getName());
+        return JSON.parseObject(jsonObj.toJSONString(), beanClass);
+    }
+
     /**
      * @param obj 需要转换的java bean
      * @param <T> 入参对象类型泛型
