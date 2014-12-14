@@ -36,7 +36,7 @@ public class TulingTest {
     public void testCall2WechatMsg(){
         RequestBean req = new RequestBean();
         req.setUserid("fengjx123");
-        req.setInfo("QQ下载");
+        req.setInfo("你是傻逼吗");
         String res = TulingApiClient.call2WechatMsg(req);
         System.out.println(res);
     }
