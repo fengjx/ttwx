@@ -97,8 +97,7 @@ public class MsgConvert {
                 for(int i=0; i<list.size() && i<11; i++){
                     NewsBean news = (NewsBean) list.get(i);
                     article = new Article();
-                    article.setTitle("");
-                    article.setDescription(news.getArticle());
+                    article.setTitle(news.getArticle());
                     article.setPicUrl(news.getIcon());
                     article.setUrl(news.getDetailurl());
                     alist.add(article);
@@ -113,13 +112,12 @@ public class MsgConvert {
                     String desc = "";
                     FlightBean flight = (FlightBean) list.get(i);
                     article = new Article();
-                    article.setTitle("");
                     desc += "航班："+flight.getFlight();
                     desc += "\n路线："+flight.getRoute();
                     desc += "\n起飞时间："+flight.getStarttime();
                     desc += "\n到达时间："+flight.getEndtime();
                     desc += "\n状态："+flight.getState();
-                    article.setDescription(desc);
+                    article.setTitle(desc);
                     article.setPicUrl(flight.getIcon());
                     article.setUrl(flight.getDetailurl());
                     alist.add(article);
@@ -135,12 +133,11 @@ public class MsgConvert {
                     String desc = "";
                     HotelBean hotel = (HotelBean) list.get(i);
                     article = new Article();
-                    article.setTitle("");
                     desc += "酒店名称："+hotel.getName();
                     desc += "\n价格："+hotel.getPrice();
                     desc += "\n满意度："+hotel.getSatisfaction();
                     desc += "\n数量："+hotel.getCount();
-                    article.setDescription(desc);
+                    article.setTitle(desc);
                     article.setPicUrl(hotel.getIcon());
                     article.setUrl(hotel.getDetailurl());
                     alist.add(article);
@@ -156,10 +153,9 @@ public class MsgConvert {
                     String desc = "";
                     PriceBean price = (PriceBean) list.get(i);
                     article = new Article();
-                    article.setTitle("");
                     desc += "名称："+price.getName();
                     desc += "\n价格："+price.getPrice();
-                    article.setDescription(desc);
+                    article.setTitle(desc);
                     article.setPicUrl(price.getIcon());
                     article.setUrl(price.getDetailurl());
                     alist.add(article);
@@ -175,10 +171,9 @@ public class MsgConvert {
                     String desc = "";
                     SoftBean soft = (SoftBean) list.get(i);
                     article = new Article();
-                    article.setTitle("");
                     desc += "软件名称："+soft.getName();
                     desc += "\n下载量："+soft.getCount();
-                    article.setDescription(desc);
+                    article.setTitle(desc);
                     article.setPicUrl(soft.getIcon());
                     article.setUrl(soft.getDetailurl());
                     alist.add(article);
@@ -194,13 +189,12 @@ public class MsgConvert {
                     String desc = "";
                     TrainBean train = (TrainBean) list.get(i);
                     article = new Article();
-                    article.setTitle("");
                     desc += "车次："+train.getTrainnum();
                     desc += "\n起始站："+train.getStart();
                     desc += "\n到达站："+train.getTerminal();
                     desc += "\n开车时间："+train.getStarttime();
                     desc += "\n到达时间："+train.getEndtime();
-                    article.setDescription(desc);
+                    article.setTitle(desc);
                     article.setPicUrl(train.getIcon());
                     article.setUrl(train.getDetailurl());
                     alist.add(article);
@@ -216,10 +210,9 @@ public class MsgConvert {
                     String desc = "";
                     VideoBean video = (VideoBean) list.get(i);
                     article = new Article();
-                    article.setTitle("");
                     desc += "名称："+video.getName();
                     desc += "\n介绍："+video.getInfo();
-                    article.setDescription(desc);
+                    article.setTitle(desc);
                     article.setPicUrl(video.getIcon());
                     article.setUrl(video.getDetailurl());
                     alist.add(article);
@@ -237,11 +230,7 @@ public class MsgConvert {
             alist.add(article);
         }else{
             TextBean text = (TextBean) bean;
-            article = new Article();
-            article.setTitle("暂不支持该功能["+text.getCode()+"]");
-            article.setDescription(text.getText());
-            msg.setArticleCount(1);
-            alist.add(article);
+            return MessageUtil.textMessageToXml("暂不支持该功能["+text.getCode()+"]");
         }
         if(alist.size()<1){
             article.setTitle("很遗憾");
