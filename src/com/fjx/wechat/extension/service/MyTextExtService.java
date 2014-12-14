@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.fjx.wechat.extension.api.tuling.client.TulingApiClient;
+import com.fjx.wechat.extension.api.tuling.vo.req.RequestBean;
 import com.fjx.wechat.mysdk.beans.resp.*;
 import com.fjx.wechat.mysdk.constants.WechatReqMsgtypeConstants;
 import com.fjx.wechat.mysdk.constants.WechatRespMsgtypeConstants;
@@ -182,7 +184,13 @@ public class MyTextExtService implements TextExtService {
             	else if("game".equals(content)) {
 					textMessage.setContent("进入<a href=\"http://3.fengjianxin.sinaapp.com/wechat/games/fishjoy/index.html\">捕鱼达人</a>");  
                     respMessage = MessageUtil.textMessageToXml(textMessage);  
-				}
+				}else{
+                    //没有匹配规则的消息，交给图灵机器人处理
+                    RequestBean req = new RequestBean();
+                    req.setInfo(content);
+                    req.setUserid(fromUserName);
+                    return MessageUtil.replaceMsgByReg(TulingApiClient.call2WechatMsg(req),requestMap);
+                }
 			}
 		} catch (Exception e) {
 			logger.error("执行自定义文本消息扩展处理发生异常",e);
