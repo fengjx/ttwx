@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.fjx.common.framework.system.exception.MyRuntimeException;
 import com.fjx.wechat.mysdk.tools.HttpUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
@@ -47,16 +48,15 @@ public class MaterialServiceImpl extends BaseAbstractService<MaterialEntity> imp
 		String msgType = material.getMsg_type();
 		if(null != msgType && msgType.equals("news")){	//图文消息
 			if(null != contents && contents.size() > 0 ){
-				String baseUrl  = "/static/html";
-				String basePath = WebUtils.getRealPath(MySystemContext.getMyRequest().getSession().getServletContext(), baseUrl);
-				MyFreemarker freemarker = MyFreemarker.getInstance(basePath+"/template/");
+				String basePath = CommonUtils.getFtlHtmlPath(MySystemContext.getMyRequest());
+				MyFreemarker freemarker = MyFreemarker.getInstance(basePath);
 				String xml_data = material.getXml_data();
 				int l = contents.size();
 				for(int i = 0; i < l; i++){
 					String htmlPath = AppConfig.STATIC_PATH;
 					String htmlUrl = "/upload/html/material/" + CommonUtils.getPrimaryKey()+".html";
 					//如果不存在则创建文件夹
-					FileUtil.mkdir(htmlPath + "/upload/html/material/");
+					FileUtil.makeDirectory(htmlPath + "/upload/html/material/");
 					htmlPath = htmlPath + htmlUrl;
 					Map<String,String> content = contents.get(i);
 					content.put("date", date_str);
