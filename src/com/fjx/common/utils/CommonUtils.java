@@ -3,8 +3,13 @@ package com.fjx.common.utils;
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import com.fjx.common.framework.system.context.MySystemContext;
 import com.fjx.common.framework.system.exception.MyRuntimeException;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -174,10 +179,21 @@ public final class CommonUtils {
         return map;
     }
 
+    /**
+     * 获得生成html文件模板路径
+     * @param request
+     * @return
+     */
+    public static String getFtlHtmlPath(HttpServletRequest request){
+        String baseUrl  = "/WEB-INF/ftl/html";
+        try {
+            return WebUtils.getRealPath(request.getSession().getServletContext(), "/")+baseUrl;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public static void main(String[] args) {
-		System.out.println(java.sql.Date.valueOf("2013-10-11"));
-		System.out.println(timeMillis2DateString(Long.valueOf("1412599875000")));
-		System.out.println(date2String(new Date()));
-		System.out.println(System.currentTimeMillis());
 	}
 }
