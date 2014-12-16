@@ -11,6 +11,7 @@ E-mail：xd-fjx@qq.com<br />
 ### 文档：<br />
 * 说明文档：doc目录下<br />
 * 数据库：db目录下，建表及初始化数据<br />
+* 图片上传：http://git.oschina.net/fengjx/ttwx/wikis/%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%EF%BC%88%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%EF%BC%89
 * PS：都是下班时间搞的东西，平时没多少时间弄，如果想要什么文档，或者什么不明白的地方可以联系我<br>
 
 ### 安装说明：<br />
