@@ -19,6 +19,7 @@ E-mail：xd-fjx@qq.com<br />
 db/mysql/db-mysql.sql<br />
 * 2、修改配置文件<br />
 db.properties修改数据库配置<br />
+spring-email.xml修改成你自己的邮箱账号和密码<br />
 * 3、打包部署<br />
 部署tomcat或jetty，打开浏览器，访问http://yourhost:port/ttwx/<br />
 
