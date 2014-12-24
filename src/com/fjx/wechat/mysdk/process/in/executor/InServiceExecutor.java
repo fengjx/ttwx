@@ -86,7 +86,7 @@ public abstract class InServiceExecutor implements ServiceExecutor, ServiceExecu
 			return "";
 		}
 		//替换参数
-		respMessage = MessageUtil.replaceMsgParam(respMessage, WechatContext.getWechatPostMap());
+		respMessage = MessageUtil.replaceMsgByReg(respMessage, WechatContext.getWechatPostMap());
 		return respMessage;
 	}
 	
