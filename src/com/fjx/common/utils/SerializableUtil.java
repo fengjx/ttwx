@@ -31,15 +31,22 @@ public final class SerializableUtil {
 		} catch (IOException e) {
 			throw e;
 		}finally{
-			try {
-				objectOutputStream.close();
-			} catch (IOException e) {
-				objectOutputStream = null;
+			if(null != objectOutputStream){
+				try {
+					objectOutputStream.close();
+				} catch (IOException e) {
+					objectOutputStream = null;
+					throw new RuntimeException(e);
+				}
 			}
-			try {
-				byteArrayOutputStream.close();
-			} catch (IOException e) {
-				byteArrayOutputStream = null;
+
+			if(null != byteArrayOutputStream){
+				try {
+					byteArrayOutputStream.close();
+				} catch (IOException e) {
+					byteArrayOutputStream = null;
+					throw new RuntimeException(e);
+				}
 			}
 		}
 		return serStr;

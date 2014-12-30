@@ -61,22 +61,22 @@ public class BaseDao implements IBaseDao {
 	 */
 	private Query setQueryParameters(Query q, Object... parameters) {
 		if (parameters != null && parameters.length > 0) {
-			String paramsStr = "";
+			StringBuffer paramsStr = new StringBuffer();
 			if(parameters[0] instanceof  List ){
 				List<Object> params = (List<Object>) parameters[0];
 				for(int i = 0; i < params.size(); i++){
 					Object param = params.get(i);
 					q.setParameter(i, param);
-					paramsStr += " 【" + i + " : " + param + "】";
+					paramsStr.append("【" + i + " : " + param + "】");
 				}
 			}else{
 				for (int i = 0; i < parameters.length; i++) {
 					Object param = parameters[i];
 					q.setParameter(i, param);
-					paramsStr += " 【" + i + " : " + param + "】";
+					paramsStr.append(" 【" + i + " : " + param + "】");
 				}
 			}
-			logger.debug("设置ql参数：" + paramsStr);
+			logger.debug("设置ql参数：" + paramsStr.toString());
 		}
 		return q;
 	}

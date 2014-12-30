@@ -177,11 +177,11 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
 		}
 		if(StringUtils.isNotBlank(param.get("start_time"))){
 			hql.append(" and a.in_time >= ?");
-			parameters.add(CommonUtils.String2Date(param.get("start_time").trim()+" 00:00:00"));
+			parameters.add(CommonUtils.string2Date(param.get("start_time").trim()+" 00:00:00"));
 		}
 		if(StringUtils.isNotBlank(param.get("end_time"))){
 			hql.append(" and a.in_time < ?");
-			parameters.add(CommonUtils.String2Date(param.get("end_time").trim()+" 23:59:59"));
+			parameters.add(CommonUtils.string2Date(param.get("end_time").trim()+" 23:59:59"));
 		}
 		hql.append(" order by a.in_time desc");
 		return pageByHql(hql.toString(), parameters);

@@ -161,9 +161,10 @@ public class HttpUtil {
 	private static String readResponseString(HttpURLConnection conn) {
 		StringBuilder sb = new StringBuilder();
 		InputStream inputStream = null;
+		BufferedReader reader = null;
 		try {
 			inputStream = conn.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, CHARSET));
+			reader = new BufferedReader(new InputStreamReader(inputStream, CHARSET));
 			String line = null;
 			while ((line = reader.readLine()) != null){
 				sb.append(line).append("\n");
@@ -175,11 +176,20 @@ public class HttpUtil {
 			throw new RuntimeException(e);
 		}
 		finally {
-			if (inputStream != null) {
+			if (null != inputStream) {
 				try {
 					inputStream.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					inputStream = null;
+					throw new RuntimeException(e);
+				}
+			}
+			if(null != reader){
+				try {
+					reader.close();
+				} catch (IOException e) {
+					reader = null;
+					throw new RuntimeException(e);
 				}
 			}
 		}

@@ -49,11 +49,11 @@ public class ReqMsgLogServiceImpl extends BaseAbstractService<ReqMsgLogEntoty> i
         }
         if(StringUtils.isNotBlank(reqMsgLog.getStart_time())){
 			hql.append(" and l.in_time > ?");
-			params.add(CommonUtils.String2Date(reqMsgLog.getStart_time()+" 00:00:00"));
+			params.add(CommonUtils.string2Date(reqMsgLog.getStart_time()+" 00:00:00"));
 		}
 		if(StringUtils.isNotBlank(reqMsgLog.getEnd_time())){
 			hql.append(" and l.in_time < ?");
-			params.add(CommonUtils.String2Date(reqMsgLog.getEnd_time()+" 23:59:59"));
+			params.add(CommonUtils.string2Date(reqMsgLog.getEnd_time()+" 23:59:59"));
 		}
         hql.append(" order by l.in_time desc");
         return pageByHql(hql.toString(), params);

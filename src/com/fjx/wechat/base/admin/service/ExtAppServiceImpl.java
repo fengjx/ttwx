@@ -69,11 +69,11 @@ public class ExtAppServiceImpl extends BaseAbstractService<ExtAppEntity> impleme
 		}
 		if(StringUtils.isNotBlank(extApp.getStart_time())){
 			hql.append(" and e.in_time > ?");
-			params.add(CommonUtils.String2Date(extApp.getStart_time() + " 00:00:00"));
+			params.add(CommonUtils.string2Date(extApp.getStart_time() + " 00:00:00"));
 		}
 		if(StringUtils.isNotBlank(extApp.getEnd_time())){
 			hql.append(" and e.in_time < ?");
-			params.add(CommonUtils.String2Date(extApp.getEnd_time()+" 23:59:59"));
+			params.add(CommonUtils.string2Date(extApp.getEnd_time()+" 23:59:59"));
 		}
 		return pageByHql(hql.toString(),params);
 	}

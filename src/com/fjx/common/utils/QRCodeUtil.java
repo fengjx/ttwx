@@ -177,9 +177,6 @@ public final class QRCodeUtil {
 	public static void main(String[] args) throws UnsupportedEncodingException, IOException {
 		QRCodeUtil qrcode = new QRCodeUtil();
 		
-		qrcode.createImg("你好sdafsdafsda啊但撒酒烧垃圾1111111111111111111112242@！vsdsd舒服撒@#%#￥&&%￥&￥afsa！！", "D:/123.png");
-		qrcode.imgTocontent("D:/123.png");
-		
 //		qrcode.createQRCode("你好sdafsdafsda啊但撒酒烧垃圾1111111111111111111112242@！vsdsd舒服撒@#%#￥&&%￥&￥afsa！", "D:/123logo.png", "D:/logo.png");
 //		qrcode.imgTocontent("D:/123logo.png");
 		

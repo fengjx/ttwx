@@ -44,7 +44,7 @@ public class WechatLogAop {
 			}
 			reqMsgLog.setTo_user_name(requestMap.get("ToUserName"));
 			reqMsgLog.setFrom_user_name(requestMap.get("FromUserName"));
-			reqMsgLog.setCreate_time(CommonUtils.String2Date(MessageUtil.formatCreateTime(requestMap.get("CreateTime")), "yyyy-MM-dd HH:mm:ss"));
+			reqMsgLog.setCreate_time(CommonUtils.string2Date(MessageUtil.formatCreateTime(requestMap.get("CreateTime")), "yyyy-MM-dd HH:mm:ss"));
 			reqMsgLog.setReq_type(msgType);
 			reqMsgLog.setMsg_id(Long.parseLong(StringUtils.defaultString(requestMap.get("MsgId"), "0")));
 			reqMsgLog.setReq_xml(requestMap.get("xml"));

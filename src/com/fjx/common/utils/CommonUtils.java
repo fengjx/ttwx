@@ -5,6 +5,7 @@ import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import com.fjx.common.framework.system.context.MySystemContext;
 import com.fjx.common.framework.system.exception.MyRuntimeException;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.ServletContext;
@@ -24,11 +25,11 @@ import java.util.UUID;
  * @author peng
  */
 public final class CommonUtils {
-	
-	
-	public static final String DATA_FORMAT_ALL = "yyyy-MM-dd HH:mm:ss";
-	public static final String DATA_FORMAT_DD = "yyyy-MM-dd";
-	
+
+
+    public static final String DATA_FORMAT_ALL = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATA_FORMAT_DD = "yyyy-MM-dd";
+
     /**
      * 生成1-9位随机数
      *
@@ -36,19 +37,7 @@ public final class CommonUtils {
      * @return 返回count位随机数
      */
     public static String getRandomNum(int count) {
-        int[] array = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        Random rand = new Random();
-        for (int i = 10; i > 1; i--) {
-            int index = rand.nextInt(i);
-            int tmp = array[index];
-            array[index] = array[i - 1];
-            array[i - 1] = tmp;
-        }
-        String result = "";
-        for (int i = 0; i < count && i < 10; i++) {
-            result = result + array[i];
-        }
-        return result;
+        return RandomStringUtils.randomNumeric(count);
     }
 
     /**
@@ -69,9 +58,9 @@ public final class CommonUtils {
      * @return
      */
     public static String date2String(Date date, String... dateFmtArgs) {
-    	if(null == date){
-    		return null;
-    	}
+        if (null == date) {
+            return null;
+        }
         String dateFmt = DATA_FORMAT_ALL;
         if (dateFmtArgs.length != 0) {
             dateFmt = dateFmtArgs[0];
@@ -79,15 +68,14 @@ public final class CommonUtils {
         DateFormat fmt = new SimpleDateFormat(dateFmt);
         return fmt.format(date);
     }
-    
+
     /**
-     * 
-     * @param timeMillis 时间戳
+     * @param timeMillis  时间戳
      * @param dateFmtArgs 变长参数 可以不输入 默认为yyyy-MM-dd HH:mm:ss
      * @return
      */
     public static String timeMillis2DateString(Long timeMillis, String... dateFmtArgs) {
-    	Date date = timeMillis2Date(timeMillis);
+        Date date = timeMillis2Date(timeMillis);
         String dateFmt = DATA_FORMAT_ALL;
         if (dateFmtArgs.length != 0) {
             dateFmt = dateFmtArgs[0];
@@ -95,17 +83,16 @@ public final class CommonUtils {
         DateFormat fmt = new SimpleDateFormat(dateFmt);
         return fmt.format(date);
     }
-    
+
     /**
-     * 
-     * @param timeMillis 时间戳
+     * @param timeMillis  时间戳
      * @param dateFmtArgs 变长参数 可以不输入 默认为yyyy-MM-dd HH:mm:ss
      * @return
      */
     public static Date timeMillis2Date(Long timeMillis, String... dateFmtArgs) {
-        return  new Date(timeMillis);
+        return new Date(timeMillis);
     }
-    
+
 
     /**
      * @param date
@@ -113,7 +100,7 @@ public final class CommonUtils {
      * @return
      * @throws ParseException
      */
-    public static Date String2Date(String date, String... dateFmtArgs){
+    public static Date string2Date(String date, String... dateFmtArgs) {
         String dateFmt = DATA_FORMAT_ALL;
         if (dateFmtArgs.length != 0) {
             dateFmt = dateFmtArgs[0];
@@ -121,21 +108,20 @@ public final class CommonUtils {
         DateFormat fmt = new SimpleDateFormat(dateFmt);
         Date res_date = null;
         try {
-			res_date = fmt.parse(date);
-		} catch (ParseException e) {
-			throw new MyRuntimeException(e);
-		}
+            res_date = fmt.parse(date);
+        } catch (ParseException e) {
+            throw new MyRuntimeException(e);
+        }
         return res_date;
     }
-    
-    
+
     /**
      * @param date
      * @return
      * @throws ParseException
      */
-    public static java.sql.Date String2SqlDate(String date){
-		return java.sql.Date.valueOf(date);
+    public static java.sql.Date string2SqlDate(String date) {
+        return java.sql.Date.valueOf(date);
     }
 
     /**
@@ -153,41 +139,15 @@ public final class CommonUtils {
     }
 
     /**
-     * 转化MAP
-     *
-     * @param mapValue 页面按struts2的格式传map进来 进行转换
-     * @return
-     */
-    public static Map<String, Object> convertMap(Map<String, Object> mapValue) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        Iterator<String> iterator = mapValue.keySet().iterator();
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-            Object o = mapValue.get(key);
-            if (o instanceof String[]) {
-                String[] values = (String[]) o;
-                if (values.length == 1) {
-                    map.put(key, values[0].toString());
-                } else {
-                    map.put(key, values);
-                }
-
-            } else {
-                map.put(key, o);
-            }
-        }
-        return map;
-    }
-
-    /**
      * 获得生成html文件模板路径
+     *
      * @param request
      * @return
      */
-    public static String getFtlHtmlPath(HttpServletRequest request){
-        String baseUrl  = "/WEB-INF/ftl/html";
+    public static String getFtlHtmlPath(HttpServletRequest request) {
+        String baseUrl = "/WEB-INF/ftl/html";
         try {
-            return WebUtils.getRealPath(request.getSession().getServletContext(), "/")+baseUrl;
+            return WebUtils.getRealPath(request.getSession().getServletContext(), "/") + baseUrl;
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -195,5 +155,5 @@ public final class CommonUtils {
 
 
     public static void main(String[] args) {
-	}
+    }
 }

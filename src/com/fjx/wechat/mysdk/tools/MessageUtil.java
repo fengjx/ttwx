@@ -204,6 +204,7 @@ public final class MessageUtil {
 					reqMsgMap.get("ToUserName"),
 					new Date().getTime()+""
 				});
+
 		return res;
 	}
 
