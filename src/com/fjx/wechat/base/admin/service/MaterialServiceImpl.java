@@ -81,8 +81,7 @@ public class MaterialServiceImpl extends BaseAbstractService<MaterialEntity> imp
 	public String loadMaterialContentByUrl(String url) {
 		String conten = "error";
 		try {
-			String path = AppConfig.STATIC_PATH + url;
-			conten = "";
+			String path = AppConfig.STATIC_DOMAIN + url;
 			conten = HttpUtil.get(path);
 			conten = conten.substring(conten.indexOf("<!--###@content@###-->") + 22, conten.lastIndexOf("<!--###@content@###-->"));
 		} catch (Exception e) {
