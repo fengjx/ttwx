@@ -85,6 +85,7 @@ public class CommonController extends BaseController {
 
     @RequestMapping("/errorview")
     public String errorView(HttpServletRequest request,Map map){
+        logger.error("request error to errorview");
         map = getErrorMap(request);
         return "common/error/error-exception";
     }
@@ -92,6 +93,7 @@ public class CommonController extends BaseController {
     @RequestMapping("/errorajax")
     @ResponseBody
     public Map<String, String> errorAjax(HttpServletRequest request){
+        logger.error("request error to errorajax");
         return getErrorMap(request);
     }
 
@@ -102,12 +104,13 @@ public class CommonController extends BaseController {
      * @return
      */
     private Map<String, String> getErrorMap(HttpServletRequest request){
+        Exception e = (Exception)request.getAttribute("ex");
+        logger.error("request error",e);
         Map<String , String> map = new HashMap<String , String>();
         String errorMsg = (String) request.getAttribute(AppConfig.REQUEST_ERROE_MSG_KEY);
         if(StringUtils.isBlank(errorMsg)){
             errorMsg = "操作失败";
             if (AppConfig.isTest()) {
-                Exception e = (Exception)request.getAttribute("ex");
                 errorMsg = e.getMessage();
             }
         }
