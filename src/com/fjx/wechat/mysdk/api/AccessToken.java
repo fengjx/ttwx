@@ -35,7 +35,7 @@ public class AccessToken {
 			errcode = (Integer)map.get("errcode");
 			errmsg = (String)map.get("errmsg");
 			if (expires_in != null){
-				expiredTime = System.currentTimeMillis() + ((expires_in - 5) * 1000);
+				expiredTime = System.currentTimeMillis() + ((expires_in - 50) * 1000);
 			}
 		} catch (Exception e) {
 			throw new MyRuntimeException("创建AccessToken异常，jsonStr["+jsonStr+"]",e);

@@ -12,6 +12,7 @@ public abstract class AbstractClient {
     protected ApiConfig apiConfig;
 
     protected <T extends AbstractClient> T init(ApiConfig apiConfig) {
+        //从缓存读取ApiConfig
         ApiConfig temp = ApiConfigContext.getApiConfigByKey(apiConfig.createKey());
         //缓存中没有相关配置
         if(BeanUtil.isNull(temp)){
