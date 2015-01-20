@@ -1,3 +1,4 @@
+
 package com.fjx.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +13,7 @@ public final class URLTool {
 
     /**
      * 构建URL串
+     * 
      * @param hostUrl
      * @param queryStr
      * @return
