@@ -359,15 +359,16 @@ function submitAppMsg(){
 				var picUrl = item.find(".js_appmsg_thumb").attr("src");
 				var select = item.find(".appmsgUrl").attr("select");
 				
-				if(!title || title == '' || title == '標題'){
-					$.messager.alert('提示', '請輸入標題[圖文'+(i+1)+']', 'warning');
-					flag = false;
-					return false;
-				}if(!picUrl || picUrl == ''){
-					$.messager.alert('提示', '請上傳圖片[圖文'+(i+1)+']', 'warning');
+				if(!title || title == '' || title == '标题'){
+					$.messager.alert('提示', '请输入标题[图文'+(i+1)+']', 'warning');
 					flag = false;
 					return false;
 				}
+				//if(!picUrl || picUrl == ''){
+				//	$.messager.alert('提示', '请上传图片[图文'+(i+1)+']', 'warning');
+				//	flag = false;
+				//	return false;
+				//}
 				var json = {};
 				xml_data += "<item>" +
 						"<Title><![CDATA["+title+"]]></Title>" +
@@ -376,7 +377,7 @@ function submitAppMsg(){
 				if(select == "1"){	//选择自定义URl
 					var app_url = item.find(".appmsgUrl").val();
 					if(!app_url || '' == app_url || 'http://' == app_url){
-						$.messager.alert('提示', '請填寫URL或選擇應用[圖文'+(i+1)+']', 'warning');
+						$.messager.alert('提示', '请填写URL或选择应用[图文'+(i+1)+']', 'warning');
 						flag = false;
 						return false;
 					}
@@ -384,7 +385,7 @@ function submitAppMsg(){
 				}else{
 					var content = item.find(".appmsgContent").val();
 					if(!content || '' == $.trim(content)){
-						$.messager.alert('提示', '請編輯頁面內容，或填寫鏈接地址[圖文'+(i+1)+']', 'warning');
+						$.messager.alert('提示', '请编辑页面内容，或者填写链接地址[语文'+(i+1)+']', 'warning');
 						flag = false;
 						return false;
 					}
@@ -405,7 +406,7 @@ function submitAppMsg(){
 				$("#contentsJson").val($.toJSON(newsJson));
 			}
 			$.messager.progress({
-				text : '數據提交中....',
+				text : '数据提交中....',
 				interval : 100
 			});
 		}
@@ -427,10 +428,10 @@ function loadContent(url){
 			content = data;
 		},
         errorHandler:function(errorString, exception){
-        	alert("正文內容讀取失敗");
+        	alert("正文內容获取失败");
         },
         exceptionHandler:function(exceptionString, exception){
-        	alert("正文內容讀取失敗");
+        	alert("正文內容获取失败");
         }
 	});
 	return content;

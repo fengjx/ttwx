@@ -174,10 +174,10 @@ function submitNewsForm(){
 				$.messager.alert('提示', '请输入标题', 'warning');
 				return false;
 			}
-			if(!picUrl || picUrl == ''){
-				$.messager.alert('提示', '请上传图片', 'warning');
-				return false;
-			}
+			//if(!picUrl || picUrl == ''){
+			//	$.messager.alert('提示', '请上传图片', 'warning');
+			//	return false;
+			//}
 			if(!description || description == ''){
 				$.messager.alert('提示', '请添加摘要', 'warning');
 				return false;
