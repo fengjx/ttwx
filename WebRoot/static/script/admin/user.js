@@ -15,7 +15,7 @@ $(function() {
 	// 加载用户分组
 	loadGroupList();
 	datagrid = $('#datagrid').datagrid({
-		url : domain + '/admin/user/userList.action',
+		url : domain + '/admin/user/userPageList.action',
 		toolbar : '#toolbar',
 		iconCls : 'icon-save',
 		pagination : true,
