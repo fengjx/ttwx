@@ -215,3 +215,13 @@ app.closeDialog = function(){
 		art = undefined;
 	}
 }
+
+app.page = function () {
+
+
+
+}
+	
+
+
+
