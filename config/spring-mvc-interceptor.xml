@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-3.0.xsd
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
-	
+
     <!-- 拦截匹配URL -->
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/admin" />
-			<mvc:mapping path="/admin/**" />
-			<bean class="com.fjx.wechat.base.admin.interceptor.AdminInterceptor"></bean>
-		</mvc:interceptor>
-	</mvc:interceptors>
-	
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin"/>
+            <mvc:mapping path="/admin/**"/>
+            <bean class="com.fjx.wechat.base.admin.interceptor.AdminInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- 拦截匹配微信请求接口 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/wechat/api"/>
+            <bean class="com.fjx.wechat.base.admin.interceptor.WechatInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
 </beans>
