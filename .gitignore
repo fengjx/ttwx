@@ -4,3 +4,4 @@
 *.war
 *.ear
 /config/sae
+/config/aliyun
