@@ -34,7 +34,7 @@ public class MaterialServiceImpl extends BaseAbstractService<MaterialEntity> imp
 
 	@Override
 	public Pagination<MaterialEntity> getListPageByType(String type,SysUserEntity sysUser) {
-		String hql = "from MaterialEntity m where m.msg_type = ? and m.sysUser = ?";
+		String hql = "from MaterialEntity m where m.msg_type = ? and m.sysUser = ? order by m.in_time desc ";
 		return pageByHql(hql, type,sysUser);
 	}
 
