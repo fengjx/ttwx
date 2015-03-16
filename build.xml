@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ttwx" basedir="." default="mkwar">
+
+    <property name="projectName" value="ttwx" />
+    <property name="src" value="src" />
+    <property name="conf" value="config" />
+    <property name="debugging" value="on" />
+    <property name="classes" value="WebRoot/WEB-INF/classes" />
+    <property name="lib" value="WebRoot/WEB-INF/lib" />
+    <property name="srcDir" value="./WebRoot" />
+
+    <path id="project.class.path">
+        <fileset dir="${lib}">
+            <include name="*.jar" />
+        </fileset>
+        <fileset dir="E:\\ProgramFiles\\apache-tomcat-7.0.34\\lib\\">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="init">
+        <tstamp>
+            <format property="build.time" pattern="yyyy-MM-dd HH:mm:ss aa" />
+        </tstamp>
+        <echo message="build time : ${build.time}" />
+    </target>
+
+    <target name="clean" depends="init">
+        <delete dir="${classes}" />
+
+    </target>
+
+    <target name="prepare" depends="clean">
+        <mkdir dir="${classes}" />
+    </target>
+
+    <target name="compile" depends="prepare">
+        <javac srcdir="${src}" destdir="${classes}" source="1.6" target="1.6" debug="true" debuglevel="lines,vars,source" encoding="UTF-8" fork="true" memoryMaximumSize="512m">
+            <classpath refid="project.class.path"/>
+        </javac>
+    </target>
+
+    <target name="mkwar" depends = "compile" >
+        <war destfile="${basedir}/${projectName}.war" webxml="${basedir}/WebRoot/WEB-INF/web.xml">
+            <fileset dir="${basedir}/WebRoot">
+                <include name="**/*.*" />
+            </fileset>
+            <classes dir="${conf}"/>
+        </war>
+    </target>
+
+</project>
