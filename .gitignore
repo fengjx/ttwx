@@ -5,3 +5,5 @@
 *.ear
 /config/sae
 /config/aliyun
+/build
+/aliyun
