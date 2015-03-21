@@ -65,7 +65,7 @@ $(function(){
 			field : 'id',
 			hidden : true
 		},{
-			field : 'level',
+			field : 'menu_level',
 			hidden : true
 		},{
 			field : 'type',
@@ -216,9 +216,9 @@ function appMenu() {
 			return false;
 		}
 		menuForm.form('load', {
-			'level' : 1
+			'menu_level' : 1
 		});
-	}else if(parseInt(selectNode.level) == 2){
+	}else if(parseInt(selectNode.menu_level) == 2){
 		$.messager.alert('提示','最多只允许添加到二級菜单',	'warning');
 		return false;
 	}else{
@@ -228,7 +228,7 @@ function appMenu() {
 			return false;
 		}
 		menuForm.form('load', {
-			'level' : parseInt(selectNode.level)+1,
+			'menu_level' : parseInt(selectNode.menu_level)+1,
 			'parent_id' : selectNode.id
 		});
 	}
@@ -250,7 +250,7 @@ function updatedMenu() {
 			'id' : selectNode.id,
 			'parent_id' : selectNode.parent_id,
 			'name' : selectNode.name,
-			'level' : selectNode.level
+			'menu_level' : selectNode.menu_level
 		});
 	}else{
 		$.messager.alert('提示', '请选择要编辑的菜单！', 'warning');

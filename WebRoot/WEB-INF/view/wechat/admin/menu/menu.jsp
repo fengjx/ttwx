@@ -9,7 +9,7 @@
 	<link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
 	<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 	<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-	<script src="<%=resourceUrl %>/script/admin/menu.js?v=2014111503" type="text/javascript" charset="UTF-8"></script>
+	<script src="<%=resourceUrl %>/script/admin/menu.js?v=2015032201" type="text/javascript" charset="UTF-8"></script>
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true">
@@ -25,7 +25,7 @@
 					<table class="tableForm">
 						<input type="hidden" name="id" value=""/>
 						<input type="hidden" name="parent_id" value=""/>
-						<input type="hidden" name="level" value=""/>
+						<input type="hidden" name="menu_level" value=""/>
 						<tr>
 							<th>菜单名称</th>
 							<td><input name="name" class="easyui-validatebox" required="true" /></td>
