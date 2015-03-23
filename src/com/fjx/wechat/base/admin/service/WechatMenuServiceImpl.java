@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.fjx.common.framework.system.exception.MyException;
-import com.fjx.wechat.mysdk.api.ApiConfig;
 import com.fjx.wechat.mysdk.api.ApiResult;
 import com.fjx.wechat.mysdk.api.ClientFactory;
 import com.fjx.wechat.mysdk.api.MenuClient;
@@ -16,11 +15,10 @@ import com.fjx.wechat.mysdk.beans.menu.ComplexButton;
 import com.fjx.wechat.mysdk.beans.menu.Menu;
 import com.fjx.wechat.mysdk.beans.menu.ViewButton;
 import com.fjx.wechat.mysdk.constants.WechatMenuConstants;
-import com.fjx.wechat.mysdk.tools.WeChatUtil;
-import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.fjx.common.framework.base.service.impl.BaseAbstractService;
@@ -30,16 +28,19 @@ import com.fjx.wechat.base.admin.entity.WechatMenuEntity;
 
 
 /**
- * 
+ *
  * @author fengjx xd-fjx@qq.com
  * @version WechatMenuServiceImpl.java 2014年9月26日
  */
 @Service
 public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity> implements WechatMenuService {
-	
+
 	@Autowired
 	private RespMsgActionService msgActionService;
-	
+
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+
 	/*
 	 * 保存菜单
 	 * (non-Javadoc)
@@ -55,7 +56,7 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 		menuEntity.setParent(parent);
 		save(menuEntity);
 	}
-	
+
 	/*
 	 * 更新菜单
 	 * (non-Javadoc)
@@ -70,14 +71,14 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 		menuEntity.setParent(parent);
 		update(menuEntity);
 	}
-	
+
 	@Override
 	public List<Map<String, Object>> treeMenu(SysUserEntity sysUser) {
 		List<Map<String,Object>> res = null;
 		res = this.loadMenuDetailById(null,sysUser.getId());
 		return res;
 	}
-	
+
 	private List<Map<String,Object>> loadMenuDetailById(String id, String userId){
 		List<Map<String,Object>> res = null;
 		StringBuffer sql = new StringBuffer("select m.id as \"id\", m.in_time as \"in_time\", m.menu_key as \"menu_key\", m.menu_level as \"menu_level\", m.name as \"name\", m.parent_id as \"parent_id\", m.type as \"type\", m.update_time as \"update_time\", m.url as \"url\", m.user_id as \"user_id\",");
@@ -89,7 +90,7 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 					 sql.append(" left join wechat_ext_app b on a.app_id = b.id ");
 					 sql.append(" left join wechat_material c on a.material_id = c.id ");
 					 sql.append(" where m.user_id = ?");
-		
+
 //		StringBuffer sql = new StringBuffer("select new map( ");
 //			sql.append(" m.id as id, m.in_time as in_time, m.menu_key as menu_key, m.menu_level as menu_level, m.name as name, m.parent.id as parent_id, m.type as type, m.update_time as update_time, m.url as url, m.sysUser.id as user_id,");
 //			sql.append(" a.id as action_id, a.action_type as action_type, a.in_time as action_time, ");
@@ -97,7 +98,7 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 //			sql.append(" ma.id as material_id, ma.xml_data as xml_data) ");
 //			sql.append(" from WechatMenuEntity m, RespMsgActionEntity a, ExtAppEntity e, MaterialEntity ma");
 //			sql.append(" where m.sysUser.id = ? and m.menu_key = a.key_word and a.extApp.id = e.id and a.material.id = ma.id");
-		
+
 //		StringBuffer sql = new StringBuffer("select new map( ");
 //			sql.append(" m.id as id, m.in_time as in_time, m.menu_key as menu_key, m.menu_level as menu_level, m.name as name, m.parent.id as parent_id, m.type as type, m.update_time as update_time, m.url as url, m.sysUser.id as user_id,");
 //			sql.append(" a.id as action_id, a.action_type as action_type, a.in_time as action_time, ");
@@ -105,14 +106,16 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 //			sql.append(" ma.id as material_id, ma.xml_data as xml_data) ");
 //			sql.append(" from WechatMenuEntity m, RespMsgActionEntity a, ExtAppEntity e, MaterialEntity ma");
 //			sql.append(" where m.sysUser.id = ? and m.menu_key = a.key_word and a.extApp.id = e.id and a.material.id = ma.id");
-			
-			
+
+
 		if(StringUtils.isBlank(id)){
 			sql.append(" and (m.parent_id is null or m.parent_id = '') order by m.in_time asc");
-			res = findListMapBySql(sql.toString(),userId);
+			//res = findListMapBySql(sql.toString(),userId);
+			res = jdbcTemplate.queryForList(sql.toString(), userId);
 		}else{
 			sql.append(" and m.parent_id = ? order by m.in_time asc");
-			res = findListMapBySql(sql.toString(),userId, id);
+			//res = findListMapBySql(sql.toString(),userId, id);
+			res = jdbcTemplate.queryForList(sql.toString(),userId, id);
 		}
 		if( null != res && res.size()>0 ){
 			for (int i = 0,l = res.size(); i < l; i++) {
@@ -125,8 +128,8 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 		}
 		return res;
 	}
-	
-	
+
+
 	@Override
 	public void deleteMenu(String id){
 		if(StringUtils.isNotBlank(id)){
@@ -134,7 +137,7 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 			msgActionService.deleteMsgActionByKey("key_"+id);
 		}
 	}
-	
+
 	/*
 	 * 菜单发布
 	 * (non-Javadoc)
@@ -211,8 +214,8 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 			}
 		}
 		return menu;
-	} 
-	
+	}
+
 	/**
 	 * 判断菜单是否是叶子节点
 	 * @param id
@@ -228,5 +231,5 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 		return true;
 	}
 
-	
+
 }
