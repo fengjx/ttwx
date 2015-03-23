@@ -39,7 +39,7 @@ public class WechatMenuServiceImpl extends BaseAbstractService<WechatMenuEntity>
 	private RespMsgActionService msgActionService;
 
 	@Autowired
-	JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 
 	/*
 	 * 保存菜单
