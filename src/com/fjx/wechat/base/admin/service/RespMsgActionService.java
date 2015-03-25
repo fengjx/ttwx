@@ -58,7 +58,7 @@ public interface RespMsgActionService extends IBaseAbstractService<RespMsgAction
 	 * @param sysUser 归属用户
 	 * @return
 	 */
-	public Pagination<KeyWordActionView> pageMsgAction(Map<String, String> param, SysUserEntity sysUser);
+	public Pagination<Map<String,String>> pageMsgAction(Map<String, String> param, SysUserEntity sysUser);
 	
 	/**
 	 * 根据关键字删除消息规则

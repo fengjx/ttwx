@@ -63,7 +63,7 @@ public class MaterialEntity extends ToStringBase {
 		this.msg_type = msg_type;
 	}
 	
-	@Column(length=4000,nullable=false)
+	@Column(length=2048,nullable=false)
 	public String getXml_data() {
 		return xml_data;
 	}

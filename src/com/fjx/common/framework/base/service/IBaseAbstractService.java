@@ -72,7 +72,6 @@ public interface IBaseAbstractService<T> {
 	
 	/**
 	 * 
-	 * @param entityClass
 	 * @param id
 	 * @return 泛型指向之外的实
 	 * @throws HibernateException
@@ -158,11 +157,13 @@ public interface IBaseAbstractService<T> {
 	 * @return
 	 */
 	public int getCount(String ql, boolean isHql, Object... parameters);
-	
+
 	/**
 	 * 分页查询，根据泛型查询该对象纪录列表
-	 * @param parameters
-	 * @return 分页对象 
+	 *
+	 * @param entityClass
+	 * @param <X>
+	 * @return
 	 */
 	public <X> Pagination<X> page(Class<X> entityClass) ;
 	
@@ -185,13 +186,14 @@ public interface IBaseAbstractService<T> {
 	
 	/**
 	 * 分页查询
-	 * @param hql
+	 *
+	 * @param sql
 	 * @param parameters
 	 * @return	返回分页数据
 	 * @throws HibernateException
 	 * @throws SQLException
 	 */
-	public Pagination<Map<String, Object>> pageListMapBySql (String sql, Object... parameters);
+	public <X> Pagination<Map<String, X>> pageListMapBySql (String sql, Object... parameters);
 	
 	/**
 	 * 执行更新操作（修改或者删除）

@@ -148,7 +148,7 @@ public class BaseAbstractService<T> implements IBaseAbstractService<T> {
 	}
 	
 	@Override
-	public Pagination<Map<String, Object>> pageListMapBySql(String sql, Object... parameters) {
+	public <X> Pagination<Map<String, X>> pageListMapBySql(String sql, Object... parameters) {
 		return baseDao.pageListMapBySql(sql, parameters);
 	}
 

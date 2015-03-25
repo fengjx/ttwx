@@ -126,9 +126,9 @@ public class RespMsgActionController extends BaseController {
 	 */
 	@RequestMapping(value="/pageList")
 	@ResponseBody
-	public Pagination<KeyWordActionView> pageList(HttpServletRequest request){
+	public Pagination<Map<String,String>> pageList(HttpServletRequest request){
 		SysUserEntity sysUser = getLoginSysUser(request);
-		Pagination<KeyWordActionView> pagination = actionService.pageMsgAction(WebUtil.getRequestParams(request),sysUser);
+		Pagination<Map<String,String>> pagination = actionService.pageMsgAction(WebUtil.getRequestParams(request),sysUser);
 		return pagination;
 	}
 	
