@@ -1,3 +1,4 @@
+
 package com.fjx.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,10 +16,9 @@ public final class LoggerUtil {
      * info日志
      * 
      * @param logger
-     * @param msg
+     * @param message
      */
     public static void info(Logger logger, String message) {
-
         if (logger.isInfoEnabled()) {
             logger.info(logPrefix() + message);
         }
@@ -31,9 +31,7 @@ public final class LoggerUtil {
      * @param message
      */
     public static void warn(Logger logger, String message) {
-
         logger.warn(logPrefix() + message);
-
     }
 
     /**
@@ -44,9 +42,7 @@ public final class LoggerUtil {
      * @param t
      */
     public static void warn(Logger logger, String message, Throwable t) {
-
         logger.warn(logPrefix() + message, t);
-
     }
 
     /**
@@ -56,7 +52,6 @@ public final class LoggerUtil {
      * @param message
      */
     public static void error(Logger logger, String message) {
-
         logger.error(logPrefix() + message);
     }
 
@@ -68,13 +63,11 @@ public final class LoggerUtil {
      * @param t
      */
     public static void error(Logger logger, String message, Throwable t) {
-
         logger.error(logPrefix() + message, t);
     }
 
     /**
      * 获取调用Logger类的调用类,调用方法,和行数,以及统一上下文ID
-     * 
      * <p>
      * 如[LoggerUtil-main-165][343434343434]
      * 
@@ -86,20 +79,18 @@ public final class LoggerUtil {
 
         // 类名
         String className = StringUtils.left(s.getFileName(),
-            StringUtils.lastIndexOf(s.getFileName(), "."));
-
+                StringUtils.lastIndexOf(s.getFileName(), "."));
         // 方法名
         String methodName = s.getMethodName();
-
         // 行数
         int lineNumber = s.getLineNumber();
-
         return "[" + className + "." + methodName + "(" + lineNumber + ")][threadId="
-               + getCurrentThreadId() + "]";
+                + getCurrentThreadId() + "]";
     }
 
     /**
      * 日志打印时前缀添加
+     * 
      * @return 返回添加前缀后的结果
      */
     private static String logPrefix() {
@@ -112,7 +103,6 @@ public final class LoggerUtil {
      * @return
      */
     private static long getCurrentThreadId() {
-
         return Thread.currentThread().getId();
 
     }

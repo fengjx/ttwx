@@ -6,6 +6,8 @@ import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import com.fjx.common.framework.system.context.MySystemContext;
 import com.fjx.common.framework.system.exception.MyRuntimeException;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.ServletContext;
@@ -54,88 +56,57 @@ public final class CommonUtils {
 
     /**
      * @param date
-     * @param dateFmtArgs 变长参数 可以不输入 默认为yyyy-MM-dd HH:mm:ss
      * @return
      */
-    public static String date2String(Date date, String... dateFmtArgs) {
+    public static String date2String(Date date) {
+        return date2String(date, DATA_FORMAT_ALL);
+    }
+
+    /**
+     * @param date
+     * @param dataFormat 默认为yyyy-MM-dd HH:mm:ss
+     * @return
+     */
+    public static String date2String(Date date, String dataFormat) {
         if (null == date) {
             return null;
         }
         String dateFmt = DATA_FORMAT_ALL;
-        if (dateFmtArgs.length != 0) {
-            dateFmt = dateFmtArgs[0];
+        if (StringUtils.isNotBlank(dataFormat)) {
+            dateFmt = dataFormat;
         }
         DateFormat fmt = new SimpleDateFormat(dateFmt);
         return fmt.format(date);
-    }
-
-    /**
-     * @param timeMillis  时间戳
-     * @param dateFmtArgs 变长参数 可以不输入 默认为yyyy-MM-dd HH:mm:ss
-     * @return
-     */
-    public static String timeMillis2DateString(Long timeMillis, String... dateFmtArgs) {
-        Date date = timeMillis2Date(timeMillis);
-        String dateFmt = DATA_FORMAT_ALL;
-        if (dateFmtArgs.length != 0) {
-            dateFmt = dateFmtArgs[0];
-        }
-        DateFormat fmt = new SimpleDateFormat(dateFmt);
-        return fmt.format(date);
-    }
-
-    /**
-     * @param timeMillis  时间戳
-     * @param dateFmtArgs 变长参数 可以不输入 默认为yyyy-MM-dd HH:mm:ss
-     * @return
-     */
-    public static Date timeMillis2Date(Long timeMillis, String... dateFmtArgs) {
-        return new Date(timeMillis);
     }
 
 
     /**
      * @param date
-     * @param dateFmtArgs 变长参数 可以不输入 默认为yyyy-MM-dd
      * @return
      * @throws ParseException
      */
-    public static Date string2Date(String date, String... dateFmtArgs) {
+    public static Date string2Date(String date) {
+        return string2Date(date,DATA_FORMAT_ALL);
+    }
+
+
+    /**
+     * @param date
+     * @param dataFormat 默认为yyyy-MM-dd
+     * @return
+     * @throws ParseException
+     */
+    public static Date string2Date(String date, String dataFormat) {
         String dateFmt = DATA_FORMAT_ALL;
-        if (dateFmtArgs.length != 0) {
-            dateFmt = dateFmtArgs[0];
+        if (StringUtils.isNotBlank(dataFormat)) {
+            dateFmt = dataFormat;
         }
         DateFormat fmt = new SimpleDateFormat(dateFmt);
-        Date res_date = null;
         try {
-            res_date = fmt.parse(date);
+            return fmt.parse(date);
         } catch (ParseException e) {
             throw new MyRuntimeException(e);
         }
-        return res_date;
-    }
-
-    /**
-     * @param date
-     * @return
-     * @throws ParseException
-     */
-    public static java.sql.Date string2SqlDate(String date) {
-        return java.sql.Date.valueOf(date);
-    }
-
-    /**
-     * @param n 随即生成N个大写字母组成的字符串
-     * @return
-     */
-    public static String randomStr(int n) {
-        String str = "";
-        Random r = new Random();
-        for (int i = 0; i < n; i++) {
-            char m = (char) (r.nextInt(26) + 65);
-            str += m;
-        }
-        return str;
     }
 
     /**
@@ -153,7 +124,30 @@ public final class CommonUtils {
         }
     }
 
-
-    public static void main(String[] args) {
+    /**
+     * 获得项目classPath
+     *
+     * @return
+     */
+    public static String getClassPath(){
+        String classPath = Thread.currentThread().getContextClassLoader().getResource("/").getPath();
+        if(SystemUtils.IS_OS_WINDOWS){
+            classPath = classPath.substring(1,classPath.length());
+        }
+        return classPath;
     }
+
+    /**
+     * 获得项目classPath
+     *
+     * @return
+     */
+    public static String getClassPath(String path){
+        String classPath = Thread.currentThread().getContextClassLoader().getResource(path).getPath();
+        if(SystemUtils.IS_OS_WINDOWS){
+            classPath = classPath.substring(1,classPath.length());
+        }
+        return classPath;
+    }
+
 }
