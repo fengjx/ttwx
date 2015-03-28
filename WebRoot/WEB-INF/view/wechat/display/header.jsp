@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav navbar-right">
       	<c:choose>
 			<c:when test="${!empty sessionScope.sys_user_login_key }">
-				<li><a target="_blank" href="<%=domain %>/admin">后台管理</a></li>
+				<li><a target="_blank" href="<%=domain %>/admin/main">后台管理</a></li>
 			</c:when>
 			<c:otherwise>
 				<li><a href="<%=domain %>/login">登录</a></li>

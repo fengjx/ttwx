@@ -4,8 +4,8 @@
 	var tree ;
 	$(function(){
 		tree = $("#tree").tree({
-			url: "<%=domain%>"+'/static/config/admin-menu.json?id='+new Date(),
-			method: "GET",
+			url: "<%=domain%>" + '/admin/sysmenu?id='+new Date(),
+			method: "post",
 			lines: true,
 			onClick: function(node){
 				if (node.attributes && node.attributes.src && node.attributes.src != '') {
