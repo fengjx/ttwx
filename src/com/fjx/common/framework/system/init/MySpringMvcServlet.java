@@ -30,7 +30,6 @@ public class MySpringMvcServlet extends DispatcherServlet {
 		//将request，response放到MySystemContext，方便在javaBean中调用
 		MySystemContext.setAll(request, response);
 		String uri = request.getRequestURI();
-		//logger.debug("访问地址："+uri);
 		//正则表达式匹配，参数在web.xml配置
 		if(uri.matches(page_url)){		//分页请求
 			logger.debug("easyui组件分页参数 -- page:" + request.getParameter("page")+";  rows: " + request.getParameter("rows"));

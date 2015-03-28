@@ -21,7 +21,6 @@
      */
     var URL = window.UEDITOR_HOME_URL || getUEBasePath();
 	
-    //var UP_URL = "http://192.168.10.190:8080/";
     var UP_URL = domain;
     //var UP_URL = "/";
     
@@ -34,7 +33,6 @@
         UEDITOR_HOME_URL : URL
 
         //图片上传配置区
-        //,imageUrl:URL+"jsp/saeImageUp.jsp"             //图片上传提交地址
         ,imageUrl:URL+"jsp/imageUp.jsp"             //图片上传提交地址
         ,imagePath:staticDomain                     //图片修正地址，引用了fixedImagePath,如有特殊需求，可自行配置
         //,imageFieldName:"upfile"                  //图片数据的key,若此处修改，需要在后台对应文件修改对应参数
