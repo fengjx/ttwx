@@ -43,10 +43,18 @@
     <target name="mkwar" depends = "compile" >
         <war destfile="${basedir}/${projectName}.war" webxml="${basedir}/WebRoot/WEB-INF/web.xml">
             <fileset dir="${basedir}/WebRoot">
-                <include name="**/*.*" />
+                <include name="**/*.*"/>
+                <exclude name="**/static/**" />
             </fileset>
             <classes dir="${conf}"/>
         </war>
+
+        <!-- 静态资源打包 -->
+        <zip destfile="${basedir}/res.zip">
+            <fileset dir="${basedir}/WebRoot/static">
+                <include name="**/*.*"/>
+            </fileset>
+        </zip>
     </target>
 
 </project>
