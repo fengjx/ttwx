@@ -3,21 +3,13 @@ package com.fjx.common.action;
 
 import com.fjx.wechat.base.admin.entity.SysUserEntity;
 import com.fjx.wechat.config.AppConfig;
-import com.sina.sae.storage.SaeStorage;
-import com.sina.sae.util.SaeUserInfo;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -108,10 +100,11 @@ public class BaseController {
         String code = request.getSession().getAttribute(
                 com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY)
                 + "";
+        logger.debug("比较验证码code=" + code + " valid_code=" + valid_code);
         if (StringUtils.isBlank(code)) {
             res.put("code", "0");
             res.put("msg", "页面超时，请重试！");
-        } else if (!code.toUpperCase().equals(valid_code.toUpperCase())) {
+        } else if (!code.equalsIgnoreCase(valid_code)) {
             res.put("code", "0");
             res.put("msg", "验证码错误！");
         }
