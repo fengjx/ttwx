@@ -19,7 +19,13 @@
     <script src="<%=resourceUrl%>/js/respond.min.js"></script>
 <![endif]-->
 
-<script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fc4913310078c3ed1cef09bf218b7066a' type='text/javascript'%3E%3C/script%3E"));
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a2efe10d99e73a13db453bd7cc51b0d1";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 </script>
+
