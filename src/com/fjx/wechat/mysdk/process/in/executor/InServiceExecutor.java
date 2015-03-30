@@ -105,7 +105,7 @@ public abstract class InServiceExecutor implements ServiceExecutor, ServiceExecu
 		Object o = SpringBeanFactoryUtil.getBean(beanName);
 		// 通过反射调用业务bean的方法
 		Method method = o.getClass().getMethod(methodName);
-		Object res = method.invoke(o, new Object());
+		Object res = method.invoke(o, null);
 		logger.debug("beanName：" + beanName + " methodName：" + methodName
 				+ "接口返回数据：" + res.toString());
 		return res.toString();
