@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--
+    <settings>
+        <setting name="lazyLoadingEnabled" value="false" />
+    </settings>
+    <typeAliases>
+        <typeAlias alias="application" type="com.sitech.dss.app.model.Application" />
+        <typeAlias alias="map"  type="java.util.Map" />
+    </typeAliases>
+    <mappers>
+        <mapper resource="reportconfig/ReportExplain_oracle.xml" />
+        <mapper resource="reportconfig/ReportConfig_oracle.xml" />
+    </mappers>
+    -->
+    <plugins>
+        <plugin interceptor="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
+            <!--<property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.PostgreSQLDialect"/>-->
+            <property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect"/>
+        </plugin>
+    </plugins>
+</configuration>
