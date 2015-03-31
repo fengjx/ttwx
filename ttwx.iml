@@ -27,7 +27,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/WebRoot/WEB-INF/classes" />
     <output-test url="file://$MODULE_DIR$/../../../IdeaProjects14/JavaEE/out/test/ttwx" />
     <exclude-output />
@@ -37,7 +37,7 @@
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="library" exported="" name="Jetty 7.6.15.v20140411" level="application_server_libraries" />
     <orderEntry type="module-library" exported="">
       <library>
