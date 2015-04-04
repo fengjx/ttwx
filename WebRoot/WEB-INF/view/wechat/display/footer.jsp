@@ -7,13 +7,6 @@
 	        <p>本网站所列开源项目的文档全部由<a href="<%=domain %>/about">天天微信团队</a>成员整理。</p>
         	<script type="text/javascript">
 				(function(){
-                  // 百度统计 start
-                  var hm = document.createElement("script");
-                  hm.src = "//hm.baidu.com/hm.js?a2efe10d99e73a13db453bd7cc51b0d1";
-                  var s = document.getElementsByTagName("script")[0];
-                  s.parentNode.insertBefore(hm, s);
-                  // 百度统计 end
-
 				var p = {
 				url:location.href,
 				showcount:'1',/*是否显示分享总数,显示：'1'，不显示：'0' */
