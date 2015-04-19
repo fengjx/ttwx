@@ -112,16 +112,16 @@ public class RespMsgActionServiceImpl extends BaseAbstractService<RespMsgActionE
         String _ids[] = ids.split(",");
         if (null != _ids && _ids.length > 1) {
             for (String id : _ids) {
-				deleteAction(ids);
+                deleteAction(id);
             }
         } else {
-			deleteAction(ids);
+            deleteAction(ids);
         }
     }
 
-	private void deleteAction(String id){
-		bulkUpdate("delete from RespMsgActionEntity a where a.id = ?",true,id);
-	}
+    private void deleteAction(String id) {
+        bulkUpdate("delete from RespMsgActionEntity a where a.id = ?", true, id);
+    }
 
     /*
      * 根据关键字删除消息规则 (non-Javadoc)
