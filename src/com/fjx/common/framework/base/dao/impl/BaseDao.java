@@ -150,7 +150,7 @@ public class BaseDao implements IBaseDao {
 	@Override
 	public <X> void delete(Class<X> entityClass, Serializable pk) {
 		Session session = getCurrentSession();
-		X entity = (X) session.load(entityClass, pk);
+		X entity = (X) session.get(entityClass, pk);
 		session.delete(entity);
 	}
 
