@@ -36,14 +36,14 @@ public class MaterialAction extends BaseController
 
     @RequestMapping("/multiple")
     public ModelAndView multiple(String id) {
-        ModelAndView mv = new ModelAndView("/wechat/admin/material/multiple_news");
+        ModelAndView mv = new ModelAndView("/wechat/admin/base/multiple_news");
         mv.addObject("id", id);
         return mv;
     }
 
     @RequestMapping("/single")
     public ModelAndView single(String id) {
-        ModelAndView mv = new ModelAndView("/wechat/admin/material/single_news");
+        ModelAndView mv = new ModelAndView("/wechat/admin/base/single_news");
         mv.addObject("id", id);
         return mv;
     }
