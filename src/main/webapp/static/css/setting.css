@@ -1,0 +1,59 @@
+form {
+	margin: 0 0 20px;
+}
+
+input.span4 {
+	width: 280px;
+}
+
+.form-horizontal .control-group {
+	margin-bottom: 20px;
+}
+
+.controls {
+	width: 800px;
+}
+
+.form-horizontal .controls {
+	margin-left: 180px;
+}
+
+.form-horizontal .control-label {
+	float: left;
+	width: 160px;
+	padding-top: 5px;
+	text-align: right;
+}
+
+.dev_right .table {
+	border: 1px solid #d3d3d3;
+	width: 800px;
+}
+
+.table {
+	font-size: 14px;
+	text-align: center;
+}
+
+.dev_right .table_cell.type, .dev_right .table_cell.desc {
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: left;
+	vertical-align: middle;
+}
+
+.dev_right .table_cell {
+	line-height: normal;
+	padding: 10px 0;
+}
+
+.table thead tr th {
+	border-color: #DDD;
+	font-weight: bold;
+}
+
+.form-search input, .form-inline input, .form-horizontal input, .form-search textarea, .form-inline textarea, .form-horizontal textarea, .form-search select, .form-inline select, .form-horizontal select, .form-search .help-inline, .form-inline .help-inline, .form-horizontal .help-inline, .form-search .uneditable-input, .form-inline .uneditable-input, .form-horizontal .uneditable-input, .form-search .input-prepend, .form-inline .input-prepend, .form-horizontal .input-prepend, .form-search .input-append, .form-inline .input-append, .form-horizontal .input-append {
+	display: inline-block;
+	margin-bottom: 0;
+	vertical-align: middle;
+}

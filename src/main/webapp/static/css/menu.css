@@ -1,0 +1,262 @@
+.icon_menu_action {
+	width: 144px;
+	height: 144px;
+	vertical-align: middle;
+	display: inline-block
+}
+
+.icon_menu_action.send {
+	background:
+		url("../img/advanced_menu_setting_z.png")
+		0 0 no-repeat
+}
+
+a:hover .icon_menu_action.send {
+	background:
+		url("../img/advanced_menu_setting_z.png")
+		0 -154px no-repeat
+}
+
+.icon_menu_action.url {
+	background:
+		url("../img/advanced_menu_setting_z.png")
+		0 -308px no-repeat
+}
+
+a:hover .icon_menu_action.url {
+	background:
+		url("../img/advanced_menu_setting_z.png")
+		0 -461px no-repeat
+}
+
+.icon_menu_action.qq {
+	background:
+		url("../img/advanced_menu_setting_z.png")
+		0 -614px no-repeat
+}
+
+a:hover .icon_menu_action.qq {
+	background:
+		url("../img/advanced_menu_setting_z.png")
+		0 -768px no-repeat
+}
+
+.icon_menu_action.other {
+	background:
+		url("../img/advanced_menu_setting_z.png")
+		0 -921px no-repeat
+}
+
+a:hover .icon_menu_action.other {
+	background:
+		url("../img/advanced_menu_setting_z.png")
+		0 -1075px no-repeat
+}
+
+.action_content {
+	display: none
+}
+
+.action_content .msg_wrp {
+	padding: 14px 20px;
+	width: 350px;
+	border: 1px solid #c6c6c6;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	word-wrap: break-word;
+	word-break: break-all
+}
+
+.action_content .msg_wrp .richvideo,.action_content .msg_wrp .appmsg {
+	width: 320px
+}
+
+.action_content.default .action_tips {
+	padding-top: 200px;
+	text-align: center;
+	font-size: 2em;
+}
+
+.action_content.init {
+	padding: 20px;
+	text-align: center
+}
+
+.action_content.init .action_tips {
+	text-align: left;
+	padding-bottom: 60px
+}
+
+.action_content.init a {
+	color: #222;
+	text-decoration: none;
+	display: inline-block;
+	margin-left: 15px;
+	margin-right: 15px
+}
+
+.action_content.init a strong {
+	display: block;
+	font-weight: 400;
+	font-style: normal
+}
+
+.action_content.send .action_tips {
+	padding: 20px
+}
+
+.action_content.send .tool_bar {
+	padding-top: 0;
+	padding-left: 20px;
+	margin-top: 0;
+	border-top-width: 0;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	text-align: left
+}
+
+.action_content.send .tool_bar .btn {
+	margin-left: 0
+}
+
+.action_content.url {
+	padding-left: 80px;
+	border: solid 1px #E0ECFF;
+}
+
+.action_content.url .action_tips {
+	padding: 60px 0 5px
+}
+
+.action_content.url .frm_control_group {
+	margin-bottom: 0
+}
+
+.action_content.url .frm_input_box {
+	width: 340px
+}
+
+.action_content.url .tool_bar {
+	margin: 0;
+	border-top-width: 0;
+	text-align: left
+}
+
+.action_content.url .tool_bar .btn {
+	margin-left: 0
+}
+
+.action_content.sended {
+	padding: 20px
+}
+
+.action_content.sended .action_tips {
+	padding-bottom: 20px
+}
+
+
+
+
+
+
+
+
+
+.icon_msg_sender {
+	margin-right: 3px;
+	margin-top: -2px;
+	*margin-top: 2px;
+	width: 22px;
+	height: 22px;
+	vertical-align: middle;
+	display: inline-block
+}
+
+.tab_text .icon_msg_sender {
+	background:
+		url("../img/msg_tab_z.png")
+		0 0 no-repeat
+}
+
+.tab_img .icon_msg_sender {
+	background:
+		url("../img/msg_tab_z.png")
+		0 -32px no-repeat
+}
+
+.tab_video .icon_msg_sender {
+	background:
+		url("../img/msg_tab_z.png")
+		0 -64px no-repeat
+}
+
+.tab_audio .icon_msg_sender {
+	background:
+		url("../img/msg_tab_z.png")
+		0 -96px no-repeat
+}
+
+.tab_appmsg .icon_msg_sender {
+	background:
+		url("../img/msg_tab_z.png")
+		0 -128px no-repeat
+}
+
+.tab_commondity_appmsg .icon_msg_sender {
+	background:
+		url("../img/msg_tab_z.png")
+		0 -160px no-repeat
+}
+
+.tab_card .icon_msg_sender {
+	background: transparent
+		url(/mpres/htmledition/images/icon/msg-sender/icon_msg_sender_card.png?__sprite)
+		no-repeat 0 0
+}
+
+
+
+.editor_toolbar {
+	padding: 0 20px;
+	line-height: 36px;
+	background-color: #f5f6f6;
+	background-image: -moz-linear-gradient(top,#fafafb 0,#f2f3f3 100%);
+	background-image: -webkit-gradient(linear,0 0,0 100%,from(#fafafb),to(#f2f3f3));
+	background-image: -webkit-linear-gradient(top,#fafafb 0,#f2f3f3 100%);
+	background-image: -o-linear-gradient(top,#fafafb 0,#f2f3f3 100%);
+	background-image: linear-gradient(to bottom,#fafafb 0,#f2f3f3 100%);
+	border: 1px solid #d3d3d3;
+	border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
+
+.icon_emotion {
+	background: transparent url(../img/icon28_msgsender.png) no-repeat 0 0;
+	width: 28px;
+	height: 28px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.icon_emotion.emotion_switch {
+	background-position: 0 -282px
+}
+
+.icon_emotion.emotion_switch:hover {
+	background-position: -31px -282px
+}
+
+.emotion_editor {
+	position: relative;
+	z-index: 1;
+	border: 1px solid #d3d3d3;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px
+}
