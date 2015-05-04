@@ -15,9 +15,9 @@
     </mappers>
     -->
     <plugins>
-        <plugin interceptor="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
-            <!--<property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.PostgreSQLDialect"/>-->
-            <property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect"/>
+        <plugin interceptor="com.fengjx.common.mybatis.PagePlugin">
+            <property name="databaseType" value="mysql"/>
         </plugin>
     </plugins>
+
 </configuration>

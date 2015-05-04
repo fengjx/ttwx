@@ -1,8 +1,13 @@
+
 package com.fengjx.wechat.base.dao;
 
 import com.fengjx.wechat.base.model.DataDict;
 
+/**
+ * 字段管理
+ */
 public interface DataDictMapper {
+
     int deleteByPrimaryKey(String id);
 
     int insert(DataDict record);

@@ -5,7 +5,7 @@
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
 	
-	<bean id="emailService" class="com.fjx.common.mail.service.MyEmailService"></bean>
+	<bean id="emailService" class="com.fengjx.common.mail.service.MyEmailService"></bean>
 	
 	<!-- 注意:这里的参数(如用户名、密码)都是针对邮件发送者的 -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

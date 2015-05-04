@@ -48,7 +48,7 @@
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<!-- 所有配置的mapper文件 -->
 		<property name="mapperLocations"
-			value="classpath*:com/fengjx/wechat/base/dao/mysql/*.xml" />
+			value="classpath*:mybatis/mapper/mysql/*.xml" />
 		<property name="typeAliasesPackage" value="com.fengjx.wechat.base.model" />
 	</bean>
 

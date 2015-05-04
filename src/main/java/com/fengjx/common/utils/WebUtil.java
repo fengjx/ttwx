@@ -1,31 +1,36 @@
+
 package com.fengjx.common.utils;
 
 import com.fengjx.wechat.config.AppConfig;
+import org.apache.commons.codec.Charsets;
+import org.apache.commons.lang3.CharSet;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
- * web相关工具类
- * Created by fengjx on 2014/11/14 0014.
+ * web相关工具类 Created by fengjx on 2014/11/14 0014.
  */
 public final class WebUtil {
 
     /**
      * 获取所有request请求参数key-value
+     * 
      * @param request
      * @return
      */
-    public static Map<String, String> getRequestParams(HttpServletRequest request){
+    public static Map<String, String> getRequestParams(HttpServletRequest request) {
 
         Map<String, String> params = new HashMap<String, String>();
-        if(null != request){
+        if (null != request) {
             Set<String> paramsKey = request.getParameterMap().keySet();
-            for(String key : paramsKey){
+            for (String key : paramsKey) {
                 params.put(key, request.getParameter(key));
             }
         }
@@ -34,6 +39,7 @@ public final class WebUtil {
 
     /**
      * 获得客户端IP
+     * 
      * @param request
      * @return
      */
@@ -58,25 +64,25 @@ public final class WebUtil {
         return accessIP;
     }
 
-
-    public static String urlEncode(String source, String chartset) throws UnsupportedEncodingException {
+    public static String urlEncode(String source) throws UnsupportedEncodingException {
         String res = source;
-        res = URLEncoder.encode(source, chartset);
+        res = URLEncoder.encode(source, "UTF-8");
         return res;
     }
 
     /**
      * 判断是否是ajax请求
+     * 
      * @param request
      * @return
      */
-    public static boolean validAjax(HttpServletRequest request){
+    public static boolean validAjax(HttpServletRequest request) {
         String flag = request.getHeader("Request-Flag");
-        if(AppConfig.REQUEST_FLAG_AJAX.equals(flag)){
+        if (AppConfig.REQUEST_FLAG_AJAX.equals(flag)) {
             return true;
         }
         String requestType = request.getHeader("X-Requested-With");
-        if("XMLHttpRequest".equals(requestType)){
+        if ("XMLHttpRequest".equals(requestType)) {
             return true;
         }
         return false;

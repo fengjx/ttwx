@@ -2,7 +2,7 @@
 package com.fengjx.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 /**
  * 日志工具类
@@ -106,7 +106,7 @@ public final class LoggerUtil {
      * @return 返回添加前缀后的结果
      */
     private static String logPrefix(String msg) {
-        return getCaller() + "\n logger \n " + msg;
+        return getCaller() + "\n logger message \n " + msg;
     }
 
     /**

@@ -2,12 +2,15 @@
 package com.fengjx.common.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -125,6 +128,21 @@ public final class JsonUtil {
     public static Map<String, Object> toMap(String jsonString) {
         Validate.notNull(jsonString, "jsonString is null");
         return getJSONFromString(jsonString);
+    }
+
+    /**
+     * json字符串转换list
+     *
+     * @param jsonStr
+     * @return
+     */
+    public static List<Map<String, Object>> parseJSON2List(String jsonStr) {
+        JSONArray jsonArr = JSON.parseArray(jsonStr);
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        for (int i = 0, l = jsonArr.size(); i < l; i++) {
+            list.add(toMap(jsonArr.getString(i)));
+        }
+        return list;
     }
 
 }

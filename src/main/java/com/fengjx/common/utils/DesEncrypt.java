@@ -13,30 +13,26 @@ import javax.crypto.spec.DESKeySpec;
 
 /**
  * des加密解密
- *
- * @author
+ * 
+ * @author fengjx
  */
 public class DesEncrypt {
 
-    private Charset UTF8 = Charset.forName("UTF-8");
+    private static Charset UTF8 = Charset.forName("UTF-8");
 
-    private Key key;
+    private static Key key;
 
-    public DesEncrypt(String str) {
-        setKey(str);// 生成密匙
-    }
-
-    public DesEncrypt() {
+    static{
         setKey("fjx123!@");
     }
 
     /**
      * 根据参数生成KEY
      */
-    public void setKey(String strKey) {
+    private static void setKey(String strKey) {
         try {
             SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-            this.key = keyFactory.generateSecret(new DESKeySpec(strKey.getBytes(UTF8)));
+            key = keyFactory.generateSecret(new DESKeySpec(strKey.getBytes(UTF8)));
         } catch (Exception e) {
             throw new RuntimeException("Error initializing SqlMap class. Cause: " + e);
         }
@@ -45,7 +41,7 @@ public class DesEncrypt {
     /**
      * 加密String明文输入,String密文输出
      */
-    public String encrypt(String strMing) throws Exception {
+    public static String encrypt(String strMing) throws Exception {
         Cipher cipher = Cipher.getInstance("DES");
         cipher.init(Cipher.ENCRYPT_MODE, key, SecureRandom.getInstance("SHA1PRNG"));
         byte[] byteMi = cipher.doFinal(strMing.getBytes(UTF8));
@@ -57,7 +53,7 @@ public class DesEncrypt {
      *
      * @param strMi
      */
-    public String decrypt(String strMi) throws Exception {
+    public static String decrypt(String strMi) throws Exception {
         Cipher cipher = Cipher.getInstance("DES");
         cipher.init(Cipher.DECRYPT_MODE, key, SecureRandom.getInstance("SHA1PRNG"));
         byte[] byteMing = cipher
@@ -65,7 +61,6 @@ public class DesEncrypt {
         if (null == byteMing) {
             throw new RuntimeException("decrypt error");
         }
-
         return new String(byteMing, UTF8);
     }
 
