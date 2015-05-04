@@ -3,20 +3,17 @@ package com.fengjx.wechat.base.dao;
 
 import com.fengjx.wechat.base.model.DataDict;
 
-/**
- * 字段管理
- */
-public interface DataDictMapper {
+public abstract interface DataDictMapper{
 
-    int deleteByPrimaryKey(String id);
+    public abstract int deleteByPrimaryKey(String paramString);
 
-    int insert(DataDict record);
+    public abstract int insert(DataDict paramDataDict);
 
-    int insertSelective(DataDict record);
+    public abstract int insertSelective(DataDict paramDataDict);
 
-    DataDict selectByPrimaryKey(String id);
+    public abstract DataDict selectByPrimaryKey(String paramString);
 
-    int updateByPrimaryKeySelective(DataDict record);
+    public abstract int updateByPrimaryKeySelective(DataDict paramDataDict);
 
-    int updateByPrimaryKey(DataDict record);
+    public abstract int updateByPrimaryKey(DataDict paramDataDict);
 }
