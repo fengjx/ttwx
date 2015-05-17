@@ -11,17 +11,31 @@
       </button>
       <span class="navbar-brand">天天微信平台</span>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="<%=domain %>/admin/base">平台管理</a></li>
+        <li class="active"><a href="<%=domain %>/admin/wechat">平台管理</a></li>
         <li><a href="#">天天小店</a></li>
         <li><a href="#">系统管理</a></li>
       </ul>
-
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="<%=domain %>/loginout">退出</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Help</a></li>
+        <li>
+          <a href="#"><i class="glyphicon glyphicon-question-sign"></i></a>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="glyphicon glyphicon-user"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-user">
+            <li>
+              <a href="#"><i class="glyphicon glyphicon-asterisk"></i> 设置</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <a href="<%=domain %>/loginout"><i class="glyphicon glyphicon-off"></i> 退出</a>
+            </li>
+          </ul>
+          <!-- /.dropdown-user -->
+        </li>
       </ul>
       <form class="navbar-form navbar-right">
         <input type="text" class="form-control" placeholder="Search...">

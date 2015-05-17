@@ -5,8 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>404 - 阿豆微信发布与营销平台</title>
-<%@include file="/WEB-INF/view/common/inc/display.jsp"%>
+<title>error</title>
+<%@include file="/WEB-INF/view/wechat/common/inc/display.jsp"%>
 </head>
 <body>
 	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>

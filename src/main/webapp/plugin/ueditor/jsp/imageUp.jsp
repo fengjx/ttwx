@@ -25,7 +25,7 @@
 
 	//加载配置文件
 	String propertiesPath = request.getSession().getServletContext()
-			.getRealPath(currentPath + "config.properties");
+			.getRealPath(currentPath + "app.properties");
 	
 	Properties properties = new Properties();
 	

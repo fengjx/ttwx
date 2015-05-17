@@ -4,8 +4,6 @@
 	function unFabu(){
 		app.alert('文档正在整理中，我们将会第一时间发布！');
 	}
-	
-	
 //-->
 </script>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -35,7 +33,7 @@
         </li>
         <li><a href="<%=domain %>/contact">联系我们</a></li>
         <%-- <li><a href="<%=domain %>/about">关于我们</a></li> --%>
-        <li><a href="http://fengjxblog.sinaapp.com/?page_id=2" target="_blank">关于我们</a></li>
+        <li><a href="http://fengjx.com" target="_blank">关于我们</a></li>
         <form role="search" class="navbar-form navbar-left">
 		  <div class="form-group">
 		  	<input type="text" placeholder="搜索" class="form-control">
@@ -46,7 +44,7 @@
       <ul class="nav navbar-nav navbar-right">
       	<c:choose>
 			<c:when test="${!empty sessionScope.sys_user_login_key }">
-				<li><a target="_blank" href="<%=domain %>/admin/main">后台管理</a></li>
+				<li><a target="_blank" href="<%=domain %>/admin">后台管理</a></li>
 			</c:when>
 			<c:otherwise>
 				<li><a href="<%=domain %>/login">登录</a></li>

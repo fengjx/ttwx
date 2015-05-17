@@ -14,7 +14,7 @@
         <session-timeout>30</session-timeout>
     </session-config>
     <listener>
-        <listener-class>com.fengjx.common.system.init.MyContextLoaderLister</listener-class>
+        <listener-class>com.fengjx.ttwx.common.system.init.MyContextLoaderLister</listener-class>
     </listener>
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -30,7 +30,7 @@
     </context-param>
     <servlet>
         <servlet-name>mvc</servlet-name>
-        <servlet-class>com.fengjx.common.system.init.MySpringMvcServlet</servlet-class>
+        <servlet-class>com.fengjx.ttwx.common.system.init.MySpringMvcServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:spring-mvc.xml</param-value>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@page import="com.fengjx.wechat.config.AppConfig"%>
+<%@ page import="com.fengjx.ttwx.modules.common.constants.AppConfig" %>
 <%
 	String login_flag = AppConfig.LOGIN_FLAG;
 	String appName = AppConfig.APP_NAME;

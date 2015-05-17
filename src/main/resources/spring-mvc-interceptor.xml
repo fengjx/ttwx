@@ -12,17 +12,17 @@
         <mvc:interceptor>
             <mvc:mapping path="/admin"/>
             <mvc:mapping path="/admin/**"/>
-            <bean class="com.fengjx.wechat.base.action.interceptor.AdminInterceptor"></bean>
+            <bean class="com.fengjx.ttwx.modules.wechat.controler.admin.interceptor.AdminInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <!-- 拦截匹配微信请求接口 -->
+    <!-- 拦截匹配微信请求接口
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/wechat/api"/>
             <bean class="com.fengjx.wechat.base.action.interceptor.WechatInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
-
+ -->
 
 </beans>

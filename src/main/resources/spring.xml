@@ -15,7 +15,7 @@
 
     <!-- 开启注解 -->
     <mvc:annotation-driven/>
-    <context:component-scan base-package="com.fengjx.wechat"/>
+    <context:component-scan base-package="com.fengjx.ttwx"/>
 
     <aop:aspectj-autoproxy/>
     <bean id="propertyConfigurer"
@@ -24,7 +24,7 @@
         <property name="locations">
             <list>
                 <value>
-                    classpath*:/db.properties
+                    classpath*:/app.properties
                 </value>
             </list>
         </property>

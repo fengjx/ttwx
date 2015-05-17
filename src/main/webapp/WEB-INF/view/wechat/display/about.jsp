@@ -10,7 +10,7 @@
 <body>
 	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
 	<!-- container -->
-	<div class="container">
+	<div class="container page-wrapper">
 		<ol class="breadcrumb">
 			<li><a href="index.html">首页</a></li>
 			<li class="active">关于我们</li>

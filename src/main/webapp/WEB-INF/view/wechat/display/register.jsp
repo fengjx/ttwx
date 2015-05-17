@@ -10,8 +10,7 @@
 <body>
 	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
 	<!-- container -->
-	<div class="container">
-
+	<div class="container page-wrapper">
 		<ol class="breadcrumb">
 			<li><a href="<%=domain%>">首页</a></li>
 			<li class="active">注册</li>
@@ -74,6 +73,6 @@
 	<%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
 	<jsp:include page="/WEB-INF/view/common/inc/display.jsp"></jsp:include>
 	<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
-	<script src="<%=resourceUrl%>/script/display/register.js" type="text/javascript"></script>
+	<script src="<%=resourceUrl%>/script/wechat/display/register.js" type="text/javascript"></script>
 </body>
 </html>

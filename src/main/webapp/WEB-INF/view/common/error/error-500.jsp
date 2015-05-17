@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>500 - 阿豆微信发布与营销平台</title>
-<%@include file="/WEB-INF/view/common/inc/bootstrap.jsp"%>
+<title>500</title>
+<%@include file="/WEB-INF/view/wechat/common/inc/display.jsp"%>
 </head>
 <body>
 	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>

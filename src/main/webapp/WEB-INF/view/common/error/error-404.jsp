@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>404 - 阿豆微信发布与营销平台</title>
+<title>404</title>
 <%@include file="/WEB-INF/view/common/inc/bootstrap.jsp"%>
 </head>
 <body>
