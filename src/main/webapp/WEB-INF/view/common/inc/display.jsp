@@ -13,7 +13,7 @@
 <script src="<%=resourceUrl%>/artDialog/dist/dialog-min.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/nprogress/nprogress.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/script/common/utils.js" type="text/javascript"></script>
-<script src="<%=resourceUrl%>/script/common/display/display.js?v=2014102601" type="text/javascript"></script>
+<script src="<%=resourceUrl%>/script/common/display.js?v=2014102601" type="text/javascript"></script>
 <!--[if lte IE 8]>
 	<script src="<%=resourceUrl%>/js/excanvas.min.js" type="text/javascript"></script>
 <![endif]-->

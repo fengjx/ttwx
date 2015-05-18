@@ -9,7 +9,7 @@ import com.fengjx.ttwx.common.db.Record;
 import com.fengjx.ttwx.common.mail.service.MyEmailService;
 import com.fengjx.ttwx.common.mail.vo.SendMailVo;
 import com.fengjx.ttwx.common.system.init.FreeMarkerUtil;
-import com.fengjx.ttwx.common.utils.AESUtil;
+import com.fengjx.ttwx.common.utils.AesUtil;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
 
@@ -93,7 +93,7 @@ public class SysUser extends Model {
         root.put(
                 "validUrl",
                 AppConfig.DOMAIN_PAGE + "/activate?ser="
-                        + AESUtil.encrypt((String) attrs.get("valid_uid")));
+                        + AesUtil.encrypt((String) attrs.get("valid_uid")));
         mail.setContent(FreeMarkerUtil.process(root, FtlFilenameConstants.REGISTER_VALID_MAIN));
         emailService.send(mail);
     }
@@ -130,7 +130,7 @@ public class SysUser extends Model {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean activate(String ser) {
-        String uid = AESUtil.decrypt(ser);
+        String uid = AesUtil.decrypt(ser);
         Map<String, Object> attrs = new HashMap();
         attrs.put("valid_uid", uid);
         Record record = findOne(attrs);

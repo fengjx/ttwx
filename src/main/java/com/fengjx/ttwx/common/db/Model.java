@@ -2,9 +2,10 @@
 package com.fengjx.ttwx.common.db;
 
 import com.fengjx.ttwx.common.utils.CommonUtils;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -25,7 +26,7 @@ public abstract class Model {
     public int insert(Class<? extends Model> cls, Map<String, Object> attrs) {
         Table table = TableUtil.getTable(cls);
         String pk = table.getPrimaryKey();
-        if(StringUtils.isBlank((String)attrs.get(pk))){
+        if (StringUtils.isBlank((String) attrs.get(pk))) {
             attrs.put(pk, CommonUtils.getPrimaryKey());
         }
         StringBuilder sql = new StringBuilder();
@@ -84,6 +85,10 @@ public abstract class Model {
         return result >= 1;
     }
 
+    public Record findById(Object id) {
+        return findById(id, "*");
+    }
+
     /**
      * Find model by id. Fetch the specific columns only. Example: User user =
      * findById(15, "name, age");
@@ -134,7 +139,14 @@ public abstract class Model {
      * @return
      */
     public Record findOne(String sql, Object... params) {
-        return new Record(jdbcTemplate.queryForMap(sql, params));
+        List<Map<String, Object>> list = jdbcTemplate.queryForList(sql, params);
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        } else if (list.size() > 1) {
+            throw new MyDbException("Incorrect result size: expected 1, actual " + list.size());
+        }
+        Map<String, Object> map = list.get(0);
+        return new Record(map);
     }
 
     /**

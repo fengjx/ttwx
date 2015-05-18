@@ -12,8 +12,8 @@ public final class AppConfig {
     private AppConfig() {
     }
 
-    //用户登录信息在session中的key
     public static final String TEST_FALG = GetPropertiesVal.getLabel("test_flag");
+    //用户登录信息在session中的key
     public static final String LOGIN_FLAG = "sys_user_login_key";
     public static final String REQUEST_ERROE_MSG_KEY = "errorMsg";
     public static final String REQUEST_FLAG_AJAX = "ajax";

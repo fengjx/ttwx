@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  * @author fengjx xd-fjx@qq.com
  * @date 2014年9月12日
  */
-public class BaseController {
+public abstract class BaseController {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseController.class);
 
@@ -93,32 +93,6 @@ public class BaseController {
         Map<String, String> res = new HashMap<String, String>();
         res.put("code", "1");
         res.put("msg", msg);
-        return res;
-    }
-
-    /**
-     * 校验验证码
-     *
-     * @param request
-     * @param valid_code
-     * @return
-     */
-    protected Map<String, String> compareValidCode(HttpServletRequest request,
-            String valid_code) {
-        Map<String, String> res = new HashMap<String, String>();
-        res.put("code", "1");
-        res.put("msg", "验证码正确");
-        String code = getSession(request).getAttribute(
-                com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY)
-                + "";
-        LogUtil.debug(LOG, "比较验证码code=" + code + " valid_code=" + valid_code);
-        if (StringUtils.isBlank(code)) {
-            res.put("code", "0");
-            res.put("msg", "页面超时，请重试！");
-        } else if (!code.equalsIgnoreCase(valid_code)) {
-            res.put("code", "0");
-            res.put("msg", "验证码错误！");
-        }
         return res;
     }
 

@@ -1,18 +1,17 @@
 
 package com.fengjx.ttwx.modules.wechat.controler.display;
 
-import com.fengjx.ttwx.common.web.BaseController;
+import com.fengjx.ttwx.modules.common.controler.MyController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author fengjx.
  * @date：2015/5/16 0016
  */
 @Controller
-public class DisplayController extends BaseController {
+public class DisplayController extends MyController {
 
     @RequestMapping(value = {
             "", "index"
@@ -30,6 +29,5 @@ public class DisplayController extends BaseController {
     public String about() {
         return "/wechat/display/about";
     }
-
 
 }

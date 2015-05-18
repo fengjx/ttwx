@@ -1,7 +1,7 @@
 
 package com.fengjx.ttwx.modules.wechat.controler.admin;
 
-import com.fengjx.ttwx.common.web.BaseController;
+import com.fengjx.ttwx.modules.common.controler.MyController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/admin/wechat")
-public class WechatController extends BaseController {
+public class WechatController extends MyController {
 
     @RequestMapping(value = {
             "", "index"

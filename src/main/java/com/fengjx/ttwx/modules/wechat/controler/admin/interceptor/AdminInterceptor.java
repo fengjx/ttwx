@@ -1,6 +1,10 @@
 
 package com.fengjx.ttwx.modules.wechat.controler.admin.interceptor;
 
+import com.fengjx.ttwx.common.utils.WebUtil;
+import com.fengjx.ttwx.modules.common.constants.AppConfig;
+import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
+
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,15 +35,16 @@ public class AdminInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object handler) throws Exception {
         HttpSession session = request.getSession();
-        // //登陆超时
-        // if(null == user){
-        // if(WebUtil.validAjax(request)){
-        // request.getRequestDispatcher("/common/loginTimeoutAjax").forward(request,response);
-        // }else{
-        // request.getRequestDispatcher("/common/loginTimeout").forward(request,response);
-        // }
-        // return false;
-        // }
+        SysUserEntity user = (SysUserEntity) session.getAttribute(AppConfig.LOGIN_FLAG);
+        // 登陆超时
+        if (null == user) {
+            if (WebUtil.validAjax(request)) {
+                request.getRequestDispatcher("/common/loginTimeoutAjax").forward(request, response);
+            } else {
+                request.getRequestDispatcher("/common/loginTimeout").forward(request, response);
+            }
+            return false;
+        }
         return true;
     }
 

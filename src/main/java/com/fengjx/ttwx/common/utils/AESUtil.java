@@ -16,7 +16,7 @@ import javax.crypto.spec.IvParameterSpec;
  * @author fengjx
  * @version 2015-5-17
  */
-public class AESUtil {
+public class AesUtil {
 
     private static byte[] keyValue = new byte[] { // 用户密钥
             22, 25, -35, -45, 25, 98, -55, -45, 10, 35, -45, 25,

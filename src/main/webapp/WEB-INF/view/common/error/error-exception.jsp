@@ -6,7 +6,7 @@
 <html>
 <head>
 <title>error</title>
-<%@include file="/WEB-INF/view/wechat/common/inc/display.jsp"%>
+<%@include file="/WEB-INF/view/common/inc/display.jsp"%>
 </head>
 <body>
 	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>

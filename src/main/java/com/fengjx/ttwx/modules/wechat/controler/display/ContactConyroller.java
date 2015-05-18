@@ -1,7 +1,7 @@
 
 package com.fengjx.ttwx.modules.wechat.controler.display;
 
-import com.fengjx.ttwx.common.web.BaseController;
+import com.fengjx.ttwx.modules.common.controler.MyController;
 import com.fengjx.ttwx.modules.wechat.model.GuestBook;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/contact")
-public class ContactConyroller extends BaseController {
+public class ContactConyroller extends MyController {
 
     @Autowired
     private GuestBook guestBook;

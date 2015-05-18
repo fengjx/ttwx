@@ -1,0 +1,95 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/WEB-INF/view/common/inc/path.jsp"%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>授权设置</title>
+	<link href="<%=resourceUrl%>/css/setting.css" rel="stylesheet" type="text/css"/>
+	<!--[if lt IE 9]>
+	<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+<script type="text/javascript">
+	var valid_state = '${wechatAccount.valid_state}';
+</script>
+<body>
+<jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>
+<div class="container-fluid">
+	<div class="row">
+		<jsp:include page="/WEB-INF/view/wechat/admin/inc_menu.jsp">
+			<jsp:param name="index" value="0"/>
+		</jsp:include>
+		<div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<ol class="breadcrumb">
+				<li><a href="#">后台管理</a></li>
+				<li class="active">平台管理</li>
+			</ol>
+
+			<div>
+				<div class="alert alert-info">
+					<p>在微信公众平台<strong>“功能”</strong>-&gt;<strong>“高级功能”</strong>-&gt;<strong>“开发模式”，</strong>将<strong>AppId和AppSecret</strong>，然后填入下边表单。</p>
+					<p>通过认证的订阅号，拥有“自定义菜单”；通过认证的服务号，拥有“自定义菜单”和所有“高级接口”</p>
+					<p><strong>配置步骤：</strong></p>
+					<p id="step1">1、<span class="step-info">将授权信息配置到公众平台&nbsp;<a href="javascript:void(-1);"><span class="glyphicon glyphicon-question-sign"></span></a></span></p>
+					<p id="step2">2、<span class="step-info">从微信客户端向公众号发送：${wechatAccount.valid_code }&nbsp;<a href="javascript:void(-1);"><span class="glyphicon glyphicon-question-sign"></span></a></span></p>
+					<p id="step3">3、<span class="step-info">完成授权</span></p>
+				</div>
+
+				<form class="form-horizontal" id="form-auth" method="POST">
+					<input type="hidden" id="id" name="id" value="${wechatAccount.id }" />
+					<div class="control-group" >
+						<label class="control-label" for="url">URL:</label>
+						<div class="controls">
+							<input readonly="readonly" type="text" class="span4 form-control" id="url" name="url" value="${wechatAccount.url }">
+							<span class="text-primary">复制到公众平台<strong>“开发者中心”</strong>-><strong>“服务器配置”</strong>-><strong>“URL”</strong></span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="token">TOKEN:</label>
+						<div class="controls">
+							<input readonly="readonly" type="text" class="span4 form-control" id="token" name="token" value="${wechatAccount.token }">
+							<span class="text-primary">复制到公众平台<strong>“开发者中心”</strong>-><strong>“服务器配置”</strong>-><strong>“TOKEN”</strong></span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="app_id">AppId:</label>
+						<div class="controls">
+							<input type="text" class="span4 form-control" id="app_id" name="app_id" value="${wechatAccount.app_id }">
+							<span class="text-primary">未认证的订阅号可留空</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="app_secret">应用密钥:</label>
+						<div class="controls">
+							<input type="text" class="span4 form-control" id="app_secret" name="app_secret" value="${wechatAccount.app_secret }">
+							<span class="text-primary">未认证的订阅号可留空</span>
+						</div>
+					</div>
+					<c:choose>
+						<c:when test="${ null == wechatAccount.id || '' eq wechatAccount.id }">
+							<input style="margin-left: 180px;" class="btn btn-danger" type="submit" id="btn-submit" value="&nbsp;生&nbsp;成&nbsp;授&nbsp;权&nbsp;" />
+						</c:when>
+						<c:otherwise>
+							<input style="margin-left: 180px;" class="btn btn-outline btn-info" type="submit" id="btn-submit" value="&nbsp;更&nbsp;新&nbsp;授&nbsp;权&nbsp;" />
+						</c:otherwise>
+					</c:choose>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
+<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
+<script src="<%=resourceUrl %>/script/wechat/admin/setting.js?v=20141005" type="text/javascript" charset="UTF-8"></script>
+<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
+</body>
+</html>
+
+
+
+
+

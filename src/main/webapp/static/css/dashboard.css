@@ -1,35 +1,15 @@
-/*
- * Base structure
- */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
 body {
     padding-top: 50px;
 }
-
-
-/*
- * Global add-ons
- */
 
 .sub-header {
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
 }
-
-/*
- * Top navigation
- * Hide default border to remove 1px line.
- */
 .navbar-fixed-top {
     border: 0;
 }
 
-/*
- * Sidebar
- */
-
-/* Hide for mobile, show later */
 .sidebar {
     display: none;
 }
@@ -70,10 +50,6 @@ body {
     border-bottom: 1px solid #e7e7e7;
 }
 
-/*
- * Main content
- */
-
 .main {
     padding: 20px;
 }
@@ -88,10 +64,6 @@ body {
 }
 
 
-/*
- * Placeholder dashboard ideas
- */
-
 .placeholders {
     margin-bottom: 30px;
     text-align: center;
@@ -105,4 +77,38 @@ body {
 .placeholder img {
     display: inline-block;
     border-radius: 50%;
+}
+
+.btn-outline {
+    color: inherit;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: #fff;
 }

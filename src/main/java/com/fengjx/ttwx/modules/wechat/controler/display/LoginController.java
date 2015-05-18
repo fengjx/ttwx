@@ -1,10 +1,10 @@
 
 package com.fengjx.ttwx.modules.wechat.controler.display;
 
-import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.common.utils.LogUtil;
-import com.fengjx.ttwx.common.web.BaseController;
 import com.fengjx.ttwx.common.web.MyExecuteCallback;
+import com.fengjx.ttwx.modules.common.constants.AppConfig;
+import com.fengjx.ttwx.modules.common.controler.MyController;
 import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
 import com.fengjx.ttwx.modules.wechat.model.SysUser;
 
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date：2015/5/16 0016
  */
 @Controller
-public class LoginController extends BaseController {
+public class LoginController extends MyController {
 
     private static final Logger LOG = LoggerFactory.getLogger(LoginController.class);
 
