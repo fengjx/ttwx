@@ -6,7 +6,7 @@ qq：466516623（加Q请带备注信息）<br />
 E-mail：xd-fjx@qq.com<br />
 有疑问可以Q我或者给我发邮件，平时上班时间不登QQ<br />
 个人公众号<br>
-![简简单单](http://ttwx.sinaapp.com/static/img/qrcode_for_gh_d7680c37887b_430.jpg)
+![简简单单](http://120.24.159.81/owncloud/index.php/s/rP7U6H8OLBXuw0I)
 
 ### 文档：<br />
 * 说明文档：doc目录下<br />
@@ -57,7 +57,7 @@ http://git.oschina.net/fengjx/ttwx/wikis/%E7%95%8C%E9%9D%A2%E6%95%88%E6%9E%9C%E9
 * -1：登陆超时<br />
 
 消息处理流程<br />
-![消息处理逻辑](http://fengjxblog-fjxstorage.stor.sinaapp.com/ttwx/%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.png)
+![消息处理逻辑](http://120.24.159.81/owncloud/index.php/s/LLyIS8EsK4NKVCD)
 
 消息处理逻辑<br />
-![消息处理流程](http://fengjxblog-fjxstorage.stor.sinaapp.com/ttwx/%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91.png)
+![消息处理流程](http://120.24.159.81/owncloud/index.php/s/JhBqzMIKkQbe5tU)
