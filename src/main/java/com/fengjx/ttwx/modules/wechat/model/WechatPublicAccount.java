@@ -52,4 +52,19 @@ public class WechatPublicAccount extends Model {
         insert(attrs);
         return findById(id);
     }
+
+    /**
+     * 根据userId获得公众号信息
+     *
+     * @param sysUserId
+     * @return
+     */
+    public Record getPublicAccountByUserid(String sysUserId){
+        StringBuilder sql = new StringBuilder();
+        sql.append("select ").append(getColumnsStr());
+        sql.append(" from ").append(getTableName());
+        sql.append(" where sys_user_id = ?");
+        return findOne(sql.toString(),sysUserId);
+    }
+
 }
