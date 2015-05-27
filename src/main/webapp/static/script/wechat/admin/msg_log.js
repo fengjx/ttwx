@@ -1,173 +1,123 @@
 /**
- * 消息回复管理 2014-03-19
+ * 消息记录
  */
+var $table;
 
-var viewDialog;
-var datagrid;
-var resTypeCombobox;
-var eventTypeCombobox;
+$(function () {
 
-$(function() {
+    $table = $('#data-table').bootstrapTable({
+        method: 'post',
+        toolbar: "#qry-toolbar",
+        contentType: "application/x-www-form-urlencoded",
+        url: domain + '/admin/wechat/msglog/pageList',
+        queryParamsType: "limit",
+        queryParams: queryParams,
+        cache: false,
+        height: 760,
+        striped: true,
+        sidePagination: "server",
+        pagination: true,
+        pageSize: 10,
+        pageList: [10, 15, 20],
+        showColumns: true,
+        minimumCountColumns: 2,
+        clickToSelect: true,
+        idField:"id",
+        columns: [{
+            field: 'id',
+            valign: 'middle',
+            radio:true
+        }, {
+            field: 'from_user_name',
+            title: 'openid',
+            align: 'left',
+            valign: 'middle'
+        }, {
+            field: 'req_type',
+            title: '消息类型',
+            align: 'center',
+            valign: 'middle',
+            formatter: function (value,row,index) {
+                return convertMsgType(value);
+            }
+        }, {
+            field: 'event_type',
+            title: '事件类型',
+            align: 'left',
+            valign: 'middle',
+            formatter: function (value,row,index) {
+                return convertEventType(value);
+            }
+        }, {
+            field: 'req_xml',
+            title: '发送内容',
+            align: 'left',
+            valign: 'middle',
+            formatter: function (value,row,index) {
+                return parseReqxml2html(value, row.in_time);
+            }
+        }, {
+            field: 'create_time',
+            title: '发送时间',
+            align: 'left',
+            valign: 'middle'
+        }, {
+            field: 'resp_xml',
+            title: '响应内容',
+            align: 'left',
+            valign: 'middle',
+            formatter : function(value, row, index) {
+                if (!value || value == '') {
+                    return "无";
+                }
+                var html = '<a class="btn btn-outline btn-info" onclick="view(' + index + ');" href="javascript:void(0);">查看</a>';
+                return html;
+            }
+        }, {
+            field: 'resp_time',
+            title: '响应时间',
+            align: 'center',
+            valign: 'middle',
+            clickToSelect: false
+        }]
+    });
 
-	// 消息预览dialog
-	viewDialog = $("#viewDialog").show().dialog({
-		modal : true
-	}).dialog('close');
+    function queryParams(params) {
+        var start_time = $('#qry-toolbar input[name="start_time"]').val();
+        var end_time = $('#qry-toolbar input[name="end_time"]').val();
+        params = $.extend(params,{
+            "key_word": $('#qry-toolbar input[name="qry_key_word"]').val(),
+            "start_time": start_time,
+            "end_time": end_time,
+            "req_type": $("#qry_req_type").val(),
+            "event_type": $("#qry_event_type").val(),
+            "from_user_name": $("#qry-toolbar input[name='qry_openid']").val()
+        });
+        return params;
+    }
 
-	// 加载消息记录数据
-	datagrid = $('#datagrid').datagrid({
-		url : domain + '/admin/msglog/pageList',
-		queryParams : {
-			"from_user_name" : $("#openid").val()
-		},
-		toolbar : '#toolbar',
-		pagination : true,
-		pageSize : 10,
-		pageList : [10, 15, 20],
-		fit : true,
-		fitColumns : true,
-		nowrap : false,
-		border : false,
-		idField : 'id',
-		frozenColumns : [[{
-					title : 'id',
-					field : 'id',
-					hidden : true
-				}, {
-					field : 'create_time',
-					hidden : true
-				}, {
-					field : 'msg_id',
-					hidden : true
-				}, {
-					field : 'to_user_name',
-					hidden : true
-				}, {
-					field : 'from_user_name',
-					title : '用戶OPENID',
-					width : 200
-				}]],
-		columns : [[{
-					// field : 'req_type',
-					field : 'req_name',
-					title : '消息类型',
-					width : 50,
-					formatter : function(value, rowData, rowIndex) {
-						return formattime(value);
-					}
-				}, {
-					// field : 'event_type',
-					field : 'event_name',
-					title : '事件类型',
-					width : 50,
-					formatter : function(value, rowData, rowIndex) {
-						return formattime(value);
-					}
-				}, {
-					field : 'req_xml',
-					title : '发送内容',
-					width : 150,
-					formatter : function(value, rowData, rowIndex) {
-						return parseReqxml2html(value, rowData.str_in_time);
-					}
-				}, {
-					field : 'str_in_time',
-					title : '发送时间',
-					width : 150
-				}, {
-					field : 'resp_xml',
-					title : '响应内容',
-					width : 250,
-					formatter : function(value, rowData, rowIndex) {
-						if (!value || value == '') {
-							return "无";
-						}
-						var html = '<a class="easyui-linkbutton" iconCls="icon-tip" plain="true" onclick="view(\''
-								+ rowData.id
-								+ '\');" href="javascript:void(0);">查看</a>';
-						return html;
-					}
-				}, {
-					field : 'str_resp_time',
-					title : '响应时间',
-					width : 150
-				}]],
-		onLoadSuccess : function(){
-			$.parser.parse();
-		}
-	});
-	// 消息类型
-	resTypeCombobox = $("#resType").combobox({
-		valueField : 'dict_value',
-		textField : 'dict_name',
-		url : domain + '/dict/list?group_code=req_type'
-	});
-	// 事件类型
-	eventTypeCombobox = $("#eventType").combobox({
-		valueField : 'dict_value',
-		textField : 'dict_name',
-		url : domain + '/dict/list?group_code=event_type'
-	});
 });
 
 function searchDatagrid() {
-	// var start_time = $('#toolbar
-	// input[comboname="paramMap.start_time"]').datetimebox('getValue');
-	// var end_time = $('#toolbar
-	// input[comboname="paramMap.end_time"]').datetimebox('getValue');
-	var start_time = $('#toolbar input[name="start_time"]').val();
-	var end_time = $('#toolbar input[name="end_time"]').val();
-	datagrid.datagrid('load', {
-				"key_word" : $('#toolbar input[name="paramMap.key_word"]')
-						.val(),
-				"start_time" : start_time,
-				"end_time" : end_time,
-				"req_type" : resTypeCombobox.combobox("getValue"),
-				"event_type" : eventTypeCombobox.combobox("getValue"),
-				"from_user_name" : $("#openid").val()
-			});
+    $table.bootstrapTable('refresh');
 }
 
 function clearDatagrid() {
-	$('#toolbar input').val('');
-	datagrid.datagrid('load', {});
+    $('#qry-toolbar input').val('');
+    document.getElementById("qry_req_type").options[0].selected = true;
+    document.getElementById("qry_event_type").options[0].selected = true;
+    $table.bootstrapTable('refresh');
 }
 
-function view(id) {
-	var row = undefined;
-	if (!id || id == '') { // id为空，则编辑当前选中的行
-		var rows = datagrid.datagrid('getSelections');
-		if (!rows || rows.length < 1) {
-			$.messager.show({
-						msg : '請選擇一個要查看的關鍵字',
-						title : '提示'
-					});
-			return false;
-		} else if (rows.length > 1) {
-			var keywords = [];
-			for (var i = 0; i < rows.length; i++) {
-				keywords.push(rows[i].key_word);
-			}
-			$.messager.show({
-						msg : '只能選擇一個關鍵字查看回复消息,您已經選擇了【' + keywords.join(',')
-								+ '】' + rows.length + '個關鍵字',
-						title : '提示'
-					});
-			return false;
-		} else if (rows.length == 1) {
-			row = rows[0];
-		}
-	}
-	if (!row) {
-		datagrid.datagrid('unselectAll');
-		row = datagrid.datagrid('selectRecord', id).datagrid("getSelected");
-	}
-	// 预览效果HTML
-	var viewHtml = parseRespxml2html(row.resp_xml, row.str_resp_time);
-	$("#viewDiv").html(viewHtml);
-
-	viewDialog.dialog({
-        title : "用戶收到的消息"
-    }).dialog("open");
-
+function view(index) {
+    $table.bootstrapTable('uncheckAll');
+    $table.bootstrapTable('check', index);
+    var row = $table.bootstrapTable('getSelections')[0];
+    // 预览效果HTML
+    var viewHtml = parseRespxml2html(row.resp_xml, row.resp_time);
+    app.alertModal(viewHtml,{
+        title:"用户收到的消息",
+        height:"auto",
+        width:300
+    });
 }

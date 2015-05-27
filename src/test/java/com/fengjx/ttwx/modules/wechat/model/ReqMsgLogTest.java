@@ -32,7 +32,7 @@ public class ReqMsgLogTest {
     public void testPage() {
         Page<Map<String, Object>> page = reqMsgLog.paginate(1, 10, "select * from wechat_req_msg_log order by in_time");
         System.out.println(page.toJson());
-        PageContext.setSageNumber(1);
+        PageContext.setPageNumber(1);
         PageContext.setPageSize(10);
         Map<String,Object> attrs = new HashMap();
         attrs.put("public_account_id","8ac398a4494d3b6301494d41cf0d0000");
