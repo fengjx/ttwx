@@ -32,7 +32,7 @@ public class PageContext {
         return _pageNumber;
     }
 
-    public static void setSageNumber(int _pageNumber) {
+    public static void setPageNumber(int _pageNumber) {
         pageNumber.set(_pageNumber);
     }
 

@@ -37,7 +37,7 @@ public class TableMappingPlugin {
         } catch (Exception e) {
             throw new MyDbException("Can not init table mapping");
         }
-        LogUtil.info(LOG,"TableMappingPlugin init finish...");
+        LogUtil.info(LOG, "TableMappingPlugin init finish...");
     }
 
     /**
@@ -72,7 +72,6 @@ public class TableMappingPlugin {
             StringBuilder columnsStr = new StringBuilder();
             for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                 String colName = rsmd.getColumnName(i);
-                columnsStr.append(" , ").append(colName);
                 String colClassName = rsmd.getColumnClassName(i);
                 if ("java.lang.String".equals(colClassName)) {
                     // varchar, char, enum, set, text, tinytext, mediumtext,
@@ -96,6 +95,7 @@ public class TableMappingPlugin {
                 else if ("java.sql.Date".equals(colClassName)) {
                     // date, year
                     table.setColumnType(colName, java.sql.Date.class);
+                    //colName = "date_format(" + colName + ",'%Y-%m-%d') as " + colName;
                 }
                 else if ("java.lang.Double".equals(colClassName)) {
                     // real, double
@@ -112,10 +112,12 @@ public class TableMappingPlugin {
                 else if ("java.sql.Time".equals(colClassName)) {
                     // time
                     table.setColumnType(colName, java.sql.Time.class);
+                    //colName = "date_format(" + colName + ",'%Y-%m-%d') as " + colName;
                 }
                 else if ("java.sql.Timestamp".equals(colClassName)) {
                     // timestamp, datetime
                     table.setColumnType(colName, java.sql.Timestamp.class);
+                    //colName = "date_format(" + colName + ",'%Y-%m-%d %H:%i:%s') as " + colName;
                 }
                 else if ("java.math.BigDecimal".equals(colClassName)) {
                     // decimal, numeric
@@ -125,8 +127,7 @@ public class TableMappingPlugin {
                     // binary, varbinary, tinyblob, blob, mediumblob, longblob
                     // qjd project: print_info.content varbinary(61800);
                     table.setColumnType(colName, byte[].class);
-                }
-                else {
+                } else {
                     int type = rsmd.getColumnType(i);
                     if (type == Types.BLOB) {
                         table.setColumnType(colName, byte[].class);
@@ -144,6 +145,7 @@ public class TableMappingPlugin {
                     // ". The ColumnClassName can't be mapped: " +
                     // colClassName);
                 }
+                columnsStr.append(" , ").append(colName);
             }
             table.setColumnsStr(columnsStr.delete(0, 2).toString());
         } finally {

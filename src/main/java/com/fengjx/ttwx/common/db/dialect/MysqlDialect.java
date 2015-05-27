@@ -4,6 +4,7 @@ package com.fengjx.ttwx.common.db.dialect;
 import com.fengjx.ttwx.common.db.Table;
 
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -73,7 +74,7 @@ public class MysqlDialect extends Dialect {
     }
 
     @Override
-    public void forModelFind(Table table, StringBuilder sql, String columns,
+    public void forModelFind(Table table, StringBuilder sql, String columns, String orderby,
             Map<String, Object> attrs, List<Object> paras) {
         sql.append(froSelectSql(table, columns));
         sql.append(" where 1 = 1 ");
@@ -86,6 +87,9 @@ public class MysqlDialect extends Dialect {
                 }
             }
         }
+        if (StringUtils.isNotBlank(orderby)) {
+            sql.append(" ").append(orderby);
+        }
     }
 
     @Override
@@ -97,13 +101,12 @@ public class MysqlDialect extends Dialect {
 
     private String froSelectSql(Table table, String columns) {
         StringBuilder sql = new StringBuilder("select ");
-        if (columns.trim().equals("*")) {
+        if (StringUtils.isBlank(columns) || columns.trim().equals("*")) {
             sql.append(table.getColumnsStr());
-        }
-        else {
+        } else {
             String[] columnsArray = columns.split(",");
             for (int i = 0; i < columnsArray.length; i++) {
-                if (i > 0){
+                if (i > 0) {
                     sql.append(", ");
                 }
                 sql.append(" ").append(columnsArray[i].trim());

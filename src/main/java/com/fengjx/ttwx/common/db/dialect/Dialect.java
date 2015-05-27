@@ -30,7 +30,7 @@ public abstract class Dialect {
 
     public abstract String forModelFindById(Table table, String columns);
 
-    public abstract void forModelFind(Table table, StringBuilder sql, String columns,
+    public abstract void forModelFind(Table table, StringBuilder sql,String orderby, String columns,
             Map<String, Object> attrs, List<Object> paras);
 
     public abstract void forPaginate(StringBuilder pageSql, int pageNumber, int pageSize, String sql);

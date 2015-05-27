@@ -24,14 +24,13 @@ class TableMapping {
         modelToTableMap.put(table.getModelClass(), table);
     }
 
-    @SuppressWarnings("rawtypes")
     public Table getTable(Class<? extends Model> modelClass) {
         Table table = modelToTableMap.get(modelClass);
         if (table == null)
             throw new RuntimeException(
                     "The Table mapping of model: "
                             + modelClass.getName()
-                            + " not exists. Please add mapping to ActiveRecordPlugin: activeRecordPlugin.addMapping(tableName, YourModel.class).");
+                            + " not exists. Please add mapping package to TableMappingPlugin for spring config ");
 
         return table;
     }

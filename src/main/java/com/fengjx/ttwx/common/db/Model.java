@@ -4,7 +4,6 @@ package com.fengjx.ttwx.common.db;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -127,7 +126,7 @@ public abstract class Model {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<Object>();
-        Config.dialect.forModelFind(table, sql, "*", attrs, paras);
+        Config.dialect.forModelFind(table, sql, "*", null, attrs, paras);
         return findOne(sql.toString(), paras.toArray());
     }
 
@@ -170,7 +169,7 @@ public abstract class Model {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<Object>();
-        Config.dialect.forModelFind(table, sql, "*", attrs, paras);
+        Config.dialect.forModelFind(table, sql, "*", null, attrs, paras);
         return findList(sql.toString(), paras.toArray());
     }
 
@@ -192,7 +191,11 @@ public abstract class Model {
      * @return
      */
     public Page<Map<String, Object>> paginate(Map<String, Object> attrs) {
-        return paginate(this.getClass(), attrs);
+        return paginate(attrs, null);
+    }
+
+    public Page<Map<String, Object>> paginate(Map<String, Object> attrs, String orderby) {
+        return paginate(this.getClass(), attrs, orderby);
     }
 
     /**
@@ -203,10 +206,23 @@ public abstract class Model {
      * @return
      */
     public Page<Map<String, Object>> paginate(Class<? extends Model> cls, Map<String, Object> attrs) {
+        return paginate(cls, attrs, null);
+    }
+
+    /**
+     * paginate(User.class,attrs,"order by in_time")
+     *
+     * @param cls
+     * @param attrs
+     * @param orderby
+     * @return
+     */
+    public Page<Map<String, Object>> paginate(Class<? extends Model> cls,
+            Map<String, Object> attrs, String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<Object>();
-        Config.dialect.forModelFind(table, sql, "*", attrs, paras);
+        Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
         return paginate(PageContext.getPageNumber(), PageContext.getPageSize(), sql.toString(),
                 paras.toArray());
     }
@@ -254,6 +270,47 @@ public abstract class Model {
         Config.dialect.forPaginate(pageSql, pageNumber, pageSize, sql);
         List<Map<String, Object>> list = findList(pageSql.toString(), paras);
         return new Page<Map<String, Object>>(list, pageNumber, pageSize, totalPage, totalRow);
+    }
+
+    /**
+     * 获得当前Model全部字段名
+     *
+     * @return
+     */
+    public String getColumnsStr(){
+        return getColumnsStr(this.getClass());
+    }
+
+    /**
+     * 通过class获得映射table的字段（如：id,name,age）
+     *
+     * @param cls
+     * @return
+     */
+    public String getColumnsStr(Class<? extends Model> cls){
+        Table t = TableUtil.getTable(cls);
+        return t.getColumnsStr();
+    }
+
+
+    /**
+     * 通过class获得映射表明
+     *
+     * @param cls
+     * @return
+     */
+    public String getTableName(Class<? extends Model> cls){
+        Table t = TableUtil.getTable(cls);
+        return t.getName();
+    }
+
+    /**
+     * 获得当前Model表名
+     *
+     * @return
+     */
+    public String getTableName(){
+        return getTableName(this.getClass());
     }
 
     public JdbcTemplate getJdbcTemplate() {
