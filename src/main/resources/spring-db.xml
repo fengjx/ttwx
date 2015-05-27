@@ -47,7 +47,8 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="packages">
             <value>
-                com.fengjx.ttwx.modules.wechat.model
+                com.fengjx.ttwx.modules.wechat.model,
+                com.fengjx.ttwx.modules.common.model
             </value>
         </property>
     </bean>
