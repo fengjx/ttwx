@@ -32,7 +32,7 @@
             </a>
         </li>
         <li>
-            <a href="###">
+            <a href="<%=domain %>/admin/wechat/msglog">
                 <i class="glyphicon glyphicon-comment"></i>
                 <span class="menu-text"> 消息管理 </span>
             </a>
