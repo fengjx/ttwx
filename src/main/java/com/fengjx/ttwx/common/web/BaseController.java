@@ -38,6 +38,12 @@ public abstract class BaseController {
         return map;
     }
 
+    protected Map<String, Object> getNotBlankRequestMap(HttpServletRequest request) {
+        Map<String, Object> map =  new HashMap<String, Object>();
+        map.putAll(WebUtil.getNotBlankRequestParams(request));
+        return map;
+    }
+
     /**
      * 当用户提交数据时，使用此模板方法，比如保存，更新操作 成功统一返回code=1，失败返回code=0
      *

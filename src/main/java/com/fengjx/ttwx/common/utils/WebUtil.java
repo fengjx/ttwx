@@ -2,6 +2,7 @@
 package com.fengjx.ttwx.common.utils;
 
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -29,6 +30,25 @@ public final class WebUtil {
             Set<String> paramsKey = request.getParameterMap().keySet();
             for (String key : paramsKey) {
                 params.put(key, request.getParameter(key));
+            }
+        }
+        return params;
+    }
+
+    /**
+     * 获取所有request请求参数key-value，过滤掉空值
+     *
+     * @param request
+     * @return
+     */
+    public static Map<String, String> getNotBlankRequestParams(HttpServletRequest request) {
+        Map<String, String> params = new HashMap<String, String>();
+        if (null != request) {
+            Set<String> paramsKey = request.getParameterMap().keySet();
+            for (String key : paramsKey) {
+                if(StringUtils.isNotBlank(request.getParameter(key))){
+                    params.put(key, request.getParameter(key));
+                }
             }
         }
         return params;
