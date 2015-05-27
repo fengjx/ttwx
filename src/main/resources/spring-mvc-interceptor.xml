@@ -7,12 +7,21 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-    <!-- 拦截匹配URL -->
+    <!-- 后台管理拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/admin"/>
             <mvc:mapping path="/admin/**"/>
             <bean class="com.fengjx.ttwx.modules.wechat.controler.admin.interceptor.AdminInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- 分页请求拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**/pageList"/>
+            <mvc:mapping path="/**/pageList/**"/>
+            <bean class="com.fengjx.ttwx.modules.common.controler.interceptor.PageInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 
