@@ -1,16 +1,16 @@
+
 package com.fengjx.ttwx.common.utils;
 
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
-import org.springframework.web.util.WebUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +21,6 @@ import java.util.UUID;
  * @author peng
  */
 public final class CommonUtils {
-
 
     public static final String DATA_FORMAT_ALL = "yyyy-MM-dd HH:mm:ss";
     public static final String DATA_FORMAT_DD = "yyyy-MM-dd";
@@ -73,16 +72,14 @@ public final class CommonUtils {
         return fmt.format(date);
     }
 
-
     /**
      * @param date
      * @return
      * @throws ParseException
      */
     public static Date string2Date(String date) {
-        return string2Date(date,DATA_FORMAT_ALL);
+        return string2Date(date, DATA_FORMAT_ALL);
     }
-
 
     /**
      * @param date
@@ -106,16 +103,16 @@ public final class CommonUtils {
     /**
      * 获得生成html文件模板路径
      *
-     * @param request
      * @return
      */
-    public static String getFtlHtmlPath(HttpServletRequest request) {
-        String baseUrl = "/WEB-INF/ftl/html";
-        try {
-            return WebUtils.getRealPath(request.getSession().getServletContext(), "/") + baseUrl;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+    public static String getFtlHtmlPath() {
+        String baseUrl = File.separator + "ftl" + File.separator + "html";
+        String classPath = Thread.currentThread().getContextClassLoader().getResource("")
+                .getPath();
+        if (SystemUtils.IS_OS_WINDOWS) {
+            classPath = classPath.substring(1);
         }
+        return classPath.substring(0, classPath.lastIndexOf("classes")) + baseUrl;
     }
 
     /**
@@ -123,10 +120,11 @@ public final class CommonUtils {
      *
      * @return
      */
-    public static String getClassPath(){
-        String classPath = Thread.currentThread().getContextClassLoader().getResource("/").getPath();
-        if(SystemUtils.IS_OS_WINDOWS){
-            classPath = classPath.substring(1,classPath.length());
+    public static String getClassPath() {
+        String classPath = Thread.currentThread().getContextClassLoader().getResource("/")
+                .getPath();
+        if (SystemUtils.IS_OS_WINDOWS) {
+            classPath = classPath.substring(1, classPath.length());
         }
         return classPath;
     }
@@ -136,10 +134,11 @@ public final class CommonUtils {
      *
      * @return
      */
-    public static String getClassPath(String path){
-        String classPath = Thread.currentThread().getContextClassLoader().getResource(path).getPath();
-        if(SystemUtils.IS_OS_WINDOWS){
-            classPath = classPath.substring(1,classPath.length());
+    public static String getClassPath(String path) {
+        String classPath = Thread.currentThread().getContextClassLoader().getResource(path)
+                .getPath();
+        if (SystemUtils.IS_OS_WINDOWS) {
+            classPath = classPath.substring(1, classPath.length());
         }
         return classPath;
     }

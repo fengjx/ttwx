@@ -1,9 +1,8 @@
 
 package com.fengjx.ttwx.common.utils;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
+import freemarker.core.ParseException;
+import freemarker.template.*;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -32,9 +31,8 @@ public class MyFreemarker {
      * 不允许其他类实例化
      * 
      * @param basePath
-     * @throws Exception
      */
-    private MyFreemarker(String basePath) throws Exception {
+    private MyFreemarker(String basePath) {
         new MyFreemarker(basePath, null);
     }
 
@@ -43,17 +41,20 @@ public class MyFreemarker {
      * 
      * @param basePath
      * @param encoding
-     * @throws Exception
      */
-    private MyFreemarker(String basePath, String encoding) throws Exception {
+    private MyFreemarker(String basePath, String encoding) {
         if (null == basePath || "".equals(basePath)) {
-            throw new Exception("basePath为空，MyFreemarker实例化失败");
+            throw new RuntimeException("basePath为空，MyFreemarker实例化失败");
         }
         if (StringUtils.isBlank(encoding)) {
             encoding = defaultEncoding;
         }
         basePath = basePath.replaceAll("\\\\", "/");
-        cfg.setDirectoryForTemplateLoading(new File(basePath));
+        try {
+            cfg.setDirectoryForTemplateLoading(new File(basePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         cfg.setDefaultEncoding(encoding);
     }
 
@@ -62,16 +63,15 @@ public class MyFreemarker {
      * 
      * @param context
      * @param basePath
-     * @throws Exception
      */
-    private MyFreemarker(ServletContext context, String basePath) throws Exception {
+    private MyFreemarker(ServletContext context, String basePath) {
         new MyFreemarker(context, basePath, null);
     }
 
     /**
      * 不允许其他类实例化
      */
-    private MyFreemarker(ServletContext context, String basePath, String encoding) throws Exception {
+    private MyFreemarker(ServletContext context, String basePath, String encoding) {
         MyFreemarker myFreemarker = myFreemarkers.get(basePath); // 从缓存中取出来
         if (myFreemarker == null) {// 如果缓存中没有
             cfg.setServletContextForTemplateLoading(context, basePath);
@@ -88,9 +88,8 @@ public class MyFreemarker {
      * 
      * @param basePath
      * @return
-     * @throws Exception
      */
-    public static MyFreemarker getInstance(String basePath) throws Exception {
+    public static MyFreemarker getInstance(String basePath) {
         return getInstance(basePath, null);
     }
 
@@ -100,9 +99,8 @@ public class MyFreemarker {
      * @param basePath freemark配置跟路径（物理路径）
      * @param encoding
      * @return
-     * @throws Exception
      */
-    public static MyFreemarker getInstance(String basePath, String encoding) throws Exception {
+    public static MyFreemarker getInstance(String basePath, String encoding) {
         MyFreemarker myFreemarker = myFreemarkers.get(basePath); // 从缓存中取出来
         if (myFreemarker == null) {// 如果缓存中没有
             if (StringUtils.isBlank(encoding)) {
@@ -119,15 +117,13 @@ public class MyFreemarker {
      * @param basePath
      * @param encoding
      * @return
-     * @throws Exception
      */
     public static MyFreemarker getInstance4Servlet(ServletContext context, String basePath,
-            String encoding) throws Exception {
+            String encoding) {
         return new MyFreemarker(context, basePath, encoding);
     }
 
-    public static MyFreemarker getInstance4Servlet(ServletContext context, String basePath)
-            throws Exception {
+    public static MyFreemarker getInstance4Servlet(ServletContext context, String basePath) {
         return getInstance4Servlet(context, basePath, null);
     }
 
@@ -136,11 +132,8 @@ public class MyFreemarker {
      * @param templatePath
      * @param htmlPath
      * @return 返回生成的文件路径
-     * @throws IOException
-     * @throws TemplateException
      */
-    public String createHTML(Map root, String templatePath, String htmlPath) throws IOException,
-            TemplateException {
+    public String createHTML(Map root, String templatePath, String htmlPath) {
         Template template = null;
         String flag = null;
         File htmlFile = null;
@@ -158,6 +151,20 @@ public class MyFreemarker {
             // 生成html
             template.process(root, out);
             flag = htmlPath;
+        } catch (MalformedTemplateNameException e) {
+            throw new RuntimeException(e);
+        } catch (TemplateException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (TemplateNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         } finally {
             IOUtils.closeQuietly(out);
         }
@@ -170,10 +177,8 @@ public class MyFreemarker {
      * @param root
      * @param templatePath
      * @return
-     * @throws IOException
-     * @throws TemplateException
      */
-    public String process(Map root, String templatePath) throws IOException, TemplateException {
+    public String process(Map root, String templatePath) {
         String flag = null;
         Writer out = null;
         Template template = null;
@@ -185,6 +190,16 @@ public class MyFreemarker {
             // 解析ftl文件
             template.process(root, out);
             flag = out.toString();
+        } catch (MalformedTemplateNameException e) {
+            throw new RuntimeException(e);
+        } catch (TemplateException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        } catch (TemplateNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         } finally {
             IOUtils.closeQuietly(out);
         }
