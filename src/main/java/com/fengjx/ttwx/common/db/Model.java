@@ -277,7 +277,7 @@ public abstract class Model {
      *
      * @return
      */
-    public String getColumnsStr(){
+    public String getColumnsStr() {
         return getColumnsStr(this.getClass());
     }
 
@@ -287,11 +287,27 @@ public abstract class Model {
      * @param cls
      * @return
      */
-    public String getColumnsStr(Class<? extends Model> cls){
+    public String getColumnsStr(Class<? extends Model> cls) {
         Table t = TableUtil.getTable(cls);
         return t.getColumnsStr();
     }
 
+    /**
+     * 通过class获得映射table的字段（如：id,name,age）
+     *
+     * @param cls
+     * @return
+     */
+    public String getColumnsStr(Class<? extends Model> cls, String alias) {
+        Table t = TableUtil.getTable(cls);
+        StringBuilder columnsStr = new StringBuilder();
+        String[] columns = t.getColumns();
+        for (String col : columns) {
+            columnsStr.append(" ,").append(alias).append(".").append(col);
+        }
+        columnsStr.delete(0, 2);
+        return columnsStr.toString();
+    }
 
     /**
      * 通过class获得映射表明
@@ -299,7 +315,7 @@ public abstract class Model {
      * @param cls
      * @return
      */
-    public String getTableName(Class<? extends Model> cls){
+    public String getTableName(Class<? extends Model> cls) {
         Table t = TableUtil.getTable(cls);
         return t.getName();
     }
@@ -309,8 +325,53 @@ public abstract class Model {
      *
      * @return
      */
-    public String getTableName(){
+    public String getTableName() {
         return getTableName(this.getClass());
+    }
+
+    /**
+     * 获得单表查询sql（如：select id, name, age from user）
+     *
+     * @param cls
+     * @return
+     */
+    public String getSelectSql(Class<? extends Model> cls) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select ").append(getColumnsStr(cls));
+        sql.append(" from ").append(getTableName(cls));
+        return sql.toString();
+    }
+
+    /**
+     * 获得带别名的单表查询sql（如：select u.id, u.name, u.age from user u)
+     *
+     * @param cls
+     * @param alias
+     * @return
+     */
+    public String getSelectSql(Class<? extends Model> cls, String alias) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select ").append(getColumnsStr(cls, alias));
+        sql.append(" from ").append(getTableName(cls)).append(" ").append(alias);
+        return sql.toString();
+    }
+
+    /**
+     * 获得带别名的单表查询sql（如：select u.id, u.name, u.age from user u)
+     *
+     * @return
+     */
+    public String getSelectSql() {
+        return getSelectSql(this.getClass());
+    }
+
+    /**
+     * 获得单表查询sql（如：select id, name, age from user）
+     *
+     * @return
+     */
+    public String getSelectSql(String alias) {
+        return getSelectSql(this.getClass(), alias);
     }
 
     public JdbcTemplate getJdbcTemplate() {

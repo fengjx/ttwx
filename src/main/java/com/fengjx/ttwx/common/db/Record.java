@@ -236,7 +236,7 @@ public class Record implements Serializable {
      * Return json string of this record.
      */
     public String toJson() {
-        return JsonUtil.toJson(this);
+        return JsonUtil.toJson(this.getColumns());
     }
 
     /**

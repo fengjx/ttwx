@@ -87,6 +87,10 @@ public class Table {
         return Collections.unmodifiableMap(columnTypeMap);
     }
 
+    public String[] getColumns(){
+        return columnsStr.replaceAll(" ", "") .split(",");
+    }
+
     public String getColumnsStr() {
         return columnsStr;
     }
