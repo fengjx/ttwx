@@ -7,58 +7,33 @@
 //分页对象
 var page;
 
-var news_datagrid;
-
 $(function(){
 	
-	init();
+	loadMaterials(1);
 	//删除按钮点击事件
-	$(".js_del").live("click",function(){
+	$(".js_del").on("click",function(){
 		var id = $(this).attr("data-id");
 		if(id && id != ''){
 			deleteMaterial(id);
 		}
 	});
 	
-	$('.page').pagination({
-		showPageList:false,
-		pageNumber:1,
-		onSelectPage:function(pageNumber, pageSize){
-			$(".inner").find("div").remove();
-			loadMaterials(pageNumber,pageSize);
-		}
-	});
 });
-
-
-/**
- * 初始化
- */
-function init(){
-	
-	loadMaterials(1,3);
-	
-}
 
 
 /**
  * 加载素材
  */
-function loadMaterials(page,rows){
+function loadMaterials(page){
 	
 	$.ajax({
-		url :  domain + '/admin/base/material/page?msg_type=news',
-		data : "page="+page+"&rows="+rows,
+		url :  domain + '/admin/wechat/material/page?msg_type=news',
+		data : "pageNumber="+page+"&pageSize=10",
 		cache : false,
 		dataType : "json",
 		success : function(data) {
-			$('.page').pagination({
-				total:data.total,   
-				pageSize:rows,
-				pageNumber:page
-			});
 			var html = "";
-			$.each(data.rows, function(i,rowData){
+			$.each(data.list, function(i,rowData){
 				var material_id = rowData.id;
 				var msg_type = rowData.msg_type;
 				var in_time = rowData.in_time;
@@ -93,5 +68,4 @@ function deleteMaterial(id){
 			});
 		}
 	});
-	
 }

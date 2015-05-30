@@ -3,8 +3,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>多图文本</title>
+	<link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
+	<link href="<%=resourceUrl%>/css/appmsg_edit.css?v=2015053001" rel="stylesheet" type="text/css"/>
+	<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/view/common/inc/ueditor.jsp"></jsp:include>
+	<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
+	<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
+	<script src="<%=resourceUrl %>/script/wechat/admin/multiple_news.js?v=2015053003" type="text/javascript" charset="UTF-8"></script>
 </head>
+<script type="text/javascript">
+	var material_id = '${id}';
+</script>
 <body>
 
 	<div class="main_bd">
@@ -28,7 +42,7 @@
 								<i class="appmsg_thumb default">封面图片</i>
 							</div>
 							<div class="appmsg_edit_mask">
-								<a href="javascript:;" data-id="1" class="icon18_common edit_gray js_edit" onclick="return false;">编辑</a>
+								<a href="javascript:;" onclick="editAppmsg(1);" data-id="1" class="icon18_common edit_gray js_edit">编辑</a>
 							</div>
 						</div>
 					</div>
@@ -42,14 +56,13 @@
 						<img src="" id="appmsg_thumb2" class="js_appmsg_thumb appmsg_thumb"> 
 						<i class="appmsg_thumb default">缩略图</i>
 						<h4 class="appmsg_title" id="appmsg_title2">
-							<a target="_blank" href="javascript:void(0);" onclick="return false;">标题</a>
+							<a target="_blank" href="javascript:void(0);">标题</a>
 						</h4>
 						<div class="appmsg_edit_mask">
-							<a href="javascript:void(0);" onclick="return false;" data-id="2" class="icon18_common edit_gray js_edit">编辑</a>
-							<a href="javascript:void(0);" onclick="return false;" data-id="2" class="icon18_common del_gray js_del">删除</a>
+							<a href="javascript:void(0);" onclick="editAppmsg(2);" data-id="2" class="icon18_common edit_gray js_edit">编辑</a>
+							<a href="javascript:void(0);" onclick="deleteAppmsg(2);" data-id="2" class="icon18_common del_gray js_del">删除</a>
 						</div>
 					</div>
-					
 					<!-- js加载更多 -->
 					
 				</div>
@@ -105,7 +118,14 @@
 								</label> 
 							</label> 
 							<span id="span_url" style="display:none;">
-								<input type="text" value="http://" id="busiapp_url" style="width:350px;">
+								<jsp:include page="/admin/wechat/ext/selecter">
+									<jsp:param name="showAll" value="1"/>
+									<jsp:param name="id" value="busiapp_url"/>
+									<jsp:param name="name" value="busiapp_url"/>
+									<jsp:param name="app_type" value="web"/>
+									<jsp:param name="msg_type" value=""/>
+									<jsp:param name="event_type" value=""/>
+								</jsp:include>
 							</span>
 						</div>
 						<div class="appmsg_edit_item content_edit" id="js_ueditor">
@@ -115,7 +135,6 @@
 							<div class="edui_editor_wrp edui-default" id="js_editor">
 								<!-- 文本编辑器 -->
 								<script id="container" name="content" type="text/plain"></script>
-								
 							</div>
 						</div>
 					</div>
@@ -127,14 +146,11 @@
 		</div>
 		<div class="tool_area">
 			<div class="tool_bar border tc">
-				<!-- <span class="btn btn_input btn_default" id="js_preview"><button onclick="javascript:history.back();">返回</button></span> -->
-				<span class="btn btn_input btn_primary" id="js_submit"><button onclick="submitAppMsg();">保存</button>
+				<span class="btn btn_input btn_primary" id="js_submit"><button onclick="submitNewsForm();">保存</button>
 				</span>
 			</div>
 		</div>
 	</div>
-
-
 
 	<form id="news_form" action="" method="POST">
 		<input type="hidden" id="materialId" name="id" value="${id}"/>
@@ -142,19 +158,4 @@
 		<input type="hidden" id="xml_data" name="xml_data" value=""/>
 		<input type="hidden" id="contentsJson" name="contentsJson"/>
 	</form>
-	
-	
-	<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
-	<%@include file="/WEB-INF/view/common/inc/ueditor.jsp"%>
-	<link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
-	<link href="<%=resourceUrl%>/css/appmsg_edit.css?v=2014030901" rel="stylesheet" type="text/css"/>
-	<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-	<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-	<script type="text/javascript" src="<%=domain %>/dwr/engine.js"></script>
-	<script type="text/javascript" src="<%=domain %>/dwr/interface/materialService.js"></script>
-	<script src="<%=resourceUrl %>/script/admin/multiple_news.js?v=2014052303" type="text/javascript" charset="UTF-8"></script>
-	<script type="text/javascript">
-		var material_id = '${id}';
-	</script>
-	
 </body>

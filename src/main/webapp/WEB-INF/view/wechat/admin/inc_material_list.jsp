@@ -2,45 +2,14 @@
 <script src="<%=resourceUrl %>/jQuery-Paging/jquery.paging.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="<%=resourceUrl %>/jQuery-Paging/jquery.bootstrap-paging.js?2015042501" type="text/javascript" charset="UTF-8"></script>
 <!-- 素材列表包含页 material.jsp | menu.jsp-->
-<!-- 分页 -->
-<ul class="pagination">
-	<li class="am-pagination-prev ">
-		<<
-	</li>
-	<li>
-		<
-	</li>
-	<li>
-		#n
-	</li>
-	<li>
-		#n
-	</li>
-	<li>
-		#c
-	</li>
-	<li>
-		#n
-	</li>
-	<li>
-		#n
-	</li>
-	<li>
-		>
-	</li>
-	<li>
-		>>
-	</li>
-</ul>
-
 
 <div id="appmsgList" class="appmsg_list">
 	<div class="appmsg_col">
 		<div id="appmsgList1" class="inner">
 			<span class="create_access"> 
 				<i class="icon42_common add_gray"></i> 
-				<a target="_blank" href="<%=domain %>/admin/material/single"><i class="icon_appmsg_create"></i><strong>单图消息</strong></a> 
-				<a target="_blank" href="<%=domain %>/admin/material/multiple"><i class="icon_appmsg_create multi"></i><strong>多图消息</strong></a> 
+				<a target="_blank" href="<%=domain %>/admin/wechat/material/single"><i class="icon_appmsg_create"></i><strong>单图消息</strong></a>
+				<a target="_blank" href="<%=domain %>/admin/wechat/material/multiple"><i class="icon_appmsg_create multi"></i><strong>多图消息</strong></a>
 			</span>
 		</div>
 	</div>
@@ -51,37 +20,6 @@
 		</div>
 	</div>
 </div>
-
-<!-- 分页 -->
-<ul class="pagination">
-	<li class="am-pagination-prev ">
-		<<
-	</li>
-	<li>
-		<
-	</li>
-	<li>
-		#n
-	</li>
-	<li>
-		#n
-	</li>
-	<li>
-		#c
-	</li>
-	<li>
-		#n
-	</li>
-	<li>
-		#n
-	</li>
-	<li>
-		>
-	</li>
-	<li>
-		>>
-	</li>
-</ul>
 
 
 <script>

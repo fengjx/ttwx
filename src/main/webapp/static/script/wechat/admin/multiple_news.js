@@ -1,6 +1,6 @@
 /**
  * 多图文本
- * 2014年3月13日
+ * 2015-5-30
  * fengjx
  */
 
@@ -14,36 +14,17 @@ var curDataId;
 var editor;
 //图片上传
 var uploader;
-//表单
-var newsForm;
-//扩展web应用
-var busiweb_combobox;
 
 $(function(){
-	//设置dwr同步执行
-	dwr.engine.setAsync(false);
-	init();
 
-	//绑定图文删除按钮事件
-	$('.js_del').live('click', function() {
-		var dataId = $(this).attr("data-id");
-		deleteAppmsg(dataId);
+	//默认编辑第一条消息
+	curDataId = 1;	//当前编辑的图文
+	newsNum = 2;	//图文个数，最小2条
+
+	$('#news_title').keyup(function() {
+		$("#appmsg_title"+curDataId).find("a").html($(this).val());
 	});
-	
-	//绑定图文编辑按钮事件
-	$('.js_edit').live('click', function() {
-		var dataId = $(this).attr("data-id");
-		editAppmsg(dataId);
-	});
-	
-	//加载web应用列表
-	busiweb_combobox = $('#busiapp_url').combobox({   
-		url: domain +'/admin/extapp/list?app_type=web',
-        method: 'get',
-        valueField:'app_url',
-        textField:'name',
-        groupField:'group_name'
-	}); 
+
 	////选择自定义URL
 	$(".frm_checkbox_label").click(function(){
 		if($(".frm_checkbox").attr("checked")){//如果是选中
@@ -63,112 +44,108 @@ $(function(){
 		}
 	});
 	
-	//实例化form组建
- 	news_form = $('#news_form').form();
-	
-});
-
-/**
- * 初始化
- */
-function init(){
-	
-	//实例化编辑器
-	editor = UE.getEditor('container',{
- 		initialFrameHeight:400,
- 		initialFrameWidth:755
- 	});
-	//实例化图片上传组件
- 	uploader = UE.getEditor('upload_container',{
- 	});
- 	
- 	editor.ready(function(){
- 		//监听编辑器输入事件
- 		editor.addListener('aftergetcontent', function (type) {
- 			$("#appmsgContent"+curDataId).val(this.body.innerHTML);	//将当前编辑器内容缓存
- 		});
- 	});
- 	
- 	uploader.ready(function () {
-        //设置编辑器不可用
-        uploader.setDisabled();
-        //隐藏编辑器，因为不会用到这个编辑器实例，所以要隐藏
-        uploader.hide();
-        //侦听图片上传
-        uploader.addListener('beforeInsertImage', function (t, arg) {
-            //图片预览
-            $("#appmsg_thumb"+curDataId).attr("src", arg[0].src);
-            $("#appmsg_thumb"+curDataId).parent().addClass("has_thumb");
-            $("#preview").attr("src", arg[0].src);
-            $(".upload_preview").show();
-        })
-    });
-	
-	
-	if(material_id && material_id != ''){
-		$.ajax({
-			url :  domain + '/admin/material/load',
-			data : "id="+material_id,
-			cache : false,
-			dataType : "json",
-			success : function(data) {
-				var json = $.xml2json(data.xml_data);
-				var items = json.Articles.item;
-				$.each(items, function(j,item){
-					var _url = item.Url;
-					if(j == 0){		//第一个图文
-						$("#appmsg_title1").find("a").html(item.Title);
-						$("#news_title").val(item.Title);
-						$("#appmsg_thumb1").attr("src",item.PicUrl);
-						$("#appmsg_thumb1").parent().addClass("has_thumb");
-			            $("#preview").attr("src", item.PicUrl);
-			            $(".upload_preview").show();
-			            
-			            if(isLocalUrl(_url)){
-			            	var tmpContent = loadContent(_url);
-			            	$("#appmsgContent1").val(tmpContent);
-			            	editor.addListener("ready", function () {
-			        	        this.setContent(tmpContent);
-			        		});
-			            }else{
-			            	$(".frm_checkbox_label").addClass("selected");
-			    			$(".frm_checkbox").attr("checked",true);
-			    			$("#busiapp_url").attr("readonly",false);
-			    			$("#appmsgUrl1").attr("select","1");
-			    			$("#appmsgUrl1").val(_url);
-			    			busiweb_combobox.combobox("setValue",_url);
-			    			$("#span_url").show();
-			    			editor.addListener("ready", function () {
-			    				editor.setDisabled('fullscreen');
-			        		});
-			            }
-					}else if(j == 1){	//第二个图文
-						$("#appmsg_title2").find("a").html(item.Title);
-						$("#appmsg_thumb2").attr("src",item.PicUrl);
-						$("#appmsg_thumb2").parent().addClass("has_thumb");
-					    if(isLocalUrl(_url)){
-			            	$("#appmsgContent2").val(loadContent(_url));
-			            }else{
-			    			$("#appmsgUrl2").attr("select","1");
-			    			$("#appmsgUrl2").val(_url);
-			            }
-					}else{
-						addAppmsg(item);
-					}
-				});
+	$("#news_form").submit(function(){
+		$(this).ajaxSubmit({
+			url : domain + "/admin/wechat/material/save",
+			dataType : 'json',
+			beforeSubmit : function () {
+				app.loadingModal("数据提交中....");
+			},
+			success : function(res){
+				app.closeDialog();
+				if(res && '1' == res.code){
+					app.alertModal("保存成功！",{
+						ok: function () {
+							window.close();
+						}
+					});
+				}else{
+					app.alertModal(res.msg?res.msg:"保存失败！");
+				}
 			}
 		});
-	}
-	
-	
-	//默认编辑第一条消息
-	curDataId = 1;	//當前編輯的圖文
-	newsNum = 2;	//圖文個數，最小2條
-    
-    $('#news_title').keyup(function() {
-		$("#appmsg_title"+curDataId).find("a").html($(this).val());
+		return false;
 	});
-}
+
+	//实例化图片上传组件
+	uploader = UE.getEditor('upload_container',{
+	});
+	uploader.ready(function () {
+		//设置编辑器不可用
+		uploader.setDisabled();
+		//隐藏编辑器，因为不会用到这个编辑器实例，所以要隐藏
+		uploader.hide();
+		//侦听图片上传
+		uploader.addListener('beforeInsertImage', function (t, arg) {
+			//图片预览
+			$("#appmsg_thumb"+curDataId).attr("src", arg[0].src);
+			$("#appmsg_thumb"+curDataId).parent().addClass("has_thumb");
+			$("#preview").attr("src", arg[0].src);
+			$(".upload_preview").show();
+		})
+	});
+
+	//实例化编辑器
+	editor = UE.getEditor('container',{
+		initialFrameHeight:400,
+		initialFrameWidth:755
+	});
+
+	editor.ready(function(){
+		if(material_id && material_id != ''){
+			$.ajax({
+				url :  domain + '/admin/wechat/material/load',
+				data : "id="+material_id,
+				cache : false,
+				dataType : "json",
+				success : function(data) {
+					var json = $.xml2json(data.xml_data);
+					var items = json.Articles.item;
+					$.each(items, function(j,item){
+						var _url = item.Url;
+						if(j == 0){		//第一个图文
+							$("#appmsg_title1").find("a").html(item.Title);
+							$("#news_title").val(item.Title);
+							$("#appmsg_thumb1").attr("src",item.PicUrl);
+							$("#appmsg_thumb1").parent().addClass("has_thumb");
+							$("#preview").attr("src", item.PicUrl);
+							$(".upload_preview").show();
+							if(isLocalUrl(_url)){
+								editor.setContent(loadContent(_url));
+							}else{
+								$(".frm_checkbox_label").addClass("selected");
+								$(".frm_checkbox").attr("checked",true);
+								$("#busiapp_url").attr("readonly",false);
+								$("#appmsgUrl1").attr("select","1");
+								$("#appmsgUrl1").val(_url);
+								$("#busiapp_url").val(_url);
+								$("#span_url").show();
+								editor.setDisabled('fullscreen');
+							}
+						}else if(j == 1){	//第二个图文
+							$("#appmsg_title2").find("a").html(item.Title);
+							$("#appmsg_thumb2").attr("src",item.PicUrl);
+							$("#appmsg_thumb2").parent().addClass("has_thumb");
+							if(isLocalUrl(_url)){
+								$("#appmsgContent2").val(loadContent(_url));
+							}else{
+								$("#appmsgUrl2").attr("select","1");
+								$("#appmsgUrl2").val(_url);
+							}
+						}else{
+							addAppmsg(item);
+						}
+					});
+				}
+			});
+		}
+	});
+	//监听编辑器输入事件
+	editor.addListener('aftergetcontent', function (type) {
+		$("#appmsgContent"+curDataId).val(this.body.innerHTML);	//将当前编辑器内容缓存
+	});
+
+});
 
 //弹出图片上传的对话框
 function upImage() {
@@ -191,28 +168,25 @@ function deleteImage(){
  */
 function addAppmsg(item){
 	if(total>7){	//限制最多10条
-		$.messager.alert('提示',	'你最多可以加入8条圖文消息。','warning');
+		app.alertModal("你最多可以加入8条图文消息");
 		return false;
 	}
 	//图文总数加1
 	total = total+1;
 	newsNum = newsNum+1;
-	var html = "";
-	
-	html = '<div class="appmsg_item js_appmsg_item" data-id="'+newsNum+'" data-fileid="" id="appmsgItem'+newsNum+'">' +
+	var html = '<div class="appmsg_item js_appmsg_item" data-id="'+newsNum+'" data-fileid="" id="appmsgItem'+newsNum+'">' +
 		'<input type="hidden" class="appmsgContent" id="appmsgContent'+newsNum+'" data-id="'+newsNum+'" value=""/>' +
 		'<input type="hidden" class="appmsgUrl" id="appmsgUrl'+newsNum+'" data-id="'+newsNum+'" value="" select=""/>' +
 		'<img id="appmsg_thumb'+newsNum+'" src="" class="js_appmsg_thumb appmsg_thumb">' +
-		'<i class="appmsg_thumb default">縮略圖</i>' +
+		'<i class="appmsg_thumb default">缩略图</i>' +
 		'<h4 class="appmsg_title" id="appmsg_title'+newsNum+'">' +
 			'<a target="_blank" href="javascript:void(0);" onclick="return false;">標題</a>' +
 		'</h4>' +
 		'<div class="appmsg_edit_mask">' +
-			'<a href="javascript:void(0);" onclick="return false;" data-id="'+newsNum+'" class="icon18_common edit_gray js_edit">編輯</a>' +
-			'<a href="javascript:void(0);" onclick="return false;" data-id="'+newsNum+'" class="icon18_common del_gray js_del">删除</a>' +
+			'<a href="javascript:void(0);" onclick="editAppmsg('+newsNum+');" data-id="'+newsNum+'" class="icon18_common edit_gray js_edit">编辑</a>' +
+			'<a href="javascript:void(0);" onclick="deleteAppmsg('+newsNum+');" data-id="'+newsNum+'" class="icon18_common del_gray js_del">删除</a>' +
 		'</div>' +
 	'</div>';
-	
 	$("#js_appmsg_preview").append(html);
 	if(item){
 		var _url = item.Url;
@@ -226,7 +200,6 @@ function addAppmsg(item){
 			$("#appmsgUrl"+newsNum).val(_url);
         }
 	}
-	
 }
 
 /**
@@ -235,12 +208,11 @@ function addAppmsg(item){
  */
 function deleteAppmsg(dataId){
 	if(total<3){	//限制最少2条
-		$.messager.alert('提示','無法刪除，多條圖文至少需要2條消息。','warning');
+		app.alertModal("无法删除，多图文消息至少需要有2条");
 		return false;
 	}
 	total = total-1;
 	$("#appmsgItem"+dataId).remove();
-	
 }
 
 /**
@@ -248,14 +220,8 @@ function deleteAppmsg(dataId){
  * @param {} index
  */
 function editAppmsg(dataId){
-	
 	if($(".frm_checkbox").attr("checked")){		//如果是选中，自定义URL
-		var app_url = busiweb_combobox.combobox("getValue");
-		//如果app_url为空，表示用户没有选择应用的链接地址
-		if(!app_url){
-			//读取用户输入的URL
-			app_url = busiweb_combobox.combobox("getText");
-		}
+		var app_url = $("#busiapp_url").val();
 		$("#appmsgUrl"+curDataId).val(app_url);
 		$("#appmsgUrl"+curDataId).attr("select","1");
 	}else{
@@ -306,7 +272,7 @@ function settingInner(dataId){
 		$("#preview").attr("src",imgSrc);
     	$(".upload_preview").show();
 	}
-	busiweb_combobox.combobox("setValue",appmsgUrl);
+	$("#busiapp_url").val(appmsgUrl);
 	editor.setContent(content);
 	if(select && select == '1'){	//选择自定义URL
 		$(".frm_checkbox_label").addClass("selected");
@@ -324,115 +290,93 @@ function settingInner(dataId){
 /**
  * 提交保存
  */
-function submitAppMsg(){
-	news_form.form('submit', {
-		url : domain + '/admin/material/save',
-		success : function(data) {
-			fjx.closeProgress();
-			var res = $.evalJSON(data);
-			if(res && '1' == res.code){
-				//fjx.showMsg('保存成功！');
-				alert('保存成功！');
-				//window.location.href = domain + '/wechat/app/material_view.action';
-				window.location.reload();
-			}else{
-				$.messager.alert('提示',	res?res.msg:'保存失败！','error');
-			}
-		},
-		onSubmit : function(){
-			editAppmsg(curDataId);
-			var flag = true;
-			//图文json数据数组
-			var newsJson = [];
-			var xml_data = "<xml>" +
-							"<ToUserName><![CDATA[]]></ToUserName>" +
-							"<FromUserName><![CDATA[]]></FromUserName>" +
-							"<CreateTime><![CDATA[]]></CreateTime>" +
-							"<MsgType><![CDATA[news]]></MsgType>" +
-							"<ArticleCount>"+total+"</ArticleCount>" +
-							"<Articles>";
-			//遍历图文消息
-			var c_num = 0;		//计数，记录内容编辑的个数
-			$(".js_appmsg_item").each(function(i){
-				var item = $(this);
-				var title = item.find(".appmsg_title > a").text();
-				var picUrl = item.find(".js_appmsg_thumb").attr("src");
-				var select = item.find(".appmsgUrl").attr("select");
-				
-				if(!title || title == '' || title == '标题'){
-					$.messager.alert('提示', '请输入标题[图文'+(i+1)+']', 'warning');
-					flag = false;
-					return false;
-				}
-				//if(!picUrl || picUrl == ''){
-				//	$.messager.alert('提示', '请上传图片[图文'+(i+1)+']', 'warning');
-				//	flag = false;
-				//	return false;
-				//}
-				var json = {};
-				xml_data += "<item>" +
-						"<Title><![CDATA["+title+"]]></Title>" +
-						"<Description><![CDATA[]]></Description>" +
-						"<PicUrl><![CDATA["+picUrl+"]]></PicUrl>";
-				if(select == "1"){	//选择自定义URl
-					var app_url = item.find(".appmsgUrl").val();
-					if(!app_url || '' == app_url || 'http://' == app_url){
-						$.messager.alert('提示', '请填写URL或选择应用[图文'+(i+1)+']', 'warning');
-						flag = false;
-						return false;
-					}
-					xml_data +=	"<Url><![CDATA["+app_url+"]]></Url>" + "</item>";
-				}else{
-					var content = item.find(".appmsgContent").val();
-					if(!content || '' == $.trim(content)){
-						$.messager.alert('提示', '请编辑页面内容，或者填写链接地址[语文'+(i+1)+']', 'warning');
-						flag = false;
-						return false;
-					}
-					json = {'title':title,'content':content};
-//					newsJson[i] = json;	//将内容添加到json数组中
-					newsJson.push(json);
-					xml_data +=	"<Url_"+c_num+"><![CDATA[##url##]]></Url_"+c_num+">" + "</item>"; //后台通过<Url_"+i+">来替换
-					c_num = c_num + 1;
-				}
-			});
-			xml_data += "</Articles>" +
-						"</xml>";
-			if(!flag){		//停止继续往下执行
-				return false;
-			}
-			$("#xml_data").val(xml_data);
-			if(newsJson.length > 0){
-				$("#contentsJson").val($.toJSON(newsJson));
-			}
-			$.messager.progress({
-				text : '数据提交中....',
-				interval : 100
-			});
-		}
-	});
+function submitNewsForm(){
+	if(validForm()){
+		$("#news_form").submit();
+	}
 }
 
+function validForm() {
+	editAppmsg(curDataId);
+	var flag = true;
+	//图文json数据数组
+	var newsJson = [];
+	var xml_data = "<xml>" +
+		"<ToUserName><![CDATA[]]></ToUserName>" +
+		"<FromUserName><![CDATA[]]></FromUserName>" +
+		"<CreateTime><![CDATA[]]></CreateTime>" +
+		"<MsgType><![CDATA[news]]></MsgType>" +
+		"<ArticleCount>"+total+"</ArticleCount>" +
+		"<Articles>";
+	//遍历图文消息
+	var c_num = 0;		//计数，记录内容编辑的个数
+	$(".js_appmsg_item").each(function(i){
+		var item = $(this);
+		var title = item.find(".appmsg_title > a").text();
+		var picUrl = item.find(".js_appmsg_thumb").attr("src");
+		var select = item.find(".appmsgUrl").attr("select");
+		if(!title || title == '' || title == '标题'){
+			app.alertModal('请输入标题[图文'+(i+1)+']');
+			flag = false;
+			return false;
+		}
+		//if(!picUrl || picUrl == ''){
+		//	$.messager.alert('提示', '请上传图片[图文'+(i+1)+']', 'warning');
+		//	flag = false;
+		//	return false;
+		//}
+		var json = {};
+		xml_data += "<item>" +
+			"<Title><![CDATA["+title+"]]></Title>" +
+			"<Description><![CDATA[]]></Description>" +
+			"<PicUrl><![CDATA["+picUrl+"]]></PicUrl>";
+		if(select == "1"){	//选择自定义URl
+			var app_url = item.find(".appmsgUrl").val();
+			if(!app_url || '' == app_url || 'http://' == app_url){
+				app.alertModal('请填写URL或选择应用[图文'+(i+1)+']');
+				flag = false;
+				return false;
+			}
+			xml_data +=	"<Url><![CDATA["+app_url+"]]></Url>" + "</item>";
+		}else{
+			var content = item.find(".appmsgContent").val();
+			if(!content || '' == $.trim(content)){
+				app.alertModal('请编辑页面内容，或者填写链接地址[图文'+(i+1)+']');
+				flag = false;
+				return false;
+			}
+			json = {'title':title,'content':content};
+			newsJson.push(json);
+			xml_data +=	"<Url_"+c_num+"><![CDATA[##url##]]></Url_"+c_num+">" + "</item>"; //后台通过<Url_"+i+">来替换
+			c_num = c_num + 1;
+		}
+	});
+	if(!flag){		//停止继续往下执行
+		return false;
+	}
+	xml_data += "</Articles></xml>";
+	$("#xml_data").val(xml_data);
+	if(newsJson.length > 0){
+		$("#contentsJson").val($.toJSON(newsJson));
+	}
+	return true;
+}
 
 /**
  * 读取素材内容
  */
 function loadContent(url){
-	if(!isLocalUrl(url)){
-		return "";
-	}
-	var content = "";
-	var path = url.split(staticDomain)[1];
-	materialService.loadMaterialContentByUrl(path,{
-		callback:function(data){
-			content = data;
-		},
-        errorHandler:function(errorString, exception){
-        	alert("正文內容获取失败");
-        },
-        exceptionHandler:function(exceptionString, exception){
-        	alert("正文內容获取失败");
-        }
+	var content;
+	$.ajax({
+		url :  domain + '/admin/wechat/material/getContent',
+		type: 'post',
+		data: {url:url},
+		dataType: "text",
+		cache: false,
+		async: false,
+		success: function (_content) {
+			content = _content
+		}
 	});
 	return content;
 }

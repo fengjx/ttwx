@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-<%@ page import="com.fjx.wechat.config.AppConfig"%>
+<%@ page import="com.fengjx.ttwx.modules.common.constants.AppConfig" %>
 <%@ page import="java.util.Properties"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Iterator"%>
@@ -7,7 +7,6 @@
 <%@ page import="java.io.FileInputStream"%>
 <%@ page import="ueditor.Uploader"%>
 <%@ page import="java.io.File"%>
-<%@ page import="java.util.Map"%>
 
 <%
 	//request.setCharacterEncoding(Uploader.ENCODEING);
@@ -25,7 +24,7 @@
 
 	//加载配置文件
 	String propertiesPath = request.getSession().getServletContext()
-			.getRealPath(currentPath + "app.properties");
+			.getRealPath(currentPath + "config.properties");
 	
 	Properties properties = new Properties();
 	

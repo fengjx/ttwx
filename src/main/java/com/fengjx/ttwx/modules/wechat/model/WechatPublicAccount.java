@@ -60,9 +60,7 @@ public class WechatPublicAccount extends Model {
      * @return
      */
     public Record getPublicAccountByUserid(String sysUserId){
-        StringBuilder sql = new StringBuilder();
-        sql.append("select ").append(getColumnsStr());
-        sql.append(" from ").append(getTableName());
+        StringBuilder sql = new StringBuilder(getSelectSql());
         sql.append(" where sys_user_id = ?");
         return findOne(sql.toString(),sysUserId);
     }

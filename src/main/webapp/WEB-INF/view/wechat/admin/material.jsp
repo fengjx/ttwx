@@ -18,9 +18,15 @@
 <div class="container-fluid">
 	<div class="row">
 		<jsp:include page="/WEB-INF/view/wechat/admin/inc_menu.jsp">
-			<jsp:param name="active" value="1"/>
+			<jsp:param name="index" value="4"/>
 		</jsp:include>
 		<div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<ol class="breadcrumb">
+				<li><a href="#">后台管理</a></li>
+				<li><a href="#">平台管理</a></li>
+				<li class="active">素材管理</li>
+			</ol>
+
 			<div class="main_bd" style="width:99.5%">
 				<%@include file="/WEB-INF/view/wechat/admin/inc_material_list.jsp" %>
 			</div>
@@ -31,16 +37,9 @@
 <link href="<%=resourceUrl%>/css/common.css?v=2014030901" rel="stylesheet" type="text/css"/>
 <script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl %>/script/admin/material.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
-<script>
-	$(function () {
-		var active = '${active}';
-		alert(active);
-		if('' !== active){
-			$("#menu>li:eq("+active+")").addClass("active");
-		}
-	});
-</script>
-
+<script src="<%=resourceUrl%>/script/wechat/admin/material.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
+<script src="<%=resourceUrl%>/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
+<script src="<%=resourceUrl%>/jQuery-Paging/jquery.paging.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="<%=resourceUrl%>/jQuery-Paging/jquery.bootstrap-paging.js?v=2015052801" type="text/javascript" charset="UTF-8"></script>
 </body>
-</html> 
+</html>

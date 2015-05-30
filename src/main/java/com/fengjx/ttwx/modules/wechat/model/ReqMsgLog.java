@@ -35,9 +35,8 @@ public class ReqMsgLog extends Model {
     public BootstrapPage pageList(Map<String, String> attrs, String userId) {
         Record accounRecordt = publicAccount.getPublicAccountByUserid(userId);
         List<Object> params = new ArrayList<Object>();
-        StringBuilder sql = new StringBuilder();
-        sql.append("select ").append(getColumnsStr());
-        sql.append(" from wechat_req_msg_log l where l.public_account_id = ?");
+        StringBuilder sql = new StringBuilder(getSelectSql());
+        sql.append(" l where l.public_account_id = ?");
         params.add(accounRecordt.getStr("id"));
         if (StringUtils.isNotBlank(attrs.get("from_user_name"))) {
             sql.append(" and l.from_user_name = ? ");

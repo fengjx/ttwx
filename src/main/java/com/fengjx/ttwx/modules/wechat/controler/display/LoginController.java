@@ -99,11 +99,8 @@ public class LoginController extends MyController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> register(final HttpServletRequest request) {
-        return doResult(new MyExecuteCallback() {
-            @Override
-            public void execute() throws Exception {
-                sysUser.register(getRequestMap(request));
-            }
+        return doResult(()->{
+            sysUser.register(getRequestMap(request));
         }, "注册用户失败！");
     }
 

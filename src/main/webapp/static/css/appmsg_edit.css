@@ -548,7 +548,7 @@
 
 .cover_appmsg_item .appmsg_title {
 	position: absolute;
-	bottom: 0;
+	bottom: -10px;
 	left: 0;
 	width: 100%;
 	background: rgba(0, 0, 0, 0.6) !important;

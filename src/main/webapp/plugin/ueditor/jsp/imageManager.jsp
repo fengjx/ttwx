@@ -1,10 +1,10 @@
-<%@page import="com.fjx.wechat.config.AppConfig"%>
 <%@ page language="java" pageEncoding="utf-8"%>
+<%@ page import="com.fengjx.ttwx.modules.common.constants.AppConfig" %>
 <%@ page import="java.util.*"%>
 <%@ page import="java.io.*"%>
 <%@ page import="javax.servlet.ServletContext"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
-<% 
+<%
     //仅做示例用，请自行修改
 	String path = "/upload/images/";
 	String imgStr ="";

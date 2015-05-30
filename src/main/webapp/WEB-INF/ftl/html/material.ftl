@@ -569,7 +569,7 @@ ol,ul {
 			<p class="activity-info">
 				<span id="post-date" class="activity-meta no-extra">${date!}</span>
 				<a href="javascript:viewProfile();" id="post-user" class="activity-meta"> 
-					<span class="text-ellipsis">香港联通</span>
+					<span class="text-ellipsis">${app_name!}</span>
 					<i class="icon_link_arrow"></i> 
 				</a>
 			</p>

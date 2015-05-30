@@ -68,7 +68,7 @@ function xml2NewsHtml(xmlStr, in_time, material_id, type) {
         html += '<div class="appmsg_opr">' +
             '<ul>' +
             '<li class="appmsg_opr_item grid_item size1of2">' +
-            '<a target="_blank" href="' + domain + '/admin/material/' + newsType + '?id=' + material_id + '" class="js_edit" data-id="' + material_id + '">' +
+            '<a target="_blank" href="' + domain + '/admin/wechat/material/' + newsType + '?id=' + material_id + '" class="js_edit" data-id="' + material_id + '">' +
             '<i class="icon18_common edit_gray">編輯</i>' +
             '</a>' +
             '</li>' +

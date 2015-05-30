@@ -38,7 +38,7 @@
             </a>
         </li>
         <li>
-            <a href="<%=domain %>/admin/base/material">
+            <a href="<%=domain %>/admin/wechat/material">
                 <i class="glyphicon glyphicon-edit"></i>
                 <span class="menu-text"> 素材管理 </span>
             </a>
