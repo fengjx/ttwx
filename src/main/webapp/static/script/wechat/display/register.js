@@ -17,7 +17,6 @@ $(function(){
 					    }
 					});
 				}else{
-					//alert(res.msg?res.msg:'注册失败');
 					app.alert("注册失败",{
 						ok: function () {
 							$("#btn-register").button('reset');
