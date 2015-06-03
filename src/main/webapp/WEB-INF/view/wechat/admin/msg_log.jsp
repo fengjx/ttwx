@@ -24,8 +24,8 @@
         </jsp:include>
         <div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ol class="breadcrumb">
-                <li><a href="#">后台管理</a></li>
-                <li><a href="#">平台管理</a></li>
+                <li><a href="<%=domain %>/admin">">后台管理</a></li>
+                <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
                 <li class="active">消息记录</li>
             </ol>
 
