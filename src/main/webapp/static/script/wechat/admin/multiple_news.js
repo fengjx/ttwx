@@ -3,7 +3,6 @@
  * 2015-5-30
  * fengjx
  */
-
 //图文总数
 var total = 2;
 //图文编号
@@ -56,7 +55,7 @@ $(function(){
 				if(res && '1' == res.code){
 					app.alertModal("保存成功！",{
 						ok: function () {
-							window.close();
+							window.location.href = domain + '/admin/wechat/material';
 						}
 					});
 				}else{
@@ -88,7 +87,7 @@ $(function(){
 	//实例化编辑器
 	editor = UE.getEditor('container',{
 		initialFrameHeight:400,
-		initialFrameWidth:755
+		initialFrameWidth:'auto'
 	});
 
 	editor.ready(function(){
@@ -180,7 +179,7 @@ function addAppmsg(item){
 		'<img id="appmsg_thumb'+newsNum+'" src="" class="js_appmsg_thumb appmsg_thumb">' +
 		'<i class="appmsg_thumb default">缩略图</i>' +
 		'<h4 class="appmsg_title" id="appmsg_title'+newsNum+'">' +
-			'<a target="_blank" href="javascript:void(0);" onclick="return false;">標題</a>' +
+			'<a target="_blank" href="javascript:void(0);" onclick="return false;">标题</a>' +
 		'</h4>' +
 		'<div class="appmsg_edit_mask">' +
 			'<a href="javascript:void(0);" onclick="editAppmsg('+newsNum+');" data-id="'+newsNum+'" class="icon18_common edit_gray js_edit">编辑</a>' +

@@ -73,7 +73,7 @@ function xml2NewsHtml(xmlStr, in_time, material_id, type) {
             '</a>' +
             '</li>' +
             '<li class="appmsg_opr_item grid_item size1of2 no_extra">' +
-            '<a href="javascript:void(0);" data-id="' + material_id + '" class="js_del no_extra">' +
+            '<a href="javascript:deleteMaterial(\''+material_id+'\');" data-id="' + material_id + '" class="js_del no_extra">' +
             '<i class="icon18_common del_gray">刪除</i>' +
             '</a>' +
             '</li>' +

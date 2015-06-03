@@ -63,9 +63,6 @@ public class MaterialController extends MyController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> addOrUpdate(HttpServletRequest request, String contentsJson) {
-        if (StringUtils.isBlank(contentsJson)) {
-            return retFail("请求数据不完整，参数contentsJson为空！");
-        }
         SysUserEntity sysUser = getLoginSysUser(request);
         List<Map<String, Object>> contents = StringUtils.isNotBlank(contentsJson) ? JsonUtil
                 .parseJSON2List(contentsJson) : null;
@@ -83,6 +80,13 @@ public class MaterialController extends MyController {
     @ResponseBody
     public String loadMaterialContentByUrl(HttpServletResponse response, String url) {
         return material.loadMaterialContentByUrl(url);
+    }
+
+    @RequestMapping(value="/delete")
+    @ResponseBody
+    public Map<String, String> delete (String id){
+        material.deleteById(id);
+        return retSuccess();
     }
 
 }

@@ -15,3 +15,12 @@
 <script src="<%=resourceUrl%>/artDialog/dist/dialog-min.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/nprogress/nprogress.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/script/common/app.js" type="text/javascript"></script>
+<!--[if lte IE 8]>
+<script src="<%=resourceUrl%>/js/excanvas.min.js" type="text/javascript"></script>
+<![endif]-->
+<!-- HTML5 shim and Respond.
+js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="<%=resourceUrl%>/js/html5shiv.min.js"></script>
+<script src="<%=resourceUrl%>/js/respond.min.js"></script>
+<![endif]-->

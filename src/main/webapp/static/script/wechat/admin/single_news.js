@@ -45,7 +45,7 @@ $(function(){
 				if(res && '1' == res.code){
 					app.alertModal("保存成功！",{
 						ok: function () {
-							window.close();
+							window.location.href = domain + '/admin/wechat/material';
 						}
 					});
 				}else{
@@ -56,11 +56,10 @@ $(function(){
 		return false;
 	});
 
-
 	//实例化编辑器
 	editor = UE.getEditor('container',{
 		initialFrameHeight:400,
-		initialFrameWidth:755
+		initialFrameWidth:'auto'
 	});
 	uploader = UE.getEditor('upload_container',{
 	});

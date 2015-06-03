@@ -146,7 +146,7 @@ app.loading = function(title, opt) {
 	}, opt || {});
 	art = dialog(_opt);
 	art.show();
-}
+};
 
 app.alert = function(msg, opt) {
 	app.closeDialog();
@@ -154,13 +154,14 @@ app.alert = function(msg, opt) {
 		title : '提示',
 		width : "200",
 		content : msg,
+		fixed: true,
 		cancel : false,
 		ok : function() {
 		}
 	}, opt || {});
 	art = dialog(_opt);
 	art.show();
-}
+};
 
 app.alertModal = function(msg, opt) {
 	app.closeDialog();
@@ -168,18 +169,60 @@ app.alertModal = function(msg, opt) {
 		title : '提示',
 		width : "200",
 		content : msg,
+		fixed: true,
 		cancel : false,
 		ok : function() {
 		}
 	}, opt || {});
 	art = dialog(_opt);
 	art.showModal();
-}
+};
+
+app.confirm = function (msg,okCallBack,opt) {
+	app.closeDialog();
+	var _opt = $.extend({
+		title : '请确认',
+		width : "200",
+		content : msg,
+		fixed: true,
+		okValue: '确定',
+		cancelValue: '取消',
+		ok : function() {
+			okCallBack();
+		},
+		cancel: function () {
+			app.closeDialog;
+		}
+	}, opt || {});
+	art = dialog(_opt);
+	art.show();
+};
+
+app.confirmModal = function (msg,okCallBack,opt) {
+	app.closeDialog();
+	var _opt = $.extend({
+		title : '请确认',
+		width : "200",
+		content : msg,
+		fixed: true,
+		okValue: '确定',
+		cancelValue: '取消',
+		ok : function() {
+			okCallBack();
+		},
+		cancel: function () {
+			app.closeDialog;
+		}
+	}, opt || {});
+	art = dialog(_opt);
+	art.showModal();
+};
 
 app.tusiModal = function(msg, time, opt) {
 	app.closeDialog();
 	var _opt = $.extend({
 		"content" : msg,
+		fixed: true,
 		"width" : "200"
 	}, opt || {});
 	art = dialog(_opt);
@@ -193,10 +236,11 @@ app.tusiModal = function(msg, time, opt) {
 
 app.tusiAlert = function(msg, time, opt) {
 	app.closeDialog();
-	var _opt = {
+	var _opt = $.extend({
 		"content" : msg,
+		fixed: true,
 		"width" : "200"
-	};
+	}, opt || {});
 	art = dialog(_opt);
 	art.show();
 	if (time) {
@@ -208,34 +252,37 @@ app.tusiAlert = function(msg, time, opt) {
 
 app.tip = function(id, msg, time, opt) {
 	app.closeDialog();
-	var d = dialog({
+	var _opt = $.extend({
 		quickClose : true,// 点击空白处快速关闭
 		content : msg,
 		onclose : function() {
 			$('#' + id).focus();
 		},
 		follow : $('#' + id)[0]
-	});
-	d.show();
-	setTimeout(function() {
-		app.closeDialog();
-	}, time * 1000)
-}
+	}, opt || {});
+	art = dialog(_opt);
+	art.show();
+	if (time) {
+		setTimeout(function() {
+			app.closeDialog();
+		}, time * 1000);
+	}
+};
 
 app.closeDialog = function() {
 	if (art) {
 		art.close().remove();
 		art = undefined;
 	}
-}
+};
 
 app.ok = function (msg) {
 	$.scojs_message(msg, $.scojs_message.TYPE_OK);
-}
+};
 
 app.error = function (msg,callback) {
 	$.scojs_message(msg, $.scojs_message.TYPE_ERROR);
-}
+};
 
 /* 定义jquery AJAX 默认设置 */
 $.ajaxSetup({

@@ -4937,7 +4937,7 @@ body.vjs-full-window {
     text-justify: distribute-all-lines;
     text-align-last: justify;
     font-size: 0;
-    padding-top: 38px;
+    //padding-top: 38px;
     margin: 0 46px;
     letter-spacing: -4px
 }
@@ -4960,7 +4960,8 @@ body.vjs-full-window {
     font-size: 14px;
     text-align: left;
     font-size: 14px;
-    letter-spacing: normal
+    letter-spacing: normal;
+    margin-top: 15px;
 }
 
 .media_dialog.appmsg_list {
