@@ -3,7 +3,6 @@ package com.fengjx.ttwx.modules.wechat.controler.admin;
 
 import com.fengjx.ttwx.common.utils.WebUtil;
 import com.fengjx.ttwx.modules.common.controler.MyController;
-import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
 import com.fengjx.ttwx.modules.wechat.model.ReqMsgLog;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,8 @@ public class ReqMsglogController extends MyController {
     @RequestMapping(value = "/pageList")
     @ResponseBody
     public String pageList(HttpServletRequest request) {
-        SysUserEntity loginSysUser = getLoginSysUser(request);
-        return reqMsgLog.pageList(WebUtil.getRequestParams(request), loginSysUser.getId()).toJson();
+        return reqMsgLog.pageList(WebUtil.getRequestParams(request), getLoginSysUserId(request))
+                .toJson();
     }
 
 }
