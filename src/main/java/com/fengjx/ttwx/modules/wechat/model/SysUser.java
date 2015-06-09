@@ -1,6 +1,7 @@
 
 package com.fengjx.ttwx.modules.wechat.model;
 
+import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.constants.FtlFilenameConstants;
 import com.fengjx.ttwx.common.db.Mapper;
@@ -62,10 +63,10 @@ public class SysUser extends Model {
     @Transactional(propagation = Propagation.REQUIRED)
     public void register(Map<String, Object> attrs) throws Exception {
         if (validUsername((String) attrs.get("username"))) {
-            throw new RuntimeException("用户名已存在");
+            throw new MyRuntimeException("用户名已存在");
         }
         if (validEmail((String) attrs.get("email"))) {
-            throw new RuntimeException("邮箱已被占用");
+            throw new MyRuntimeException("邮箱已被占用");
         }
         attrs.put("pwd", DigestUtils.md5Hex((String) attrs.get("pwd")));
         attrs.put("is_valid", "0");
