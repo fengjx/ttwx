@@ -11,7 +11,7 @@
         }
     }
 </script>
-<div class="col-sm-3 col-md-2 sidebar">
+<div class="sidebar">
     <ul class="nav nav-sidebar" id="side-menu">
         <li>
             <a href="<%=domain %>/admin/wechat/setting">
@@ -44,25 +44,25 @@
             </a>
         </li>
         <li>
-            <a href="###">
+            <a href="<%=domain %>/admin/wechat/action/keyword">
                 <i class="glyphicon glyphicon-send"></i>
                 <span class="menu-text"> 自动回复 </span>
             </a>
         </li>
         <li>
-            <a href="###">
+            <a href="<%=domain %>/admin/wechat/action/subscribe">
                 <i class="glyphicon glyphicon-qrcode"></i>
                 <span class="menu-text"> 粉丝关注回复 </span>
             </a>
         </li>
         <li>
-            <a href="###">
+            <a href="<%=domain %>/admin/wechat/action/default">
                 <i class="glyphicon glyphicon-certificate"></i>
                 <span class="menu-text"> 默认回复 </span>
             </a>
         </li>
         <li>
-            <a href="###">
+            <a href="<%=domain %>/admin/wechat/action/lbs">
                 <i class="glyphicon glyphicon-globe"></i>
                 <span class="menu-text"> LBS回复 </span>
             </a>

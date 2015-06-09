@@ -1,19 +1,44 @@
-
 /**
  * 用户关注回复
  */
-
 var msgAction;
+var msgActionForm;
 
 $(function(){
 	
 	loadSubscribeMsg();
+	msgActionForm = $("#msgActionForm").submit(function () {
+		$(this).ajaxSubmit({
+			url: domain + "/admin/wechat/action/save",
+			dataType: 'json',
+			beforeSubmit: function () {
+				app.loadingModal("数据提交中....");
+			},
+			success: function (res) {
+				app.closeDialog();
+				if (res && '1' == res.code) {
+					app.alertModal("保存成功！", {
+						ok: function () {
+							window.location.reload();
+						}
+					});
+				} else {
+					app.alertModal(res.msg ? res.msg : "保存失败！", {
+						ok: function () {
+							app.closeDialog();
+						}
+					});
+				}
+			}
+		});
+		return false;
+	});
+
 });
 
 function loadSubscribeMsg(){
-	
 	$.ajax({
-		url :  domain + '/admin/action/load',
+		url :  domain + '/admin/wechat/action/load',
 		data : {
 			"req_type" : "event",
 			"event_type" : "subscribe"
@@ -21,7 +46,8 @@ function loadSubscribeMsg(){
 		dataType : "json",
 		success : function(res) {
 			msgAction = res;
-			if(res){
+			// 如果有数据，表示已经设置过了
+			if(res&&res.id){
 				$("#set-tip").hide();
 				thowSetting();
 			}
@@ -37,26 +63,24 @@ function thowSetting(){
 	}
 	var viewHtml = "";		//预览效果HTML
 	if(msgAction.action_type == 'material'){//数据源从素材读取
-		var json = $.xml2json(msgAction.material.xml_data);
+		var json = $.xml2json(msgAction.xml_data);
 		var msgType = json.MsgType;
 		if(msgType == "text"){		//文本消息
 			viewHtml = json.Content;
 		}else if(msgType == "news"){	//图文消息
-			viewHtml = xml2NewsHtml(msgAction.material.xml_data, msgAction.material.str_in_time, msgAction.material.id);
+			viewHtml = xml2NewsHtml(msgAction.xml_data, msgAction.in_time, msgAction.material_id);
 		}
 	}else if(msgAction.action_type == 'api'){
-		if(!msgAction.extApp){
-			viewHtml = "插件已经被删除，请重新配置！";
+		if(!msgAction.app_id){
+			viewHtml = "配置的接口已经失效，请重新配置";
 		}else{
-			viewHtml = "从接口【"+msgAction.extApp.name+"】中获得数据";
+			viewHtml = "从接口【"+msgAction.app_name+"】中获得响应数据";
 		}
 	}
 	$("#viewDiv").html(viewHtml);
-	$.parser.parse('#viewDiv');
 	$("#resp-setting").hide();
 	$("#view").show();
 }
-
 
 
 function updateMsgView(){
@@ -65,26 +89,25 @@ function updateMsgView(){
 	$("#msgActionId").val(msgAction.id);
 	
 	var tabIndex;
-	
 	if(msgAction.action_type == 'material'){//数据源从素材读取
-		var json = $.xml2json(msgAction.material.xml_data);
+		var json = $.xml2json(msgAction.xml_data);
 		var msgType = json.MsgType;
 		if(msgType == "text"){		//文本消息
 			tabIndex = 0;
 			$("#replyText").val(json.Content);
 		}else if(msgType == "news"){	//图文消息
 			tabIndex = 4;
-			var newsId = msgAction.material.id;
-			viewHtml = xml2NewsHtml(msgAction.material.xml_data,msgAction.material.str_in_time,newsId);
+			var newsId = msgAction.material_id;
+			viewHtml = xml2NewsHtml(msgAction.xml_data,msgAction.in_time,newsId);
 			$("#preview_news").html(viewHtml);				
 		}
 	}else if(msgAction.action_type == 'api'){
 		tabIndex = 5;
-		if (msgAction.extApp) {
-			busiapi_combobox.combobox("select",msgAction.extApp.id);
+		if (msgAction.app_id) {
+			$("#busiapp_id").val(msgAction.app_id)
 		}
 	}
-	$("#edit_tabs").tabs("select",tabIndex);
+	$('#edit_tabs a:eq('+tabIndex+')').tab('show');
 	$("#view").hide();
 	$("#resp-setting").show();
 }
@@ -94,50 +117,35 @@ function updateMsgView(){
  * @param {} respType 消息响应类型
  */
 function submitMsgActionForm(respType){
-	msgActionForm.form('submit', {
-		url : domain + '/admin/action/save',
-		success : function(data) {
-			fjx.closeProgress();
-			var res = $.evalJSON(data);
-			if(res && '1' == res.code){
-//				clearData();
-				parent.fjx.showMsg('設置成功');
-				window.location.reload();
-			}else{
-				$.messager.alert('提示',	res?res.msg:'设置失败！','error');
-			}
-		},
-		onSubmit : function(){
-			$("#msgReqType").val(req_type);
-			$("#eventType").val(event_type);
-			if(respType === 'text'){
-				$("#msgActionType").val("material");		//响应消息类型
-				var txtContent = $.trim($("#replyText").val());
-				if(!txtContent || "" == txtContent){
-					$.messager.alert('提示', '请输入要回复的内容', 'warning');
-					return false;
-				}
-				$("#txtContent").val(txtContent);
-			}
-			if(respType === 'news'){
-				$("#msgActionType").val("material");		//响应消息类型
-				var newsId = $("#newsId").val();
-				if(!newsId || newsId == ''){
-					$.messager.alert('提示', '请选择素材', 'warning');
-					return false;
-				}
-				$("#msgMaterialId").val(newsId);
-			}
-			if(respType === 'api'){
-				$("#msgActionType").val("api");				//响应消息类型
-				var app_id = busiapi_combobox.combobox("getValue");
-				if(!app_id){
-					$.messager.alert('提示', '请选择业务功能', 'warning');
-					return false;
-				}
-				$("#msgExtAppId").val(app_id);
-			}
-			fjx.progress();
+
+	$("#msgReqType").val(req_type);
+	$("#eventType").val(event_type);
+	if(respType === 'text'){
+		$("#msgActionType").val("material");		//响应消息类型
+		var txtContent = $.trim($("#replyText").val());
+		if(!txtContent || "" == txtContent){
+			app.alertModal("请输入要回复的内容");
+			return false;
 		}
-	});
+		$("#txtContent").val(txtContent);
+	}
+	if(respType === 'news'){
+		$("#msgActionType").val("material");		//响应消息类型
+		var newsId = $("#newsId").val();
+		if(!newsId || newsId == ''){
+			app.alertModal("请选择素材");
+			return false;
+		}
+		$("#msgMaterialId").val(newsId);
+	}
+	if(respType === 'api'){
+		$("#msgActionType").val("api");				//响应消息类型
+		var app_id = $.trim($("#busiapp_id").val());
+		if (!app_id) {
+			app.alertModal("请选择扩展应用");
+			return false;
+		}
+		$("#msgExtAppId").val(app_id);
+	}
+	msgActionForm.submit();
 }

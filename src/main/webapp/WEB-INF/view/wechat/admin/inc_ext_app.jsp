@@ -124,8 +124,11 @@
     </c:when>
     <c:when test="${param.app_type eq 'api' }">
         <select class="form-control" id="${param.id}" name="${param.name}" style="width: 159px;">
+            <c:if test="${param.showAll eq '1'}">
+                <option value="" selected="selected">请选择</option>
+            </c:if>
             <c:forEach var="a" items="${apps}" varStatus="status">
-                <option value="${a.bean_name}">${a.name}</option>
+                <option value="${a.id}">${a.name}</option>
             </c:forEach>
         </select>
     </c:when>
