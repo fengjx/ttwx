@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!--<bean id="baseDao" class="com.fjx.common.framework.base.dao.impl.BaseDao">
 	</bean>
@@ -64,6 +64,5 @@
 		</property>
 	</bean>
 	<!-- /验证码组件 -->
-	
-	
+
 </beans>
