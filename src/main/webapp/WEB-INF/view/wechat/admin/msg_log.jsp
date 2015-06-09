@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/view/common/inc/path.jsp"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -8,12 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>后台管理</title>
     <link href="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
-    <link href="<%=resourceUrl%>/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
     <link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
-    <!--[if lt IE 9]>
-    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
 </head>
 <body>
 <jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>
@@ -24,13 +20,13 @@
         </jsp:include>
         <div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ol class="breadcrumb">
-                <li><a href="<%=domain %>/admin">">后台管理</a></li>
+                <li><a href="<%=domain %>/admin">后台管理</a></li>
                 <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
                 <li class="active">消息记录</li>
             </ol>
 
             <div id="qry-toolbar">
-                <div class="form-inline" role="form" style="width: 1000px;">
+                <div class="form-inline" role="form">
                     <fieldset>
                         <div class="form-group">
                             <div class="control-group">
@@ -69,15 +65,18 @@
                                     </div>
                                 </div>
 
-                                <span class="columns-right pull-right" style="margin-right: -396px;">
-                                    <button onclick="searchDatagrid();" type="button" class="bottom-margin btn glyphicon glyphicon-search ">
-                                        <i class="fa fa-check"></i>
+                                <span class="columns-right pull-right">
+                                    <button onclick="searchDatagrid();" type="button" class="btn">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                        查询
                                     </button>
-                                    <button onclick="clearDatagrid();" type="button" class="btn glyphicon glyphicon-transfer">
-                                        <i class="fa fa-check"></i>
+                                    <button onclick="clearDatagrid();" type="button" class="btn">
+                                        <i class="glyphicon glyphicon-transfer"></i>
+                                        重置
                                     </button>
                                 </span>
                             </div>
+                        </div>
                     </fieldset>
                 </div>
             </div>
@@ -85,8 +84,6 @@
         </div>
     </div>
 </div>
-
-<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
 <script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
 <script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>

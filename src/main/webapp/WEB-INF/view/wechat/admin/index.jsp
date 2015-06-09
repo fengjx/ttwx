@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/view/common/inc/path.jsp"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -7,10 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>后台管理</title>
-  <!--[if lt IE 9]>
-  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  <jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
 </head>
 <body>
 <jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>
@@ -26,7 +23,6 @@
     </div>
   </div>
 </div>
-<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
 </body>
 </html>
 

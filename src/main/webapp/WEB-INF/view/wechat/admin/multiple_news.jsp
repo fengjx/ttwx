@@ -28,7 +28,7 @@
 		</jsp:include>
 		<div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<ol class="breadcrumb">
-				<li><a href="<%=domain %>/admin">">后台管理</a></li>
+				<li><a href="<%=domain %>/admin">后台管理</a></li>
 				<li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
 				<li><a href="<%=domain %>/admin/wechat/material">素材管理</a></li>
 				<li class="active">添加素材</li>

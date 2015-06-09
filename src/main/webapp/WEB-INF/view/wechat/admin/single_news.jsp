@@ -15,10 +15,6 @@
 	<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
 	<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
 	<script src="<%=resourceUrl %>/script/wechat/admin/single_news.js?v=2015053003" type="text/javascript" charset="UTF-8"></script>
-	<!--[if lt IE 9]>
-	<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
 </head>
 <script type="text/javascript">
 	var material_id = '${id}';
@@ -32,7 +28,7 @@
 		</jsp:include>
 		<div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<ol class="breadcrumb">
-				<li><a href="<%=domain %>/admin">">后台管理</a></li>
+				<li><a href="<%=domain %>/admin">后台管理</a></li>
 				<li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
 				<li><a href="<%=domain %>/admin/wechat/material">素材管理</a></li>
 				<li class="active">添加素材</li>
