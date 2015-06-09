@@ -34,7 +34,7 @@ public class MaterialController extends MyController {
     private Material material;
 
     @RequestMapping(value = "")
-    public ModelAndView view(HttpServletRequest request) {
+    public ModelAndView view() {
         ModelAndView mv = new ModelAndView("wechat/admin/material");
         return mv;
     }
@@ -56,8 +56,8 @@ public class MaterialController extends MyController {
     @RequestMapping("/page")
     @ResponseBody
     public String pageList(HttpServletRequest request, String msg_type, int pageNumber, int pageSize) {
-        SysUserEntity sysUser = getLoginSysUser(request);
-        return material.getListPageByType(pageNumber, pageSize, msg_type, sysUser.getId()).toJson();
+        return material.getListPageByType(pageNumber, pageSize, msg_type,
+                getLoginSysUserId(request)).toJson();
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -76,15 +76,15 @@ public class MaterialController extends MyController {
         return material.findById(id).toJson();
     }
 
-    @RequestMapping(value = "/getContent",produces="text/html;charset=UTF-8")
+    @RequestMapping(value = "/getContent", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String loadMaterialContentByUrl(HttpServletResponse response, String url) {
         return material.loadMaterialContentByUrl(url);
     }
 
-    @RequestMapping(value="/delete")
+    @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map<String, String> delete (String id){
+    public Map<String, String> delete(String id) {
         material.deleteById(id);
         return retSuccess();
     }
