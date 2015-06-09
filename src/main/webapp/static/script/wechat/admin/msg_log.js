@@ -13,7 +13,6 @@ $(function () {
         queryParamsType: "limit",
         queryParams: queryParams,
         cache: false,
-        height: 760,
         striped: true,
         sidePagination: "server",
         pagination: true,
