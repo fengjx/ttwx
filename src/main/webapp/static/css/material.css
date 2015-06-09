@@ -2766,11 +2766,6 @@ body {
     padding: 0 20px
 }
 
-button.btn {
-    height: 32px;
-    line-height: 28px
-}
-
 .btn button {
     display: block;
     height: 100%;

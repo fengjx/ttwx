@@ -16,7 +16,8 @@ body {
 @media (min-width: 768px) {
     .sidebar {
         position: fixed;
-        top: 51px;
+        top: 50px;
+        width: 224px;
         bottom: 0;
         left: 0;
         z-index: 1000;
@@ -55,8 +56,8 @@ body {
 }
 @media (min-width: 768px) {
     .main {
-        padding-right: 40px;
-        padding-left: 40px;
+        //padding-right: 40px;
+        //padding-left: 40px;
     }
 }
 .main .page-header {
@@ -118,4 +119,17 @@ body {
     display: table;
     margin-left: auto;
     margin-right: auto;
+}
+
+.none{
+    display: none;
+}
+
+.clear {
+    clear: both;
+}
+
+.layout-sub-title {
+    padding: 26px 0 26px 30px;
+    border-bottom: 1px solid #e6e6e6;
 }
