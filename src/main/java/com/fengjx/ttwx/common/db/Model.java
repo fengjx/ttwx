@@ -6,6 +6,7 @@ import com.fengjx.ttwx.common.utils.CommonUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
@@ -140,7 +141,7 @@ public abstract class Model {
     public Record findOne(String sql, Object... params) {
         List<Map<String, Object>> list = jdbcTemplate.queryForList(sql, params);
         if (CollectionUtils.isEmpty(list)) {
-            return null;
+            return new Record();
         } else if (list.size() > 1) {
             throw new MyDbException("Incorrect result size: expected 1, actual " + list.size());
         }
@@ -271,6 +272,39 @@ public abstract class Model {
         List<Map<String, Object>> list = findList(pageSql.toString(), paras);
         return new Page<Map<String, Object>>(list, pageNumber, pageSize, totalPage, totalRow);
     }
+
+    /**
+     * 执行新增、更新、删除语句
+     *
+     * @param sql
+     * @param args
+     * @return
+     */
+    public int execute(String sql, Object... args){
+        return jdbcTemplate.update(sql,args);
+    }
+
+    /**
+     * 批量执行新增、更新、删除语句
+     *
+     * @param sql
+     * @param bpss
+     * @return
+     */
+    public int[] batchExecute(String sql, BatchPreparedStatementSetter bpss){
+        return jdbcTemplate.batchUpdate(sql, bpss);
+    }
+
+    /**
+     * 批量执行新增、更新、删除语句
+     *
+     * @param sqls
+     * @return
+     */
+    public int[] batchExecute(String... sqls){
+        return jdbcTemplate.batchUpdate(sqls);
+    }
+
 
     /**
      * 获得当前Model全部字段名

@@ -34,4 +34,8 @@ public class SpringBeanFactoryUtil {
     public static Object getBean(String beanName) {
         return getSpringContext().getBean(beanName);
     }
+
+    public static <T> T getBean(Class<T> cls) {
+        return getSpringContext().getBean(cls);
+    }
 }

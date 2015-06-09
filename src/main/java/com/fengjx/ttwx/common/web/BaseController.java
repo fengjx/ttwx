@@ -33,13 +33,13 @@ public abstract class BaseController {
     }
 
     protected Map<String, Object> getRequestMap(HttpServletRequest request) {
-        Map<String, Object> map =  new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap();
         map.putAll(WebUtil.getRequestParams(request));
         return map;
     }
 
     protected Map<String, Object> getNotBlankRequestMap(HttpServletRequest request) {
-        Map<String, Object> map =  new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap();
         map.putAll(WebUtil.getNotBlankRequestParams(request));
         return map;
     }
@@ -53,21 +53,17 @@ public abstract class BaseController {
      */
     protected Map<String, String> doResult(MyExecuteCallback callack,
             String exceptionInfo) {
-        Map<String, String> res = new HashMap<String, String>();
         try {
             callack.execute();
-            res.put("code", "1");
-            res.put("msg", "操作成功");
+            return retSuccess();
         } catch (Exception e) {
-            res.put("code", "0");
-            if (StringUtils.isBlank(exceptionInfo)) {
-                res.put("msg", e.getMessage());
-            } else {
-                res.put("msg", exceptionInfo);
-            }
             LogUtil.error(LOG, exceptionInfo, e);
+            if (StringUtils.isBlank(exceptionInfo)) {
+                return retFail();
+            } else {
+                return retFail(exceptionInfo);
+            }
         }
-        return res;
     }
 
     /**
@@ -80,7 +76,7 @@ public abstract class BaseController {
     }
 
     protected Map<String, String> retFail(String msg) {
-        Map<String, String> res = new HashMap<String, String>();
+        Map<String, String> res = new HashMap();
         res.put("code", "0");
         res.put("msg", msg);
         return res;
@@ -119,7 +115,6 @@ public abstract class BaseController {
             writer.write(res);
         } catch (IOException e) {
             LogUtil.error(LOG, "输出JSON字符串异常", e);
-            throw new RuntimeException("write json string error");
         } finally {
             IOUtils.closeQuietly(writer);
         }

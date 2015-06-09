@@ -32,7 +32,7 @@ public abstract class MyController extends BaseController {
      */
     protected Map<String, String> compareValidCode(HttpServletRequest request,
             String valid_code) {
-        Map<String, String> res = new HashMap<String, String>();
+        Map<String, String> res = new HashMap();
         res.put("code", "1");
         res.put("msg", "验证码正确");
         String code = getSession(request).getAttribute(
@@ -57,6 +57,16 @@ public abstract class MyController extends BaseController {
      */
     protected SysUserEntity getLoginSysUser(HttpServletRequest request) {
         return (SysUserEntity) getSession(request).getAttribute(AppConfig.LOGIN_FLAG);
+    }
+
+    /**
+     * 获得当前登录用户ID
+     *
+     * @param request
+     * @return
+     */
+    protected String getLoginSysUserId(HttpServletRequest request) {
+        return getLoginSysUser(request).getId();
     }
 
 }

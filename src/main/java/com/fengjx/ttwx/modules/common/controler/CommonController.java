@@ -1,7 +1,8 @@
 
 package com.fengjx.ttwx.modules.common.controler;
 
-import com.fengjx.ttwx.modules.common.constants.AppConfig;
+import com.fengjx.ttwx.common.system.exception.MyException;
+import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.common.utils.WebUtil;
 import com.fengjx.ttwx.common.web.BaseController;
@@ -116,11 +117,11 @@ public class CommonController extends BaseController {
     private Map<String, String> getErrorMap(HttpServletRequest request) {
         Exception e = (Exception) request.getAttribute("ex");
         LogUtil.error(LOG, "request error", e);
-        Map<String, String> map = new HashMap<String, String>();
-        String errorMsg = (String) request.getAttribute(AppConfig.REQUEST_ERROE_MSG_KEY);
-        if (StringUtils.isBlank(errorMsg)) {
-            errorMsg = "请求失败";
-            if (AppConfig.isTest()) {
+        Map<String, String> map = new HashMap();
+        String errorMsg = "请求失败";
+        // 自定义异常
+        if (e instanceof MyRuntimeException || e instanceof MyException) {
+            if (StringUtils.isNotBlank(e.getMessage())) {
                 errorMsg = e.getMessage();
             }
         }

@@ -4,6 +4,7 @@ package com.fengjx.ttwx.common.db;
 import com.fengjx.ttwx.common.utils.JsonUtil;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.MapUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -20,8 +21,15 @@ public class Record implements Serializable {
 
     private Map<String, Object> columns;
 
+    public Record() {
+    }
+
     public Record(Map<String, Object> columns) {
         this.columns = columns;
+    }
+
+    public boolean isEmpty(){
+        return MapUtils.isEmpty(getColumns());
     }
 
     /**
@@ -236,7 +244,10 @@ public class Record implements Serializable {
      * Return json string of this record.
      */
     public String toJson() {
-        return JsonUtil.toJson(this.getColumns());
+        if(MapUtils.isEmpty(getColumns())){
+            return "{}";
+        }
+        return JsonUtil.toJson(getColumns());
     }
 
     /**
