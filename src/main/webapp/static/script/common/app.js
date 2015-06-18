@@ -218,6 +218,52 @@ app.confirmModal = function (msg,okCallBack,opt) {
 	art.showModal();
 };
 
+app.prompt = function (title,okCallBack,opt) {
+	app.closeDialog();
+	var _opt = $.extend({
+		title : title,
+		width : "200",
+		content : "<input id='art-content' type='text' autofocus />",
+		fixed: true,
+		okValue: '确定',
+		cancelValue: '取消',
+		ok : function() {
+			return okCallBack($("#art-content").val());
+		},
+		cancel: function () {
+			app.closeDialog;
+		}
+	}, opt || {});
+	art = dialog(_opt);
+	art.show();
+	if(opt && opt.defaultVal){
+		$("#art-content").val(opt.defaultVal);
+	}
+};
+
+app.promptModal = function (title,okCallBack,opt) {
+	app.closeDialog();
+	var _opt = $.extend({
+		title : title,
+		width : "200",
+		content : "<input id='art-content' style='width:185px;' type='text' autofocus />",
+		fixed: true,
+		okValue: '确定',
+		cancelValue: '取消',
+		ok : function() {
+			return okCallBack($("#art-content").val());
+		},
+		cancel: function () {
+			app.closeDialog;
+		}
+	}, opt || {});
+	art = dialog(_opt);
+	art.showModal();
+	if(opt && opt.defaultVal){
+		$("#art-content").val(opt.defaultVal);
+	}
+};
+
 app.tusiModal = function(msg, time, opt) {
 	app.closeDialog();
 	var _opt = $.extend({
@@ -296,7 +342,7 @@ $.ajaxSetup({
 		if (type === "json") {
 			var _data = $.parseJSON(data);
 			if (_data && "-1" == _data.code) { // -1表示登陆超时
-				app.alert("登陆超时，请重新登陆！",{
+				app.alertModal("登陆超时，请重新登陆！",{
 					ok : function(){
 						window.location.href = domain + "/login";
 					}
@@ -304,10 +350,10 @@ $.ajaxSetup({
 				return false;
 			}
 		}
-		return data // 返回处理后的数据
+		return data; // 返回处理后的数据
 	},
 	error : function(XMLHttpRequest, textStatus, errorThrown) {
-		app.alert(XMLHttpRequest.responseText.split('<script')[0]);
+		app.alertModal(XMLHttpRequest.responseText.split('<script')[0]);
 		NProgress.done();
 	},
 	beforeSend : function(XMLHttpRequest) {
