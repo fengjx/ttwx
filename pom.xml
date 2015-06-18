@@ -9,6 +9,12 @@
 	<name>ttwx</name>
 	<url>http://maven.apache.org</url>
 
+	<properties>
+		<jdk.version>1.8</jdk.version>
+		<encoding>UTF-8</encoding>
+		<environment>dev</environment>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -218,17 +224,110 @@
 			<artifactId>weixin-java-mp</artifactId>
 			<version>1.1.5</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<environment>dev</environment>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>release</id>
+			<properties>
+				<environment>release</environment>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<finalName>ttwx</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<excludes>
+					<exclude>**/env/**</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<encoding>${encoding}</encoding>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<!--war包去掉静态资源 -->
+					<warSourceExcludes>**/static/**</warSourceExcludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>copy-env-sources</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<target>
+								<copy todir="${build.outputDirectory}" overwrite="true">
+									<fileset dir="src/main/resources/env/${environment}" />
+								</copy>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>zip</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<target>
+								<!-- 静态资源打包 -->
+								<zip destfile="${project.build.directory}/res.zip">
+									<fileset dir="src/main/webapp/static">
+										<include name="**/*.*"/>
+									</fileset>
+								</zip>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18</version>
+				<configuration>
+					<skipTests>true</skipTests>
 				</configuration>
 			</plugin>
 			<plugin>
