@@ -1,9 +1,9 @@
 
 package com.fengjx.ttwx.modules.wechat.model;
 
-import com.fengjx.ttwx.common.db.Mapper;
-import com.fengjx.ttwx.common.db.Model;
-import com.fengjx.ttwx.common.db.Record;
+import com.fengjx.ttwx.common.plugin.db.Mapper;
+import com.fengjx.ttwx.common.plugin.db.Model;
+import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.utils.AesUtil;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
@@ -59,10 +59,10 @@ public class WechatPublicAccount extends Model {
      * @param sysUserId
      * @return
      */
-    public Record getPublicAccountByUserid(String sysUserId){
+    public Record getPublicAccountByUserid(String sysUserId) {
         StringBuilder sql = new StringBuilder(getSelectSql());
         sql.append(" where sys_user_id = ?");
-        return findOne(sql.toString(),sysUserId);
+        return findOne(sql.toString(), sysUserId);
     }
 
 }

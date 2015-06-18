@@ -26,7 +26,7 @@
             </a>
         </li>
         <li>
-            <a href="###">
+            <a href="<%=domain %>/admin/wechat/menu">
                 <i class="glyphicon glyphicon-menu-hamburger"></i>
                 <span class="menu-text"> 菜单管理 </span>
             </a>
