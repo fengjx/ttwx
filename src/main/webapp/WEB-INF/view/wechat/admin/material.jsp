@@ -7,10 +7,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>素材管理</title>
-	<!--[if lt IE 9]>
-	<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
 	<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
 </head>
 <body>
@@ -39,7 +35,5 @@
 <script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
 <script src="<%=resourceUrl%>/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/jQuery-Paging/jquery.paging.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/jQuery-Paging/jquery.bootstrap-paging.js?v=2015052801" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

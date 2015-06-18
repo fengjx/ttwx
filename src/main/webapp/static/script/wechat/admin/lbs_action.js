@@ -96,8 +96,7 @@ function updateMsgView(){
 			$("#replyText").val(json.Content);
 		}else if(msgType == "news"){	//图文消息
 			tabIndex = 4;
-			newsId = msgAction.material_id;
-			viewHtml = xml2NewsHtml(msgAction.xml_data,msgAction.in_time,msgAction.material_id);
+			var viewHtml = xml2NewsHtml(msgAction.xml_data,msgAction.in_time,msgAction.material_id);
 			$("#preview_news").html(viewHtml);				
 		}
 	}else if(msgAction.action_type == 'api'){
