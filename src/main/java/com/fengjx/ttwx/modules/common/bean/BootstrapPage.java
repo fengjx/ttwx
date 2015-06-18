@@ -2,7 +2,7 @@
 package com.fengjx.ttwx.modules.common.bean;
 
 import com.fengjx.ttwx.common.bean.ToStringBase;
-import com.fengjx.ttwx.common.db.Page;
+import com.fengjx.ttwx.common.plugin.db.Page;
 import com.fengjx.ttwx.common.utils.JsonUtil;
 
 import java.util.List;
