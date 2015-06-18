@@ -1,7 +1,7 @@
-package com.fengjx.ttwx.common.db;
+package com.fengjx.ttwx.common.plugin.db;
 
-import com.fengjx.ttwx.common.db.dialect.Dialect;
-import com.fengjx.ttwx.common.db.dialect.MysqlDialect;
+import com.fengjx.ttwx.common.plugin.db.dialect.Dialect;
+import com.fengjx.ttwx.common.plugin.db.dialect.MysqlDialect;
 
 /**
  * 数据库配置

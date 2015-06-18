@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.common.db;
+package com.fengjx.ttwx.common.plugin.db;
 
 import com.fengjx.ttwx.common.utils.CommonUtils;
 
@@ -23,19 +23,19 @@ public abstract class Model {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public int insert(Class<? extends Model> cls, Map<String, Object> attrs) {
+    public boolean insert(Class<? extends Model> cls, Map<String, Object> attrs) {
         Table table = TableUtil.getTable(cls);
         String pk = table.getPrimaryKey();
         if (StringUtils.isBlank((String) attrs.get(pk))) {
             attrs.put(pk, CommonUtils.getPrimaryKey());
         }
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList<Object>();
+        List<Object> paras = new ArrayList();
         Config.dialect.forModelSave(table, attrs, sql, paras);
-        return jdbcTemplate.update(sql.toString(), paras.toArray());
+        return jdbcTemplate.update(sql.toString(), paras.toArray()) >= 1;
     }
 
-    public int insert(Map<String, Object> attrs) {
+    public boolean insert(Map<String, Object> attrs) {
         return insert(getClass(), attrs);
     }
 
@@ -76,13 +76,41 @@ public abstract class Model {
             throw new MyDbException("You can't update model without Primary Key.");
         }
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList<Object>();
+        List<Object> paras = new ArrayList();
         Config.dialect.forModelUpdate(table, attrs, pKey, id, sql, paras);
         if (paras.size() <= 1) { // Needn't update
             return false;
         }
         int result = jdbcTemplate.update(sql.toString(), paras.toArray());
         return result >= 1;
+    }
+
+    /**
+     * 新增或者更新
+     *
+     * @param cls
+     * @param attrs
+     * @return
+     */
+    public boolean insertOrUpdate(Class<? extends Model> cls, Map<String, Object> attrs) {
+        Table table = TableUtil.getTable(cls);
+        String pKey = table.getPrimaryKey();
+        Object id = attrs.get(pKey);
+        if (null == id || "".equals(id)) {
+            return insert(cls, attrs);
+        } else {
+            return update(cls, attrs);
+        }
+    }
+
+    /**
+     * 新增或者更新
+     *
+     * @param attrs
+     * @return
+     */
+    public boolean insertOrUpdate(Map<String, Object> attrs) {
+        return insertOrUpdate(this.getClass(), attrs);
     }
 
     public Record findById(Object id) {
@@ -126,7 +154,7 @@ public abstract class Model {
     public Record findOne(Class<? extends Model> cls, Map<String, Object> attrs) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList<Object>();
+        List<Object> paras = new ArrayList();
         Config.dialect.forModelFind(table, sql, "*", null, attrs, paras);
         return findOne(sql.toString(), paras.toArray());
     }
@@ -169,7 +197,7 @@ public abstract class Model {
     public List<Map<String, Object>> findList(Class<? extends Model> cls, Map<String, Object> attrs) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList<Object>();
+        List<Object> paras = new ArrayList();
         Config.dialect.forModelFind(table, sql, "*", null, attrs, paras);
         return findList(sql.toString(), paras.toArray());
     }
@@ -222,7 +250,7 @@ public abstract class Model {
             Map<String, Object> attrs, String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList<Object>();
+        List<Object> paras = new ArrayList();
         Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
         return paginate(PageContext.getPageNumber(), PageContext.getPageSize(), sql.toString(),
                 paras.toArray());
@@ -255,12 +283,9 @@ public abstract class Model {
         }
         int totalRow = 0;
         int totalPage = 0;
-
-        StringBuilder countSql = new StringBuilder();
-        Config.dialect.forCount(countSql, sql);
-        totalRow = jdbcTemplate.queryForObject(countSql.toString(), paras, Integer.class);
+        totalRow = getCount(sql, paras);
         if (totalRow < 1) {
-            return new Page<Map<String, Object>>(new ArrayList<Map<String, Object>>(0), pageNumber,
+            return new Page(new ArrayList<Map<String, Object>>(0), pageNumber,
                     pageSize, 0, 0);
         }
         totalPage = totalRow / pageSize;
@@ -270,7 +295,20 @@ public abstract class Model {
         StringBuilder pageSql = new StringBuilder();
         Config.dialect.forPaginate(pageSql, pageNumber, pageSize, sql);
         List<Map<String, Object>> list = findList(pageSql.toString(), paras);
-        return new Page<Map<String, Object>>(list, pageNumber, pageSize, totalPage, totalRow);
+        return new Page(list, pageNumber, pageSize, totalPage, totalRow);
+    }
+
+    /**
+     * 获得总记录数
+     * 
+     * @param sql
+     * @param paras
+     * @return
+     */
+    public int getCount(String sql, Object... paras) {
+        StringBuilder countSql = new StringBuilder();
+        Config.dialect.forCount(countSql, sql);
+        return jdbcTemplate.queryForObject(countSql.toString(), paras, Integer.class);
     }
 
     /**
@@ -280,8 +318,8 @@ public abstract class Model {
      * @param args
      * @return
      */
-    public int execute(String sql, Object... args){
-        return jdbcTemplate.update(sql,args);
+    public int execute(String sql, Object... args) {
+        return jdbcTemplate.update(sql, args);
     }
 
     /**
@@ -291,7 +329,7 @@ public abstract class Model {
      * @param bpss
      * @return
      */
-    public int[] batchExecute(String sql, BatchPreparedStatementSetter bpss){
+    public int[] batchExecute(String sql, BatchPreparedStatementSetter bpss) {
         return jdbcTemplate.batchUpdate(sql, bpss);
     }
 
@@ -301,10 +339,9 @@ public abstract class Model {
      * @param sqls
      * @return
      */
-    public int[] batchExecute(String... sqls){
+    public int[] batchExecute(String... sqls) {
         return jdbcTemplate.batchUpdate(sqls);
     }
-
 
     /**
      * 获得当前Model全部字段名

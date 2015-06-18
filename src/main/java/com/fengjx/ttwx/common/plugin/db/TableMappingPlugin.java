@@ -1,6 +1,7 @@
 
-package com.fengjx.ttwx.common.db;
+package com.fengjx.ttwx.common.plugin.db;
 
+import com.fengjx.ttwx.common.plugin.IPlugin;
 import com.fengjx.ttwx.common.utils.ClassUtil;
 import com.fengjx.ttwx.common.utils.LogUtil;
 
@@ -19,14 +20,15 @@ import javax.sql.DataSource;
  * @author fengjx.
  * @date：2015/5/9 0009
  */
-public class TableMappingPlugin {
+public class TableMappingPlugin implements IPlugin {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ClassUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TableMappingPlugin.class);
 
     private DataSource dataSource;
     private String[] packages;
 
-    public void init() {
+    @Override
+    public void start() {
         try {
             Set<Class<?>> classSet = getModelClasses();
             for (Class<?> cls : classSet) {
@@ -37,7 +39,7 @@ public class TableMappingPlugin {
         } catch (Exception e) {
             throw new MyDbException("Can not init table mapping");
         }
-        LogUtil.info(LOG, "TableMappingPlugin init finish...");
+        LogUtil.info(LOG, "TableMappingPlugin started...");
     }
 
     /**
@@ -95,7 +97,8 @@ public class TableMappingPlugin {
                 else if ("java.sql.Date".equals(colClassName)) {
                     // date, year
                     table.setColumnType(colName, java.sql.Date.class);
-                    //colName = "date_format(" + colName + ",'%Y-%m-%d') as " + colName;
+                    // colName = "date_format(" + colName + ",'%Y-%m-%d') as " +
+                    // colName;
                 }
                 else if ("java.lang.Double".equals(colClassName)) {
                     // real, double
@@ -112,12 +115,14 @@ public class TableMappingPlugin {
                 else if ("java.sql.Time".equals(colClassName)) {
                     // time
                     table.setColumnType(colName, java.sql.Time.class);
-                    //colName = "date_format(" + colName + ",'%Y-%m-%d') as " + colName;
+                    // colName = "date_format(" + colName + ",'%Y-%m-%d') as " +
+                    // colName;
                 }
                 else if ("java.sql.Timestamp".equals(colClassName)) {
                     // timestamp, datetime
                     table.setColumnType(colName, java.sql.Timestamp.class);
-                    //colName = "date_format(" + colName + ",'%Y-%m-%d %H:%i:%s') as " + colName;
+                    // colName = "date_format(" + colName +
+                    // ",'%Y-%m-%d %H:%i:%s') as " + colName;
                 }
                 else if ("java.math.BigDecimal".equals(colClassName)) {
                     // decimal, numeric

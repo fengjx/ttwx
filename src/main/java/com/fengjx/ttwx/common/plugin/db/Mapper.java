@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.common.db;
+package com.fengjx.ttwx.common.plugin.db;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

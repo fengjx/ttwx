@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.fengjx.ttwx.common.db.cache;
+package com.fengjx.ttwx.common.plugin.db.cache;
 
 /**
  * ICache.

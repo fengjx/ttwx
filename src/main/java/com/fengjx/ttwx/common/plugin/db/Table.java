@@ -1,12 +1,11 @@
 
-package com.fengjx.ttwx.common.db;
+package com.fengjx.ttwx.common.plugin.db;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Table save the table meta info like column name and column type.

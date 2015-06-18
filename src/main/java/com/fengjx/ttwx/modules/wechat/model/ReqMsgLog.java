@@ -1,9 +1,9 @@
 
 package com.fengjx.ttwx.modules.wechat.model;
 
-import com.fengjx.ttwx.common.db.Mapper;
-import com.fengjx.ttwx.common.db.Model;
-import com.fengjx.ttwx.common.db.Record;
+import com.fengjx.ttwx.common.plugin.db.Mapper;
+import com.fengjx.ttwx.common.plugin.db.Model;
+import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.modules.common.bean.BootstrapPage;
 

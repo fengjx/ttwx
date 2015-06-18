@@ -1,9 +1,9 @@
 
 package com.fengjx.ttwx.modules.wechat.model;
 
-import com.fengjx.ttwx.common.db.Mapper;
-import com.fengjx.ttwx.common.db.Model;
-import com.fengjx.ttwx.common.db.Record;
+import com.fengjx.ttwx.common.plugin.db.Mapper;
+import com.fengjx.ttwx.common.plugin.db.Model;
+import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.modules.common.bean.BootstrapPage;
@@ -234,7 +234,7 @@ public class RespMsgAction extends Model {
             actionMap.put("material_id", materialMap.get("id"));
             insert(actionMap);
         } else if (menuType.equals(WxConsts.BUTTON_VIEW)) {
-            menuMap.put("menu_key", "");
+            menuMap.put("menu_key", null);
         }
         update(WechatMenu.class, menuMap);
     }

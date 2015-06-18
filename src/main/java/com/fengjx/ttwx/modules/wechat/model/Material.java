@@ -1,19 +1,15 @@
 
 package com.fengjx.ttwx.modules.wechat.model;
 
-import com.fengjx.ttwx.common.db.Mapper;
-import com.fengjx.ttwx.common.db.Model;
-import com.fengjx.ttwx.common.db.Page;
-import com.fengjx.ttwx.common.db.Record;
+import com.fengjx.ttwx.common.plugin.db.Mapper;
+import com.fengjx.ttwx.common.plugin.db.Model;
+import com.fengjx.ttwx.common.plugin.db.Page;
 import com.fengjx.ttwx.common.system.init.FreeMarkerUtil;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.common.utils.FileUtil;
 import com.fengjx.ttwx.common.utils.HttpUtil;
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
-
-import me.chanjar.weixin.mp.bean.WxMpXmlOutNewsMessage;
-import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;

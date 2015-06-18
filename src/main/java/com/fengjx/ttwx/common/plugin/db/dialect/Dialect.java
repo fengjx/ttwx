@@ -1,7 +1,7 @@
 
-package com.fengjx.ttwx.common.db.dialect;
+package com.fengjx.ttwx.common.plugin.db.dialect;
 
-import com.fengjx.ttwx.common.db.Table;
+import com.fengjx.ttwx.common.plugin.db.Table;
 
 import java.util.List;
 import java.util.Locale;
