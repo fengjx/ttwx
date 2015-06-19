@@ -4,11 +4,11 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-	    http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
     	http://www.springframework.org/schema/aop
-	    http://www.springframework.org/schema/aop/spring-aop.xsd
+	    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 	    http://www.springframework.org/schema/tx
-	    http://www.springframework.org/schema/tx/spring-tx.xsd">
+	    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
           init-method="init" destroy-method="close">
@@ -43,7 +43,7 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean init-method="init" id="tableMappingPlugin" class="com.fengjx.ttwx.common.db.TableMappingPlugin">
+    <bean id="tableMappingPlugin" class="com.fengjx.ttwx.common.plugin.db.TableMappingPlugin">
         <property name="dataSource" ref="dataSource"/>
         <property name="packages">
             <value>
