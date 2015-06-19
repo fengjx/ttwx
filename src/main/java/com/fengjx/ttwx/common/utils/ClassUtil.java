@@ -1,9 +1,6 @@
 
 package com.fengjx.ttwx.common.utils;
 
-import com.fengjx.ttwx.common.db.Mapper;
-import com.fengjx.ttwx.common.db.Table;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,26 +27,6 @@ import java.util.jar.JarFile;
 public class ClassUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger(ClassUtil.class);
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        // 标识是否要遍历该包路径下子包的类名
-        // boolean recursive = false;
-        boolean recursive = true;
-        // 指定的包名
-        // String pkg = "javax.crypto.spec";//
-        // 为java/jre6/lib/jce.jar，普通的java工程默认已引用
-        // String pkg = "javax.crypto";
-        // String pkg = "lab.sodino";
-        String pkg = "com.fengjx.ttwx.common.db";
-        Set<Class<?>> set = null;
-        // list = getClassList(pkg, recursive, null);
-        // 增加 author.class的过滤项，即可只选出ClassTestDemo
-        set = getClasses(pkg, recursive, Mapper.class);
-
-        for (Class<?> cls : set) {
-            System.out.println("==>" + cls.getName());
-        }
-    }
 
     /**
      * 通过包名获得包含指定注解的class
