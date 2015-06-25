@@ -1,7 +1,6 @@
 
 package com.fengjx.ttwx.common.plugin.cache;
 
-import com.fengjx.ttwx.common.plugin.cache.ehcache.SimpleEhCache;
 import com.fengjx.ttwx.common.plugin.cache.memory.MemoryCache;
 
 import java.util.HashMap;
@@ -20,7 +19,6 @@ public class CacheFactory {
 
         static {
             cacheMaps = new HashMap();
-            cacheMaps.put(CacheName.CACHE_NAME_EHCACHE, new SimpleEhCache());
             cacheMaps.put(CacheName.CACHE_NAME_MEMORY, MemoryCache.getInstance());
         }
     }
