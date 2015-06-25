@@ -1,53 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
     <bean init-method="init" id="plugins" class="com.fengjx.ttwx.common.plugin.Plugins">
         <property name="pluginList">
             <list>
                 <ref bean="tableMappingPlugin"/>
-                <ref bean="ehCachePlugin"/>
             </list>
         </property>
     </bean>
 
-    <bean id="ehCachePlugin" class="com.fengjx.ttwx.common.plugin.cache.ehcache.EhCachePlugin">
-        <!--<property name="configurationFileName" value="ehcache.xml"/>-->
-    </bean>
+    <!--<bean id="ehCachePlugin" class="com.fengjx.ttwx.common.plugin.cache.ehcache.EhCachePlugin">
+    </bean>-->
 
-    <!--
-    &lt;!&ndash; 微信->商户请求服务执行引擎 &ndash;&gt;
-    <bean id="inServiceEngine" class="com.fjx.wechat.mysdk.process.in.InServiceEngineImpl"/>
+    <bean id="serviceEngine" class="com.fengjx.ttwx.modules.wechat.process.ServiceEngineImpl"/>
 
-    &lt;!&ndash; 微信->商户 请求服务处理工厂 &ndash;&gt;
-    <bean id="inServiceExecutorFactory" class="com.fjx.wechat.mysdk.process.in.executor.InServiceExecutorFactory">
+    <!-- 微信->商户 请求服务处理工厂 -->
+    <bean id="serviceExecutorFactory" class="com.fengjx.ttwx.modules.wechat.process.executor.ServiceExecutorFactory">
         <property name="executorList">
             <list>
-                <ref local="inWechatTextMsgExecutor" />
-                <ref local="inWechatEventSubscribeMsgExecutor" />
-                <ref local="inWechatImageMsgExecutor" />
-                <ref local="inWechatEventClickMsgExecutor" />
-                <ref local="inWechatValidMsgExecutor" />
-                <ref local="inWechatLocationMsgExecutor" />
+                <ref bean="defaultExecutor"/>
+                <ref bean="eventSubscribeExecutor"/>
+                <ref bean="ImageExecutor"/>
+                <ref bean="locationExecutor"/>
+                <ref bean="memuClickExecutor"/>
+                <ref bean="textExecutor"/>
+                <ref bean="validExecutor"/>
             </list>
         </property>
     </bean>
-    &lt;!&ndash; 微信->商户 文本消息处理器 &ndash;&gt;
-    <bean id="inWechatTextMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatTextMsgExecutor" />
-    &lt;!&ndash; 微信->商户 用户关注消息处理器 &ndash;&gt;
-    <bean id="inWechatEventSubscribeMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatEventSubscribeMsgExecutor" />
-    &lt;!&ndash; 微信->商户 图片消息处理器 &ndash;&gt;
-    <bean id="inWechatImageMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatImageMsgExecutor" />
-    &lt;!&ndash; 微信->商户 菜单点击事件消息处理器 &ndash;&gt;
-    <bean id="inWechatEventClickMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatEventClickMsgExecutor" />
-    &lt;!&ndash; 微信->商户 验证码消息验证处理器 &ndash;&gt;
-    <bean id="inWechatValidMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatValidMsgExecutor" />
-    &lt;!&ndash; 微信->商户 地理位置消息处理器 &ndash;&gt;
-    <bean id="inWechatLocationMsgExecutor" class="com.fjx.wechat.mysdk.process.in.executor.InWechatLocationMsgExecutor" />
 
+    <bean id="defaultExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.DefaultExecutor"/>
+    <bean id="eventSubscribeExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.EventSubscribeExecutor"/>
+    <bean id="ImageExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.ImageExecutor"/>
+    <bean id="locationExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.LocationExecutor"/>
+    <bean id="memuClickExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.MemuClickExecutor"/>
+    <bean id="textExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.TextExecutor"/>
+    <bean id="validExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.ValidExecutor"/>
 
+    <!--
     &lt;!&ndash; 本地扩展接口start &ndash;&gt;
     <bean id="myExtService" class="com.fjx.wechat.extension.service.MyExtService"></bean>
     <bean id="myTextExtService" class="com.fjx.wechat.extension.service.MyTextExtService"></bean>

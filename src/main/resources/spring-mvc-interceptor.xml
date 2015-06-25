@@ -20,18 +20,19 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**/pageList"/>
+            <mvc:mapping path="/**/*PageList"/>
             <mvc:mapping path="/**/pageList/**"/>
             <bean class="com.fengjx.ttwx.modules.common.controler.interceptor.PageInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <!-- 拦截匹配微信请求接口
+    <!-- 拦截匹配微信请求接口 -->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/wechat/api"/>
-            <bean class="com.fengjx.wechat.base.action.interceptor.WechatInterceptor"></bean>
+            <bean class="com.fengjx.ttwx.modules.wechat.controler.api.interceptor.WechatInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
- -->
+
 
 </beans>
