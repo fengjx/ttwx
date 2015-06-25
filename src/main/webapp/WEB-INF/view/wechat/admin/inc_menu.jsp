@@ -20,7 +20,7 @@
             </a>
         </li>
         <li>
-            <a href="<%=domain %>/admin/base/user">
+            <a href="<%=domain %>/admin/wechat/user">
                 <i class="glyphicon glyphicon-user"></i>
                 <span class="menu-text"> 用户管理 </span>
             </a>
