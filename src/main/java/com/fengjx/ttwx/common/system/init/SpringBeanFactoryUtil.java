@@ -1,11 +1,12 @@
-package com.fengjx.ttwx.common.system.init;
 
-import javax.servlet.ServletContext;
+package com.fengjx.ttwx.common.system.init;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import javax.servlet.ServletContext;
 
 public class SpringBeanFactoryUtil {
 
@@ -31,8 +32,8 @@ public class SpringBeanFactoryUtil {
         return springContext;
     }
 
-    public static Object getBean(String beanName) {
-        return getSpringContext().getBean(beanName);
+    public static <T> T getBean(String beanName) {
+        return (T) getSpringContext().getBean(beanName);
     }
 
     public static <T> T getBean(Class<T> cls) {
