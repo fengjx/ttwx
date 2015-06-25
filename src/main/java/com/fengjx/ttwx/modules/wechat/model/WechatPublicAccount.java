@@ -35,18 +35,16 @@ public class WechatPublicAccount extends Model {
         Map<String, Object> attrs = new HashMap();
         attrs.put("sys_user_id", sysUserId);
         Record account = findOne(attrs);
-        if (null != account) {
+        if (null != account && !account.isEmpty()) {
             return account;
         }
         String id = CommonUtils.getPrimaryKey();
         String token = CommonUtils.getPrimaryKey();
-        String ticket = CommonUtils.getPrimaryKey();
         attrs.put("id", id);
         attrs.put("in_time", new Date());
         attrs.put("token", token);
-        attrs.put("ticket", ticket);
         attrs.put("url", AppConfig.DOMAIN_PAGE + "/wechat/api?ticket="
-                + AesUtil.encrypt(ticket));
+                + AesUtil.encrypt(id));
         attrs.put("valid_code", CommonUtils.getRandomNum(5));
         attrs.put("valid_state", VALID_STATE_NONACTIVATED);
         insert(attrs);

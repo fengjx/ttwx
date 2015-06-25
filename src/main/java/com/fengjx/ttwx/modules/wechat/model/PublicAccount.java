@@ -7,11 +7,11 @@ import com.fengjx.ttwx.common.plugin.cache.SimpleCache;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.Record;
-import com.fengjx.ttwx.modules.wechat.bean.MyWxMpConfigStorage;
+import com.fengjx.ttwx.common.utils.AesUtil;
+import com.fengjx.ttwx.modules.wechat.process.utils.WxMpUtil;
 
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.WxMpServiceImpl;
 
 import org.springframework.stereotype.Component;
 
@@ -24,6 +24,10 @@ import org.springframework.stereotype.Component;
 @Mapper(table = "wechat_public_account")
 @Component
 public class PublicAccount extends Model {
+
+    public static final String VALID_STATE_NONACTIVATED = "0"; // 0：未激活
+    public static final String VALID_STATE_EXCESS = "1"; // 1：已配置到公众平台
+    public static final String VALID_STATE_ACTIVATE = "2"; // 2：已通过客户端校验验证码
 
     /**
      * 根据userid获得公众账号信息
@@ -38,26 +42,41 @@ public class PublicAccount extends Model {
     }
 
     /**
-     * 获得公众号配置
+     * 根据userId获得公众号配置
      *
      * @param userId
      * @return
      */
-    public WxMpConfigStorage getWxMpConfigStorage(String userId) {
-        SimpleCache cache = CacheFactory.getSimpleCache(CacheName.CACHE_NAME_EHCACHE);
-        return cache.get("getWxMpConfigStorage_key", () -> {
-            MyWxMpConfigStorage config = new MyWxMpConfigStorage();
+    public WxMpConfigStorage getWxMpConfigStorageByUserId(String userId) {
+        SimpleCache cache = CacheFactory.getSimpleCache(CacheName.CACHE_NAME_MEMORY);
+        return cache.get("getWxMpConfigStorage_user_" + userId, () -> {
             Record record = getAccountByUserId(userId);
-            // 设置微信公众号的appid
-                config.setAppId(record.getStr("app_id"));
-                // 设置微信公众号的app corpSecret
-                config.setSecret(record.getStr("app_secret"));
-                // 设置微信公众号的token
-                config.setToken(record.getStr("token"));
-                // 设置微信公众号的EncodingAESKey
-                config.setAesKey(record.getStr("encodingAESKey"));
-                return config;
-            });
+            return WxMpUtil.buildConfigStorage(record);
+        });
+    }
+
+    /**
+     * 根据ID获得公众号配置
+     *
+     * @param id
+     * @return
+     */
+    public WxMpConfigStorage getWxMpConfigStorage(String id) {
+        SimpleCache cache = CacheFactory.getSimpleCache(CacheName.CACHE_NAME_MEMORY);
+        return cache.get("getWxMpConfigStorage_id_" + id, () -> {
+            Record record = findById(id);
+            return WxMpUtil.buildConfigStorage(record);
+        });
+    }
+
+    /**
+     * 获得公众号配置
+     *
+     * @param ticket
+     * @return
+     */
+    public WxMpConfigStorage getWxMpConfigStorageByTicket(String ticket) {
+        return getWxMpConfigStorage(AesUtil.decrypt(ticket));
     }
 
     /**
@@ -67,9 +86,17 @@ public class PublicAccount extends Model {
      * @return
      */
     public WxMpService getWxMpService(String userId) {
-        WxMpService wxMpService = new WxMpServiceImpl();
-        wxMpService.setWxMpConfigStorage(getWxMpConfigStorage(userId));
-        return wxMpService;
+        return WxMpUtil.getWxMpServiceByConfig(getWxMpConfigStorageByUserId(userId));
+    }
+
+    /**
+     * 通过ticket获得WxMpService
+     *
+     * @param ticket
+     * @return
+     */
+    public WxMpService getWxMpServiceByTicket(String ticket) {
+        return WxMpUtil.getWxMpServiceByConfig(getWxMpConfigStorageByTicket(ticket));
     }
 
 }
