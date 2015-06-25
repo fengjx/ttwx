@@ -25,6 +25,7 @@ public class Plugins {
         } else {
             pluginList.forEach(p -> {
                 p.start();
+                LogUtil.warn(LOG, p.getClass().getSimpleName() + " started...");
             });
         }
     }
