@@ -3,10 +3,9 @@
  */
 // 用户列表数据
 var datagrid;
+var $table;
 // 分组表单Dialog
 var groupDialog;
-// 添加/修改分组表单
-var groupForm;
 // 用户分组数据
 var groupData;
 // 当前选择的用户分组
@@ -14,126 +13,103 @@ var curGroupId;
 $(function() {
 	// 加载用户分组
 	loadGroupList();
-	datagrid = $('#datagrid').datagrid({
-		url : domain + '/admin/user/userPageList.action',
-		toolbar : '#toolbar',
-		iconCls : 'icon-save',
-		pagination : true,
-		pageSize : 10,
-		pageList : [10, 15, 20],
-		fit : true,
-		singleSelect : true,
-		fitColumns : true,
-		nowrap : false,
-		border : false,
-		idField : 'id',
-		frozenColumns : [[{
-				title : 'id',
-				field : 'id',
-				hidden : true
-			}, {
-				field : 'group_name',
-				hidden : true
-			}, {
-				field : 'openid',
-				title : 'openid',
-				width : 150
-			}]],
-		columns : [[{
-				field : 'nickname',
-				title : '昵称',
-				width : 50
-			}, {
-				field : 'sex',
-				title : '性別',
-				width : 50
-			}, {
-				field : 'headimgurl',
-				title : '头像',
-				width : 150
-			}, {
-				field : 'str_subscribe_time',
-				title : '关注时间',
-				width : 130
-			}, {
-				field : 'group_id',
-				title : '分组',
-				width : 150,
-				formatter : function(value, rowData, rowIndex) {
-					return createGroupCombobox(value, rowData.id);
-				}
-			}, {
-				field : 'str_unsubscribe_time',
-				title : '取消关注时间',
-				width : 130
-			}, {
-				field : 'op',
-				title : '操作',
-				width : 90,
-				formatter : function(value, rowData, rowIndex) {
-					var html = '<a class="easyui-linkbutton" iconCls="icon-tip" plain="true" onclick="viewLog(\''+ rowData.openid + '\');" href="javascript:void(-1);">消息记录</a>';
-					return html;
-				}
-			}]],
-		onLoadSuccess : function(){
-			$.parser.parse();
-		}
-	});
-	groupDialog = $('#groupDialog').show().dialog({
-		modal : true,
-		buttons : [{
-			text : '確定',
-			handler : function() {
-				groupForm.form('submit', {
-					url : domain + '/admin/user/saveGroup.action',
-					success : function(res) {
-						fjx.closeProgress();
-						var data = $.evalJSON(res);
-						groupDialog.dialog('close');
-						if (data && '1' == data.code) {
-							fjx.showMsg('操作成功！');
-						} else {
-							$.messager.alert('提示', data? data.msg:'操作失败', 'error');
-						}
-						loadGroupList();
-					},
-					onSubmit : function() {
-						$.messager.progress({
-							text : '数据提交中....',
-							interval : 100
-						});
-					},
-					onLoadError:function(){
-						fjx.closeProgress();
-					}
-				});
+
+	$table = $('#data-table').bootstrapTable({
+		method: 'post',
+		toolbar: "#toolbar",
+		contentType: "application/x-www-form-urlencoded",
+		url: domain + '/admin/wechat/user/userPageList',
+		queryParamsType: "limit",
+		queryParams: queryParams,
+		cache: false,
+		striped: true,
+		sidePagination: "server",
+		pagination: true,
+		pageSize: 10,
+		pageList: [10, 15, 20],
+		minimumCountColumns: 2,
+		clickToSelect: true,
+		idField:"id",
+		columns: [{
+			field: 'id',
+			valign: 'middle',
+			radio:true
+		}, {
+			field: 'openid',
+			title: 'openid',
+			align: 'left',
+			valign: 'middle'
+		}, {
+			field: 'nickname',
+			title: '昵称',
+			align: 'left',
+			valign: 'middle'
+		}, {
+			field: 'sex',
+			title: '性别',
+			align: 'left',
+			valign: 'middle'
+		}, {
+			field: 'headimgurl',
+			title: '头像',
+			align: 'left',
+			valign: 'middle'
+		}, {
+			field: 'group_id',
+			title: '分组',
+			align: 'left',
+			valign: 'middle',
+			formatter: function (value,row,index) {
+				return createGroupCombobox(value);
+			}
+		}, {
+			field: 'unsubscribe_time',
+			title: '取消关注时间',
+			align: 'left',
+			valign: 'middle'
+		}, {
+			field: 'op',
+			title: '操作',
+			align: 'center',
+			valign: 'middle',
+			formatter: function (value,row,index) {
+				///admin/wechat/msglog?openid
+				var html = '<a class="btn btn-info" href="'+domain+'/admin/wechat/msglog?openid='+row.openid+'">消息记录</a>';
+				return html;
 			}
 		}]
-	}).dialog('close');
-
-	// 实例化表单
-	groupForm = $('#groupForm').form();
-
-	$(".inner_menu_link").live('click', function() {
-		var groupId = $(this).attr("data-id");
-		$(".inner_menu_item").removeClass("selected");
-		$(this).parent().addClass("selected");
-		curGroupId = groupId;
-		searchDatagrid();
 	});
 
-	$(".edit_gray").live('click', function() {
-		groupForm.form('load', {
-			"id" : $(this).attr("data-gid"),
-			"name" : $(this).attr("data-gname")
+	function queryParams(params) {
+		var start_time = $('#qry-toolbar input[name="start_time"]').val();
+		var end_time = $('#qry-toolbar input[name="end_time"]').val();
+		params = $.extend(params,{
+			"key_word": $('#qry-toolbar input[name="qry_key_word"]').val(),
+			"start_time": start_time,
+			"end_time": end_time,
+			"req_type": $("#qry_req_type").val(),
+			"event_type": $("#qry_event_type").val(),
+			"from_user_name": $("#qry-toolbar input[name='qry_openid']").val()
 		});
-		groupDialog.dialog('open').dialog({
-			title : '修改分组'
-		});
-	});
+		return params;
+	}
 
+	//$(".inner_menu_link").live('click', function() {
+	//	var groupId = $(this).attr("data-id");
+	//	$(".inner_menu_item").removeClass("selected");
+	//	$(this).parent().addClass("selected");
+	//	curGroupId = groupId;
+	//	searchDatagrid();
+	//});
+    //
+
+	// 修改分组名称
+	$(".inner_menu").on('click',".edit_gray", function() {
+		editGroup($(this).attr("data-gid"),$(this).attr("data-gname"));
+	});
+    //
 	// 刪除分組
-	$(".del_gray").live("click", function() {
+	$(".inner_menu").on("click", ".del_gray", function() {
 		var groupId = $(this).attr("data-gid");
 		var groupName = $(this).attr("data-gname");
 		deleteGroup(groupId, groupName);
@@ -160,7 +136,7 @@ function clearDatagrid() {
 
 function loadGroupList() {
 	$.ajax({
-		url : domain + '/admin/user/groupList.action',
+		url : domain + '/admin/wechat/user/groupList.action',
 		cache : false,
 		dataType : "json",
 		success : function(data) {
@@ -192,44 +168,69 @@ function loadGroupList() {
 				});
 				$(".inner_menu").append(html);
 			} else {
-				$.messager.alert('提示', '用户分组加载失败！', 'error');
+				app.alertModal("用户分组加载失败");
 			}
 		}
 	});
 }
 
+/**
+ * 删除分组
+ * @param groupId
+ * @param groupName
+ */
 function deleteGroup(groupId, groupName) {
-	if (!groupId) {
-		$.messager.alert('提示', '请选择要删除的分组！', 'info');
-		return false;
-	}
-	$.messager.confirm('请确认', '确认要删除分组【' + groupName + '】吗', function(r) {
-		if (r) {
-			$.ajax({
-				url : domain + '/admin/user/deleteGroup',
-				data : 'id=' + groupId,
-				dataType : "json",
-				success : function(data) {
-					if (data && '1' == data.code) {
-						fjx.showMsg('刪除成功');
-					} else {
-						$.messager.alert('提示', data ? data.msg : '删除失败', 'error');
-					}
+	app.confirmModal('确认要删除分组【' + groupName + '】吗', function () {
+		$.ajax({
+			url : domain + '/admin/wechat/user/deleteGroup',
+			data : 'id=' + groupId,
+			dataType : "json",
+			success : function(data) {
+				if (data && '1' == data.code) {
+					app.ok("删除成功");
 					loadGroupList();
+				} else {
+					app.error(res.msg ? res.msg : '刪除失败');
 				}
-			});
-		}
+			}
+		});
 	});
 }
 
 /**
  * 添加分组
  */
-function appGroup() {
-	groupForm.form('clear');
-	groupDialog.dialog('open').dialog({
-		title : '添加分組'
-	});
+function editGroup(id,name) {
+	var title = "添加分組";
+	if(id){
+		title = "修改分组";
+	}
+	app.promptModal(title, function (val) {
+		if (!val) {
+			alert("请输入分组名称");
+			return false;
+		}
+		$.ajax({
+			url: domain + '/admin/wechat/user/saveGroup',
+			type: 'post',
+			data: {
+				id: id,
+				name: val
+			},
+			dataType: "json",
+			cache: false,
+			async: true,
+			success: function (data) {
+				if (data && '1' == data.code) {
+					loadGroupList();
+					app.closeDialog();
+				} else {
+					alert(data.msg ? data.msg : "保存失败");
+				}
+			}
+		});
+		return false;
+	},{defaultVal:name});
 }
 
 /**
@@ -278,8 +279,8 @@ function groupSelect(record) {
  * @param {} openid
  */
 function viewLog(openid){
-	parent.app.loadingModal();
-	var href = domain+'/admin/msglog?openid='+openid;
+	app.loadingModal();
+	var href = domain+'/admin/wechat/msglog?openid='+openid;
 	parent.addTab({
 		src : href,
 		title : '消息管理'
