@@ -2,7 +2,6 @@
 package com.fengjx.ttwx.modules.wechat.controler.display;
 
 import com.fengjx.ttwx.common.utils.LogUtil;
-import com.fengjx.ttwx.common.web.MyExecuteCallback;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.controler.MyController;
 import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
@@ -99,7 +98,7 @@ public class LoginController extends MyController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> register(final HttpServletRequest request) {
-        return doResult(()->{
+        return doResult(() -> {
             sysUser.register(getRequestMap(request));
         }, "注册用户失败！");
     }

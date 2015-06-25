@@ -3,6 +3,7 @@ package com.fengjx.ttwx.modules.wechat.model;
 
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
+import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 
 import me.chanjar.weixin.common.api.WxConsts;

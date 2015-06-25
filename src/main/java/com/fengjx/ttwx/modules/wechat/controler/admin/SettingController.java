@@ -2,7 +2,6 @@
 package com.fengjx.ttwx.modules.wechat.controler.admin;
 
 import com.fengjx.ttwx.modules.common.controler.MyController;
-import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
 import com.fengjx.ttwx.modules.wechat.model.WechatPublicAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,8 @@ public class SettingController extends MyController {
     @RequestMapping(value = "")
     public ModelAndView view(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("wechat/admin/setting");
-        SysUserEntity sysUser = getLoginSysUser(request);
-        mv.addObject("wechatAccount", publicAccount.getAccountSetting(sysUser.getId()).getColumns());
+        mv.addObject("wechatAccount", publicAccount.getAccountSetting(getLoginSysUserId(request))
+                .getColumns());
         return mv;
     }
 
