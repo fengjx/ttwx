@@ -30,8 +30,8 @@
                     <h4>可创建最多3个一级菜单，每个一级菜单下可创建最多5个二级菜单。编辑中的菜的那不会马上被用户看到，请放心调试。</h4>
                 </div>
                 <div class="row" style="border:1px solid #ddd;min-height: 530px;">
-                    <div class="col-md-3" style="border-right:1px solid #ddd;min-height: 530px;">
-                        <div style="margin-left: -13px;text-align: left;">
+                    <div class="col-md-3 nopadding" style="border-right:1px solid #ddd;min-height: 530px;">
+                        <div style="text-align: left;">
                             <button type="button" onclick="append(1)" class="btn btn-default btn-sm sorted" title="添加">
                                 <i class="glyphicon glyphicon-plus"></i>
                             </button>
@@ -54,7 +54,7 @@
                                 取消
                             </button>
                         </div>
-                        <div class="dd" id="nestable" style="margin-left: -13px;">
+                        <div class="dd" id="nestable">
                             <ol id="menu_tree" class="dd-list">
                             </ol>
                         </div>
@@ -135,9 +135,6 @@
 
                     </div>
                 </div>
-
-
-
 
             </div>
 

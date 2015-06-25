@@ -8,10 +8,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>授权设置</title>
 	<link href="<%=resourceUrl%>/css/setting.css" rel="stylesheet" type="text/css"/>
-	<!--[if lt IE 9]>
-	<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
 </head>
 <script type="text/javascript">
 	var valid_state = '${wechatAccount.valid_state}';
@@ -25,8 +21,9 @@
 		</jsp:include>
 		<div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<ol class="breadcrumb">
-				<li><a href="#">后台管理</a></li>
-				<li class="active">平台管理</li>
+				<li><a href="<%=domain %>/admin">后台管理</a></li>
+				<li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+				<li class="active">授权配置</li>
 			</ol>
 
 			<div>

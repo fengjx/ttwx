@@ -2,6 +2,11 @@ body {
     padding-top: 50px;
 }
 
+.nopadding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 .sub-header {
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
@@ -132,4 +137,9 @@ body {
 .layout-sub-title {
     padding: 26px 0 26px 30px;
     border-bottom: 1px solid #e6e6e6;
+}
+
+textarea {
+    overflow: auto;
+    vertical-align: top
 }
