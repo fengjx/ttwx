@@ -9,7 +9,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <span class="navbar-brand">天天微信平台</span>
+      <span class="navbar-brand">
+        <i class="glyphicon glyphicon-fire"></i>
+        天天微信平台
+      </span>
       <ul class="nav navbar-nav">
         <li class="active"><a href="<%=domain %>/admin/wechat">平台管理</a></li>
         <li><a href="#">天天小店</a></li>
