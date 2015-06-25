@@ -2,7 +2,10 @@
 <%@include file="/WEB-INF/view/common/inc/url.jsp"%>
 <!-- 素材列表包含页 material.jsp | menu.jsp-->
 <div style="width: 91%;margin-right: auto;margin-left: auto;">
-	<button id="btn-refresh" type="button" class="btn btn-outline btn-info btn-block">刷&nbsp;&nbsp;&nbsp;&nbsp;新</button>
+	<button id="btn-refresh" type="button" class="btn btn-outline btn-primary btn-block">
+		<i class="glyphicon glyphicon-refresh"></i>
+		刷&nbsp;&nbsp;&nbsp;&nbsp;新
+	</button>
 </div>
 <div id="appmsgList" class="appmsg_list">
 	<div class="appmsg_col">
@@ -22,7 +25,10 @@
 	</div>
 </div>
 <div style="width: 91%;margin-right: auto;margin-left: auto;">
-	<button id="btn-more" type="button" class="btn btn-outline btn-info btn-block">更&nbsp;&nbsp;&nbsp;&nbsp;多</button>
+	<button id="btn-more" type="button" class="btn btn-outline btn-info btn-block">
+		<i class="glyphicon glyphicon-circle-arrow-down"></i>
+		更&nbsp;&nbsp;&nbsp;&nbsp;多
+	</button>
 </div>
 <script>
 	var curPage = 1;
