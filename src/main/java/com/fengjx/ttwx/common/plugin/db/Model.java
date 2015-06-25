@@ -85,34 +85,6 @@ public abstract class Model {
         return result >= 1;
     }
 
-    /**
-     * 新增或者更新
-     *
-     * @param cls
-     * @param attrs
-     * @return
-     */
-    public boolean insertOrUpdate(Class<? extends Model> cls, Map<String, Object> attrs) {
-        Table table = TableUtil.getTable(cls);
-        String pKey = table.getPrimaryKey();
-        Object id = attrs.get(pKey);
-        if (null == id || "".equals(id)) {
-            return insert(cls, attrs);
-        } else {
-            return update(cls, attrs);
-        }
-    }
-
-    /**
-     * 新增或者更新
-     *
-     * @param attrs
-     * @return
-     */
-    public boolean insertOrUpdate(Map<String, Object> attrs) {
-        return insertOrUpdate(this.getClass(), attrs);
-    }
-
     public Record findById(Object id) {
         return findById(id, "*");
     }
