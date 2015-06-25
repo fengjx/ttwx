@@ -73,6 +73,7 @@ $(function(){
 		var start_time = $('#toolbar input[name="start_time"]').val();
 		var end_time = $('#toolbar input[name="end_time"]').val();
 		params = $.extend(params,{
+			"req_type": "text",
 			"key_word": $('#toolbar input[name="qry_key_word"]').val(),
 			"start_time": start_time,
 			"end_time": end_time
