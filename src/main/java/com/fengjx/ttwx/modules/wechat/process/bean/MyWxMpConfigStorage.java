@@ -1,3 +1,4 @@
+
 package com.fengjx.ttwx.modules.wechat.process.bean;
 
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
