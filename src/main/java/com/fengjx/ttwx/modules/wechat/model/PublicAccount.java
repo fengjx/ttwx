@@ -3,6 +3,7 @@ package com.fengjx.ttwx.modules.wechat.model;
 
 import com.fengjx.ttwx.common.plugin.cache.CacheFactory;
 import com.fengjx.ttwx.common.plugin.cache.CacheName;
+import com.fengjx.ttwx.common.plugin.cache.IDataLoader;
 import com.fengjx.ttwx.common.plugin.cache.SimpleCache;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
@@ -47,12 +48,18 @@ public class PublicAccount extends Model {
      * @param userId
      * @return
      */
-    public WxMpConfigStorage getWxMpConfigStorageByUserId(String userId) {
+    public WxMpConfigStorage getWxMpConfigStorageByUserId(final String userId) {
         SimpleCache cache = CacheFactory.getSimpleCache(CacheName.CACHE_NAME_MEMORY);
-        return cache.get("getWxMpConfigStorage_user_" + userId, () -> {
-            Record record = getAccountByUserId(userId);
-            return WxMpUtil.buildConfigStorage(record);
-        });
+  IDataLoader<WxMpConfigStorage> dataLoader=new IDataLoader<WxMpConfigStorage>() {
+			
+			@Override
+			public WxMpConfigStorage load() {
+				  Record record = getAccountByUserId(userId);
+		            return WxMpUtil.buildConfigStorage(record);
+			}
+		};
+        return cache.get("getWxMpConfigStorage_user_" + userId, dataLoader 
+        );
     }
 
     /**
@@ -61,12 +68,17 @@ public class PublicAccount extends Model {
      * @param id
      * @return
      */
-    public WxMpConfigStorage getWxMpConfigStorage(String id) {
+    public WxMpConfigStorage getWxMpConfigStorage(final String id) {
         SimpleCache cache = CacheFactory.getSimpleCache(CacheName.CACHE_NAME_MEMORY);
-        return cache.get("getWxMpConfigStorage_id_" + id, () -> {
-            Record record = findById(id);
-            return WxMpUtil.buildConfigStorage(record);
-        });
+        IDataLoader<WxMpConfigStorage> dataLoader=new IDataLoader<WxMpConfigStorage>() {
+			
+			@Override
+			public WxMpConfigStorage load() {
+				  Record record = findById(id);
+		            return WxMpUtil.buildConfigStorage(record);
+			}
+		};
+        return cache.get("getWxMpConfigStorage_id_" + id, dataLoader);
     }
 
     /**
