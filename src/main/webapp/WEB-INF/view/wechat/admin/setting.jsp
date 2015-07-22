@@ -71,7 +71,7 @@
 							<input style="margin-left: 180px;" class="btn btn-danger" type="submit" id="btn-submit" value="&nbsp;生&nbsp;成&nbsp;授&nbsp;权&nbsp;" />
 						</c:when>
 						<c:otherwise>
-							<input style="margin-left: 180px;" class="btn btn-outline btn-info" type="submit" id="btn-submit" value="&nbsp;更&nbsp;新&nbsp;授&nbsp;权&nbsp;" />
+							<input style="margin-left: 180px;" class="btn btn-info" type="submit" id="btn-submit" value="&nbsp;更&nbsp;新&nbsp;授&nbsp;权&nbsp;" />
 						</c:otherwise>
 					</c:choose>
 				</form>

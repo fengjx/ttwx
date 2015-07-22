@@ -69,7 +69,7 @@ $(function () {
                 if (!value || value == '') {
                     return "无";
                 }
-                var html = '<a class="btn btn-outline btn-info" onclick="view(' + index + ');" href="javascript:void(0);">查看</a>';
+                var html = '<a class="btn btn-info" onclick="view(' + index + ');" href="javascript:void(0);">查看</a>';
                 return html;
             }
         }, {

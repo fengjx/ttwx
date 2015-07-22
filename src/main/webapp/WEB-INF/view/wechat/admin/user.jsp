@@ -49,6 +49,12 @@
 										<i class="icon14_common add_gray"></i> <strong>新建分組</strong>
 									</a>
 								</div>
+
+								<div class="inner_menu_item extra">
+									<a href="javascript:void(0);" onclick="editGroup();" >
+										<i class="glyphicon glyphicon-refresh"></i> <strong>同步分組</strong>
+									</a>
+								</div>
 								<%--<dl class="inner_menu no_extra">
                                     <dt class="inner_menu_item selected">
                                         <a href="" class="inner_menu_link">
