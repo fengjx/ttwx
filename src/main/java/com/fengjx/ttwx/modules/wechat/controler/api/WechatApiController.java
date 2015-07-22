@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
  * @date：2015/6/21 0021
  */
 @Controller
-@RequestMapping("/wechat")
 public class WechatApiController extends MyController {
 
     private static final Logger LOG = LoggerFactory.getLogger(WechatApiController.class);
@@ -45,7 +44,7 @@ public class WechatApiController extends MyController {
      *
      * @throws Exception
      */
-    @RequestMapping(value = "/api", produces = "text/html;charset=UTF-8", method = RequestMethod.POST)
+    @RequestMapping(value = "/wechat/api", produces = "text/html;charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
     public String responseMsg(HttpServletRequest request) {
         String res = serviceEngine.processRequest();
