@@ -7,7 +7,6 @@ import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.wechat.model.PublicAccount;
 import com.fengjx.ttwx.modules.wechat.process.bean.WechatContext;
-import com.fengjx.ttwx.modules.wechat.process.utils.MessageUtil;
 import com.fengjx.ttwx.modules.wechat.process.utils.WxMpUtil;
 
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
@@ -63,6 +62,7 @@ public class WechatInterceptor implements HandlerInterceptor {
                 LogUtil.info(LOG, "请求无效，ticket为空");
                 return false;
             }
+            // 解密
             String id = AesUtil.decrypt(ticket);
             String signature = request.getParameter("signature");
             String nonce = request.getParameter("nonce");
@@ -74,6 +74,20 @@ public class WechatInterceptor implements HandlerInterceptor {
                 return false;
             }
             WxMpConfigStorage wxMpConfig = WxMpUtil.buildConfigStorage(record);
+            // 非测试环境做签名校验
+            if (!AppConfig.isTest()) {
+                WxMpService wxMpService = WxMpUtil.getWxMpServiceByConfig(wxMpConfig);
+                if (!wxMpService.checkSignature(timestamp, nonce, signature)) {
+                    // 消息签名不正确，说明不是公众平台发过来的消息
+                    LogUtil.error(LOG, "消息签名不正确，非法请求");
+                    return false;
+                }
+            }
+            String echostr = request.getParameter("echostr");
+            if (StringUtils.isNotBlank(echostr)) {
+                // 说明是一个仅仅用来验证的请求
+                return true;
+            }
             String encryptType = StringUtils.isBlank(request.getParameter("encrypt_type")) ?
                     "raw" :
                     request.getParameter("encrypt_type");
@@ -91,17 +105,6 @@ public class WechatInterceptor implements HandlerInterceptor {
             WechatContext.setInMessageRecord(record);
             WechatContext.setWxMpConfigStorage(wxMpConfig);
             WechatContext.setEncryptType(encryptType);
-            // 测试环境不做签名校验
-            if (AppConfig.isTest()) {
-                LogUtil.warn(LOG, "测试环境不做签名校验");
-                return true;
-            }
-            WxMpService wxMpService = WxMpUtil.getWxMpServiceByConfig(wxMpConfig);
-            if (!wxMpService.checkSignature(timestamp, nonce, signature)) {
-                // 消息签名不正确，说明不是公众平台发过来的消息
-                LogUtil.error(LOG, "消息签名不正确，非法请求");
-                return false;
-            }
             return true;
         } finally {
             IOUtils.closeQuietly(in);
