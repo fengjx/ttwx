@@ -2,6 +2,7 @@
 package com.fengjx.ttwx.modules.wechat.controler.display;
 
 import com.fengjx.ttwx.common.utils.LogUtil;
+import com.fengjx.ttwx.common.web.MyExecuteCallback;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.controler.MyController;
 import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
@@ -38,7 +39,8 @@ public class LoginController extends MyController {
     public Map<String, String> signin(HttpServletRequest request, SysUserEntity user,
             String valid_code) {
         Map<String, String> res = compareValidCode(request, valid_code);
-        if ("0".equals(res.get("code"))) {
+        //ignore valid code here
+        if (false&&"0".equals(res.get("code"))) {
             return res;
         }
         SysUserEntity loginUser = sysUser.signin(user.getUsername(), user.getPwd());
@@ -98,9 +100,15 @@ public class LoginController extends MyController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> register(final HttpServletRequest request) {
-        return doResult(() -> {
-            sysUser.register(getRequestMap(request));
-        }, "注册用户失败！");
+    	MyExecuteCallback callback=new MyExecuteCallback() {
+			
+			@Override
+			public void execute() throws Exception {
+				 sysUser.register(getRequestMap(request));
+				
+			}
+		};
+        return doResult(callback, "注册用户失败！");
     }
 
     /**

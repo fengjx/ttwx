@@ -241,7 +241,7 @@ public class WechatMenu extends Model {
      * @param sortList
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void sort(List<Map<String, Object>> sortList, String userId) {
+    public void sort(final List<Map<String, Object>> sortList,final String userId) {
         if (CollectionUtils.isEmpty(sortList)) {
             throw new MyRuntimeException("菜单排序数据为空");
         }
