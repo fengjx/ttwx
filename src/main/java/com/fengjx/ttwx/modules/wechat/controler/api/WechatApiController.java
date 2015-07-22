@@ -32,7 +32,7 @@ public class WechatApiController extends MyController {
     /**
      * 接口认证
      */
-    @RequestMapping(value = "/wechat/api", method = RequestMethod.GET)
+    @RequestMapping(value = "/api", method = RequestMethod.GET)
     @ResponseBody
     public String valid(HttpServletRequest request) {
         // 拦截器里已经做了消息签名校验，这里直接返回就可以了
