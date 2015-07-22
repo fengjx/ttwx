@@ -6,6 +6,7 @@ import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.common.constants.MsgTemplateConstants;
 import com.fengjx.ttwx.modules.wechat.model.PublicAccount;
 
+import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
@@ -28,7 +29,7 @@ public class ValidExecutor extends BaseServiceExecutor {
 
     @Override
     public WxMpXmlOutMessage execute(WxMpXmlMessage inMessage, Record accountRecord,
-            WxMpConfigStorage wxMpConfig) {
+            WxMpConfigStorage wxMpConfig, WxSession session) {
         LogUtil.info(LOG, "进入验证消息处理器fromUserName=" + inMessage.getFromUserName());
 
         String valid_code = accountRecord.getStr("valid_code");

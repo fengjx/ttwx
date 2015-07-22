@@ -3,9 +3,14 @@ package com.fengjx.ttwx.modules.wechat.process.bean;
 
 import com.fengjx.ttwx.common.plugin.db.Record;
 
+import me.chanjar.weixin.common.session.StandardSessionManager;
+import me.chanjar.weixin.common.session.WxSession;
+import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 微信请求上下文
@@ -15,6 +20,10 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
  */
 public class WechatContext {
 
+    /**
+     * 微信session管理器
+     */
+    private static final WxSessionManager sessionManager = new StandardSessionManager();
     private static ThreadLocal<WxMpConfigStorage> wxMpConfigStorage = new InheritableThreadLocal();
     private static ThreadLocal<Record> inMessageRecord = new InheritableThreadLocal();
     private static ThreadLocal<String> encryptType = new InheritableThreadLocal();
@@ -59,6 +68,13 @@ public class WechatContext {
 
     public static void setEncryptType(String encryptType) {
         WechatContext.encryptType.set(encryptType);
+    }
+
+    public static WxSession getWxsession() {
+        if (null == getInMessage() || StringUtils.isBlank(getInMessage().getFromUserName())) {
+            throw new RuntimeException("getWxsession error...");
+        }
+        return sessionManager.getSession(getInMessage().getFromUserName());
     }
 
     public static void removeAll() {

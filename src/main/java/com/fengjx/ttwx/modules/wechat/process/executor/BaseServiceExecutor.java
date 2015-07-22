@@ -10,6 +10,7 @@ import com.fengjx.ttwx.modules.wechat.model.PublicAccount;
 import com.fengjx.ttwx.modules.wechat.model.RespMsgAction;
 import com.fengjx.ttwx.modules.wechat.process.ServiceExecutor;
 import com.fengjx.ttwx.modules.wechat.process.ServiceExecutorNameWire;
+import com.fengjx.ttwx.modules.wechat.process.bean.WechatContext;
 import com.fengjx.ttwx.modules.wechat.process.ext.ExtService;
 import com.fengjx.ttwx.modules.wechat.process.utils.MessageUtil;
 import com.fengjx.ttwx.modules.wechat.process.utils.WxMpUtil;
@@ -77,7 +78,7 @@ public abstract class BaseServiceExecutor implements ServiceExecutor, ServiceExe
         if (respMsgAction.ACTION_TYPE_MATERIAL.equals(actionType)) { // 从素材取数据
             res = actionRecord.getStr("xml_data");
         } else if (respMsgAction.ACTION_TYPE_API.equals(actionType)) { // 从接口返回数据
-            res = busiappHandle(actionRecord.getStr("Bean_name"));
+            res = busiappHandle(actionRecord.getStr("bean_name"));
         }
         return doAction(res);
     }
@@ -111,8 +112,9 @@ public abstract class BaseServiceExecutor implements ServiceExecutor, ServiceExe
     protected String busiappHandle(String beanName) {
         // 从spring中拿到业务bean
         ExtService ext = SpringBeanFactoryUtil.getBean(beanName);
-        String res = ext.execute();
-        LogUtil.debug(LOG, "beanName：" + beanName + "接口返回数据：" + res);
+        String res = ext.execute(WechatContext.getInMessage(), WechatContext.getInMessageRecord(),
+                WechatContext.getWxMpConfigStorage(), WechatContext.getWxsession());
+        LogUtil.debug(LOG, "beanName：" + beanName + " execute");
         return res;
     }
 

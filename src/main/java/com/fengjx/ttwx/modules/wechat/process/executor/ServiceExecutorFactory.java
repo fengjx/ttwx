@@ -3,6 +3,7 @@ package com.fengjx.ttwx.modules.wechat.process.executor;
 
 import com.fengjx.ttwx.modules.wechat.process.Dispatcher;
 import com.fengjx.ttwx.modules.wechat.process.ServiceExecutor;
+
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class ServiceExecutorFactory {
 
     public ServiceExecutor getExecutorByName(WxMpXmlMessage inMessage) {
         String executorName = Dispatcher.getExecutorName(inMessage);
-        return executorMaps.get(executorName);
+        return getExecutorByName(executorName);
     }
 
     /**

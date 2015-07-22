@@ -16,6 +16,13 @@ import me.chanjar.weixin.mp.bean.*;
  */
 public final class WxMpUtil {
 
+
+    /**
+     * 通过数据创建ConfigStorage对象
+     *
+     * @param accountRecord
+     * @return
+     */
     public static WxMpConfigStorage buildConfigStorage(Record accountRecord) {
         MyWxMpConfigStorage config = new MyWxMpConfigStorage();
         // 设置微信公众号的appid

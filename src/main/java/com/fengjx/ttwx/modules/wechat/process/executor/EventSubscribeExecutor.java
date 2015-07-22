@@ -8,6 +8,7 @@ import com.fengjx.ttwx.modules.wechat.model.WechatUser;
 import com.fengjx.ttwx.modules.wechat.process.utils.ExecutorNameUtil;
 
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
@@ -35,7 +36,7 @@ public class EventSubscribeExecutor extends BaseServiceExecutor {
 
     @Override
     public WxMpXmlOutMessage execute(WxMpXmlMessage inMessage, Record accountRecord,
-            WxMpConfigStorage wxMpConfig) {
+            WxMpConfigStorage wxMpConfig, WxSession session) {
         LogUtil.info(LOG, "进入用户关注消息处理器fromUserName=" + inMessage.getFromUserName());
         Map<String, Object> attrs = new HashMap();
         attrs.put("id", CommonUtils.getPrimaryKey());

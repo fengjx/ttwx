@@ -55,9 +55,10 @@ public class ServiceEngineImpl implements ServiceEngine {
                 LogUtil.warn(LOG, "ToUserName[" + inMessage.getToUserName() + "]无效，返回空不做响应");
                 return "";
             }
-            WxMpXmlOutMessage outMessage = executor.execute(inMessage, accountRecord, wxMpConfig);
+            WxMpXmlOutMessage outMessage = executor.execute(inMessage, accountRecord, wxMpConfig,
+                    WechatContext.getWxsession());
             // 当道请求上下文里，使用aop记录日志需要用到
-			WechatContext.setOutMessage(outMessage);
+            WechatContext.setOutMessage(outMessage);
             return processResult(outMessage, inMessage);
         } catch (Exception e) {
             LogUtil.error(LOG, "处理微信请求出现异常", e);

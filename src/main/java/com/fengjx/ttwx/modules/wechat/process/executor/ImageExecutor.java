@@ -6,6 +6,7 @@ import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.wechat.process.utils.ExecutorNameUtil;
 
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
@@ -25,7 +26,7 @@ public class ImageExecutor extends BaseServiceExecutor {
 
     @Override
     public WxMpXmlOutMessage execute(WxMpXmlMessage inMessage, Record accountRecord,
-            WxMpConfigStorage wxMpConfig) {
+            WxMpConfigStorage wxMpConfig, WxSession session) {
         LogUtil.info(LOG, "进入图片消息处理器fromUserName=" + inMessage.getFromUserName());
         return null;
     }
