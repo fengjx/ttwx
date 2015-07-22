@@ -18,7 +18,7 @@ public class EhCachePlugin implements IPlugin {
 
     private static final Logger LOG = LoggerFactory.getLogger(EhCachePlugin.class);
 
-    private static CacheManager cacheManager;
+    private CacheManager cacheManager;
     private String configurationFileName;
     private URL configurationFileURL;
 
@@ -27,7 +27,7 @@ public class EhCachePlugin implements IPlugin {
     }
 
     public EhCachePlugin(CacheManager cacheManager) {
-        EhCachePlugin.cacheManager = cacheManager;
+        this.cacheManager = cacheManager;
     }
 
     public EhCachePlugin(String configurationFileName) {
@@ -42,7 +42,6 @@ public class EhCachePlugin implements IPlugin {
     public void start() {
         createCacheManager();
         EhCacheUtil.init(cacheManager);
-        LogUtil.info(LOG, "EhCachePlugin started...");
     }
 
     private void createCacheManager() {
@@ -60,12 +59,12 @@ public class EhCachePlugin implements IPlugin {
         cacheManager = CacheManager.create();
     }
 
-    public static CacheManager getCacheManager() {
+    public CacheManager getCacheManager() {
         return cacheManager;
     }
 
-    public static void setCacheManager(CacheManager cacheManager) {
-        EhCachePlugin.cacheManager = cacheManager;
+    public void setCacheManager(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
     }
 
     public String getConfigurationFileName() {
