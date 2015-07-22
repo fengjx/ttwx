@@ -2,6 +2,7 @@
 package com.fengjx.ttwx.common.utils;
 
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -46,7 +47,7 @@ public final class WebUtil {
         if (null != request) {
             Set<String> paramsKey = request.getParameterMap().keySet();
             for (String key : paramsKey) {
-                if(StringUtils.isNotBlank(request.getParameter(key))){
+                if (StringUtils.isNotBlank(request.getParameter(key))) {
                     params.put(key, request.getParameter(key));
                 }
             }
@@ -81,9 +82,13 @@ public final class WebUtil {
         return accessIP;
     }
 
-    public static String urlEncode(String source) throws UnsupportedEncodingException {
+    public static String urlEncode(String source) {
         String res = source;
-        res = URLEncoder.encode(source, "UTF-8");
+        try {
+            res = URLEncoder.encode(source, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         return res;
     }
 
