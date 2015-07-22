@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache-4.0.xsd">
+
+    <cache:annotation-driven/>
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehcache"/>
+    </bean>
+    <!-- EhCache library setup -->
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:ehcache.xml"/>
+    </bean>
 
     <bean init-method="init" id="plugins" class="com.fengjx.ttwx.common.plugin.Plugins">
         <property name="pluginList">
             <list>
                 <ref bean="tableMappingPlugin"/>
+                <ref bean="ehCachePlugin"/>
             </list>
         </property>
     </bean>
 
-    <!--<bean id="ehCachePlugin" class="com.fengjx.ttwx.common.plugin.cache.ehcache.EhCachePlugin">
-    </bean>-->
+    <bean id="ehCachePlugin" class="com.fengjx.ttwx.common.plugin.cache.ehcache.EhCachePlugin">
+        <property name="cacheManager" ref="ehcache"/>
+    </bean>
 
     <bean id="serviceEngine" class="com.fengjx.ttwx.modules.wechat.process.ServiceEngineImpl"/>
 
