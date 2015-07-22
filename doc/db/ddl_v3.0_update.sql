@@ -1,4 +1,4 @@
--- 2.x升级3.x
+-- 2.x update to 3.x
 
 ALTER TABLE `wechat_ext_app`
 DROP COLUMN `method_name`,
