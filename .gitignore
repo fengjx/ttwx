@@ -7,3 +7,4 @@
 /catalina.base_IS_UNDEFINED
 /target
 /ttwx.iml
+/src/main/resources/env/release/app.properties
