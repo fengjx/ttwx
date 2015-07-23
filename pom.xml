@@ -185,9 +185,9 @@
 			<version>2.3.22</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.code.kaptcha</groupId>
+			<groupId>com.github.axet</groupId>
 			<artifactId>kaptcha</artifactId>
-			<version>2.3.2</version>
+			<version>0.0.9</version>
 		</dependency>
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
@@ -222,7 +222,7 @@
 		<dependency>
 			<groupId>me.chanjar</groupId>
 			<artifactId>weixin-java-mp</artifactId>
-			<version>1.1.5</version>
+			<version>1.1.8</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
