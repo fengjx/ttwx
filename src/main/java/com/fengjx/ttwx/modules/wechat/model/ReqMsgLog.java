@@ -24,7 +24,7 @@ import java.util.Map;
 public class ReqMsgLog extends Model {
 
     @Autowired
-    private WechatPublicAccount publicAccount;
+    private PublicAccount publicAccount;
 
     /**
      * 分页查询
@@ -33,8 +33,8 @@ public class ReqMsgLog extends Model {
      * @return
      */
     public BootstrapPage pageList(Map<String, String> attrs, String userId) {
-        Record accounRecordt = publicAccount.getPublicAccountByUserid(userId);
-        List<Object> params = new ArrayList<Object>();
+        Record accounRecordt = publicAccount.getAccountByUserId(userId);
+        List<Object> params = new ArrayList();
         StringBuilder sql = new StringBuilder(getSelectSql());
         sql.append(" l where l.public_account_id = ?");
         params.add(accounRecordt.getStr("id"));

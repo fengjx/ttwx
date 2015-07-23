@@ -2,7 +2,7 @@
 package com.fengjx.ttwx.modules.wechat.controler.admin;
 
 import com.fengjx.ttwx.modules.common.controler.MyController;
-import com.fengjx.ttwx.modules.wechat.model.WechatPublicAccount;
+import com.fengjx.ttwx.modules.wechat.model.PublicAccount;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SettingController extends MyController {
 
     @Autowired
-    private WechatPublicAccount publicAccount;
+    private PublicAccount publicAccount;
 
     @RequestMapping(value = "")
     public ModelAndView view(HttpServletRequest request) {
