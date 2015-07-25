@@ -1,7 +1,7 @@
 
-package com.fengjx.ttwx.modules.wechat.controler.display;
+package com.fengjx.ttwx.modules.wechat.controller.display;
 
-import com.fengjx.ttwx.modules.common.controler.MyController;
+import com.fengjx.ttwx.modules.common.controller.MyController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

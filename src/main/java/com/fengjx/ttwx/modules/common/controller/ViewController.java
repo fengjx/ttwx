@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.common.controler;
+package com.fengjx.ttwx.modules.common.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

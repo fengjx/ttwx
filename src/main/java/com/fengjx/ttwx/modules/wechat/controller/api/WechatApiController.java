@@ -1,8 +1,8 @@
 
-package com.fengjx.ttwx.modules.wechat.controler.api;
+package com.fengjx.ttwx.modules.wechat.controller.api;
 
 import com.fengjx.ttwx.common.utils.LogUtil;
-import com.fengjx.ttwx.modules.common.controler.MyController;
+import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.wechat.model.PublicAccount;
 import com.fengjx.ttwx.modules.wechat.process.ServiceEngine;
 import com.fengjx.ttwx.modules.wechat.process.bean.WechatContext;

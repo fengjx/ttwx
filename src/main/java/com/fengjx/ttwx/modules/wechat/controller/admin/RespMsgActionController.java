@@ -1,9 +1,9 @@
 
-package com.fengjx.ttwx.modules.wechat.controler.admin;
+package com.fengjx.ttwx.modules.wechat.controller.admin;
 
 import com.fengjx.ttwx.common.utils.WebUtil;
 import com.fengjx.ttwx.modules.common.bean.BootstrapPage;
-import com.fengjx.ttwx.modules.common.controler.MyController;
+import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.wechat.model.Material;
 import com.fengjx.ttwx.modules.wechat.model.RespMsgAction;
 import com.fengjx.ttwx.modules.wechat.model.WechatMenu;

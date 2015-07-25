@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.wechat.controler.api.interceptor;
+package com.fengjx.ttwx.modules.wechat.controller.api.interceptor;
 
 import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.utils.AesUtil;

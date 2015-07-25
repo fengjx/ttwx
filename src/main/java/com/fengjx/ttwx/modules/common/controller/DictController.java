@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.common.controler;
+package com.fengjx.ttwx.modules.common.controller;
 
 import com.fengjx.ttwx.modules.common.model.DataDict;
 

@@ -12,7 +12,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/admin"/>
             <mvc:mapping path="/admin/**"/>
-            <bean class="com.fengjx.ttwx.modules.wechat.controler.admin.interceptor.AdminInterceptor"></bean>
+            <bean class="com.fengjx.ttwx.modules.wechat.controller.admin.interceptor.AdminInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 
@@ -22,7 +22,7 @@
             <mvc:mapping path="/**/pageList"/>
             <mvc:mapping path="/**/*PageList"/>
             <mvc:mapping path="/**/pageList/**"/>
-            <bean class="com.fengjx.ttwx.modules.common.controler.interceptor.PageInterceptor"></bean>
+            <bean class="com.fengjx.ttwx.modules.common.controller.interceptor.PageInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 
@@ -30,7 +30,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/wechat/api"/>
-            <bean class="com.fengjx.ttwx.modules.wechat.controler.api.interceptor.WechatInterceptor"></bean>
+            <bean class="com.fengjx.ttwx.modules.wechat.controller.api.interceptor.WechatInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 

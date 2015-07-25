@@ -1,24 +1,18 @@
 
-package com.fengjx.ttwx.modules.common.controler.interceptor;
+package com.fengjx.ttwx.modules.wechat.controller.admin.interceptor;
 
-import com.fengjx.ttwx.common.plugin.db.PageContext;
-import com.fengjx.ttwx.common.utils.LogUtil;
+import com.fengjx.ttwx.common.utils.WebUtil;
+import com.fengjx.ttwx.modules.common.constants.AppConfig;
+import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- * 分页拦截器
- */
-public class PageInterceptor implements HandlerInterceptor {
-
-    private static final Logger LOG = LoggerFactory.getLogger(PageInterceptor.class);
+public class AdminInterceptor implements HandlerInterceptor {
 
     public void afterCompletion(HttpServletRequest request,
             HttpServletResponse response, Object handler, Exception e)
@@ -40,20 +34,18 @@ public class PageInterceptor implements HandlerInterceptor {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object handler) throws Exception {
-        String limitStr = request.getParameter("limit");
-        // 默认每页10条
-        int pageSize = 10;
-        if (StringUtils.isNotBlank(limitStr)) {
-            pageSize = Integer.valueOf(limitStr);
+        HttpSession session = request.getSession();
+        SysUserEntity user = (SysUserEntity) session.getAttribute(AppConfig.LOGIN_FLAG);
+        // 登陆超时
+        if (null == user) {
+            // 如果是ajax请求
+            if (WebUtil.validAjax(request)) {
+                request.getRequestDispatcher("/common/loginTimeoutAjax").forward(request, response);
+            } else {
+                request.getRequestDispatcher("/common/loginTimeout").forward(request, response);
+            }
+            return false;
         }
-        String offsetStr = request.getParameter("offset");
-        int pageNumber = 1;
-        if (StringUtils.isNotBlank(offsetStr)) {
-            pageNumber = (Integer.valueOf(offsetStr) / pageSize) + 1;
-        }
-        LogUtil.debug(LOG, "page params pageSize=" + pageSize + " pageNumber=" + pageNumber);
-        PageContext.setPageSize(pageSize);
-        PageContext.setPageNumber(pageNumber);
         return true;
     }
 

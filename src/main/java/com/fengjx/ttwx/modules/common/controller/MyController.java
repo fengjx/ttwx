@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.common.controler;
+package com.fengjx.ttwx.modules.common.controller;
 
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.common.web.BaseController;

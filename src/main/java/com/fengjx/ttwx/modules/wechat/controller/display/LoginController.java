@@ -1,10 +1,10 @@
 
-package com.fengjx.ttwx.modules.wechat.controler.display;
+package com.fengjx.ttwx.modules.wechat.controller.display;
 
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.common.web.MyExecuteCallback;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
-import com.fengjx.ttwx.modules.common.controler.MyController;
+import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
 import com.fengjx.ttwx.modules.wechat.model.SysUser;
 
