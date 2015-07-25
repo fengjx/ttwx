@@ -10,7 +10,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<jdk.version>1.8</jdk.version>
+		<jdk.version>1.7</jdk.version>
 		<encoding>UTF-8</encoding>
 		<environment>dev</environment>
 	</properties>
@@ -175,11 +175,6 @@
 			<type>pom</type>
 		</dependency>
 		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.8.4</version>
-		</dependency>
-		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>2.3.22</version>
@@ -245,6 +240,12 @@
 			<id>release</id>
 			<properties>
 				<environment>release</environment>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<environment>test</environment>
 			</properties>
 		</profile>
 	</profiles>
