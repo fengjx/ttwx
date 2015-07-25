@@ -37,7 +37,7 @@ public class ValidExecutor extends BaseServiceExecutor {
         if (valid_code.equals(inMessage.getContent())) {
             Map<String, Object> attrs = accountRecord.getColumns();
             // 更新账号状态为激活
-            attrs.put("Valid_state", PublicAccount.VALID_STATE_ACTIVATE);
+            attrs.put("valid_state", PublicAccount.VALID_STATE_ACTIVATE);
             attrs.put("account_id", inMessage.getToUserName());
             publicAccount.update(attrs);
             return doAction(msgTemplate

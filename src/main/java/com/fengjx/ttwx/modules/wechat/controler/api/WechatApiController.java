@@ -3,7 +3,9 @@ package com.fengjx.ttwx.modules.wechat.controler.api;
 
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.common.controler.MyController;
+import com.fengjx.ttwx.modules.wechat.model.PublicAccount;
 import com.fengjx.ttwx.modules.wechat.process.ServiceEngine;
+import com.fengjx.ttwx.modules.wechat.process.bean.WechatContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,6 +33,9 @@ public class WechatApiController extends MyController {
     @Autowired
     private ServiceEngine serviceEngine;
 
+    @Autowired
+    private PublicAccount publicAccount;
+
     /**
      * 接口认证
      */
@@ -36,6 +43,10 @@ public class WechatApiController extends MyController {
     @ResponseBody
     public String valid(HttpServletRequest request) {
         // 拦截器里已经做了消息签名校验，这里直接返回就可以了
+        Map<String, Object> attrs = WechatContext.getInMessageRecord().getColumns();
+        attrs.put("valid_state", PublicAccount.VALID_STATE_EXCESS);
+        // 更新接口为已接入状态
+        publicAccount.update(attrs);
         return request.getParameter("echostr");
     }
 
