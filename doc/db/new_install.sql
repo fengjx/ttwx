@@ -312,7 +312,3 @@ CREATE TABLE `wechat_user_info` (
   KEY `FKA9C826C946F171D4` (`public_account_id`),
   KEY `FKA9C826C92814BF9C` (`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- View structure for `keyword_action_view`
--- ----------------------------
-DROP VIEW IF EXISTS `keyword_action_view`;
