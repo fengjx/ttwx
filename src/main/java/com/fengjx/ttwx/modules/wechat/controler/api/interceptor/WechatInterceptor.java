@@ -70,12 +70,14 @@ public class WechatInterceptor implements HandlerInterceptor {
             // 将公众号配置信息放到微信请求上下文
             Record record = publicAccount.findById(id);
             if (record.isEmpty()) {
-                LogUtil.info(LOG, "请求ticket无效");
+                LogUtil.info(LOG, "ticket无效，找不到对应公众号信息");
                 return false;
             }
+            WechatContext.setInMessageRecord(record);
             WxMpConfigStorage wxMpConfig = WxMpUtil.buildConfigStorage(record);
             // 非测试环境做签名校验
             if (!AppConfig.isTest()) {
+                LogUtil.debug(LOG, "进入签名校验");
                 WxMpService wxMpService = WxMpUtil.getWxMpServiceByConfig(wxMpConfig);
                 if (!wxMpService.checkSignature(timestamp, nonce, signature)) {
                     // 消息签名不正确，说明不是公众平台发过来的消息
@@ -102,7 +104,6 @@ public class WechatInterceptor implements HandlerInterceptor {
                         msgSignature);
             }
             WechatContext.setInMessage(inMessage);
-            WechatContext.setInMessageRecord(record);
             WechatContext.setWxMpConfigStorage(wxMpConfig);
             WechatContext.setEncryptType(encryptType);
             return true;
