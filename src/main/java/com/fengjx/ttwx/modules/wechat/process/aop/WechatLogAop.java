@@ -46,7 +46,7 @@ public class WechatLogAop {
             attrs.put("in_time", new Date());
             attrs.put("public_account_id", WechatContext.getInMessageRecord().getStr("id"));
             Object res = joinpoint.proceed();
-            attrs.put("resp_xml", res.toString());
+            attrs.put("resp_xml", WechatContext.getOutMessage().toXml());
             attrs.put("resp_time", new Date());
             msgLog.insert(attrs);
             return res;

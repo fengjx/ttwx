@@ -8,6 +8,7 @@ import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -27,6 +28,7 @@ public class WechatContext {
     private static ThreadLocal<Record> inMessageRecord = new InheritableThreadLocal();
     private static ThreadLocal<String> encryptType = new InheritableThreadLocal();
     private static ThreadLocal<WxMpXmlMessage> inMessage = new InheritableThreadLocal();
+    private static ThreadLocal<WxMpXmlOutMessage> outMessage = new InheritableThreadLocal();
 
     public static WxMpConfigStorage getWxMpConfigStorage() {
         return wxMpConfigStorage.get();
@@ -50,6 +52,14 @@ public class WechatContext {
 
     public static void setInMessageRecord(Record inMessageRecord) {
         WechatContext.inMessageRecord.set(inMessageRecord);
+    }
+
+    public static WxMpXmlOutMessage getOutMessage() {
+        return outMessage.get();
+    }
+
+    public static void setOutMessage(WxMpXmlOutMessage outMessage) {
+        WechatContext.outMessage.set(outMessage);
     }
 
     public static String getEncryptType() {
