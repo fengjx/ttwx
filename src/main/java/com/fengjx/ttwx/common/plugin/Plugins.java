@@ -21,16 +21,16 @@ public class Plugins {
 
     public void init() {
         if (CollectionUtils.isEmpty(pluginList)) {
-            LogUtil.warn(LOG, "pluginList is null，no plugin will be start");
+            LogUtil.info(LOG, "pluginList is null，no plugin will be start");
         } else {
         	for (IPlugin p : pluginList) {
         		  p.start();
-                  LogUtil.warn(LOG, p.getClass().getSimpleName() + " started...");	
+                  LogUtil.info(LOG, p.getClass().getSimpleName() + " started...");
 			}
         	//java 8 style
 //            pluginList.forEach(p -> {
 //                p.start();
-//                LogUtil.warn(LOG, p.getClass().getSimpleName() + " started...");
+//                LogUtil.info(LOG, p.getClass().getSimpleName() + " started...");
 //            });
         }
     }
