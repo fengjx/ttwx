@@ -95,7 +95,7 @@ public abstract class BaseServiceExecutor implements ServiceExecutor, ServiceExe
         }
         xmlMsg = xmlMsg.replaceAll("\\<CreateTime>(.*?)\\</CreateTime>",
                 "<CreateTime><![CDATA[" + new Date().getTime() + "]]></CreateTime>");
-        return XStreamTransformer.fromXml(
+        return (WxMpXmlOutMessage) XStreamTransformer.fromXml(
                 WxMpUtil.getXmlOutMsgType(MessageUtil.parseMsgType(xmlMsg)), xmlMsg);
         // 替换参数
         // respMessage = MessageUtil.replaceMsgByReg(respMessage,
