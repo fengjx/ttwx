@@ -38,10 +38,12 @@ public class LoginController extends MyController {
     @ResponseBody
     public Map<String, String> signin(HttpServletRequest request, SysUserEntity user,
             String valid_code) {
-        Map<String, String> res = compareValidCode(request, valid_code);
-        // ignore valid code here
-        if (false && "0".equals(res.get("code"))) {
-            return res;
+        // 测试环境忽略掉验证码校验
+        if (!AppConfig.isTest()) {
+            Map<String, String> res = compareValidCode(request, valid_code);
+            if ("0".equals(res.get("code"))) {
+                return res;
+            }
         }
         SysUserEntity loginUser = sysUser.signin(user.getUsername(), user.getPwd());
         LogUtil.debug(LOG, "查询到登陆用户：" + loginUser);
