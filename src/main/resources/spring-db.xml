@@ -48,7 +48,8 @@
         <property name="packages">
             <value>
                 com.fengjx.ttwx.modules.wechat.model,
-                com.fengjx.ttwx.modules.common.model
+                com.fengjx.ttwx.modules.common.model,
+                com.fengjx.ttwx.modules.system.model
             </value>
         </property>
     </bean>

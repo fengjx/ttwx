@@ -1,28 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<select class="form-control" id="${param.id}" name="${param.name}" style="width: 159px;">
-    <c:if test="${param.showAll eq '1'}">
-        <option value="" selected="selected"></option>
-    </c:if>
-    <c:choose>
-        <c:when test="${param.app_type eq 'web' }">
-            <c:forEach var="a" items="${apps}" varStatus="status">
-                <option value="${a.app_url}">${a.name}</option>
-            </c:forEach>
-        </c:when>
-        <c:when test="${param.app_type eq 'restful' }">
-            <c:forEach var="a" items="${apps}" varStatus="status">
-                <option value="${a.restful_url}">${a.name}</option>
-            </c:forEach>
-        </c:when>
-        <c:when test="${param.app_type eq 'api' }">
-            <c:forEach var="a" items="${apps}" varStatus="status">
-                <option value="${a.bean_name}">${a.name}</option>
-            </c:forEach>
-        </c:when>
-    </c:choose>
-</select>--%>
-
 <c:choose>
     <c:when test="${param.app_type eq 'web' }">
         <div class="form-inline">

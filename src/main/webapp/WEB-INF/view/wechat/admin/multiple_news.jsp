@@ -131,7 +131,7 @@
 										</label>
 									</label>
 							<span id="span_url" style="display:none;">
-								<jsp:include page="/admin/wechat/ext/selecter">
+								<jsp:include page="/admin/system/ext/selecter">
 									<jsp:param name="showAll" value="1"/>
 									<jsp:param name="id" value="busiapp_url"/>
 									<jsp:param name="name" value="busiapp_url"/>

@@ -1,10 +1,12 @@
 
-package com.fengjx.ttwx.modules.wechat.model;
+package com.fengjx.ttwx.modules.system.model;
 
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 
+import com.fengjx.ttwx.common.utils.CommonUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,6 +22,9 @@ import java.util.Map;
 @Mapper(table = "wechat_ext_app")
 @Component
 public class ExtApp extends Model {
+
+    @Autowired
+    private ExtAppSupport extAppSupport;
 
     /**
      * @param app_type 应用类型 web、api、restful
@@ -47,5 +52,25 @@ public class ExtApp extends Model {
         sql.append(" where e.app_type = ?");
         return findList(sql.toString(), params.toArray());
     }
+
+    /**
+     * 保存扩展接口（不包含URL应用）
+     */
+    public void saveExtApi(Map<String,Object> attrs, String[] msgTypes, String[] eventTypes){
+        String apiId = (String)attrs.get("id");
+        if(StringUtils.isBlank(apiId)){
+            apiId = CommonUtils.getPrimaryKey();
+            attrs.put("id",apiId);
+        }else {
+            StringBuilder delSql = new StringBuilder("delete from ");
+            delSql.append(extAppSupport.getTableName());
+            delSql.append(" where ext_app_id = ?");
+            execute(delSql.toString(),apiId);
+        }
+
+
+    }
+
+
 
 }
