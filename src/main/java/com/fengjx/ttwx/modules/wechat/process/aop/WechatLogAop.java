@@ -6,6 +6,7 @@ import com.fengjx.ttwx.modules.wechat.model.ReqMsgLog;
 import com.fengjx.ttwx.modules.wechat.process.bean.WechatContext;
 
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
@@ -46,7 +47,8 @@ public class WechatLogAop {
             attrs.put("in_time", new Date());
             attrs.put("public_account_id", WechatContext.getInMessageRecord().getStr("id"));
             Object res = joinpoint.proceed();
-            attrs.put("resp_xml", WechatContext.getOutMessage().toXml());
+            WxMpXmlOutMessage outMessage = WechatContext.getOutMessage();
+			attrs.put("resp_xml", outMessage==null?"":outMessage.toXml());
             attrs.put("resp_time", new Date());
             msgLog.insert(attrs);
             return res;
