@@ -164,14 +164,15 @@
 							<i class="arrow arrow_in" style="margin-top: 0px;"></i>
 							<div class="mask" style="display: none;"></div>
 						</div>
-					</div>
-				</div>
-				<div class="tool_area">
+						<div class="tool_area">
 					<div class="tool_bar border tc">
 				<span class="btn btn_input btn_primary" id="js_submit"><button onclick="submitNewsForm();">保存</button>
 				</span>
 					</div>
 				</div>
+					</div>
+				</div>
+				
 			</div>
 
 			<form id="news_form" action="" method="POST">
