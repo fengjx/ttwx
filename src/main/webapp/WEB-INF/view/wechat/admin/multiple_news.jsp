@@ -146,8 +146,17 @@
 										<span class="tips l">（如果不填写链接地址，可以从编辑器中编辑內容，系统会生成编辑內容的URL地址）</span>
 									</label>
 									<div class="edui_editor_wrp edui-default" id="js_editor">
-										<!-- 文本编辑器 -->
+										
+									</div>
+									<div class="w_left">
+											<jsp:include
+												page="/WEB-INF/view/wechat/admin/wechart_template.jsp"></jsp:include>
+										</div>
+										<div class="w_right">
+												<!-- 文本编辑器 -->
 										<script id="container" name="content" type="text/plain"></script>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

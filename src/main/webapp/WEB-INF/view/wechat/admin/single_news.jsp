@@ -120,16 +120,21 @@
 								</jsp:include>
 							</span>
 								</div>
-								<div id="js_ueditor" class="appmsg_edit_item content_edit">
-									<label for="" class="frm_label">
-										<strong class="title">正文</strong>
-										<span class="tips l">（如果不填写链接地址，可以从编辑器中编辑內容，系統会生成编辑內容的URL地址）</span>
-									</label>
-									<div id="js_editor" class="edui_editor_wrp edui-default">
-										<script id="container" name="content" type="text/plain"></script>
+									<div id="js_ueditor" class="appmsg_edit_item content_edit">
+										<label for="" class="frm_label"> <strong class="title">正文</strong>
+											<span class="tips l">（如果不填写链接地址，可以从编辑器中编辑內容，系統会生成编辑內容的URL地址）</span>
+										</label>
+										 <div id="js_editor" class="edui_editor_wrp edui-default">
+										<div class="w_left">
+											<jsp:include
+												page="/WEB-INF/view/wechat/admin/wechart_template.jsp"></jsp:include>
+										</div>
+										<div class="w_right">
+												<script id="container" name="content" type="text/plain"></script>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
 							<i class="arrow arrow_out" style="margin-top: 0px;"></i> <i
 								class="arrow arrow_in" style="margin-top: 0px;"></i>
 							<div class="mask" style="display: none;"></div>
