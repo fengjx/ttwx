@@ -48,7 +48,8 @@ public class SysUser extends Model {
         Map<String, Object> attrs = new HashMap();
         attrs.put("username", username);
         Record record = findOne(attrs);
-        if (null != record && record.getStr("pwd").equalsIgnoreCase(DigestUtils.md5Hex(pwd))) {
+        String md5Hex = DigestUtils.md5Hex(pwd);
+		if (null != record && record.getStr("pwd").equalsIgnoreCase(md5Hex)) {
             return record.toBean(SysUserEntity.class);
         }
         return null;

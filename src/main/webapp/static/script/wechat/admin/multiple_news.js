@@ -303,7 +303,7 @@ function validForm() {
 	var xml_data = "<xml>" +
 		"<ToUserName><![CDATA[]]></ToUserName>" +
 		"<FromUserName><![CDATA[]]></FromUserName>" +
-		"<CreateTime><![CDATA[]]></CreateTime>" +
+		"<CreateTime><![CDATA[1]]></CreateTime>" +
 		"<MsgType><![CDATA[news]]></MsgType>" +
 		"<ArticleCount>"+total+"</ArticleCount>" +
 		"<Articles>";

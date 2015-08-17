@@ -5,12 +5,20 @@ import com.fengjx.ttwx.common.utils.JsonUtil;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
 import com.fengjx.ttwx.modules.wechat.model.Material;
+ 
+
+
+
+
+
+import me.chanjar.weixin.common.exception.WxErrorException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,9 +55,10 @@ public class MaterialController extends MyController {
     }
 
     @RequestMapping("/single")
-    public ModelAndView single(String id) {
+    public ModelAndView single(@RequestParam(value="id",required=false) String id,@RequestParam(value="fname",required=false) String fileName) {
         ModelAndView mv = new ModelAndView("/wechat/admin/single_news");
         mv.addObject("id", id);
+        mv.addObject("fname", fileName);
         return mv;
     }
 
@@ -66,7 +75,20 @@ public class MaterialController extends MyController {
         SysUserEntity sysUser = getLoginSysUser(request);
         List<Map<String, Object>> contents = StringUtils.isNotBlank(contentsJson) ? JsonUtil
                 .parseJSON2List(contentsJson) : null;
-        material.saveOrUpdate(getRequestMap(request), contents, sysUser.getId());
+                Map<String, Object> params=       getRequestMap(request);
+    material.saveOrUpdate(params, contents, sysUser.getId());
+        String msgType = (String) params.get("msg_type");
+        if (null != msgType && msgType.equals("news")) { // 图文消息
+            if (null != contents && contents.size() > 0) {
+                String xml_data = (String) params.get("xml_data");
+                try {
+					material.sendMessage(contents, xml_data, sysUser.getId());
+				} catch (WxErrorException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        }
         return retSuccess();
     }
 
@@ -88,5 +110,7 @@ public class MaterialController extends MyController {
         material.deleteById(id);
         return retSuccess();
     }
+    
+ 
 
 }

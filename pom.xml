@@ -224,6 +224,11 @@
 			<artifactId>guava</artifactId>
 			<version>18.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.qiniu</groupId>
+			<artifactId>qiniu-java-sdk</artifactId>
+			<version>[7.0.0, 7.0.99]</version>
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -290,20 +295,10 @@
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.8</version>
 				<executions>
-					<execution>
-						<id>copy-env-sources</id>
-						<phase>process-resources</phase>
-						<configuration>
-							<target>
-								<copy todir="${build.outputDirectory}" overwrite="true">
-									<fileset dir="src/main/resources/env/${environment}" />
-								</copy>
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
+					<!-- <execution> <id>copy-env-sources</id> <phase>process-resources</phase> 
+						<configuration> <target> <copy todir="${build.outputDirectory}" overwrite="true"> 
+						<fileset dir="src/main/resources/env/${environment}" /> </copy> </target> 
+						</configuration> <goals> <goal>run</goal> </goals> </execution> -->
 					<execution>
 						<id>zip</id>
 						<phase>prepare-package</phase>
@@ -312,7 +307,7 @@
 								<!-- 静态资源打包 -->
 								<zip destfile="${project.build.directory}/res.zip">
 									<fileset dir="src/main/webapp/static">
-										<include name="**/*.*"/>
+										<include name="**/*.*" />
 									</fileset>
 								</zip>
 							</target>

@@ -1,12 +1,13 @@
 package com.fengjx.ttwx.common.utils;
 
-import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.AlgorithmParameterSpec;
+
+import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
 
 /**
  * 通过AES算法对文本进行加密解密
@@ -36,10 +37,9 @@ public class AesUtil {
             // 为指定算法生成一个密钥生成器对象。
             kgen = KeyGenerator.getInstance("AES");
             // 使用用户提供的随机源初始化此密钥生成器，使其具有确定的密钥长度。
-            // kgen.init(128, new SecureRandom(keyValue));  // 这种方式随操作系统本身的內部状态而变化，可能会出问题
-            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+            SecureRandom secureRandom =   SecureRandom.getInstance("SHA1PRNG");
             secureRandom.setSeed(keyValue);
-            kgen.init(128, secureRandom);
+			kgen.init(128, secureRandom);
             // 使用KeyGenerator生成（对称）密钥。
             key = kgen.generateKey();
             // 使用iv中的字节作为IV来构造一个 算法参数。
@@ -133,4 +133,6 @@ public class AesUtil {
         }
         return encrypted;
     }
+    
+   
 }

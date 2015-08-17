@@ -63,7 +63,7 @@ public class WechatInterceptor implements HandlerInterceptor {
                 return false;
             }
             // 解密
-            String id = AesUtil.decrypt(ticket);
+            String id =  AesUtil.decrypt(ticket); 
             String signature = request.getParameter("signature");
             String nonce = request.getParameter("nonce");
             String timestamp = request.getParameter("timestamp");
