@@ -37,7 +37,9 @@ public class AesUtil {
             // 为指定算法生成一个密钥生成器对象。
             kgen = KeyGenerator.getInstance("AES");
             // 使用用户提供的随机源初始化此密钥生成器，使其具有确定的密钥长度。
-            kgen.init(128, new SecureRandom(keyValue));
+            SecureRandom secureRandom =   SecureRandom.getInstance("SHA1PRNG");
+            secureRandom.setSeed(keyValue);
+			kgen.init(128, secureRandom);
             // 使用KeyGenerator生成（对称）密钥。
             key = kgen.generateKey();
             // 使用iv中的字节作为IV来构造一个 算法参数。
@@ -131,4 +133,6 @@ public class AesUtil {
         }
         return encrypted;
     }
+    
+   
 }
