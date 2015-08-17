@@ -10,13 +10,35 @@ import com.fengjx.ttwx.common.utils.FileUtil;
 import com.fengjx.ttwx.common.utils.HttpUtil;
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
+ 
+
+import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.WxMpMassNews;
+import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutNewsMessage;
+import me.chanjar.weixin.mp.bean.WxMpMassNews.WxMpMassNewsArticle;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutNewsMessage.Item;
+import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
+import me.chanjar.weixin.mp.bean.result.WxMpMassUploadResult;
+import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +53,10 @@ import java.util.Map;
 @Mapper(table = "wechat_material")
 public class Material extends Model {
 
+	private static final Log logger=LogFactory.getLog(Material.class);
+	@Autowired 
+	private PublicAccount publicAccount;
+	
     private static final Logger LOG = LoggerFactory.getLogger(Material.class);
 
     /**
@@ -61,6 +87,7 @@ public class Material extends Model {
         if (MapUtils.isEmpty(params)) {
             throw new RuntimeException("添加素材失败，提交的数据为空");
         }
+       String fileName=(String) params.get("file_name");
         Date now_date = new Date();
         params.put("in_time", now_date);
         String msgType = (String) params.get("msg_type");
@@ -70,7 +97,8 @@ public class Material extends Model {
                 int l = contents.size();
                 for (int i = 0; i < l; i++) {
                     String htmlPath = AppConfig.STATIC_PATH;
-                    String htmlUrl = "/upload/html/material/" + CommonUtils.getPrimaryKey()
+                    String primaryKey =StringUtils.isBlank(fileName)? CommonUtils.getPrimaryKey():fileName;
+					String htmlUrl = "/upload/html/material/" + primaryKey
                             + ".html";
                     // 如果不存在则创建文件夹
                     FileUtil.makeDirectory(htmlPath + "/upload/html/material/");
@@ -78,6 +106,7 @@ public class Material extends Model {
                     Map<String, Object> content = contents.get(i);
                     content.put("app_name", AppConfig.APP_NAME);
                     content.put("date", CommonUtils.date2String(now_date));
+                    content.put("email", AppConfig.SUPPORT_EMAIL);
                     // 通过freemarker生成静态页面，并返回URL
                     FreeMarkerUtil.createHTML(content, "html/material.ftl", htmlPath);
                     xml_data = xml_data.replaceAll("\\<Url_" + i + ">(.*?)\\</Url_" + i + ">",
@@ -112,6 +141,103 @@ public class Material extends Model {
             LogUtil.error(LOG, "读取页面失败，url-->" + url, e);
         }
         return conten;
+    }
+    
+    public void sendMessage(final List<Map<String, Object>> contents,String xmlData,String userId) throws WxErrorException{
+    	 
+     
+
+		WxMpXmlOutNewsMessage outNewsMessage = XStreamTransformer.fromXml(
+				WxMpXmlOutNewsMessage.class, xmlData);
+		outNewsMessage.setCreateTime(System.currentTimeMillis());
+		 
+		// 微信服务器交互
+	 
+		WxMpService mpService = 	publicAccount.getWxMpService(userId);
+
+		WxMpMassNews massNews = new WxMpMassNews();
+
+		int i = 0;
+		for (Item item : outNewsMessage.getArticles()) {
+			if(contents==null||contents.isEmpty()){ 
+				WxMpMassNewsArticle art = new WxMpMassNewsArticle();
+				art.setAuthor(AppConfig.APP_NAME);
+				art.setShowCoverPic(false);
+				//art.setContentSourceUrl(contentSourceUrl);;
+				art.setTitle(item.getTitle());
+				 
+				 
+				art.setContent("Test");
+				massNews.addArticle(art);
+				break;
+			}
+			Map<String, Object> content = contents.get(i);
+			//logger.debug("content:" + content);
+			String picUrl = item.getPicUrl();
+			WxMpMassNewsArticle art = new WxMpMassNewsArticle();
+			art.setAuthor(AppConfig.APP_NAME);
+			art.setShowCoverPic(false);
+			//art.setContentSourceUrl(contentSourceUrl);;
+			art.setTitle(item.getTitle());
+			Object content2 = content.get("content");
+			logger.debug("content2:"+content2);
+			art.setContent((String)content2);
+		 
+			if (picUrl != null) {
+				InputStream is;
+				WxMediaUploadResult uploadMediaResult = null;
+				try {
+					//上传图片获得 media id
+					is = new URL(picUrl).openStream();
+					uploadMediaResult = mpService.mediaUpload(
+							WxConsts.MEDIA_IMAGE, WxConsts.FILE_JPG, is);
+				} catch (MalformedURLException e) {
+				  e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (WxErrorException e) {
+					e.printStackTrace();
+				}
+			 logger.debug("uploadImageResult:" + uploadMediaResult);
+				if (uploadMediaResult != null
+						&& uploadMediaResult.getMediaId() != null) {
+					art.setThumbMediaId(uploadMediaResult.getMediaId());
+				}
+			}
+			massNews.addArticle(art);
+			i++;
+		}
+
+		//if(true) return;
+		// 发消息
+		 
+			
+			//upload news and get media id
+			WxMpMassUploadResult  uploadResult = mpService
+						.massNewsUpload(massNews);
+		 
+			//logger.debug("uploadnews:" + uploadResult);
+			
+			//send group message here
+			
+			//  uploadResult:WxUploadResult [type=news, media_id=6qgukdST2fRPjhPsW8CYBU_7wJe4x3v2FucGrdFrcxz-Oiix2jMBAV9IOrBusLO7, created_at=1437640304]
+			//测试账号不允许群发
+			//返回 "errcode":48003,"
+//			WxMpMassGroupMessage message = new WxMpMassGroupMessage();
+//			message.setMediaId(uploadResult.getMediaId());
+//			message.setMsgtype(WxConsts.MASS_MSG_NEWS);
+//			WxMpMassSendResult sendResult = mpService
+//					.massGroupMessageSend(message);
+			
+			//just for development test
+			WxMpMassOpenIdsMessage massMessage = new WxMpMassOpenIdsMessage();
+			massMessage.setMsgType(WxConsts.MASS_MSG_NEWS);
+			//massMessage.setContent("消息内容");
+			massMessage.setMediaId(uploadResult.getMediaId());
+			massMessage.getToUsers().add("opi45t5FeNlJVO-oaprnOWQwPSzA");
+			 massMessage.getToUsers().add("opi45t5DfijippcrCnTJIaqxdfSQ");
+			WxMpMassSendResult sendResult = mpService.massOpenIdsMessageSend(massMessage);
+			logger.debug("send mass message news:" + sendResult);
     }
 
 }

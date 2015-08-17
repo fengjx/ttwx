@@ -10,6 +10,7 @@
 
     <!-- 静态资源(js/image)的访问 -->
     <mvc:resources location="/static/" mapping="/static/**" />
+    <mvc:resources location="/upload/" mapping="/upload/**" />
     <mvc:resources location="/plugin/ueditor/" mapping="/plugin/ueditor/**" />
 
 
