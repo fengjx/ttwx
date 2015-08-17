@@ -48,9 +48,10 @@ public class MaterialController extends MyController {
     }
 
     @RequestMapping("/multiple")
-    public ModelAndView multiple(String id) {
+    public ModelAndView multiple(@RequestParam(value="id",required=false) String id,@RequestParam(value="fname",required=false) String fileName) {
         ModelAndView mv = new ModelAndView("/wechat/admin/multiple_news");
         mv.addObject("id", id);
+        mv.addObject("fname", fileName);
         return mv;
     }
 
@@ -76,8 +77,15 @@ public class MaterialController extends MyController {
         List<Map<String, Object>> contents = StringUtils.isNotBlank(contentsJson) ? JsonUtil
                 .parseJSON2List(contentsJson) : null;
                 Map<String, Object> params=       getRequestMap(request);
-    material.saveOrUpdate(params, contents, sysUser.getId());
-        String msgType = (String) params.get("msg_type");
+       material.saveOrUpdate(params, contents, sysUser.getId());
+    
+         //toSendMessage(sysUser, contents, params);
+        return retSuccess();
+    }
+
+	private void toSendMessage(SysUserEntity sysUser,
+			List<Map<String, Object>> contents, Map<String, Object> params) {
+		String msgType = (String) params.get("msg_type");
         if (null != msgType && msgType.equals("news")) { // 图文消息
             if (null != contents && contents.size() > 0) {
                 String xml_data = (String) params.get("xml_data");
@@ -89,8 +97,7 @@ public class MaterialController extends MyController {
 				}
             }
         }
-        return retSuccess();
-    }
+	}
 
     @RequestMapping("/load")
     @ResponseBody

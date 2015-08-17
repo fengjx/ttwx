@@ -32,7 +32,8 @@ function loadMaterials(page,isAppend){
 				var material_id = rowData.id;
 				var msg_type = rowData.msg_type;
 				var in_time = rowData.in_time;
-				html = xml2NewsHtml(rowData.xml_data,in_time,material_id,'edit');
+				var file_name=rowData.file_name;
+				html = xml2NewsHtml(rowData.xml_data,in_time,material_id,'edit',file_name);
 				if(i%2 == 0){	
 					$("#appmsgList2").append(html);
 				}else{

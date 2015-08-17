@@ -56,7 +56,7 @@
 
 <footer class="footer">
     <div class="container">
-        <p class="text-muted">技术支持 - Email: xd-fjx@qq.com</p>
+        <p class="text-muted">技术支持 - Email: ${email}</p>
     </div>
 </footer>
 

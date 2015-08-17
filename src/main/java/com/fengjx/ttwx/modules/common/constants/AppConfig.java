@@ -25,6 +25,7 @@ public final class AppConfig {
     public static final String RESOURCE_URL = GetPropertiesVal.getLabel("resource.url");
     public static final String STATIC_DOMAIN = GetPropertiesVal.getLabel("staticDomain");
     public static final String STATIC_PATH = GetPropertiesVal.getLabel("staticPath");
+    public static final String SUPPORT_EMAIL=GetPropertiesVal.getLabel("support.email");
 
     /**
      *

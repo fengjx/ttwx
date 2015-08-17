@@ -180,6 +180,7 @@
 				<input type="hidden" id="msgTyype" name="msg_type" value="news"/>
 				<input type="hidden" id="xml_data" name="xml_data" value=""/>
 				<input type="hidden" id="contentsJson" name="contentsJson"/>
+				<input type="hidden" id="fileName" name="file_name" value="${fname}">
 			</form>
 
 		</div>
