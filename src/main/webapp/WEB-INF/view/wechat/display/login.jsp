@@ -44,7 +44,7 @@
 								<div class="row top-margin control-group">
 									<div class="col-lg-8">
 										<label>验证码<span class="text-danger">*</span></label>
-										<input id="valid_code" name="valid_code" maxlength="4" type="text" class="form-control login-field" placeholder="输入验证码" />
+										<input id="valid_code" name="valid_code" maxlength="4" type="text" class="form-control login-field" placeholder="输入验证码" value="AAAA" />
 										<label class="login-field-icon fui-clip label-icon" style="margin-right: 15px;" for="valid_code"></label>
 									</div>
 									<div class="col-lg-4" style="margin-top: 40px;">

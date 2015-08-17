@@ -5,6 +5,7 @@ import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 
 import com.fengjx.ttwx.common.utils.CommonUtils;
+import me.chanjar.weixin.common.api.WxConsts;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,11 +37,12 @@ public class ExtApp extends Model {
         if (StringUtils.isBlank(app_type)) {
             throw new IllegalArgumentException("app_type不能为空！");
         }
-        List<Object> params = new ArrayList<Object>();
+        List<Object> params = new ArrayList();
         params.add(app_type);
         StringBuilder sql = new StringBuilder(getSelectSql("e"));
+
         if (StringUtils.isNotBlank(msg_type)) {
-            sql.append(" inner join wechat_ext_app_support_type s on s.msg_type = ?");
+            sql.append(" left join wechat_ext_app_support_type s on s.msg_type = ?");
             params.add(msg_type);
             if (StringUtils.isNotBlank(event_type)) {
                 sql.append("and s.event_type = ?");
@@ -49,7 +51,10 @@ public class ExtApp extends Model {
                 sql.append(" and (s.event_type = '' or s.event_type is null)");
             }
         }
-        sql.append(" where e.app_type = ?");
+        sql.append(" where e.is_valid = '1' ");
+        if (StringUtils.isBlank(app_type)) {
+            sql.append(" and e.app_type = ?");
+        }
         return findList(sql.toString(), params.toArray());
     }
 

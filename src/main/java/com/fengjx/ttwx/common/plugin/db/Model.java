@@ -389,7 +389,7 @@ public abstract class Model {
      * 获得带别名的单表查询sql（如：select u.id, u.name, u.age from user u)
      *
      * @param cls
-     * @param alias
+     * @param alias 表的别名
      * @return
      */
     public String getSelectSql(Class<? extends Model> cls, String alias) {
