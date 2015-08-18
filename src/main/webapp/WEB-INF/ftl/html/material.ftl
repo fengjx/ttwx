@@ -36,6 +36,16 @@
         .container .text-muted {
             margin: 20px 0;
         }
+        .container * {
+           max-width: 100%;
+           width: 100%; 
+         } 
+         
+        .rich_media_title {
+          font-size: 24px;
+          font-weight: 400;
+          line-height: 1.4;
+         }
 
     </style>
 </head>
@@ -43,7 +53,7 @@
 <!-- Begin page content -->
 <div class="container">
     <div class="page-header">
-        <h1>${title!}</h1>
+        <h1 class="rich_media_title">${title!}</h1>
         <p class="activity-info">
             <span>${date!}</span>
             <a>
@@ -56,7 +66,7 @@
 
 <footer class="footer">
     <div class="container">
-        <p class="text-muted">技术支持 - Email: xd-fjx@qq.com</p>
+        <p class="text-muted">技术支持 - Email: ${email}</p>
     </div>
 </footer>
 

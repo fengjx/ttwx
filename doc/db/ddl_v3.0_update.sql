@@ -17,3 +17,6 @@ ALTER TABLE `wechat_public_account`
 DROP COLUMN `ticket`,
 MODIFY COLUMN `token`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `pwd`;
 
+ALTER TABLE `wechat_material`
+ADD COLUMN `file_name`  varchar(255) NULL AFTER `msg_type`;
+
