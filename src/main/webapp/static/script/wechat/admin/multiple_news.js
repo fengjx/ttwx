@@ -44,6 +44,7 @@ $(function(){
 	});
 	
 	$("#news_form").submit(function(){
+		var preview=$("#previewMsg").val();
 		$(this).ajaxSubmit({
 			url : domain + "/admin/wechat/material/save",
 			dataType : 'json',
@@ -53,11 +54,15 @@ $(function(){
 			success : function(res){
 				app.closeDialog();
 				if(res && '1' == res.code){
+					if(preview){
+						app.alert("预览成功，请留意微信消息！");	
+					}else{
 					app.alertModal("保存成功！",{
 						ok: function () {
 							window.location.href = domain + '/admin/wechat/material';
 						}
 					});
+					}
 				}else{
 					app.alertModal(res.msg?res.msg:"保存失败！");
 				}
@@ -289,8 +294,13 @@ function settingInner(dataId){
 /**
  * 提交保存
  */
-function submitNewsForm(){
+function submitNewsForm(isPreview){
 	if(validForm()){
+		if(isPreview){
+			$("#previewMsg").val(true);
+		}else{
+			$("#previewMsg").val(false);
+		}
 		$("#news_form").submit();
 	}
 }

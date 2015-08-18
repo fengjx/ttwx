@@ -8,6 +8,8 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.WxMpServiceImpl;
+import me.chanjar.weixin.mp.api.ext.WxMpServiceExt;
+import me.chanjar.weixin.mp.api.ext.WxMpServiceImplExt;
 import me.chanjar.weixin.mp.bean.*;
 
 /**
@@ -41,7 +43,7 @@ public final class WxMpUtil {
      * @return
      */
     public static WxMpService getWxMpServiceByConfig(WxMpConfigStorage config) {
-        WxMpService wxMpService = new WxMpServiceImpl();
+    	WxMpServiceExt wxMpService = new WxMpServiceImplExt();
         wxMpService.setWxMpConfigStorage(config);
         return wxMpService;
     }

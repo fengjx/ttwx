@@ -19,11 +19,13 @@ import com.fengjx.ttwx.modules.common.constants.AppConfig;
 
 
 
+
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.ext.WxMpServiceExt;
 import me.chanjar.weixin.mp.bean.WxMpMassNews;
 import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutNewsMessage;
@@ -187,7 +189,7 @@ public class Material extends Model {
         return conten;
     }
     
-    public void sendMessage(final List<Map<String, Object>> contents,String xmlData,String userId) throws WxErrorException{
+    public void previewMessage(final List<Map<String, Object>> contents,String xmlData,String userId) throws WxErrorException{
     	 
      
 
@@ -197,8 +199,7 @@ public class Material extends Model {
 		 
 		// 微信服务器交互
 	 
-		WxMpService mpService = 	publicAccount.getWxMpService(userId);
-
+		WxMpServiceExt mpService =(WxMpServiceExt)	publicAccount.getWxMpService(userId);
 		WxMpMassNews massNews = new WxMpMassNews();
 
 		int i = 0;
@@ -278,8 +279,7 @@ public class Material extends Model {
 			//massMessage.setContent("消息内容");
 			massMessage.setMediaId(uploadResult.getMediaId());
 			massMessage.getToUsers().add("oaXuSv4_0mXijafuTFuJ6DqeX7Jo");
-			 massMessage.getToUsers().add("oaXuSv4_0mXijafuTFuJ6DqeX7Jo");
-			WxMpMassSendResult sendResult = mpService.massOpenIdsMessageSend(massMessage);
+			WxMpMassSendResult sendResult = mpService.massPreviewMessage(massMessage);
 			logger.debug("send mass message news:" + sendResult);
     }
 
