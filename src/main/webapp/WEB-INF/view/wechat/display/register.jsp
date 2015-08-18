@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="/WEB-INF/view/common/inc/meta.jsp">
-	<jsp:param value="注册" name="title"/>
-</jsp:include>
+	<jsp:include page="/WEB-INF/view/common/inc/meta.jsp">
+		<jsp:param value="注册" name="title"/>
+	</jsp:include>
+	<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
 </head>
 <body>
-	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
 	<!-- container -->
 	<div class="container page-wrapper">
 		<ol class="breadcrumb">
@@ -70,9 +70,6 @@
 		</div>
 	</div>	<!-- /container -->
 	
-	<%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
-	<jsp:include page="/WEB-INF/view/common/inc/display.jsp"></jsp:include>
-	<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
 	<script src="<%=resourceUrl%>/script/wechat/display/register.js" type="text/javascript"></script>
 </body>
 </html>

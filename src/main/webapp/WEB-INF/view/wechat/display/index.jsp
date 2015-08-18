@@ -8,7 +8,6 @@
 <link href="<%=resourceUrl%>/css/index.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
 
 	<div class="jumbotron masthead">
 		<div class="container text-center">
@@ -85,9 +84,6 @@
 	        </div>
       </div>
 	</div><!-- /.container -->
-	
-	<%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
-	<jsp:include page="/WEB-INF/view/common/inc/display.jsp"></jsp:include>
 	
 </body>
 </html>

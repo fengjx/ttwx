@@ -3,19 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="/WEB-INF/view/common/inc/meta.jsp">
-	<jsp:param value="登录" name="title"/>
-</jsp:include>
-<style type="text/css">
-	
-	.label-icon{
-		margin-top: 40px;
-	}
-	
-</style>
+	<jsp:include page="/WEB-INF/view/common/inc/meta.jsp">
+		<jsp:param value="登录" name="title"/>
+	</jsp:include>
+	<style type="text/css">
+
+		.label-icon{
+			margin-top: 40px;
+		}
+
+	</style>
+	<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
 </head>
 <body>
-	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
 	<!-- container -->
 	<div class="container page-wrapper">
 		<ol class="breadcrumb">
@@ -72,9 +72,6 @@
 		</div>
 	</div>	<!-- /container -->
 	
-	<%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
-	<jsp:include page="/WEB-INF/view/common/inc/display.jsp"></jsp:include>
-	<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
 	<script src="<%=resourceUrl%>/script/wechat/display/login.js" type="text/javascript"></script>
 </body>
 </html>

@@ -8,7 +8,6 @@
 </jsp:include>
 </head>
 <body>
-	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
 	<!-- container -->
 	<div class="container page-wrapper">
 		<ol class="breadcrumb">
@@ -24,10 +23,5 @@
 		</div>
 	</div>	<!-- /container -->
 	
-	
-	
-	
-	<%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
-	<jsp:include page="/WEB-INF/view/common/inc/display.jsp"></jsp:include>
 </body>
 </html>

@@ -23,13 +23,5 @@ js IE8 support of HTML5 elements and media queries -->
     <script src="<%=resourceUrl%>/js/respond.min.js"></script>
 <![endif]-->
 
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "//hm.baidu.com/hm.js?a2efe10d99e73a13db453bd7cc51b0d1";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
+
 
