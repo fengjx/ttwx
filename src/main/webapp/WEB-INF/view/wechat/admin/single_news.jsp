@@ -157,8 +157,9 @@
 					<div class="tool_area">
 						<div class="tool_bar border tc">
 							<!-- <span id="js_preview" class="btn btn_input btn_default"><button onclick="javascript:history.back();">返回</button></span>  -->
-							<span id="js_submit" class="btn btn_input btn_primary"><button
-									onclick="submitNewsForm();">保存</button> </span>
+							<span id="js_submit" class="btn btn_input btn_primary" style="margin-right: 40px;"><button
+									onclick="submitNewsForm(false);">保存</button> </span>
+							<span id="js_preview" class="btn btn_input btn_default"><button onclick="submitNewsForm(true);">预览消息</button></span>		
 						</div>
 					</div>
 				</div>
@@ -169,6 +170,8 @@
 						type="hidden" id="xml_data" name="xml_data" value="" /> <input
 						type="hidden" id="contentsJson" name="contentsJson" />
 						<input type="hidden" id="fileName" name="file_name" value="${fname}">
+						<input type="hidden" id="previewMsg" name="preview" value="">
+						<input type="hidden" id="wxUserId" name="wxUserId" value="">
 				</form>
 
 

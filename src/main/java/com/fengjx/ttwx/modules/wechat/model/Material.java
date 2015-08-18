@@ -1,6 +1,7 @@
 
 package com.fengjx.ttwx.modules.wechat.model;
 
+import com.ext.qiniu.QiNiuUti;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.Page;
@@ -12,11 +13,19 @@ import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
  
 
+
+
+
+
+
+
+
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.api.ext.WxMpServiceExt;
 import me.chanjar.weixin.mp.bean.WxMpMassNews;
 import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutNewsMessage;
@@ -27,6 +36,8 @@ import me.chanjar.weixin.mp.bean.result.WxMpMassUploadResult;
 import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
 
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,6 +46,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -97,20 +109,46 @@ public class Material extends Model {
                 int l = contents.size();
                 for (int i = 0; i < l; i++) {
                     String htmlPath = AppConfig.STATIC_PATH;
-                    String primaryKey =StringUtils.isBlank(fileName)? CommonUtils.getPrimaryKey():fileName;
-					String htmlUrl = "/upload/html/material/" + primaryKey
+                    String primaryKey =StringUtils.isBlank(fileName)? CommonUtils.getPrimaryKey():fileName+i;
+					String storePrefix = "/upload/html/material/";
+					String htmlUrl = storePrefix + primaryKey
                             + ".html";
+					
+					 Map<String, Object> content = contents.get(i);
+	                    content.put("app_name", AppConfig.APP_NAME);
+	                    content.put("date", CommonUtils.date2String(now_date));
+	                    content.put("email", AppConfig.SUPPORT_EMAIL);
+					
+					if(QiNiuUti.isStoreInQiNiu()){
+				       try {
+				    	//创建临时文件，上传完成后删除
+						File temp = File.createTempFile("uphtml", ".temp");
+						String path= FreeMarkerUtil.createHTML(content, "html/material.ftl", temp.getAbsolutePath());
+						 QiNiuUti.uploadFile(temp, htmlUrl,true);
+						 temp.delete();
+						
+						logger.debug("path:"+path);
+					} catch (IOException e) {
+						logger.error(e.getMessage(),e);
+					}  catch (Exception e) {
+						 logger.error(e.getMessage(),e);
+					}
+                   
+					}else{
                     // 如果不存在则创建文件夹
-                    FileUtil.makeDirectory(htmlPath + "/upload/html/material/");
+                    FileUtil.makeDirectory(htmlPath + storePrefix);
                     htmlPath = htmlPath + htmlUrl;
-                    Map<String, Object> content = contents.get(i);
-                    content.put("app_name", AppConfig.APP_NAME);
-                    content.put("date", CommonUtils.date2String(now_date));
-                    content.put("email", AppConfig.SUPPORT_EMAIL);
+                   
                     // 通过freemarker生成静态页面，并返回URL
                     FreeMarkerUtil.createHTML(content, "html/material.ftl", htmlPath);
+					}
+					String uri=AppConfig.STATIC_DOMAIN + htmlUrl;
+					//避免出现abc//abc.html的情况
+					if(AppConfig.STATIC_DOMAIN.endsWith("/")&&htmlUrl.startsWith("/")){
+					 // uri=	AppConfig.STATIC_DOMAIN + htmlUrl.substring(1,htmlUrl.length());
+					}
                     xml_data = xml_data.replaceAll("\\<Url_" + i + ">(.*?)\\</Url_" + i + ">",
-                            "<Url><![CDATA[" + AppConfig.STATIC_DOMAIN + htmlUrl + "]]></Url>");
+                            "<Url><![CDATA[" + uri + "]]></Url>");
                 }
                 xml_data.replaceAll("\\<ArticleCount>(.*?)\\</ArticleCount>", "<ArticleCount>" + l
                         + "</ArticleCount>");
@@ -134,6 +172,14 @@ public class Material extends Model {
     public String loadMaterialContentByUrl(String url) {
         String conten = "页面丢失，请重新编辑！";
         try {
+        	if(url.startsWith("http://"))
+        	{
+        		url= url.substring("http://".length(), url.length());
+        		url="http://"+url.replace("//", "/");//替换url中的双斜杠
+        	}else if(url.startsWith("https://")){
+        		url= url.substring("https://".length(), url.length());
+        		url="https://"+url.replace("//", "/");//替换url中的双斜杠
+        	}
             conten = HttpUtil.get(url);
             conten = conten.substring(conten.indexOf("<!--###@content@###-->") + 22,
                     conten.lastIndexOf("<!--###@content@###-->"));
@@ -143,9 +189,7 @@ public class Material extends Model {
         return conten;
     }
     
-    public void sendMessage(final List<Map<String, Object>> contents,String xmlData,String userId) throws WxErrorException{
-    	 
-     
+    public void previewMessage(final List<Map<String, Object>> contents,String xmlData,String userId,String wxUserId) throws WxErrorException{
 
 		WxMpXmlOutNewsMessage outNewsMessage = XStreamTransformer.fromXml(
 				WxMpXmlOutNewsMessage.class, xmlData);
@@ -153,19 +197,17 @@ public class Material extends Model {
 		 
 		// 微信服务器交互
 	 
-		WxMpService mpService = 	publicAccount.getWxMpService(userId);
-
+		WxMpServiceExt mpService =(WxMpServiceExt)	publicAccount.getWxMpService(userId);
 		WxMpMassNews massNews = new WxMpMassNews();
 
 		int i = 0;
 		for (Item item : outNewsMessage.getArticles()) {
 			if(contents==null||contents.isEmpty()){ 
 				WxMpMassNewsArticle art = new WxMpMassNewsArticle();
-				art.setAuthor(AppConfig.APP_NAME);
+				//art.setAuthor(AppConfig.APP_NAME);
 				art.setShowCoverPic(false);
 				//art.setContentSourceUrl(contentSourceUrl);;
 				art.setTitle(item.getTitle());
-				 
 				 
 				art.setContent("Test");
 				massNews.addArticle(art);
@@ -207,36 +249,16 @@ public class Material extends Model {
 			massNews.addArticle(art);
 			i++;
 		}
-
-		//if(true) return;
-		// 发消息
 		 
-			
 			//upload news and get media id
 			WxMpMassUploadResult  uploadResult = mpService
 						.massNewsUpload(massNews);
 		 
-			//logger.debug("uploadnews:" + uploadResult);
-			
-			//send group message here
-			
-			//  uploadResult:WxUploadResult [type=news, media_id=6qgukdST2fRPjhPsW8CYBU_7wJe4x3v2FucGrdFrcxz-Oiix2jMBAV9IOrBusLO7, created_at=1437640304]
-			//测试账号不允许群发
-			//返回 "errcode":48003,"
-//			WxMpMassGroupMessage message = new WxMpMassGroupMessage();
-//			message.setMediaId(uploadResult.getMediaId());
-//			message.setMsgtype(WxConsts.MASS_MSG_NEWS);
-//			WxMpMassSendResult sendResult = mpService
-//					.massGroupMessageSend(message);
-			
-			//just for development test
 			WxMpMassOpenIdsMessage massMessage = new WxMpMassOpenIdsMessage();
 			massMessage.setMsgType(WxConsts.MASS_MSG_NEWS);
-			//massMessage.setContent("消息内容");
 			massMessage.setMediaId(uploadResult.getMediaId());
-			massMessage.getToUsers().add("opi45t5FeNlJVO-oaprnOWQwPSzA");
-			 massMessage.getToUsers().add("opi45t5DfijippcrCnTJIaqxdfSQ");
-			WxMpMassSendResult sendResult = mpService.massOpenIdsMessageSend(massMessage);
+			massMessage.getToUsers().add(wxUserId);//.add("oaXuSv4_0mXijafuTFuJ6DqeX7Jo");
+			WxMpMassSendResult sendResult = mpService.massPreviewMessage(massMessage);
 			logger.debug("send mass message news:" + sendResult);
     }
 

@@ -11,7 +11,7 @@
  * @param {} type type=edit，则html生成编辑按钮（删除、编辑）,type=select则生成选择预览样式
  * @return {}
  */
-function xml2NewsHtml(xmlStr, in_time, material_id, type) {
+function xml2NewsHtml(xmlStr, in_time, material_id, type,fileName) {
 
     var newsType;
 
@@ -65,10 +65,14 @@ function xml2NewsHtml(xmlStr, in_time, material_id, type) {
         return html;
     }
     if (type === 'edit') {
+    	var href=domain + '/admin/wechat/material/' + newsType + '?id='+material_id;
+    	if(fileName){
+    		href=href+'&fname='+fileName;
+    	}
         html += '<div class="appmsg_opr">' +
             '<ul>' +
             '<li class="appmsg_opr_item grid_item size1of2">' +
-            '<a target="_blank" href="' + domain + '/admin/wechat/material/' + newsType + '?id=' + material_id + '" class="js_edit" data-id="' + material_id + '">' +
+            '<a target="_blank" href="'+href +'" class="js_edit" data-id="' + material_id + '">' +
             '<i class="icon18_common edit_gray">編輯</i>' +
             '</a>' +
             '</li>' +

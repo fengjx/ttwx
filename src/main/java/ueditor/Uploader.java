@@ -8,6 +8,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import com.ext.qiniu.QiNiuUti;
+import com.qiniu.common.QiniuException;
+import com.qiniu.http.Response;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -239,15 +241,11 @@ public class Uploader {
 
 		// 存储title
 		this.title = this.getParameter("pictitle");
-
 		try {
-
 			if (!this.checkFileType(this.originalName)) {
 				this.state = this.errorInfo.get("TYPE");
 				return;
 			}
-
-			
 			 
 			this.fileName = this.originalName;//this.getName(this.originalName);
 			this.type = this.getFileExt(this.fileName);
@@ -270,7 +268,11 @@ public class Uploader {
 
 			QiNiuUti.uploadFile(fileByte, this.getUrl());
 			this.state = this.errorInfo.get("SUCCESS");
-		} catch (Exception e) {
+		}catch(QiniuException e) {
+			logger.error(e);
+			Response r = e.response;
+			this.state = r.error;
+		}catch (Exception e) {
 			logger.error(e);
 			this.state = this.errorInfo.get("IO");
 		}
