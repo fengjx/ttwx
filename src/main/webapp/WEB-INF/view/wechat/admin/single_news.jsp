@@ -171,6 +171,7 @@
 						type="hidden" id="contentsJson" name="contentsJson" />
 						<input type="hidden" id="fileName" name="file_name" value="${fname}">
 						<input type="hidden" id="previewMsg" name="preview" value="">
+						<input type="hidden" id="wxUserId" name="wxUserId" value="">
 				</form>
 
 

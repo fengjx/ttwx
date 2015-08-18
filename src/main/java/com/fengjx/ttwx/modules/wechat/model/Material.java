@@ -189,9 +189,7 @@ public class Material extends Model {
         return conten;
     }
     
-    public void previewMessage(final List<Map<String, Object>> contents,String xmlData,String userId) throws WxErrorException{
-    	 
-     
+    public void previewMessage(final List<Map<String, Object>> contents,String xmlData,String userId,String wxUserId) throws WxErrorException{
 
 		WxMpXmlOutNewsMessage outNewsMessage = XStreamTransformer.fromXml(
 				WxMpXmlOutNewsMessage.class, xmlData);
@@ -251,34 +249,15 @@ public class Material extends Model {
 			massNews.addArticle(art);
 			i++;
 		}
-
-		//if(true) return;
-		// 发消息
 		 
-			
 			//upload news and get media id
 			WxMpMassUploadResult  uploadResult = mpService
 						.massNewsUpload(massNews);
 		 
-			//logger.debug("uploadnews:" + uploadResult);
-			
-			//send group message here
-			
-			//  uploadResult:WxUploadResult [type=news, media_id=6qgukdST2fRPjhPsW8CYBU_7wJe4x3v2FucGrdFrcxz-Oiix2jMBAV9IOrBusLO7, created_at=1437640304]
-			//测试账号不允许群发
-			//返回 "errcode":48003,"
-//			WxMpMassGroupMessage message = new WxMpMassGroupMessage();
-//			message.setMediaId(uploadResult.getMediaId());
-//			message.setMsgtype(WxConsts.MASS_MSG_NEWS);
-//			WxMpMassSendResult sendResult = mpService
-//					.massGroupMessageSend(message);
-			
-			//just for development test
 			WxMpMassOpenIdsMessage massMessage = new WxMpMassOpenIdsMessage();
 			massMessage.setMsgType(WxConsts.MASS_MSG_NEWS);
-			//massMessage.setContent("消息内容");
 			massMessage.setMediaId(uploadResult.getMediaId());
-			massMessage.getToUsers().add("oaXuSv4_0mXijafuTFuJ6DqeX7Jo");
+			massMessage.getToUsers().add(wxUserId);//.add("oaXuSv4_0mXijafuTFuJ6DqeX7Jo");
 			WxMpMassSendResult sendResult = mpService.massPreviewMessage(massMessage);
 			logger.debug("send mass message news:" + sendResult);
     }

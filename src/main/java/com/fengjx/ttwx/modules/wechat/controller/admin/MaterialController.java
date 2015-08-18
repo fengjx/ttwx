@@ -80,7 +80,11 @@ public class MaterialController extends MyController {
         String previewStr = (String) params.get("preview");
         
         if(previewStr!=null&&previewStr.equals("true")){
-        	toSendPreviewMessage(sysUser, contents, params);
+        	try {
+				toSendPreviewMessage(sysUser, contents, params);
+			} catch (WxErrorException e) {
+				 return retFail(e.getError().getErrorMsg());
+			}
         }else{
          material.saveOrUpdate(params, contents, sysUser.getId());
         }
@@ -88,18 +92,16 @@ public class MaterialController extends MyController {
     }
 
 	private void toSendPreviewMessage(SysUserEntity sysUser,
-			List<Map<String, Object>> contents, Map<String, Object> params) {
+			List<Map<String, Object>> contents, Map<String, Object> params) throws WxErrorException {
 		
 		String msgType = (String) params.get("msg_type");
+		String wxUserId=(String)params.get("wxUserId");
         if (null != msgType && msgType.equals("news")) { // 图文消息
             if (null != contents && contents.size() > 0) {
                 String xml_data = (String) params.get("xml_data");
-                try {
-					material.previewMessage(contents, xml_data, sysUser.getId());
-				} catch (WxErrorException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+                
+					material.previewMessage(contents, xml_data, sysUser.getId(),wxUserId);
+				 
             }
         }
 	}
