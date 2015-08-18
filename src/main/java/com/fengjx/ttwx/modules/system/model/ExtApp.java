@@ -3,9 +3,7 @@ package com.fengjx.ttwx.modules.system.model;
 
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
-
 import com.fengjx.ttwx.common.utils.CommonUtils;
-import me.chanjar.weixin.common.api.WxConsts;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -52,7 +50,7 @@ public class ExtApp extends Model {
             }
         }
         sql.append(" where e.is_valid = '1' ");
-        if (StringUtils.isBlank(app_type)) {
+        if (StringUtils.isNotBlank(app_type)) {
             sql.append(" and e.app_type = ?");
         }
         return findList(sql.toString(), params.toArray());
