@@ -15,7 +15,6 @@
 	String scheme=request.getScheme()+"://";  //scheme:http://
 	String header  =request.getHeader("host");  //header:localhost:8080
 	String contextPath = request.getContextPath();  //contextPath:/hkmall
-	String path = scheme + header + contextPath;
 	String requestURI = request.getRequestURI();  //requestURI:/HkWechat/crest/jsp/index.jsp
 	String curUrl = scheme+header+contextPath;
 %>
