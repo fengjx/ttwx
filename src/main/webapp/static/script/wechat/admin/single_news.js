@@ -35,7 +35,7 @@ $(function(){
 
 	$("#news_form").submit(function(){
 		var preview=$("#previewMsg").val();
-		if(preview){
+		if(preview=='true'){
 			app.prompt("请输入预览userId",function (userId) {
 				 if(userId==''){app.alert("userId不能为空") ;}
 				 else{
@@ -145,7 +145,7 @@ function toSubmit(){
 		success : function(res){
 			app.closeDialog();
 			if(res && '1' == res.code){
-				if(preview){
+				if(preview=='true'){
 					app.alert("预览成功，请留意微信消息！");	
 				}else{
 				app.alertModal("保存成功！",{
