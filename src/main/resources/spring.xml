@@ -9,28 +9,21 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
+
+    <!-- 加载配置属性文件 -->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties" />
+
     <!-- 开启注解 -->
     <context:component-scan base-package="com.fengjx.ttwx"/>
     <!-- 添加注解驱动 -->
     <mvc:annotation-driven/>
 
     <aop:aspectj-autoproxy/>
-    <bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          lazy-init="false">
-        <property name="locations">
-            <list>
-                <value>
-                    classpath*:/app.properties
-                </value>
-            </list>
-        </property>
-    </bean>
 
     <import resource="spring-db.xml"/>
     <import resource="spring-beans.xml"/>
     <import resource="spring-aop.xml"/>
     <import resource="spring-email.xml"/>
     <import resource="spring-mvc-interceptor.xml"/>
-
+    
 </beans>
