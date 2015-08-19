@@ -8,7 +8,7 @@
         var lis = ul.getElementsByTagName("li");
         for(var i = 0; i < lis.length; i++){
             var href = lis.item(i).getElementsByTagName("a")[0].getAttribute("href");
-            if(curUrl === href){
+            if(-1 !== curUrl.indexOf(href)){
                 lis.item(i).setAttribute("class", "active");
                 break;
             }

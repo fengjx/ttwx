@@ -1,13 +1,12 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/common/inc/path.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <title>404</title>
-<%@include file="/WEB-INF/view/common/inc/bootstrap.jsp"%>
 </head>
 <body>
-	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
-	
+
 	<!-- container -->
 	<div class="container">
 		<ol class="breadcrumb">
@@ -35,6 +34,5 @@
 		</div>
 	</div>	<!-- /container -->
 	
-	<%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
 </body>
 </html>

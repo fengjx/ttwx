@@ -1,4 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/common/inc/path.jsp" %>
 <%
 	Exception e = (Exception)request.getAttribute("ex");
 %>
@@ -6,10 +7,8 @@
 <html>
 <head>
 <title>error</title>
-<%@include file="/WEB-INF/view/common/inc/display.jsp"%>
 </head>
 <body>
-	<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
 	<!-- container -->
 	<div class="container">
 		<ol class="breadcrumb">
@@ -36,6 +35,5 @@
 			</article>
 		</div>
 	</div>	<!-- /container -->
-	<%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
 </body>
 </html>

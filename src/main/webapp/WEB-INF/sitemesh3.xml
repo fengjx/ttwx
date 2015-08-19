@@ -16,6 +16,11 @@
 
     <!-- 排除，不进行装饰的路径-->
     <mapping path="/admin" exclue="true"/>
+    <mapping path="/static/*" exclue="true"/>
+    <mapping path="/plugin/*" exclue="true"/>
+    <mapping path="/admin/system/ext/selecter" exclue="true"/>
+    <mapping path="/admin/wechat/material/multiple" exclue="true"/>
+    <mapping path="/admin/wechat/material/single" exclue="true"/>
 
 
 </sitemesh>
