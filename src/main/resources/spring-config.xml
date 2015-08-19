@@ -11,19 +11,38 @@
 
 
     <!-- 加载配置属性文件 -->
-      <import resource="spring-config.xml"/>
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties" />
+    
+    
+	<!-- VM 参数 -DENV_MODE=dev/release/test 转换各环境配置文件  -->
+	<bean
+		class="com.fengjx.ttwx.common.config.ConfigPropertyPlaceholderConfigurer">
 
-    <!-- 开启注解 -->
-    <context:component-scan base-package="com.fengjx.ttwx"/>
-    <!-- 添加注解驱动 -->
-    <mvc:annotation-driven/>
+		<property name="location">
+			<value>classpath:env/${ENV_MODE:dev}/app.properties</value>
+		</property>
+		
+		<property name="order" value="1">
+		</property>
+		
+		<property name="ignoreUnresolvablePlaceholders" value="true">
+		</property>
+	</bean>
+	
+	<bean
+		class="com.fengjx.ttwx.common.config.ConfigPropertyPlaceholderConfigurer">
 
-    <aop:aspectj-autoproxy/>
-
-    <import resource="spring-db.xml"/>
-    <import resource="spring-beans.xml"/>
-    <import resource="spring-aop.xml"/>
-     <import resource="spring-email.xml"/>
-    <import resource="spring-mvc-interceptor.xml"/>
+		<property name="location">
+			<value>classpath:app.properties</value>
+		</property>
+		
+		<property name="order" value="2">
+		</property>
+		
+		<property name="ignoreUnresolvablePlaceholders" value="false">
+		</property>
+	</bean>
+    
+ 
     
 </beans>
