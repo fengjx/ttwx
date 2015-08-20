@@ -20,12 +20,15 @@ import com.fengjx.ttwx.modules.common.constants.AppConfig;
 
 
 
+
+
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.ext.WxMpServiceExt;
+import me.chanjar.weixin.mp.bean.WxMpMassGroupMessage;
 import me.chanjar.weixin.mp.bean.WxMpMassNews;
 import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutNewsMessage;
@@ -189,14 +192,28 @@ public class Material extends Model {
         return conten;
     }
     
-    public void previewMessage(final List<Map<String, Object>> contents,String xmlData,String userId,String wxUserId) throws WxErrorException{
+    public void previewMsg(final List<Map<String, Object>> contents,String xmlData,String userId,String wxUserId) throws WxErrorException{
 
+		WxMpMassUploadResult uploadResult = uploadMedia(contents, xmlData,
+				userId);
+		 
+		WxMpServiceExt mpService =(WxMpServiceExt)	publicAccount.getWxMpService(userId);
+			WxMpMassOpenIdsMessage massMessage = new WxMpMassOpenIdsMessage();
+			massMessage.setMsgType(WxConsts.MASS_MSG_NEWS);
+			massMessage.setMediaId(uploadResult.getMediaId());
+			massMessage.getToUsers().add(wxUserId);//.add("oaXuSv4_0mXijafuTFuJ6DqeX7Jo");
+			WxMpMassSendResult sendResult = mpService.massPreviewMessage(massMessage);
+			logger.debug("send mass message news:" + sendResult);
+    }
+
+	private WxMpMassUploadResult uploadMedia(
+			final List<Map<String, Object>> contents, String xmlData,
+			String userId) throws WxErrorException {
 		WxMpXmlOutNewsMessage outNewsMessage = XStreamTransformer.fromXml(
 				WxMpXmlOutNewsMessage.class, xmlData);
 		outNewsMessage.setCreateTime(System.currentTimeMillis());
 		 
 		// 微信服务器交互
-	 
 		WxMpServiceExt mpService =(WxMpServiceExt)	publicAccount.getWxMpService(userId);
 		WxMpMassNews massNews = new WxMpMassNews();
 
@@ -253,13 +270,20 @@ public class Material extends Model {
 			//upload news and get media id
 			WxMpMassUploadResult  uploadResult = mpService
 						.massNewsUpload(massNews);
-		 
-			WxMpMassOpenIdsMessage massMessage = new WxMpMassOpenIdsMessage();
-			massMessage.setMsgType(WxConsts.MASS_MSG_NEWS);
-			massMessage.setMediaId(uploadResult.getMediaId());
-			massMessage.getToUsers().add(wxUserId);//.add("oaXuSv4_0mXijafuTFuJ6DqeX7Jo");
-			WxMpMassSendResult sendResult = mpService.massPreviewMessage(massMessage);
-			logger.debug("send mass message news:" + sendResult);
-    }
+		return uploadResult;
+	}
+
+	public void sendGroupMsg(List<Map<String, Object>> contents,
+			String xmlData, String userId) throws WxErrorException {
+		WxMpMassUploadResult uploadResult = uploadMedia(contents, xmlData,
+				userId);
+		WxMpServiceExt mpService =(WxMpServiceExt)	publicAccount.getWxMpService(userId);
+		WxMpMassGroupMessage message=new WxMpMassGroupMessage();
+		message.setMsgtype(WxConsts.MASS_MSG_NEWS);
+		message.setMediaId(uploadResult.getMediaId());
+		WxMpMassSendResult result=mpService.massGroupMessageSend(message);
+		logger.debug(result);
+		
+	}
 
 }

@@ -21,6 +21,6 @@
     <mapping path="/admin/system/ext/selecter" exclue="true"/>
     <mapping path="/admin/wechat/material/multiple" exclue="true"/>
     <mapping path="/admin/wechat/material/single" exclue="true"/>
-
+    <mapping path="/admin/wechat/material/getContent" exclue="true"/>
 
 </sitemesh>

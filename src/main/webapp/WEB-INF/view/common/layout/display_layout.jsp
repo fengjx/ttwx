@@ -1,5 +1,4 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/common/inc/path.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +9,7 @@
 <body>
 <%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
 
-    <sitemesh:write property='body' />
+    <sitemesh:write property='body' /> 
     <%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
     <script>
         var _hmt = _hmt || [];
