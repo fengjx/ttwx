@@ -11,7 +11,7 @@
 
 
     <!-- 加载配置属性文件 -->
-    <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties" />
+  <!--   <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties" /> -->
     
     
 	<!-- VM 参数 -DENV_MODE=dev/release/test 转换各环境配置文件  -->
@@ -19,7 +19,7 @@
 		class="com.fengjx.ttwx.common.config.ConfigPropertyPlaceholderConfigurer">
 
 		<property name="location">
-			<value>classpath:env/${ENV_MODE:dev}/app.properties</value>
+			<value>classpath:env/${ENV_MODE}/app.properties</value>
 		</property>
 		
 		<property name="order" value="1">

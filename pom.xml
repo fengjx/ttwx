@@ -241,6 +241,7 @@
             <id>dev</id>
             <properties>
                 <environment>dev</environment>
+               <ENV_MODE>${ENV_MODE:dev}</ENV_MODE>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -250,12 +251,15 @@
             <id>release</id>
             <properties>
                 <environment>release</environment>
+                <ENV_MODE>${ENV_MODE:release}</ENV_MODE>
             </properties>
+            
         </profile>
         <profile>
             <id>test</id>
             <properties>
                 <environment>test</environment>
+                 <ENV_MODE>${ENV_MODE:test}</ENV_MODE>
             </properties>
         </profile>
     </profiles>
@@ -270,10 +274,12 @@
                 <includes>
                     <include>**/*.*</include>
                 </includes>
-                <excludes>
-                    <exclude>**/env/**</exclude>
-                </excludes>
+                  <excludes>
+                  <!-- <exclude>**/env/**</exclude> -->  
+                </excludes> 
+                
             </resource>
+            
         </resources>
 
         <plugins>
@@ -300,7 +306,7 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.8</version>
                 <executions>
-                    <execution>
+                    <!-- 由maven  控制环境变量ENV_MODE,打包/部署时候自动替换spring-config.xml的变量 <execution>
                         <id>copy-env-sources</id>
                         <phase>process-resources</phase>
                         <configuration>
@@ -313,13 +319,13 @@
                         <goals>
                             <goal>run</goal>
                         </goals>
-                    </execution>
+                    </execution> -->
                     <execution>
                         <id>zip</id>
                         <phase>prepare-package</phase>
                         <configuration>
                             <target>
-                                <!-- 静态资源打包 -->
+                                
                                 <zip destfile="${project.build.directory}/res.zip">
                                     <fileset dir="src/main/webapp/static">
                                         <include name="**/*.*"/>
@@ -332,7 +338,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>  
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
