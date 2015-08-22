@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+	<meta name="decorator" content="wechat"/>
 	<title>关键字回复</title>
 	<link href="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
 	<link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>

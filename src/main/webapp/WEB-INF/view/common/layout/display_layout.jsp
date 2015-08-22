@@ -1,16 +1,17 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/view/common/inc/path.jsp" %>
+<%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title><sitemesh:write property='title' /></title>
+    <title><sitemesh:title/></title>
     <jsp:include page="/WEB-INF/view/common/inc/display.jsp"></jsp:include>
-    <sitemesh:write property='head' />
+    <sitemesh:head/>
 </head>
 <body>
 <%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
 
-    <sitemesh:write property='body' />
+    <sitemesh:body/>
     <%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
     <script>
         var _hmt = _hmt || [];

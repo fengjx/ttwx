@@ -6,76 +6,91 @@ var viewDialog;
 var $table;
 
 $(function(){
+
+
+
+
+    $("#btn-add").click(function () {
+        var test = $.scojs_modal({
+            title : "test",
+            target : "#target",
+            width : 300,
+            height : 300
+        });
+        test.show();
+    });
+
+
     //消息预览dialog
     //viewDialog = $('#viewDialog').modal({
     //    keyboard : true,
     //    show : false
     //});
 
-    $table = $('#data-table').bootstrapTable({
-        method: 'post',
-        toolbar: "#toolbar",
-        contentType: "application/x-www-form-urlencoded",
-        url: domain + '/admin/system/ext/pageList',
-        queryParamsType: "limit",
-        queryParams: queryParams,
-        cache: false,
-        height: 'auto',
-        striped: true,
-        sidePagination: "server",
-        pagination: true,
-        pageSize: 10,
-        pageList: [10, 15, 20],
-        minimumCountColumns: 2,
-        clickToSelect: true,
-        idField:"id",
-        columns: [{
-            field: 'id',
-            valign: 'middle',
-            radio:true
-        },{
-            field: 'name',
-            title: '接口名称',
-            align: 'left',
-            valign: 'middle'
-        },{
-            field: 'description',
-            title: '接口描述',
-            align: 'left',
-            width: '20%',
-            valign: 'middle'
-        },{
-            field: 'app_type',
-            title: '接口类型',
-            align: 'left',
-            width: '20%',
-            valign: 'middle'
-        },{
-            field: 'is_valid',
-            title: '是否启用',
-            align: 'left',
-            width: '20%',
-            valign: 'middle'
-        },{
-            field: 'in_time',
-            title: '接入时间',
-            align: 'left',
-            width: '15%',
-            valign: 'middle'
-        },{
-            field: 'op',
-            title: '操作',
-            width: '12%',
-            align: 'center',
-            valign: 'middle',
-            formatter : function(value, row, index) {
-                var html = '<a class="btn btn-sm btn-success" onclick="view(\''+index+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                html += '<a class="btn btn-sm btn-info" href="'+domain+'/admin/wechat/action/keywordAdd?id='+row.id+'"><i class="glyphicon glyphicon-edit"></i></a>';
-                html += '<a class="btn btn-sm btn-warning" onclick="deleteMsgAction(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i></a>';
-                return html;
-            }
-        }]
-    });
+    //$table = $('#data-table').bootstrapTable({
+    //    method: 'post',
+    //    toolbar: "#toolbar",
+    //    contentType: "application/x-www-form-urlencoded",
+    //    url: domain + '/admin/system/ext/pageList',
+    //    queryParamsType: "limit",
+    //    queryParams: queryParams,
+    //    cache: false,
+    //    height: 'auto',
+    //    striped: true,
+    //    sidePagination: "server",
+    //    pagination: true,
+    //    pageSize: 10,
+    //    pageList: [10, 15, 20],
+    //    minimumCountColumns: 2,
+    //    clickToSelect: true,
+    //    idField:"id",
+    //    columns: [{
+    //        field: 'id',
+    //        valign: 'middle',
+    //        radio:true
+    //    },{
+    //        field: 'name',
+    //        title: '接口名称',
+    //        align: 'left',
+    //        valign: 'middle'
+    //    },{
+    //        field: 'description',
+    //        title: '接口描述',
+    //        align: 'left',
+    //        width: '20%',
+    //        valign: 'middle'
+    //    },{
+    //        field: 'app_type',
+    //        title: '接口类型',
+    //        align: 'left',
+    //        width: '20%',
+    //        valign: 'middle'
+    //    },{
+    //        field: 'is_valid',
+    //        title: '是否启用',
+    //        align: 'left',
+    //        width: '20%',
+    //        valign: 'middle'
+    //    },{
+    //        field: 'in_time',
+    //        title: '接入时间',
+    //        align: 'left',
+    //        width: '15%',
+    //        valign: 'middle'
+    //    },{
+    //        field: 'op',
+    //        title: '操作',
+    //        width: '12%',
+    //        align: 'center',
+    //        valign: 'middle',
+    //        formatter : function(value, row, index) {
+    //            var html = '<a class="btn btn-sm btn-success" onclick="view(\''+index+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-eye-open"></i></a>';
+    //            html += '<a class="btn btn-sm btn-info" href="'+domain+'/admin/wechat/action/keywordAdd?id='+row.id+'"><i class="glyphicon glyphicon-edit"></i></a>';
+    //            html += '<a class="btn btn-sm btn-warning" onclick="deleteMsgAction(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i></a>';
+    //            return html;
+    //        }
+    //    }]
+    //});
 
     function queryParams(params) {
         var start_time = $('#toolbar input[name="start_time"]').val();

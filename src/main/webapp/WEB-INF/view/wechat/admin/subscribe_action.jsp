@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <meta name="decorator" content="wechat"/>
 	<title>粉丝关注回复</title>
 </head>
 <body>
