@@ -1,19 +1,18 @@
 
 package com.fengjx.ttwx.modules.wechat.model;
 
-import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
-import com.fengjx.ttwx.modules.common.constants.AppConfig;
-import com.fengjx.ttwx.modules.common.constants.FtlFilenameConstants;
+import com.fengjx.ttwx.common.mail.service.MyEmailService;
+import com.fengjx.ttwx.common.mail.vo.SendMailVo;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.Record;
-import com.fengjx.ttwx.common.mail.service.MyEmailService;
-import com.fengjx.ttwx.common.mail.vo.SendMailVo;
-import com.fengjx.ttwx.common.system.init.FreeMarkerUtil;
+import com.fengjx.ttwx.common.plugin.freemarker.FreemarkerUtil;
+import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.AesUtil;
 import com.fengjx.ttwx.common.utils.CommonUtils;
+import com.fengjx.ttwx.modules.common.constants.AppConfig;
+import com.fengjx.ttwx.modules.common.constants.FtlFilenameConstants;
 import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -96,7 +95,7 @@ public class SysUser extends Model {
                 "validUrl",
                 AppConfig.DOMAIN_PAGE + "/activate?ser="
                         + AesUtil.encrypt((String) attrs.get("valid_uid")));
-        mail.setContent(FreeMarkerUtil.process(root, FtlFilenameConstants.REGISTER_VALID_MAIN));
+        mail.setContent(FreemarkerUtil.process(root, FtlFilenameConstants.REGISTER_VALID_MAIN));
         emailService.send(mail);
     }
 

@@ -20,14 +20,6 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring.xml</param-value>
     </context-param>
-    <context-param>
-        <param-name>ftlPath</param-name>
-        <param-value>WEB-INF/ftl</param-value>
-    </context-param>
-    <context-param>
-        <param-name>ftlEncoding</param-name>
-        <param-value>UTF-8</param-value>
-    </context-param>
     <servlet>
         <servlet-name>mvc</servlet-name>
         <servlet-class>com.fengjx.ttwx.common.system.init.MySpringMvcServlet</servlet-class>
