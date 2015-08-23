@@ -1,12 +1,12 @@
 
 package com.fengjx.ttwx.modules.wechat.model;
 
-import com.fengjx.ttwx.common.mail.service.MyEmailService;
-import com.fengjx.ttwx.common.mail.vo.SendMailVo;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.plugin.freemarker.FreemarkerUtil;
+import com.fengjx.ttwx.common.plugin.mail.EmailUtil;
+import com.fengjx.ttwx.common.plugin.mail.SendMailBean;
 import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.AesUtil;
 import com.fengjx.ttwx.common.utils.CommonUtils;
@@ -14,7 +14,6 @@ import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.constants.FtlFilenameConstants;
 import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +32,6 @@ import java.util.Map;
 @Mapper(table = "wechat_sys_user", id = "id")
 public class SysUser extends Model {
 
-    @Autowired
-    private MyEmailService emailService;
-
     /**
      * 登录
      *
@@ -48,7 +44,7 @@ public class SysUser extends Model {
         attrs.put("username", username);
         Record record = findOne(attrs);
         String md5Hex = DigestUtils.md5Hex(pwd);
-		if (null != record && record.getStr("pwd").equalsIgnoreCase(md5Hex)) {
+        if (null != record && record.getStr("pwd").equalsIgnoreCase(md5Hex)) {
             return record.toBean(SysUserEntity.class);
         }
         return null;
@@ -85,18 +81,18 @@ public class SysUser extends Model {
      * @throws Exception
      */
     public void sendRegisterMail(Map<String, Object> attrs) throws Exception {
-        SendMailVo mail = new SendMailVo();
-        mail.setType(SendMailVo.TYPE_HTML);
+        SendMailBean mail = new SendMailBean();
+        mail.setType(SendMailBean.TYPE_HTML);
         mail.setToUser((String) attrs.get("email"));
         mail.setSubject("邮箱验证");
-        Map<String, String> root = new HashMap<String, String>();
+        Map<String, String> root = new HashMap();
         root.put("userEmail", (String) attrs.get("email"));
         root.put(
                 "validUrl",
                 AppConfig.DOMAIN_PAGE + "/activate?ser="
                         + AesUtil.encrypt((String) attrs.get("valid_uid")));
         mail.setContent(FreemarkerUtil.process(root, FtlFilenameConstants.REGISTER_VALID_MAIN));
-        emailService.send(mail);
+        EmailUtil.send(mail);
     }
 
     /**
