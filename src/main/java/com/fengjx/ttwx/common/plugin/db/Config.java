@@ -1,7 +1,7 @@
+
 package com.fengjx.ttwx.common.plugin.db;
 
 import com.fengjx.ttwx.common.plugin.db.dialect.Dialect;
-import com.fengjx.ttwx.common.plugin.db.dialect.MysqlDialect;
 
 /**
  * 数据库配置
@@ -11,7 +11,19 @@ import com.fengjx.ttwx.common.plugin.db.dialect.MysqlDialect;
  */
 public class Config {
 
-    protected static final Dialect dialect = new MysqlDialect();
+    public static Dialect dialect;
 
+    public static String adapterPageName;
+
+    /**
+     * 初始化配置信息
+     *
+     * @param adapterPageName 分页数据适配名称
+     * @param dialect 数据库方言
+     */
+    protected static void init(String adapterPageName, Dialect dialect) {
+        Config.dialect = dialect;
+        Config.adapterPageName = adapterPageName;
+    }
 
 }

@@ -4,9 +4,8 @@ package com.fengjx.ttwx.modules.wechat.model;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.Record;
+import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.utils.CommonUtils;
-import com.fengjx.ttwx.modules.common.bean.BootstrapPage;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,7 +31,7 @@ public class ReqMsgLog extends Model {
      * @param attrs
      * @return
      */
-    public BootstrapPage pageList(Map<String, String> attrs, String userId) {
+    public AdapterPage pageList(Map<String, String> attrs, String userId) {
         Record accounRecordt = publicAccount.getAccountByUserId(userId);
         List<Object> params = new ArrayList();
         StringBuilder sql = new StringBuilder(getSelectSql());
@@ -59,7 +58,7 @@ public class ReqMsgLog extends Model {
             params.add(CommonUtils.string2Date(attrs.get("end_time") + " 23:59:59"));
         }
         sql.append(" order by l.in_time desc");
-        return new BootstrapPage(paginate(sql.toString(), params.toArray()));
+        return paginate(sql.toString(), params.toArray()).convert();
     }
 
 }

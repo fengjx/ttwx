@@ -2,17 +2,18 @@
 package com.fengjx.ttwx.common.plugin.db;
 
 import com.fengjx.ttwx.common.plugin.IPlugin;
+import com.fengjx.ttwx.common.plugin.db.dialect.Dialect;
+import com.fengjx.ttwx.common.plugin.db.dialect.MysqlDialect;
 import com.fengjx.ttwx.common.utils.ClassUtil;
 import com.fengjx.ttwx.common.utils.LogUtil;
-
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import javax.sql.DataSource;
 
 /**
  * 表映射插件
@@ -26,9 +27,11 @@ public class TableMappingPlugin implements IPlugin {
 
     private DataSource dataSource;
     private String[] packages;
+    private String adapterPageName;
 
     @Override
     public void start() {
+        setConfig(adapterPageName, null);
         try {
             Set<Class<?>> classSet = getModelClasses();
             for (Class<?> cls : classSet) {
@@ -39,6 +42,22 @@ public class TableMappingPlugin implements IPlugin {
         } catch (Exception e) {
             throw new MyDbException("Can not init table mapping");
         }
+    }
+
+    /**
+     * 设置配置
+     *
+     * @param adapterPageName
+     * @param dialect
+     */
+    private void setConfig(String adapterPageName, Dialect dialect) {
+        if (StringUtils.isBlank(adapterPageName)) {
+            adapterPageName = "JqGridPage";
+        }
+        if (null == dialect) {
+            dialect = new MysqlDialect();
+        }
+        Config.init(adapterPageName, dialect);
     }
 
     /**
@@ -169,5 +188,17 @@ public class TableMappingPlugin implements IPlugin {
 
     public void setPackages(String[] packages) {
         this.packages = packages;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    public String getAdapterPageName() {
+        return adapterPageName;
+    }
+
+    public void setAdapterPageName(String adapterPageName) {
+        this.adapterPageName = adapterPageName;
     }
 }

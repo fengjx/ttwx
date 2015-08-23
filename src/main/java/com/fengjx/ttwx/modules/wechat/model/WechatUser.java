@@ -3,9 +3,8 @@ package com.fengjx.ttwx.modules.wechat.model;
 
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
+import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.utils.CommonUtils;
-import com.fengjx.ttwx.modules.common.bean.BootstrapPage;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +29,7 @@ public class WechatUser extends Model {
      * @param userId
      * @return
      */
-    public BootstrapPage pageList(Map<String, String> attrs, String userId) {
+    public AdapterPage pageList(Map<String, String> attrs, String userId) {
         StringBuilder sql = new StringBuilder(getSelectSql("u"));
         sql.append(" where u.public_account_id = (select id from ");
         sql.append(getTableName(PublicAccount.class));
@@ -55,7 +54,7 @@ public class WechatUser extends Model {
             sql.append(" and u.group_id = ?");
             params.add(attrs.get("group_id"));
         }
-        return new BootstrapPage(paginate(sql.toString(), params.toArray()));
+        return paginate(sql.toString(), params.toArray()).convert();
     }
 
 }

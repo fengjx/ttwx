@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.common.plugin.db;
+package com.fengjx.ttwx.common.plugin.db.page;
 
 /**
  * @author fengjx.

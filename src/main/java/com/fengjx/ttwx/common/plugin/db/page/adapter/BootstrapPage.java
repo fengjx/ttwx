@@ -1,9 +1,8 @@
 
-package com.fengjx.ttwx.modules.common.bean;
+package com.fengjx.ttwx.common.plugin.db.page.adapter;
 
-import com.fengjx.ttwx.common.bean.ToStringBase;
-import com.fengjx.ttwx.common.plugin.db.Page;
-import com.fengjx.ttwx.common.utils.JsonUtil;
+import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
+import com.fengjx.ttwx.common.plugin.db.page.Page;
 
 import java.util.List;
 
@@ -13,9 +12,12 @@ import java.util.List;
  * @author fengjx.
  * @date：2015/5/19 0019
  */
-public class BootstrapPage<T> extends ToStringBase {
+public class BootstrapPage<T> extends AdapterPage {
 
-    public int total;
+    public static final String ADAPTER_PAGE_NAME = "BootstrapPage";
+    private static final long serialVersionUID = 1L;
+
+    public Long total;
 
     public List<T> rows;
 
@@ -27,11 +29,11 @@ public class BootstrapPage<T> extends ToStringBase {
         this.rows = page.getList();
     }
 
-    public int getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
 
@@ -41,10 +43,6 @@ public class BootstrapPage<T> extends ToStringBase {
 
     public void setRows(List<T> rows) {
         this.rows = rows;
-    }
-
-    public String toJson(){
-        return JsonUtil.toJson(this);
     }
 
 }

@@ -4,7 +4,7 @@ package com.fengjx.ttwx.modules.wechat.model;
 import com.ext.qiniu.QiNiuUti;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
-import com.fengjx.ttwx.common.plugin.db.Page;
+import com.fengjx.ttwx.common.plugin.db.page.Page;
 import com.fengjx.ttwx.common.plugin.freemarker.FreemarkerUtil;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.common.utils.FileUtil;

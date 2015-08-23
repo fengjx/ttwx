@@ -3,16 +3,13 @@ package com.fengjx.ttwx.modules.wechat.model;
 
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
-import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
-
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.WxMenu;
 import me.chanjar.weixin.common.bean.WxMenu.WxMenuButton;
 import me.chanjar.weixin.common.bean.result.WxError;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,7 +125,7 @@ public class WechatMenu extends Model {
     private boolean isLeef(String id) {
         StringBuilder sql = new StringBuilder("select * from ");
         sql.append(getTableName()).append(" where parent_id = ?");
-        int count = getCount(sql.toString(), id);
+        Long count = getCount(sql.toString(), id);
         if (count > 0) {
             return false;
         }

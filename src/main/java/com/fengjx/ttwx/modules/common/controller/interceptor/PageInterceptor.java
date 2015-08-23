@@ -1,7 +1,10 @@
 
 package com.fengjx.ttwx.modules.common.controller.interceptor;
 
-import com.fengjx.ttwx.common.plugin.db.PageContext;
+import com.fengjx.ttwx.common.plugin.db.Config;
+import com.fengjx.ttwx.common.plugin.db.page.PageContext;
+import com.fengjx.ttwx.common.plugin.db.page.adapter.BootstrapPage;
+import com.fengjx.ttwx.common.plugin.db.page.adapter.JqGridPage;
 import com.fengjx.ttwx.common.utils.LogUtil;
 
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +43,30 @@ public class PageInterceptor implements HandlerInterceptor {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object handler) throws Exception {
+        if (JqGridPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(Config.adapterPageName)) {
+            parseJqGridPage(request, response);
+        } else if (BootstrapPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(Config.adapterPageName)) {
+            parseDataTablePage(request, response);
+        }
+        return true;
+    }
+
+    private void parseJqGridPage(HttpServletRequest request, HttpServletResponse response) {
+        String rowsStr = request.getParameter("rows");
+        // 默认每页10条
+        int pageSize = 10;
+        if (StringUtils.isNotBlank(rowsStr)) {
+            pageSize = Integer.valueOf(rowsStr);
+        }
+        String pageStr = request.getParameter("page");
+        int pageNumber = 1;
+        if (StringUtils.isNotBlank(pageStr)) {
+            pageNumber = Integer.valueOf(pageStr);
+        }
+        setPage(pageSize, pageNumber);
+    }
+
+    private void parseDataTablePage(HttpServletRequest request, HttpServletResponse response) {
         String limitStr = request.getParameter("limit");
         // 默认每页10条
         int pageSize = 10;
@@ -51,10 +78,13 @@ public class PageInterceptor implements HandlerInterceptor {
         if (StringUtils.isNotBlank(offsetStr)) {
             pageNumber = (Integer.valueOf(offsetStr) / pageSize) + 1;
         }
+        setPage(pageSize, pageNumber);
+    }
+
+    private void setPage(int pageSize, int pageNumber) {
         LogUtil.debug(LOG, "page params pageSize=" + pageSize + " pageNumber=" + pageNumber);
         PageContext.setPageSize(pageSize);
         PageContext.setPageNumber(pageNumber);
-        return true;
     }
 
 }
