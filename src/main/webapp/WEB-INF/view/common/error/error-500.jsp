@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>500</title>
+	<meta name="decorator" content="display"/>
+	<title>500</title>
 </head>
 <body>
 	<!-- container -->
