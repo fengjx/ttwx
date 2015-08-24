@@ -29,7 +29,7 @@ public class ExtAppController extends MyController {
 
     @RequestMapping("selecter")
     public ModelAndView selecter(String app_type, String msg_type, String event_type) {
-        ModelAndView mv = new ModelAndView("system/inc_ext_app");
+        ModelAndView mv = new ModelAndView("sys/inc_ext_app");
        // mv.addObject("apps", extApp.listByType(app_type, msg_type, event_type));
         return mv;
     }

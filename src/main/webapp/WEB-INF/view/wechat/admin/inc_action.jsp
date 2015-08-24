@@ -151,7 +151,7 @@
 			<div class="form-inline" style="width: 500px;">
 				<div class="form-group">
 					<label class="control-label">选择扩展插件：</label>
-					<jsp:include page="/admin/system/ext/selecter">
+					<jsp:include page="/admin/sys/ext/selecter">
 						<jsp:param name="showAll" value="1"/>
 						<jsp:param name="id" value="busiapp_id"/>
 						<jsp:param name="name" value="busiapp_id"/>
