@@ -15,7 +15,7 @@
 <jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>
 <div class="container-fluid">
     <div class="row">
-        <jsp:include page="/WEB-INF/view/system/inc_menu.jsp"></jsp:include>
+        <jsp:include page="/WEB-INF/view/sys/inc_menu.jsp"></jsp:include>
         <div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <sitemesh:body/>
         </div>

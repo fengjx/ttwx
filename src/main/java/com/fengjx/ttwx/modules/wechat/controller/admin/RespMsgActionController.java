@@ -28,7 +28,7 @@ import java.util.Map;
  * @date：2015/6/5 0005
  */
 @Controller
-@RequestMapping("/admin/wechat/action")
+@RequestMapping("${adminPath}/wechat/action")
 public class RespMsgActionController extends MyController {
 
     @Autowired

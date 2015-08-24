@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.system.model;
+package com.fengjx.ttwx.modules.sys.model;
 
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;

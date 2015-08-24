@@ -18,6 +18,7 @@
                 <ref bean="ehCachePlugin"/>
                 <ref bean="dictPlugin"/>
                 <ref bean="freemarkerPlugin"/>
+                <ref bean="emailPlugin"/>
             </list>
         </property>
     </bean>
@@ -36,7 +37,7 @@
     </bean>
 
     <!-- 数据字典-->
-    <bean id="dictService" class="com.fengjx.ttwx.modules.system.service.DictServiceImpl">
+    <bean id="dictService" class="com.fengjx.ttwx.modules.sys.service.DictServiceImpl">
     </bean>
     <bean id="dictPlugin" class="com.fengjx.ttwx.common.plugin.dict.DictPlugin">
         <property name="service" ref="dictService"/>

@@ -45,11 +45,12 @@
 
     <bean id="tableMappingPlugin" class="com.fengjx.ttwx.common.plugin.db.TableMappingPlugin">
         <property name="dataSource" ref="dataSource"/>
+        <property name="adapterPageName" value="BootstrapPage"/>
         <property name="packages">
             <value>
                 com.fengjx.ttwx.modules.wechat.model,
                 com.fengjx.ttwx.modules.common.model,
-                com.fengjx.ttwx.modules.system.model
+                com.fengjx.ttwx.modules.sys.model
             </value>
         </property>
     </bean>

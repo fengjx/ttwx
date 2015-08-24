@@ -4,9 +4,15 @@
 <div class="sidebar">
     <ul class="nav nav-sidebar" id="side-menu">
         <li>
-            <a href="<%=domain %>/admin/system/ext">
+            <a href="<%=domain %>/admin/sys/ext">
                 <i class="glyphicon glyphicon-open"></i>
                 <span class="menu-text"> 接口管理 </span>
+            </a>
+        </li>
+        <li>
+            <a href="<%=domain %>/admin/sys/dict">
+                <i class="glyphicon glyphicon-open"></i>
+                <span class="menu-text"> 字典管理 </span>
             </a>
         </li>
     </ul>

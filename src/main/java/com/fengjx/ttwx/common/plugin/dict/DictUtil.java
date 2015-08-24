@@ -21,10 +21,22 @@ public final class DictUtil {
      * 根据字典值获得字典名称
      *
      * @param value
+     * @param group
      * @return
      */
-    String getDictLabel(String value) {
-        return service.getDictLabel(value);
+    public static String getDictLabel(String value, String group) {
+        return service.getDictLabel(value, group);
+    }
+
+    /**
+     * 根据指点标签和分组获得字典值
+     *
+     * @param label
+     * @param group
+     * @return
+     */
+    public static String getDictValue(String label, String group) {
+        return service.getDictValue(label, group);
     }
 
     /**

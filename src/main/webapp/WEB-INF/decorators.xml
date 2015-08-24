@@ -4,7 +4,7 @@
 	<!-- 默认装饰页面, 在需要装饰的页面增加<meta name="decorator" content="default"/> -->
 	<decorator name="display" page="common/layout/display_layout.jsp" />
 	<decorator name="wechat" page="common/layout/admin_wechat_layout.jsp" />
-	<decorator name="system" page="common/layout/admin_system_layout.jsp" />
+	<decorator name="sys" page="common/layout/admin_sys_layout.jsp" />
 
 
 </decorators>

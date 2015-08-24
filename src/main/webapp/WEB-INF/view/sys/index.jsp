@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta name="decorator" content="system"/>
+    <meta name="decorator" content="sys"/>
     <title>后台管理</title>
 </head>
 <body>

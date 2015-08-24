@@ -1,8 +1,8 @@
 
-package com.fengjx.ttwx.modules.system.controller;
+package com.fengjx.ttwx.modules.sys.controller;
 
 import com.fengjx.ttwx.modules.common.controller.MyController;
-import com.fengjx.ttwx.modules.system.model.ExtApp;
+import com.fengjx.ttwx.modules.sys.model.ExtApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @date：2015/5/30 0030
  */
 @Controller
-@RequestMapping("/admin/system/ext")
+@RequestMapping("/admin/sys/ext")
 public class ExtAppController extends MyController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class ExtAppController extends MyController {
 
     @RequestMapping("")
     public String view() {
-        return "system/extapp";
+        return "sys/extapp";
     }
 
     @RequestMapping("selecter")

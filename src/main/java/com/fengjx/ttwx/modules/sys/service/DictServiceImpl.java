@@ -1,9 +1,9 @@
 
-package com.fengjx.ttwx.modules.system.service;
+package com.fengjx.ttwx.modules.sys.service;
 
 import com.fengjx.ttwx.common.plugin.dict.DictData;
 import com.fengjx.ttwx.common.plugin.dict.DictService;
-import com.fengjx.ttwx.modules.system.model.Dict;
+import com.fengjx.ttwx.modules.sys.model.Dict;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,13 @@ public class DictServiceImpl implements DictService {
     private Dict dict;
 
     @Override
-    public String getDictLabel(String value) {
-        return dict.getDictLabel(value);
+    public String getDictLabel(String value, String group) {
+        return dict.getDictLabel(value, group);
+    }
+
+    @Override
+    public String getDictValue(String label, String group) {
+        return dict.getDictValue(label, group);
     }
 
     @Override

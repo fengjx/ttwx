@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.Map;
 
 /**
- * freemark¹¤¾ßÀà
+ * Freemarkerå·¥å…·ç±»
  *
  * @Created by FengJianxin on 2015/8/22.
  * @Email xd-fjx@qq.com
@@ -26,11 +26,9 @@ public class FreemarkerUtil {
      * @param root
      * @param templatePath
      * @param htmlPath
-     * @return ·µ»ØÉú³ÉµÄÎÄ¼şÂ·¾¶
      */
     public static String createHTML(Map root, String templatePath, String htmlPath) {
         Template template = null;
-        String flag = null;
         File htmlFile = null;
         Writer out = null;
         try {
@@ -38,11 +36,9 @@ public class FreemarkerUtil {
             htmlFile = new File(htmlPath);
             out = new BufferedWriter(
                     new OutputStreamWriter(new FileOutputStream(htmlFile), "UTF-8"));
-            // ¼ÓÔØÄ£°åÎÄ¼ş
             template = cfg.getTemplate(templatePath);
-            // Éú³Éhtml
             template.process(root, out);
-            flag = htmlPath;
+            return htmlPath;
         } catch (MalformedTemplateNameException e) {
             throw new RuntimeException(e);
         } catch (TemplateException e) {
@@ -60,12 +56,10 @@ public class FreemarkerUtil {
         } finally {
             IOUtils.closeQuietly(out);
         }
-        return flag;
+
     }
 
     /**
-     * ½âÎöftlÎÄ¼ş£¬·µ»Ø×Ö·û´®
-     *
      * @param root
      * @param templatePath
      * @return
@@ -76,9 +70,7 @@ public class FreemarkerUtil {
         Template template = null;
         try {
             out = new StringWriter();
-            // ¼ÓÔØÄ£°åÎÄ¼ş
             template = cfg.getTemplate(templatePath);
-            // ½âÎöftlÎÄ¼ş
             template.process(root, out);
             flag = out.toString();
         } catch (MalformedTemplateNameException e) {

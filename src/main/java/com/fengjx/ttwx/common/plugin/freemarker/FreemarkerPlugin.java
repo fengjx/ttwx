@@ -5,7 +5,6 @@ import com.fengjx.ttwx.common.plugin.IPlugin;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 /**
- * freemark²å¼þ
  *
  * @Created by FengJianxin on 2015/8/22.
  * @Email xd-fjx@qq.com

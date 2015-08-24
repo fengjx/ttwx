@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ViewController {
 
-    @RequestMapping(value = "/admin")
+    @RequestMapping(value = "${adminPath}")
     public String view() {
         return "/common/index";
     }

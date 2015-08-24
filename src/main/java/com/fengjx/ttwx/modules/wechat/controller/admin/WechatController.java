@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date：2015/5/17 0017
  */
 @Controller
-@RequestMapping("/admin/wechat")
+@RequestMapping("${adminPath}/wechat")
 public class WechatController extends MyController {
 
     @RequestMapping(value = {

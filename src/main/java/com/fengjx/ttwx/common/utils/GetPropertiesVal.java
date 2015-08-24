@@ -30,7 +30,7 @@ public final class GetPropertiesVal {
         try {
         	res = new String(statusRes.getString(key).getBytes("ISO-8859-1"),"UTF-8");
 		} catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            // 异常代表无配置，这里什么也不做
 		}
         return res;
     }

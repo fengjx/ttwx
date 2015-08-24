@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.system.controller;
+package com.fengjx.ttwx.modules.sys.controller;
 
 import com.fengjx.ttwx.modules.common.controller.MyController;
 
@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/system")
 public class SystemController extends MyController {
 
-    @RequestMapping(value = {
-            "", "index"
-    })
+    @RequestMapping(value = "")
     public String view() {
-        return "system/index";
+        return "sys/index";
     }
 
 }
