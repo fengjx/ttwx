@@ -280,6 +280,13 @@ app.tusiModal = function (msg, time, opt) {
     }
 }
 
+/**
+ * 自动消失的提示框
+ *
+ * @param msg
+ * @param time
+ * @param opt
+ */
 app.tusiAlert = function (msg, time, opt) {
     app.closeDialog();
     var _opt = $.extend({
@@ -296,6 +303,14 @@ app.tusiAlert = function (msg, time, opt) {
     }
 }
 
+/**
+ * 自动消失的提示框
+ *
+ * @param id
+ * @param msg
+ * @param time
+ * @param opt
+ */
 app.tip = function (id, msg, time, opt) {
     app.closeDialog();
     var _opt = $.extend({
@@ -313,6 +328,44 @@ app.tip = function (id, msg, time, opt) {
             app.closeDialog();
         }, time * 1000);
     }
+};
+
+app.win = function ($select, title, okCallBack, opt) {
+    app.closeDialog();
+    var _opt = $.extend({
+        title: title ? title : '',
+        width: "auto",
+        height: "auto",
+        content: $($select).show(),
+        fixed: true,
+        cancel: false,
+        ok: function () {
+            if(okCallBack){
+                okCallBack();
+            }
+        }
+    }, opt || {});
+    art = dialog(_opt);
+    art.show();
+};
+
+app.winModal = function ($select, title, okCallBack, opt) {
+    app.closeDialog();
+    var _opt = $.extend({
+        title: title ? title : '',
+        width: "auto",
+        height: "auto",
+        content: $($select).show(),
+        fixed: true,
+        cancel: false,
+        ok: function () {
+            if(okCallBack){
+                okCallBack();
+            }
+        }
+    }, opt || {});
+    art = dialog(_opt);
+    art.showModal();
 };
 
 app.closeDialog = function () {

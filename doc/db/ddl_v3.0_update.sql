@@ -20,3 +20,4 @@ MODIFY COLUMN `token`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci N
 ALTER TABLE `wechat_material`
 ADD COLUMN `file_name`  varchar(255) NULL AFTER `msg_type`;
 
+alter table 'wechat_data_dict' rename 'sys_dict';

@@ -13,6 +13,7 @@
 <script src="<%=resourceUrl%>/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/metisMenu/metisMenu.min.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/scojs/js/sco.message.js" type="text/javascript"></script>
+<script src="<%=resourceUrl%>/scojs/js/sco.modal.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/artDialog/dist/dialog-min.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/nprogress/nprogress.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/jquery-select2/js/select2.min.js" type="text/javascript"></script>

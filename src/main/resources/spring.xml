@@ -11,7 +11,7 @@
 
 
     <!-- 加载配置属性文件 -->
-      <import resource="spring-config.xml"/>
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties" />
 
     <!-- 开启注解 -->
     <context:component-scan base-package="com.fengjx.ttwx"/>
@@ -23,7 +23,7 @@
     <import resource="spring-db.xml"/>
     <import resource="spring-beans.xml"/>
     <import resource="spring-aop.xml"/>
-     <import resource="spring-email.xml"/>
+    <import resource="spring-email.xml"/>
     <import resource="spring-mvc-interceptor.xml"/>
-    
+
 </beans>

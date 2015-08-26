@@ -1,8 +1,8 @@
 
 package com.fengjx.ttwx.modules.wechat.model;
 
-import com.fengjx.ttwx.common.plugin.db.Page;
-import com.fengjx.ttwx.common.plugin.db.PageContext;
+import com.fengjx.ttwx.common.plugin.db.page.Page;
+import com.fengjx.ttwx.common.plugin.db.page.PageContext;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
