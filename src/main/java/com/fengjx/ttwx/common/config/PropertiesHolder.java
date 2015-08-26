@@ -2,8 +2,6 @@ package com.fengjx.ttwx.common.config;
 
  
 
-import java.net.URL;
-import java.util.Map;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -24,22 +22,7 @@ public class PropertiesHolder {
 
 	private PropertiesHolder() {
 	}
-
-  private void readFromExternal() {
-		String env = System.getProperty("ENV_MODE");
-		 
-		 
-		Properties prop = System.getProperties();
-		if (prop != null) {
-			for (Map.Entry<Object, Object> entry : prop.entrySet()) {
-				appConfig.setProperty((String) entry.getKey(), (String) entry.getValue());
-			}
-		}
-		
-		for(Object key: appConfig.keySet()) {
-			logger.info("config property [" + key + ": " + appConfig.getProperty(key.toString()) + "]");
-		}
-  }
+ 
 
 	public Properties getAppConfig() {
 		return appConfig;
@@ -49,4 +32,7 @@ public class PropertiesHolder {
 		this.appConfig = appConfig;
 	}
 
+	public String getValue(String key){
+		return getAppConfig().getProperty(key);
+	}
 }

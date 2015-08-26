@@ -2,8 +2,11 @@ package com.fengjx.ttwx.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.fengjx.ttwx.common.config.PropertiesHolder;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
@@ -19,16 +22,15 @@ public final class GetPropertiesVal {
 
     }
 
-    private static ResourceBundle statusRes;
-
     static {
-        statusRes = ResourceBundle.getBundle("app", Locale.getDefault());
     }
 
     public static String getLabel(String key) {
     	String res = "";
         try {
-        	res = new String(statusRes.getString(key).getBytes("ISO-8859-1"),"UTF-8");
+        	Properties properties= PropertiesHolder.INSTANCE.getAppConfig();
+        	res=new String(properties.getProperty(key).getBytes("ISO-8859-1"),"UTF-8");
+        	//res = new String(statusRes.getString(key).getBytes("ISO-8859-1"),"UTF-8");
 		} catch (UnsupportedEncodingException e) {
             // 异常代表无配置，这里什么也不做
 		}

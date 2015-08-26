@@ -1,48 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 
     <!-- 加载配置属性文件 -->
-    <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties" />
-    
-    
-	<!-- VM 参数 -DENV_MODE=dev/release/test 转换各环境配置文件  -->
-	<bean
-		class="com.fengjx.ttwx.common.config.ConfigPropertyPlaceholderConfigurer">
+    <!--   <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties" /> -->
 
-		<property name="location">
-			<value>classpath:env/${ENV_MODE:dev}/app.properties</value>
-		</property>
-		
-		<property name="order" value="1">
-		</property>
-		
-		<property name="ignoreUnresolvablePlaceholders" value="true">
-		</property>
-	</bean>
-	
-	<bean
-		class="com.fengjx.ttwx.common.config.ConfigPropertyPlaceholderConfigurer">
+    <!-- VM 参数 -DENV_MODE=dev/release/test 转换各环境配置文件  -->
+    <bean class="com.fengjx.ttwx.common.config.ConfigPropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:env/${ENV_MODE}/app.properties</value>
+        </property>
+        <property name="order" value="1"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
 
-		<property name="location">
-			<value>classpath:app.properties</value>
-		</property>
-		
-		<property name="order" value="2">
-		</property>
-		
-		<property name="ignoreUnresolvablePlaceholders" value="false">
-		</property>
-	</bean>
-    
- 
-    
+    <bean class="com.fengjx.ttwx.common.config.ConfigPropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:app.properties</value>
+        </property>
+        <property name="order" value="2"/>
+        <property name="ignoreUnresolvablePlaceholders" value="false"/>
+    </bean>
+
+
 </beans>

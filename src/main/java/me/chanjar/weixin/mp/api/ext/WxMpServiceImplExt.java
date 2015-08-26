@@ -24,7 +24,6 @@ public class WxMpServiceImplExt extends WxMpServiceImpl implements
 		    //预览只支持一个to User,去掉toUser list的[]
 		    json=json.replace("[", "").replace("]", "");
 		  
-		    System.out.println(json);
 			String responseContent = execute(new SimplePostRequestExecutor(), url, json);
 		    return WxMpMassSendResult.fromJson(responseContent);
 	}

@@ -40,7 +40,8 @@ public class MaterialController extends MyController {
     }
 
     @RequestMapping("/multiple")
-    public ModelAndView multiple(@RequestParam(value="id",required=false) String id,@RequestParam(value="fname",required=false) String fileName) {
+    public ModelAndView multiple(@RequestParam(value = "id", required = false) String id,
+            @RequestParam(value = "fname", required = false) String fileName) {
         ModelAndView mv = new ModelAndView("/wechat/admin/multiple_news");
         mv.addObject("id", id);
         mv.addObject("fname", fileName);
@@ -48,7 +49,8 @@ public class MaterialController extends MyController {
     }
 
     @RequestMapping("/single")
-    public ModelAndView single(@RequestParam(value="id",required=false) String id,@RequestParam(value="fname",required=false) String fileName) {
+    public ModelAndView single(@RequestParam(value = "id", required = false) String id,
+            @RequestParam(value = "fname", required = false) String fileName) {
         ModelAndView mv = new ModelAndView("/wechat/admin/single_news");
         mv.addObject("id", id);
         mv.addObject("fname", fileName);
@@ -68,35 +70,45 @@ public class MaterialController extends MyController {
         SysUserEntity sysUser = getLoginSysUser(request);
         List<Map<String, Object>> contents = StringUtils.isNotBlank(contentsJson) ? JsonUtil
                 .parseJSON2List(contentsJson) : null;
-                Map<String, Object> params=       getRequestMap(request);
-        String previewStr = (String) params.get("preview");
-        
-        if(previewStr!=null&&previewStr.equals("true")){
-        	try {
-				toSendPreviewMessage(sysUser, contents, params);
-			} catch (WxErrorException e) {
-				 return retFail(e.getError().getErrorMsg());
-			}
-        }else{
-         material.saveOrUpdate(params, contents, sysUser.getId());
+        Map<String, Object> params = getRequestMap(request);
+        String msgFlag = (String) params.get("msgFlag");
+
+        if (msgFlag != null && msgFlag.equals("1")) {
+            try {
+                toSendMessage(sysUser, contents, params, true);
+            } catch (WxErrorException e) {
+                return retFail(e.getError().getErrorMsg());
+            }
+        } else {
+            material.saveOrUpdate(params, contents, sysUser.getId());
+            if ("2".equals(msgFlag)) {
+                try {
+                    toSendMessage(sysUser, contents, params, false);
+                } catch (WxErrorException e) {
+                    return retFail(e.getError().getErrorMsg());
+                }
+            }
         }
         return retSuccess();
     }
 
-	private void toSendPreviewMessage(SysUserEntity sysUser,
-			List<Map<String, Object>> contents, Map<String, Object> params) throws WxErrorException {
-		
-		String msgType = (String) params.get("msg_type");
-		String wxUserId=(String)params.get("wxUserId");
+    private void toSendMessage(SysUserEntity sysUser,
+            List<Map<String, Object>> contents, Map<String, Object> params, boolean isPreview)
+            throws WxErrorException {
+
+        String msgType = (String) params.get("msg_type");
+        String wxUserId = (String) params.get("wxUserId");
         if (null != msgType && msgType.equals("news")) { // 图文消息
             if (null != contents && contents.size() > 0) {
                 String xml_data = (String) params.get("xml_data");
-                
-					material.previewMessage(contents, xml_data, sysUser.getId(),wxUserId);
-				 
+                if (isPreview)
+                    material.previewMsg(contents, xml_data, sysUser.getId(), wxUserId);
+                else
+                    material.sendGroupMsg(contents, xml_data, sysUser.getId());
+
             }
         }
-	}
+    }
 
     @RequestMapping("/load")
     @ResponseBody
@@ -107,7 +119,8 @@ public class MaterialController extends MyController {
     @RequestMapping(value = "/getContent", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String loadMaterialContentByUrl(HttpServletResponse response, String url) {
-        return material.loadMaterialContentByUrl(url);
+        String content = material.loadMaterialContentByUrl(url);
+        return content;
     }
 
     @RequestMapping(value = "/delete")
@@ -116,7 +129,5 @@ public class MaterialController extends MyController {
         material.deleteById(id);
         return retSuccess();
     }
-    
- 
 
 }

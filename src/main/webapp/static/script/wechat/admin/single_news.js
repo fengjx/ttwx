@@ -34,8 +34,8 @@ $(function(){
 	});
 
 	$("#news_form").submit(function(){
-		var preview=$("#previewMsg").val();
-		if(preview=='true'){
+		var msgFlag=$("#msgFlag").val();
+		if(msgFlag=='1'){
 			app.prompt("请输入预览userId",function (userId) {
 				 if(userId==''){app.alert("userId不能为空") ;}
 				 else{
@@ -144,17 +144,20 @@ function toSubmit(){
 		},
 		success : function(res){
 			app.closeDialog();
+			var msgFlag= $("#msgFlag").val();
 			if(res && '1' == res.code){
-				if(preview=='true'){
+				if(msgFlag=='1'){
 					app.alert("预览成功，请留意微信消息！");	
 				}else{
-				app.alertModal("保存成功！",{
+					var msg=msgFlag=='2'?"群发成功!":"保存成功!";
+				app.alertModal(msg,{
 					ok: function () {
 						window.location.href = domain + '/admin/wechat/material';
 					}
 				});}
 			}else{
 				app.closeDialog();
+				app.alertModal(res.msg?res.msg:"保存失败！");
 			}
 		}
 	});
@@ -235,14 +238,10 @@ function validForm() {
 /**
  * 提交表单
  */
-function submitNewsForm(isPreview){
-	if(validForm()){
-		if(isPreview){
-			$("#previewMsg").val(true);
-		}else{
-			$("#previewMsg").val(false);
-		}
-		$("#news_form").submit();
+function submitNewsForm(flag){
+	if(validForm()){		 
+		 $("#msgFlag").val(flag);
+		 $("#news_form").submit();
 	}
 }
 
