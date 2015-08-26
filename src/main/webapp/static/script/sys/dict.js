@@ -2,10 +2,14 @@
  * 字典管理
  */
 
-var viewDialog;
+var editModal;
 var $table;
 
 $(function () {
+
+    editModal = $('#modal').modal({
+        show : false
+    });
 
     $table = $('#data-table').bootstrapTable({
         method: 'post',
@@ -106,7 +110,7 @@ function searchDatagrid() {
 function clearDatagrid() {
     //$('#toolbar input').val('');
     //$table.bootstrapTable('refresh');
-    app.win("#modal");
+    editModal.modal('show');
 }
 
 function deleteExt(id, appName) {

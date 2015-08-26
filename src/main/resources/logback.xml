@@ -42,11 +42,17 @@
     <logger name="java.sql.ResultSet">
         <level value="DEBUG"/>
     </logger>
+    <logger name="org.springframework">
+        <level value="INFO"/>
+    </logger>
     <logger name="org.springframework.jdbc.core">
         <level value="DEBUG"/>
     </logger>
-    <logger name="com.fengjx.ttwx.modules">
+    <logger name="com.alibaba.druid.sql">
         <level value="DEBUG"/>
+    </logger>
+    <logger name="com.fengjx.ttwx.modules">
+        <level value="INFO"/>
     </logger>
 
     <root level="INFO">
