@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="decorator" content="display"/>
 	<jsp:include page="/WEB-INF/view/common/inc/meta.jsp">
 		<jsp:param value="注册" name="title"/>
 	</jsp:include>

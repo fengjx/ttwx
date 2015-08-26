@@ -1,6 +1,8 @@
 
 package com.fengjx.ttwx.common.plugin.db;
 
+import com.fengjx.ttwx.common.plugin.db.page.Page;
+import com.fengjx.ttwx.common.plugin.db.page.PageContext;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -253,14 +255,14 @@ public abstract class Model {
         if (pageNumber < 1 || pageSize < 1) {
             throw new MyDbException("pageNumber and pageSize must be more than 0");
         }
-        int totalRow = 0;
+        Long totalRow = 0L;
         int totalPage = 0;
         totalRow = getCount(sql, paras);
         if (totalRow < 1) {
             return new Page(new ArrayList<Map<String, Object>>(0), pageNumber,
-                    pageSize, 0, 0);
+                    pageSize, 0, 0L);
         }
-        totalPage = totalRow / pageSize;
+        totalPage = totalRow.intValue() / pageSize;
         if (totalRow % pageSize != 0) {
             totalPage++;
         }
@@ -277,10 +279,10 @@ public abstract class Model {
      * @param paras
      * @return
      */
-    public int getCount(String sql, Object... paras) {
+    public Long getCount(String sql, Object... paras) {
         StringBuilder countSql = new StringBuilder();
         Config.dialect.forCount(countSql, sql);
-        return jdbcTemplate.queryForObject(countSql.toString(), paras, Integer.class);
+        return jdbcTemplate.queryForObject(countSql.toString(), paras, Long.class);
     }
 
     /**

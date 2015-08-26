@@ -5,14 +5,7 @@ import com.fengjx.ttwx.common.utils.JsonUtil;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
 import com.fengjx.ttwx.modules.wechat.model.Material;
- 
-
-
-
-
-
 import me.chanjar.weixin.common.exception.WxErrorException;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,11 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 素材管理
@@ -35,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date：2015/5/28 0028
  */
 @Controller
-@RequestMapping("/admin/wechat/material")
+@RequestMapping("${adminPath}/wechat/material")
 public class MaterialController extends MyController {
 
     @Autowired

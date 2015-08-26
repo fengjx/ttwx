@@ -2,15 +2,12 @@
 package com.fengjx.ttwx.modules.wechat.controller.admin;
 
 import com.fengjx.ttwx.common.utils.WebUtil;
-import com.fengjx.ttwx.modules.common.bean.BootstrapPage;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.wechat.model.Material;
 import com.fengjx.ttwx.modules.wechat.model.RespMsgAction;
 import com.fengjx.ttwx.modules.wechat.model.WechatMenu;
-
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
-
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 消息动作规则
@@ -32,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date：2015/6/5 0005
  */
 @Controller
-@RequestMapping("/admin/wechat/action")
+@RequestMapping("${adminPath}/wechat/action")
 public class RespMsgActionController extends MyController {
 
     @Autowired
@@ -125,9 +121,8 @@ public class RespMsgActionController extends MyController {
     @RequestMapping(value = "/pageList")
     @ResponseBody
     public String pageList(HttpServletRequest request) {
-        BootstrapPage page = respMsgAction.pageMsgAction(WebUtil.getNotBlankRequestParams(request),
-                getLoginSysUserId(request));
-        return page.toJson();
+        return respMsgAction.pageMsgAction(WebUtil.getNotBlankRequestParams(request),
+                getLoginSysUserId(request)).toJson();
     }
 
     /**

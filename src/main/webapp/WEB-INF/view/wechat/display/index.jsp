@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="decorator" content="display"/>
 <meta property="qc:admins" content="422531167706316110063757" />
 <jsp:include page="/WEB-INF/view/common/inc/meta.jsp"></jsp:include>
 <link href="<%=resourceUrl%>/css/index.css" rel="stylesheet" type="text/css"/>

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <meta name="decorator" content="wechat"/>
     <title>菜单管理</title>
     <link href="<%=resourceUrl%>/css/menu.css?v=2014111501" rel="stylesheet" type="text/css"/>
     <link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
@@ -82,7 +83,7 @@
                                     <td>
                                     <span class="">
                                         链接地址：
-                                        <jsp:include page="/admin/system/ext/selecter">
+                                        <jsp:include page="/admin/sys/ext/selecter">
                                             <jsp:param name="showAll" value="1"/>
                                             <jsp:param name="id" value="busiapp_url"/>
                                             <jsp:param name="name" value="busiapp_url"/>

@@ -11,6 +11,18 @@
        http://www.springframework.org/schema/context/spring-context-4.0.xsd
        ">
 
+    <bean init-method="init" id="plugins" class="com.fengjx.ttwx.common.plugin.Plugins">
+        <property name="pluginList">
+            <list>
+                <ref bean="tableMappingPlugin"/>
+                <ref bean="ehCachePlugin"/>
+                <ref bean="dictPlugin"/>
+                <ref bean="freemarkerPlugin"/>
+                <ref bean="emailPlugin"/>
+            </list>
+        </property>
+    </bean>
+
     <cache:annotation-driven/>
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
         <property name="cacheManager" ref="ehcache"/>
@@ -20,17 +32,15 @@
         <property name="configLocation" value="classpath:ehcache.xml"/>
     </bean>
 
-    <bean init-method="init" id="plugins" class="com.fengjx.ttwx.common.plugin.Plugins">
-        <property name="pluginList">
-            <list>
-                <ref bean="tableMappingPlugin"/>
-                <ref bean="ehCachePlugin"/>
-            </list>
-        </property>
-    </bean>
-
     <bean id="ehCachePlugin" class="com.fengjx.ttwx.common.plugin.cache.ehcache.EhCachePlugin">
         <property name="cacheManager" ref="ehcache"/>
+    </bean>
+
+    <!-- 数据字典-->
+    <bean id="dictService" class="com.fengjx.ttwx.modules.sys.service.DictServiceImpl">
+    </bean>
+    <bean id="dictPlugin" class="com.fengjx.ttwx.common.plugin.dict.DictPlugin">
+        <property name="service" ref="dictService"/>
     </bean>
 
     <bean id="serviceEngine" class="com.fengjx.ttwx.modules.wechat.process.ServiceEngineImpl"/>
@@ -86,8 +96,29 @@
         </property>
     </bean>
     <!-- /验证码组件 -->
-    
+
     <!-- Ueditor相关 -->
-    	<context:component-scan base-package="ueditor"></context:component-scan>
+    <context:component-scan base-package="ueditor"></context:component-scan>
+
+
+    <!-- freemarker的配置 -->
+    <bean id="freemarkerConfigurer"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/ftl"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">10</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="number_format">#.##</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="freemarkerPlugin" class="com.fengjx.ttwx.common.plugin.freemarker.FreemarkerPlugin">
+        <property name="configurer" ref="freemarkerConfigurer"/>
+    </bean>
+
 
 </beans>

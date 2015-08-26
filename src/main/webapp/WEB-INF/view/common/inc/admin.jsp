@@ -3,11 +3,11 @@
 <link href="<%=resourceUrl%>/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <link href="<%=resourceUrl%>/artDialog/css/ui-dialog.css" rel="stylesheet" type="text/css"/>
 <link href="<%=resourceUrl%>/scojs/css/scojs.css" rel="stylesheet" type="text/css"/>
-<link href="<%=resourceUrl%>/scojs/css/sco.message.css" rel="stylesheet" type="text/css"/>
 <link href="<%=resourceUrl%>/metisMenu/metisMenu.min.css" rel="stylesheet" type="text/css"/>
 <link href="<%=resourceUrl%>/artDialog/css/ui-dialog.css" rel="stylesheet" type="text/css"/>
 <link href="<%=resourceUrl%>/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="<%=resourceUrl%>/nprogress/nprogress.css" rel="stylesheet" type="text/css"/>
+<link href="<%=resourceUrl%>/jquery-select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
 <link href="<%=resourceUrl%>/css/dashboard.css" rel="stylesheet" type="text/css"/>
 <script src="<%=resourceUrl%>/js/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -15,6 +15,7 @@
 <script src="<%=resourceUrl%>/scojs/js/sco.message.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/artDialog/dist/dialog-min.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/nprogress/nprogress.js" type="text/javascript"></script>
+<script src="<%=resourceUrl%>/jquery-select2/js/select2.min.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/script/common/app.js" type="text/javascript"></script>
 <!--[if lte IE 8]>
 <script src="<%=resourceUrl%>/js/excanvas.min.js" type="text/javascript"></script>

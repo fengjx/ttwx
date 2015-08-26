@@ -3,15 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="decorator" content="display"/>
 	<jsp:include page="/WEB-INF/view/common/inc/meta.jsp">
 		<jsp:param value="登录" name="title"/>
 	</jsp:include>
 	<style type="text/css">
-
 		.label-icon{
 			margin-top: 40px;
 		}
-
 	</style>
 	<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
 </head>

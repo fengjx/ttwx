@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+	<meta name="decorator" content="wechat"/>
 	<title>授权设置</title>
 	<link href="<%=resourceUrl%>/css/setting.css" rel="stylesheet" type="text/css"/>
 	<script type="text/javascript">

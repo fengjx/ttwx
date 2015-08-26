@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author fengjx.
  * @date：2015/5/19 0019
  */
-@RequestMapping("/admin/wechat/msglog")
+@RequestMapping("${adminPath}/wechat/msglog")
 @Controller
 public class ReqMsglogController extends MyController {
 

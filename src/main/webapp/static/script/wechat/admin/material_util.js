@@ -191,6 +191,8 @@ function convertEventType(eventType) {
         return "用户关注";
     } else if (eventType == 'unsubscribe') {	//取消关注
         return "取消关注";
+    }else{
+        return "";
     }
 }
 

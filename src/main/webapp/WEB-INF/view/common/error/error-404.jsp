@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>404</title>
+	<meta name="decorator" content="display"/>
+	<title>404</title>
 </head>
 <body>
 

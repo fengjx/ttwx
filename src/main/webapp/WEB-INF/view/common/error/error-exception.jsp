@@ -6,7 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>error</title>
+	<meta name="decorator" content="display"/>
+	<title>error</title>
 </head>
 <body>
 	<!-- container -->

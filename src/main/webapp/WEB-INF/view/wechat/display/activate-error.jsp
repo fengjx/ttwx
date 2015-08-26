@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="/WEB-INF/view/common/inc/meta.jsp">
-	<jsp:param value="激活失败" name="title"/>
-</jsp:include>
+	<meta name="decorator" content="display"/>
+	<jsp:include page="/WEB-INF/view/common/inc/meta.jsp">
+		<jsp:param value="激活失败" name="title"/>
+	</jsp:include>
 </head>
 <body>
 	<!-- container -->

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <meta name="decorator" content="wechat"/>
 	<title>LBS地理位置</title>
 </head>
 <body>

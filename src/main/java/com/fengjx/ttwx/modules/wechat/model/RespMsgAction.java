@@ -4,12 +4,10 @@ package com.fengjx.ttwx.modules.wechat.model;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.Record;
+import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.CommonUtils;
-import com.fengjx.ttwx.modules.common.bean.BootstrapPage;
-
 import me.chanjar.weixin.common.api.WxConsts;
-
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -76,7 +74,7 @@ public class RespMsgAction extends Model {
      * @param userId 所属用户
      * @return
      */
-    public BootstrapPage pageMsgAction(Map<String, String> params, String userId) {
+    public AdapterPage pageMsgAction(Map<String, String> params, String userId) {
         List<Object> parameters = new ArrayList();
         StringBuilder sql = new StringBuilder(detailSql());
         sql.append(" where a.user_id = ? ");
@@ -106,7 +104,7 @@ public class RespMsgAction extends Model {
             parameters.add(CommonUtils.string2Date(params.get("end_time").trim() + " 23:59:59"));
         }
         sql.append(" order by a.in_time desc");
-        return new BootstrapPage(paginate(sql.toString(), parameters.toArray()));
+        return paginate(sql.toString(), parameters.toArray()).convert();
     }
 
     /**

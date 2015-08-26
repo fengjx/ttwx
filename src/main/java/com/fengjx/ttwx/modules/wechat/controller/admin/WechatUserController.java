@@ -6,16 +6,14 @@ import com.fengjx.ttwx.common.utils.WebUtil;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.wechat.model.WechatUser;
 import com.fengjx.ttwx.modules.wechat.model.WechatUserGroup;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 粉丝管理
@@ -24,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date：2015/6/19 0019
  */
 @Controller
-@RequestMapping("/admin/wechat/user")
+@RequestMapping("${adminPath}/wechat/user")
 public class WechatUserController extends MyController {
 
     @Autowired
