@@ -7,3 +7,7 @@
 /catalina.base_IS_UNDEFINED
 /target
 /ttwx.iml
+/*.iml
+/*.classpath
+/.settings
+/*.project
