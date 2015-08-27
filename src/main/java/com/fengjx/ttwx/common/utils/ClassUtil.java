@@ -47,7 +47,7 @@ public class ClassUtil {
             URL url = urls.nextElement();
             if (url != null) {
                 String protocol = url.getProtocol();
-                String pkgPath = url.getPath();
+                String pkgPath = Encodes.urlDecode(url.getPath());
                 LOG.debug("protocol:" + protocol + " path:" + pkgPath);
                 if ("file".equals(protocol)) {
                     // 本地自己可见的代码
@@ -63,7 +63,7 @@ public class ClassUtil {
 
     private static void findClassName(Set<Class<?>> classSet, String pkgName, String pkgPath,
             boolean isRecursive, Class<? extends Annotation> annotation)
-            throws ClassNotFoundException {
+                    throws ClassNotFoundException {
         if (classSet == null) {
             return;
         }
@@ -95,8 +95,8 @@ public class ClassUtil {
      * @throws IOException
      */
     private static void findClassName(Set<Class<?>> classSet, String pkgName, URL url,
-            boolean isRecursive, Class<? extends Annotation> annotation) throws IOException,
-            ClassNotFoundException {
+            boolean isRecursive, Class<? extends Annotation> annotation)
+                    throws IOException, ClassNotFoundException {
         JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
         JarFile jarFile = jarURLConnection.getJarFile();
         LOG.debug("jarFile:" + jarFile.getName());
@@ -120,8 +120,7 @@ public class ClassUtil {
                     addClassName(classSet, clazzName, annotation);
                 } else if (isRecursive && prefix.startsWith(pkgName)) {
                     // 遍历子包名：子类
-                    LOG.debug("jar entryName:" + jarEntryName + " isRecursive:"
-                            + isRecursive);
+                    LOG.debug("jar entryName:" + jarEntryName + " isRecursive:" + isRecursive);
                     addClassName(classSet, clazzName, annotation);
                 }
             }
