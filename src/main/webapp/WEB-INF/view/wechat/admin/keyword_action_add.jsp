@@ -12,14 +12,16 @@
     </script>
 </head>
 <body>
-    <ol class="breadcrumb">
-      <li><a href="<%=domain %>/admin">后台管理</a></li>
-      <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
-      <li><a href="<%=domain %>/admin/wechat/action/keyword">关键字回复</a></li>
-      <li class="active">添加规则</li>
-    </ol>
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ol class="breadcrumb">
+          <li><a href="<%=domain %>/admin">后台管理</a></li>
+          <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+          <li><a href="<%=domain %>/admin/wechat/action/keyword">关键字回复</a></li>
+          <li class="active">添加规则</li>
+        </ol>
+    </div>
 
-    <div>
+    <div class="page-content">
       <!-- 文本消息动作 -->
       <jsp:include page="/WEB-INF/view/wechat/admin/inc_action.jsp">
         <jsp:param name="req_type" value="text"/>

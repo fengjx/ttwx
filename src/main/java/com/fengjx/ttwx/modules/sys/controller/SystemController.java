@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date：2015-7-25
  */
 @Controller
-@RequestMapping("/admin/system")
+@RequestMapping("${adminPath}/sys")
 public class SystemController extends MyController {
 
     @RequestMapping(value = "")

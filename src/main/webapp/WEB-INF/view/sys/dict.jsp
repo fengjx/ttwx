@@ -38,6 +38,7 @@
 				</fieldset>
 			</div>
 		</div>
+		<table id="data-table"></table>
 
 		<div id="editModal" class="modal">
 			<div class="modal-dialog">

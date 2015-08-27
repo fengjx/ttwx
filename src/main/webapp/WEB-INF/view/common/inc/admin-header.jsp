@@ -16,7 +16,7 @@
       <ul class="nav navbar-nav">
         <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
         <li><a href="#">天天小店</a></li>
-        <li><a href="<%=domain %>/admin/system">系统管理</a></li>
+        <li><a href="<%=domain %>/admin/sys">系统管理</a></li>
       </ul>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
