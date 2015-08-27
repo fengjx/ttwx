@@ -17,7 +17,7 @@
     </ol>
   </div>
 
-  <div class="row">
+  <div class="row page-content">
     <div class="col-lg-3 col-md-6">
       <div class="panel panel-primary">
         <div class="panel-heading">

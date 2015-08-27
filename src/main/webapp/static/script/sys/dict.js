@@ -82,9 +82,9 @@ $(function () {
             align: 'center',
             valign: 'middle',
             formatter : function(value, row, index) {
-                var html = '<a class="btn btn-sm btn-success" onclick="view(\''+index+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-plus"></i></a>';
-                html += '<a class="btn btn-sm btn-info" href="'+domain+'/admin/wechat/action/keywordAdd?id='+row.id+'"><i class="glyphicon glyphicon-edit"></i></a>';
-                html += '<a class="btn btn-sm btn-warning" onclick="deleteMsgAction(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i></a>';
+                var html = '<a class="btn btn-xs btn-success" onclick="view(\''+index+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
+                html += '<a class="btn btn-xs btn-info" href="'+domain+'/admin/wechat/action/keywordAdd?id='+row.id+'"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
+                html += '<a class="btn btn-xs btn-warning" onclick="deleteMsgAction(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
                 return html;
             }
         }]

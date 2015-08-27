@@ -11,13 +11,16 @@
 	</script>
 </head>
 <body>
-	<ol class="breadcrumb">
-		<li><a href="<%=domain %>/admin">后台管理</a></li>
-		<li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
-		<li class="active">授权配置</li>
-	</ol>
 
-	<div>
+	<div class="breadcrumbs" id="breadcrumbs">
+		<ol class="breadcrumb">
+			<li><a href="<%=domain %>/admin">后台管理</a></li>
+			<li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+			<li class="active">授权配置</li>
+		</ol>
+	</div>
+
+	<div class="page-content">
 		<div class="alert alert-info">
 			<p>在微信公众平台<strong>“功能”</strong>-&gt;<strong>“高级功能”</strong>-&gt;<strong>“开发模式”，</strong>将<strong>AppId和AppSecret</strong>，然后填入下边表单。</p>
 			<p>通过认证的订阅号，拥有“自定义菜单”；通过认证的服务号，拥有“自定义菜单”和所有“高级接口”</p>

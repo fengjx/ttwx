@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/common/inc/url.jsp"%>
 <!-- 素材列表包含页 material.jsp | menu.jsp-->
-<div style="width: 91%;margin-right: auto;margin-left: auto;">
+<div>
 	<button id="btn-refresh" type="button" class="btn btn-outline btn-primary btn-block">
 		<i class="glyphicon glyphicon-refresh"></i>
 		刷&nbsp;&nbsp;&nbsp;&nbsp;新
@@ -24,7 +24,7 @@
 		</div>
 	</div>
 </div>
-<div style="width: 91%;margin-right: auto;margin-left: auto;">
+<div>
 	<button id="btn-more" type="button" class="btn btn-outline btn-info btn-block">
 		<i class="glyphicon glyphicon-circle-arrow-down"></i>
 		更&nbsp;&nbsp;&nbsp;&nbsp;多
