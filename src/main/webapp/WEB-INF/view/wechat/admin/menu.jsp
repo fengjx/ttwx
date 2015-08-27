@@ -15,7 +15,7 @@
         <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
         <li class="active">菜单管理</li>
     </ol>
-    <div class="container-fluid" style="margin-top: -18px;" >
+    <div class="container-fluid">
         <div class="row" >
             <h4>可创建最多3个一级菜单，每个一级菜单下可创建最多5个二级菜单。编辑中的菜的那不会马上被用户看到，请放心调试。</h4>
         </div>

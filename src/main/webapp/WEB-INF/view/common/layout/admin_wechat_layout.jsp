@@ -13,10 +13,10 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>
-<div class="container-fluid">
-    <div class="row">
+<div class="container-fluid main-container">
+    <div class="row main-content-inner">
         <jsp:include page="/WEB-INF/view/wechat/admin/inc_menu.jsp"></jsp:include>
-        <div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 page-content">
             <sitemesh:body/>
         </div>
     </div>
