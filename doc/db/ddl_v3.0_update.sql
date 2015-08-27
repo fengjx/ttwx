@@ -21,3 +21,6 @@ ALTER TABLE `wechat_material`
 ADD COLUMN `file_name`  varchar(255) NULL AFTER `msg_type`;
 
 alter table 'wechat_data_dict' rename 'sys_dict';
+
+ALTER TABLE `sys_dict`
+MODIFY COLUMN `is_valid`  tinyint NULL DEFAULT 0 AFTER `in_time`;
