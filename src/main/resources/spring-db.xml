@@ -78,7 +78,11 @@
     </tx:advice>
 
     <aop:config>
-        <aop:pointcut id="servicePointcut" expression="execution(* com.fengjx.ttwx.modules.wechat.model..*.*(..))"/>
+        <aop:pointcut id="servicePointcut"
+                      expression="
+                        execution(* com.fengjx.ttwx.modules.wechat.model..*.*(..)) ||
+                        execution(* com.fengjx.ttwx.modules.sys.model..*.*(..))
+                       "/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" order="1"/>
     </aop:config>
     <!-- 事务定义 end -->

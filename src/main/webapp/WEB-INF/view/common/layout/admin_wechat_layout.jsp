@@ -11,12 +11,12 @@
     <sitemesh:head/>
     <jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
 </head>
-<body>
+<body class="no-skin">
 <jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>
-<div class="container-fluid">
-    <div class="row">
-        <jsp:include page="/WEB-INF/view/wechat/admin/inc_menu.jsp"></jsp:include>
-        <div id="context" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="main-container">
+    <jsp:include page="/WEB-INF/view/wechat/admin/inc_menu.jsp"></jsp:include>
+    <div class="main-content">
+        <div id="context" class="main-content-inner">
             <sitemesh:body/>
         </div>
     </div>

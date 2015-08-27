@@ -8,45 +8,46 @@
 	<link href="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-	<ol class="breadcrumb">
-		<li><a href="<%=domain %>/admin">后台管理</a></li>
-		<li><a href="<%=domain %>/admin/sys">系统管理</a></li>
-		<li class="active">字典管理</li>
-	</ol>
-
-	<div id="toolbar">
-		<div class="form-inline" role="form">
-			<fieldset>
-				<div class="form-group">
-					<div class="control-group">
-						<label class="control-label">openid：</label>
-						<input name="qry_openid" class="form-control" type="text" placeholder="用户发送的文字">
-                        <span class="columns-right pull-right">
-                            <button onclick="searchDatagrid();" type="button" class="btn">
-								<i class="glyphicon glyphicon-search"></i>
-								查询
-							</button>
-                            <button onclick="clearDatagrid();" type="button" class="btn">
-								<i class="glyphicon glyphicon-transfer"></i>
-								重置
-							</button>
-                        </span>
-					</div>
-				</div>
-			</fieldset>
-		</div>
+	<div class="breadcrumbs">
+		<ol class="breadcrumb">
+			<li><a href="<%=domain %>/admin">后台管理</a></li>
+			<li><a href="<%=domain %>/admin/sys">系统管理</a></li>
+			<li class="active">字典管理</li>
+		</ol>
 	</div>
-	<table id="data-table"></table>
+	<div class="page-content">
+		<div id="toolbar">
+			<div class="form-inline" role="form">
+				<fieldset>
+					<div class="form-group">
+						<div class="control-group">
+							<label class="control-label">openid：</label>
+							<input name="qry_openid" class="form-control" type="text" placeholder="用户发送的文字">
+							<span class="columns-right pull-right">
+								<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-primary">
+									<i class="glyphicon glyphicon-search"></i>
+									查询
+								</button>
+								<button onclick="clearDatagrid();" type="button" class="btn btn-white">
+									<i class="glyphicon glyphicon-transfer"></i>
+									重置
+								</button>
+							</span>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
 
-	<div id="editModal" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">字典编辑</h4>
-				</div>
-				<form action="<%=domain %>/admin/sys/dict/save" class="form-horizontal" id="form-dict" method="POST">
-					<div class="modal-body">
+		<div id="editModal" class="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">字典编辑</h4>
+					</div>
+					<form action="<%=domain %>/admin/sys/dict/save" class="form-horizontal" id="form-dict" method="POST">
+						<div class="modal-body">
 							<input type="hidden" id="id" name="id" value="${wechatAccount.id }" />
 							<div class="control-group" >
 								<label class="control-label" for="dict_value">字典值:</label>
@@ -90,15 +91,16 @@
 									<input id="is_valid" name="is_valid" value="1" type="checkbox">
 								</div>
 							</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						<button type="submit" class="btn btn-primary" data-loading-text="正在提交...">保存</button>
-					</div>
-				</form>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+							<button type="submit" class="btn btn-primary" data-loading-text="正在提交...">保存</button>
+						</div>
+					</form>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	</div>
 
 <script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>

@@ -8,7 +8,7 @@
 <link href="<%=resourceUrl%>/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="<%=resourceUrl%>/nprogress/nprogress.css" rel="stylesheet" type="text/css"/>
 <link href="<%=resourceUrl%>/jquery-select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
-<link href="<%=resourceUrl%>/css/dashboard.css" rel="stylesheet" type="text/css"/>
+<link href="<%=resourceUrl%>/theme/ace/css/ace.min.css" rel="stylesheet" type="text/css"/>
 <script src="<%=resourceUrl%>/js/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<%=resourceUrl%>/metisMenu/metisMenu.min.js" type="text/javascript"></script>

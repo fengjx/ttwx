@@ -7,12 +7,17 @@
     <title>后台管理</title>
 </head>
 <body>
-  <ol class="breadcrumb">
-    <li><a href="<%=domain %>/admin">后台管理</a></li>
-    <li class="active">平台管理</li>
-  </ol>
+  <div class="breadcrumbs" id="breadcrumbs">
+    <ol class="breadcrumb">
+      <li>
+        <i class="ace-icon fa fa-home home-icon"></i>
+        <a href="<%=domain %>/admin">后台管理</a>
+      </li>
+      <li class="active">平台管理</li>
+    </ol>
+  </div>
 
-  <div class="row">
+  <div class="row page-content">
     <div class="col-lg-3 col-md-6">
       <div class="panel panel-primary">
         <div class="panel-heading">

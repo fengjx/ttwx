@@ -9,15 +9,19 @@
     <link href="<%=resourceUrl%>/css/common.css?v=2014030901" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-    <ol class="breadcrumb">
-        <li><a href="<%=domain %>/admin">后台管理</a></li>
-        <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
-        <li class="active">素材管理</li>
-    </ol>
-    <div class="main_bd" style="width:99.5%">
-        <jsp:include page="/WEB-INF/view/wechat/admin/inc_material_list.jsp">
-            <jsp:param name="showType" value="edit"/>
-        </jsp:include>
+    <div class="breadcrumbs">
+        <ol class="breadcrumb">
+            <li><a href="<%=domain %>/admin">后台管理</a></li>
+            <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+            <li class="active">素材管理</li>
+        </ol>
+    </div>
+    <div class="page-content">
+        <div class="main_bd" style="width:99.5%">
+            <jsp:include page="/WEB-INF/view/wechat/admin/inc_material_list.jsp">
+                <jsp:param name="showType" value="edit"/>
+            </jsp:include>
+        </div>
     </div>
 
 <script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
