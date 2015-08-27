@@ -59,7 +59,7 @@
 										</label>
 									</div>
 									<div class="col-lg-4 text-right">
-										<input id="btn-register" type="submit" class="btn btn-primary" data-loading-text="正在登录..." value="&nbsp;注&nbsp;&nbsp;册&nbsp;" />
+										<input id="btn-register" type="submit" class="btn btn-primary" data-loading-text="正在注册..." value="&nbsp;注&nbsp;&nbsp;册&nbsp;" />
 									</div>
 								</div>
 							</form>

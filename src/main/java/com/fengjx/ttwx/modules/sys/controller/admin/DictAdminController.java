@@ -32,12 +32,25 @@ public class DictAdminController extends MyController {
         return mv;
     }
 
-
     @RequestMapping("pageList")
     @ResponseBody
     public AdapterPage pageList(HttpServletRequest request) {
         Map<String, Object> attrs = getRequestMap(request);
-        return dict.paginate(attrs).convert();
+        return dict.paginate(attrs, "order by in_time desc").convert();
     }
 
+    @RequestMapping("save")
+    @ResponseBody
+    public Map<String, String> save(HttpServletRequest request) {
+        Map<String, Object> attrs = getRequestMap(request);
+        dict.saveOrUpdate(attrs);
+        return retSuccess();
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public Map<String, String> delete(String id) {
+        dict.deleteById(id);
+        return retSuccess();
+    }
 }

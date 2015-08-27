@@ -3,12 +3,13 @@
  */
 
 var editModal;
+var formValid
 var $table;
 
 $(function () {
 
-    editModal = $('#modal').modal({
-        show : false
+    editModal = $('#editModal').modal({
+        show: false
     });
 
     $table = $('#data-table').bootstrapTable({
@@ -27,64 +28,64 @@ $(function () {
         pageList: [10, 15, 20],
         minimumCountColumns: 2,
         clickToSelect: true,
-        idField:"id",
+        idField: "id",
         columns: [{
             field: 'id',
             valign: 'middle',
-            radio:true
-        },{
+            radio: true
+        }, {
             field: 'dict_value',
             title: '字典值',
             align: 'left',
             valign: 'middle'
-        },{
+        }, {
             field: 'dict_name',
             title: '字典名称',
             align: 'left',
             valign: 'middle'
-        },{
+        }, {
             field: 'dict_desc',
             title: '字典描述',
             align: 'left',
             width: '30%',
             valign: 'middle'
-        },{
+        }, {
             field: 'group_code',
             title: '字典组',
             align: 'left',
             valign: 'middle'
-        },{
+        }, {
             field: 'group_name',
             title: '组名称',
             align: 'left',
             width: '15%',
             valign: 'middle'
-        },{
+        }, {
             field: 'order_num',
             title: '排序',
             align: 'left',
             valign: 'middle'
-        },{
+        }, {
             field: 'is_valid',
             title: '是否启用',
             align: 'left',
             valign: 'middle'
-        },{
+        }, {
             field: 'in_time',
             title: '接入时间',
             align: 'left',
             width: '15%',
             valign: 'middle'
-        },{
+        }, {
             field: 'op',
             title: '操作',
             width: '15%',
             align: 'center',
             valign: 'middle',
-            formatter : function(value, row, index) {
-                var html = '<a class="btn btn-sm btn-success" onclick="view(\''+index+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-plus"></i></a>';
-                html += '<a class="btn btn-sm btn-info" href="'+domain+'/admin/wechat/action/keywordAdd?id='+row.id+'"><i class="glyphicon glyphicon-edit"></i></a>';
-                html += '<a class="btn btn-sm btn-warning" onclick="deleteMsgAction(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i></a>';
+            formatter: function (value, row, index) {
+                var html = '<a class="btn btn-sm btn-success" onclick="view(\'' + index + '\');" href="javascript:void(0);"><i class="glyphicon glyphicon-plus"></i></a>';
+                html += '<a class="btn btn-sm btn-info" href="' + domain + '/admin/wechat/action/keywordAdd?id=' + row.id + '"><i class="glyphicon glyphicon-edit"></i></a>';
+                html += '<a class="btn btn-sm btn-warning" onclick="deleteData(\'' + row.id + '\',\'' + row.dict_name + '\');" href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i></a>';
                 return html;
             }
         }]
@@ -101,6 +102,48 @@ $(function () {
         return params;
     }
 
+    formValid = $.scojs_valid('#form-dict', {
+        rules: {
+            dict_value: ['not_empty', {'min_length': 2}, {'max_length': 20}],
+            dict_name: ['not_empty'],
+            group_code: ['not_empty']
+        },
+        messages: {
+            dict_value: {
+                not_empty: "请输入字典值",
+                min_length: "字典值不少于2个字符",
+                max_length: "字典值不能超过20个字符"
+            },
+            dict_name: {
+                not_empty: "请输入字典名称"
+            },
+            group_code: {
+                not_empty: "请输入字典组标识"
+            }
+        },
+        wrapper:'.control-group'
+    });
+
+    $("#form-dict").submit(function () {
+        $(this).ajaxSubmit({
+            url: domain + "/admin/sys/dict/save",
+            dataType: 'json',
+            beforeSubmit: function () {
+                return formValid.validate();
+            },
+            success: function (res) {
+                if (res && "1" == res.code) {
+                    editModal.modal('hide');
+                    app.ok(res.msg);
+                    $table.bootstrapTable('refresh');
+                } else {
+                    app.error(res.msg);
+                }
+            }
+        });
+        return false;
+    });
+
 });
 
 function searchDatagrid() {
@@ -113,19 +156,19 @@ function clearDatagrid() {
     editModal.modal('show');
 }
 
-function deleteExt(id, appName) {
-    app.confirmModal("你要删除关键字【" + appName + "】的响应规则吗？", function () {
+function deleteData(id, name) {
+    app.confirmModal("你要删除字典【" + name + "】吗？", function () {
         $.ajax({
-            url: domain + '/admin/wechat/action/delete',
+            url: domain + '/admin/sys/dict/delete',
             data: 'id=' + id,
             cache: false,
             dataType: "json",
             success: function (res) {
                 if (res && '1' === res.code) {
-                    app.alertModal('刪除成功');
+                    app.ok('刪除成功');
                     $table.bootstrapTable('refresh');
                 } else {
-                    app.alertModal(res.msg ? res.msg : '刪除失败');
+                    app.error(res.msg ? res.msg : '刪除失败');
                 }
             }
         });

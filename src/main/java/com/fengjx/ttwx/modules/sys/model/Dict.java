@@ -3,8 +3,11 @@ package com.fengjx.ttwx.modules.sys.model;
 
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,4 +59,15 @@ public class Dict extends Model {
         attrs.put("group_code", group);
         return findList(attrs);
     }
+
+    public void saveOrUpdate(Map<String, Object> attrs) {
+        String id = (String) attrs.get("id");
+        attrs.put("in_time", new Date());
+        if (StringUtils.isBlank(id)) {
+            insert(attrs);
+        } else {
+            update(attrs);
+        }
+    }
+
 }

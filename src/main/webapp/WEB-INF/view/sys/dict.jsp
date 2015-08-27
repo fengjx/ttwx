@@ -38,26 +38,67 @@
 	</div>
 	<table id="data-table"></table>
 
-	<div id="editModal" class="modal fade">
+	<div id="editModal" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Modal title</h4>
+					<h4 class="modal-title">字典编辑</h4>
 				</div>
-				<div class="modal-body">
-					<p>One fine body&hellip;</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
-				</div>
+				<form action="<%=domain %>/admin/sys/dict/save" class="form-horizontal" id="form-dict" method="POST">
+					<div class="modal-body">
+							<input type="hidden" id="id" name="id" value="${wechatAccount.id }" />
+							<div class="control-group" >
+								<label class="control-label" for="dict_value">字典值:</label>
+								<div class="controls">
+									<input id="dict_value" name="dict_value" value="" type="text" class="span4 form-control">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="dict_name">字典名称:</label>
+								<div class="controls">
+									<input id="dict_name" name="dict_name" value="" type="text" class="span4 form-control">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="dict_desc">字典描述:</label>
+								<div class="controls">
+									<input id="dict_desc" name="dict_desc" value="" type="text" class="span4 form-control">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="group_code">字典组标识:</label>
+								<div class="controls">
+									<input id="group_code" name="group_code" value="" type="text" class="span4 form-control">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="group_name">字典组名称:</label>
+								<div class="controls">
+									<input id="group_name" name="group_name" value="" type="text" class="span4 form-control">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="order_num">排序:</label>
+								<div class="controls">
+									<input id="order_num" name="order_num" value="" type="number" class="span4 form-control">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="is_valid">是否启用:</label>
+								<div class="controls">
+									<input id="is_valid" name="is_valid" value="1" type="checkbox">
+								</div>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="submit" class="btn btn-primary" data-loading-text="正在提交...">保存</button>
+					</div>
+				</form>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-
-
-
 
 <script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
