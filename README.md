@@ -6,3 +6,13 @@
   例如:
  设置一个系统环境变量ENV_MODE=release,可以设置为操作系统环境或加java 启动参数-DENV_MODE="release"
  这样,你配置的环境相关的配置就会覆盖默认的配置
+ 
+ #eclipse 开发初始化
+ 1.mvn eclipse:eclipse 生成 eclipse项目
+ 2.修改.classpath 添加maven 引用
+ <classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
