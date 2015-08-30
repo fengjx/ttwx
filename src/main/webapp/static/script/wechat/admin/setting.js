@@ -5,14 +5,14 @@ $(function(){
 	
 	$("#form-auth").submit(function(){
 		$(this).ajaxSubmit({
-			url : domain + "/admin/wechat/setting/save",
+			url : adminPath + "/wechat/setting/save",
 	        dataType : 'json', 
 	        beforeSubmit : validForm,
 	        success : function(res){
 	        	if(res && "1" == res.code){
 	        		app.alert("授权已生成！",{
 	        			ok : function(){
-				   			window.location.href = domain + '/admin/wechat/setting';
+				   			window.location.href = adminPath + '/wechat/setting';
 	        			}
 	        		});
 				}else{

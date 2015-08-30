@@ -17,7 +17,7 @@ $(function(){
 		method: 'post',
 		toolbar: "#toolbar",
 		contentType: "application/x-www-form-urlencoded",
-		url: domain + '/admin/wechat/action/pageList',
+		url: adminPath + '/wechat/action/pageList',
 		queryParamsType: "limit",
 		queryParams: queryParams,
 		cache: false,
@@ -61,9 +61,9 @@ $(function(){
 			align: 'center',
 			valign: 'middle',
 			formatter : function(value, row, index) {
-				var html = '<a class="btn btn-sm btn-success" onclick="view(\''+index+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-eye-open"></i></a>';
-				html += '<a class="btn btn-sm btn-info" href="'+domain+'/admin/wechat/action/keywordAdd?id='+row.id+'"><i class="glyphicon glyphicon-edit"></i></a>';
-				html += '<a class="btn btn-sm btn-warning" onclick="deleteMsgAction(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i></a>';
+				var html = '<a class="btn btn-xs btn-success" onclick="view(\''+index+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-eye-open"></i></a>';
+				html += '<a class="btn btn-xs btn-info" href="'+adminPath+'/wechat/action/keywordAdd?id='+row.id+'"><i class="glyphicon glyphicon-edit"></i></a>';
+				html += '<a class="btn btn-xs btn-danger" onclick="deleteMsgAction(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i></a>';
 				return html;
 			}
 		}]
@@ -95,7 +95,7 @@ function clearDatagrid() {
 function deleteMsgAction(id, keywords){
 	app.confirmModal("你要删除关键字【"+keywords+"】的响应规则吗？", function () {
 		$.ajax({
-			url :  domain + '/admin/wechat/action/delete',
+			url :  adminPath + '/wechat/action/delete',
 			data : 'id='+id,
 			cache : false,
 			dataType : "json",

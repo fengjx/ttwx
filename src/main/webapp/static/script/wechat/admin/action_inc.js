@@ -55,7 +55,7 @@ function selectedMaterial() {
 function deleteById(id, okCallback) {
     app.confirmModal("确定要删除回复内容吗？", function () {
         $.ajax({
-            url: domain + '/admin/wechat/action/delete',
+            url: adminPath + '/wechat/action/delete',
             data: 'id=' + id,
             cache: false,
             dataType: "json",

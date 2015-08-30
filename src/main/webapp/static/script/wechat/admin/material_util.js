@@ -65,7 +65,7 @@ function xml2NewsHtml(xmlStr, in_time, material_id, type,fileName) {
         return html;
     }
     if (type === 'edit') {
-    	var href=domain + '/admin/wechat/material/' + newsType + '?id='+material_id;
+    	var href= adminPath + '/wechat/material/' + newsType + '?id='+material_id;
     	if(fileName){
     		href=href+'&fname='+fileName;
     	}

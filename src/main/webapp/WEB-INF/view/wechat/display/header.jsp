@@ -1,4 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/common/inc/path.jsp" %>
 <<script type="text/javascript">
 <!--
 	function unFabu(){
@@ -13,7 +14,7 @@
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand hidden-sm" href="<%=domain %>"><%=appName %></a>
+      <a class="navbar-brand hidden-sm" href="${domain}">${appName}</a>
     </div>
     <div class="navbar-collapse collapse" role="navigation">
       <ul class="nav navbar-nav">
@@ -31,8 +32,8 @@
             </li>
           </ul>
         </li>
-        <li><a href="<%=domain %>/contact">联系我们</a></li>
-        <%-- <li><a href="<%=domain %>/about">关于我们</a></li> --%>
+        <li><a href="${domain}/contact">联系我们</a></li>
+        <%-- <li><a href="${domain}/about">关于我们</a></li> --%>
         <li><a href="http://fengjx.com" target="_blank">关于我们</a></li>
         <form role="search" class="navbar-form navbar-left">
 		  <div class="form-group">
@@ -44,11 +45,11 @@
       <ul class="nav navbar-nav navbar-right">
       	<c:choose>
 			<c:when test="${!empty sessionScope.sys_user_login_key }">
-				<li><a target="_blank" href="<%=domain %>/admin">后台管理</a></li>
+				<li><a target="_blank" href="${domain}/admin">后台管理</a></li>
 			</c:when>
 			<c:otherwise>
-				<li><a href="<%=domain %>/login">登录</a></li>
-        		<li><a href="<%=domain %>/register">注册</a></li>
+				<li><a href="${domain}/login">登录</a></li>
+        		<li><a href="${domain}/register">注册</a></li>
 			</c:otherwise>
 		</c:choose>
       </ul>

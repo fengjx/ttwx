@@ -86,7 +86,7 @@ $(function(){
 	editor.ready(function(){
 		if(material_id && material_id != ''){
 			$.ajax({
-				url :  domain + '/admin/wechat/material/load',
+				url :  adminPath + '/wechat/material/load',
 				data : "id="+material_id,
 				cache : false,
 				dataType : "json",
@@ -141,7 +141,7 @@ $(function(){
 
 function toSubmit(){
 	$("#news_form").ajaxSubmit({
-		url : domain + "/admin/wechat/material/save",
+		url : adminPath + "/wechat/material/save",
 		dataType : 'json',
 		beforeSubmit : function () {
 			app.loadingModal("数据提交中....");
@@ -156,7 +156,7 @@ function toSubmit(){
 					var msg=msgFlag=='2'?"群发成功!":"保存成功!";
 				app.alertModal(msg,{
 					ok: function () {
-						window.location.href = domain + '/admin/wechat/material';
+						window.location.href = adminPath + '/wechat/material';
 					}
 				});
 				}
@@ -388,7 +388,7 @@ function validForm() {
 function loadContent(url){
 	var content;
 	$.ajax({
-		url :  domain + '/admin/wechat/material/getContent',
+		url :  adminPath + '/wechat/material/getContent',
 		type: 'post',
 		data: {url:url},
 		dataType: "text",

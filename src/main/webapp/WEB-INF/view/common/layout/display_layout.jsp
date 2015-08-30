@@ -9,10 +9,11 @@
     <sitemesh:head/>
 </head>
 <body>
-<%@include file="/WEB-INF/view/wechat/display/header.jsp"%>
+<jsp:include page="/WEB-INF/view/wechat/display/header.jsp"></jsp:include>
 
     <sitemesh:body/>
-    <%@include file="/WEB-INF/view/wechat/display/footer.jsp"%>
+    <jsp:include page="/WEB-INF/view/wechat/display/footer.jsp"></jsp:include>
+
     <script>
         var _hmt = _hmt || [];
         (function() {

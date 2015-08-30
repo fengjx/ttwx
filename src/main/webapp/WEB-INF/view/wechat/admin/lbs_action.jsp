@@ -9,8 +9,8 @@
 <body>
     <div class="breadcrumbs">
         <ol class="breadcrumb">
-            <li><a href="<%=domain %>/admin">后台管理</a></li>
-            <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+            <li><a href="${adminPath}">后台管理</a></li>
+            <li><a href="${adminPath}/wechat">平台管理</a></li>
             <li class="active">地理位置消息规则</li>
         </ol>
     </div>
@@ -36,8 +36,8 @@
                     用户向公众号发送地理位置时，会收到以下信息
                 </div>
                 <div style="float:right;">
-                    <button onclick="updateMsgView();" type="button" class="btn btn-success">修&nbsp;&nbsp;改</button>
-                    <button onclick="deleteById(msgAction.id);" type="button" class="btn btn-danger">删&nbsp;&nbsp;除</button>
+                    <button onclick="updateMsgView();" type="button" class="btn btn-info btn-sm">修&nbsp;&nbsp;改</button>
+                    <button onclick="deleteById(msgAction.id);" type="button" class="btn btn-danger btn-sm">删&nbsp;&nbsp;除</button>
                 </div>
             </div>
             <div class="clear"></div>
@@ -47,13 +47,13 @@
         </div>
     </div>
 
-<link href="<%=resourceUrl%>/css/menu.css?v=2015060801" rel="stylesheet" type="text/css"/>
-<link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
-<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
-<script src="<%=resourceUrl%>/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl %>/script/wechat/admin/lbs_action.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
+<link href="${resourceUrl}/css/menu.css?v=2015060801" rel="stylesheet" type="text/css"/>
+<link href="${resourceUrl}/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
+<script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>
+<script src="${resourceUrl}/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/lbs_action.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
 

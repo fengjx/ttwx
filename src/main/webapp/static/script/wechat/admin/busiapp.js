@@ -306,7 +306,7 @@ function submitApp () {
     };
 
     $.ajax({
-        url: domain + '/admin/extapp/save',
+        url: adminPath + '/extapp/save',
         type: 'post',
         data: data,
         dataType: "json",

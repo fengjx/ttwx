@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@include file="/WEB-INF/view/common/inc/path.jsp"%>
-<link href="<%=resourceUrl%>/css/wechart_style.css" rel="stylesheet"
+<link href="${resourceUrl}/css/wechart_style.css" rel="stylesheet"
 	type="text/css" />
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -33,7 +33,7 @@
 	}
 </script>
 
-<script src="<%=resourceUrl %>/script/wechat/admin/wechart.widget.js?v=2015053003" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/wechart.widget.js?v=2015053003" type="text/javascript" charset="UTF-8"></script>
 <div id="tabbox">
 	<ul id="tabs" class="tabs">
 		<li class="thistab"><a class="ttitle" tab="tab1" href="#">标题</a></li>

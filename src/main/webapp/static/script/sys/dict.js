@@ -16,7 +16,7 @@ $(function () {
         method: 'post',
         toolbar: "#toolbar",
         contentType: "application/x-www-form-urlencoded",
-        url: domain + '/admin/sys/dict/pageList',
+        url: adminPath + '/sys/dict/pageList',
         queryParamsType: "limit",
         queryParams: queryParams,
         cache: false,
@@ -84,8 +84,8 @@ $(function () {
             valign: 'middle',
             formatter : function(value, row, index) {
                 var html = '<a class="btn btn-xs btn-success" onclick="view(\''+index+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
-                html += '<a class="btn btn-xs btn-info" href="'+domain+'/admin/wechat/action/keywordAdd?id='+row.id+'"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
-                html += '<a class="btn btn-xs btn-warning" onclick="deleteMsgAction(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
+                html += '<a class="btn btn-xs btn-info" href="'+adminPath+'/wechat/action/keywordAdd?id='+row.id+'"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
+                html += '<a class="btn btn-xs btn-danger" onclick="deleteData(\''+row.id+'\',\''+row.dict_name+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
                 return html;
             }
         }]
@@ -126,7 +126,7 @@ $(function () {
 
     $("#form-dict").submit(function () {
         $(this).ajaxSubmit({
-            url: domain + "/admin/sys/dict/save",
+            url: adminPath + "/sys/dict/save",
             dataType: 'json',
             beforeSubmit: function () {
                 return formValid.validate();
@@ -159,7 +159,7 @@ function clearDatagrid() {
 function deleteData(id, name) {
     app.confirmModal("你要删除字典【" + name + "】吗？", function () {
         $.ajax({
-            url: domain + '/admin/sys/dict/delete',
+            url: adminPath + '/sys/dict/delete',
             data: 'id=' + id,
             cache: false,
             dataType: "json",

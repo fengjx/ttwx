@@ -5,14 +5,14 @@
 <head>
 	<meta name="decorator" content="sys"/>
 	<title>接口管理</title>
-	<link href="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
-	<link href="<%=resourceUrl%>/css/setting.css" rel="stylesheet" type="text/css"/>
+	<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+	<link href="${resourceUrl}/css/setting.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<div class="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="<%=domain %>/admin">后台管理</a></li>
-			<li><a href="<%=domain %>/admin/sys">系统管理</a></li>
+			<li><a href="${adminPath}">后台管理</a></li>
+			<li><a href="${adminPath}/sys">系统管理</a></li>
 			<li class="active">接口配置</li>
 		</ol>
 	</div>
@@ -74,10 +74,10 @@
 			ssssssssssssssssssssssssss
 		</div>
 	</div>
-<script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl %>/script/sys/extapp.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/sys/extapp.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

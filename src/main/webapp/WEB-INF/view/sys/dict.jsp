@@ -5,13 +5,13 @@
 <head>
 	<meta name="decorator" content="sys"/>
 	<title>字典管理</title>
-	<link href="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+	<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<div class="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="<%=domain %>/admin">后台管理</a></li>
-			<li><a href="<%=domain %>/admin/sys">系统管理</a></li>
+			<li><a href="${adminPath}">后台管理</a></li>
+			<li><a href="${adminPath}/sys">系统管理</a></li>
 			<li class="active">字典管理</li>
 		</ol>
 	</div>
@@ -40,14 +40,14 @@
 		</div>
 		<table id="data-table"></table>
 
-		<div id="editModal" class="modal">
+		<div id="editModal" class="modal fade">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title">字典编辑</h4>
 					</div>
-					<form action="<%=domain %>/admin/sys/dict/save" class="form-horizontal" id="form-dict" method="POST">
+					<form action="${adminPath}/sys/dict/save" class="form-horizontal" id="form-dict" method="POST" role="form">
 						<div class="modal-body">
 							<input type="hidden" id="id" name="id" value="${wechatAccount.id }" />
 							<div class="control-group" >
@@ -94,8 +94,8 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-							<button type="submit" class="btn btn-primary" data-loading-text="正在提交...">保存</button>
+							<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+							<button type="submit" class="btn btn-primary btn-sm" data-loading-text="正在提交...">保存</button>
 						</div>
 					</form>
 				</div><!-- /.modal-content -->
@@ -103,10 +103,10 @@
 		</div><!-- /.modal -->
 	</div>
 
-<script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl %>/script/sys/dict.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/sys/dict.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

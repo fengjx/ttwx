@@ -9,7 +9,7 @@
 <body>
     <div class="breadcrumbs">
         <ol class="breadcrumb">
-          <li><a href="<%=domain %>/admin">后台管理</a></li>
+          <li><a href="${adminPath}">后台管理</a></li>
           <li class="active">系统管理</li>
         </ol>
     </div>

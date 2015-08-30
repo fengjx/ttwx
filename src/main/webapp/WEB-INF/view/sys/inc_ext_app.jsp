@@ -4,7 +4,7 @@
     <c:when test="${param.app_type eq 'web' }">
         <div class="form-inline">
             <input id="${param.id}" name="${param.name}" class="form-control field" type="text" value="http://" style="width:400px;">
-            <a href="#urlModal" data-toggle="modal" class="btn btn-default" role="button">选择链接</a>
+            <a href="#urlModal" data-toggle="modal" class="btn btn-white btn-info btn-sm" role="button">选择链接</a>
         </div>
         <div class="modal" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">

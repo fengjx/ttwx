@@ -5,14 +5,14 @@
 <head>
 	<meta name="decorator" content="wechat"/>
 	<title>关键字回复</title>
-	<link href="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
-	<link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
+	<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+	<link href="${resourceUrl}/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<div class="breadcrumbs" id="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="<%=domain %>/admin">后台管理</a></li>
-			<li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+			<li><a href="${adminPath}">后台管理</a></li>
+			<li><a href="${adminPath}/wechat">平台管理</a></li>
 			<li class="active">关键字回复</li>
 		</ol>
 	</div>
@@ -39,11 +39,11 @@
 								</div>
 							</div>
 						<span class="columns-right pull-right">
-							<button onclick="searchDatagrid();" type="button" class="btn">
+							<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-info btn-sm">
 								<i class="glyphicon glyphicon-search"></i>
 								查看
 							</button>
-							<button onclick="clearDatagrid();" type="button" class="btn">
+							<button onclick="clearDatagrid();" type="button" class="btn btn-white btn-sm">
 								<i class="glyphicon glyphicon-transfer"></i>
 								重置
 							</button>
@@ -52,16 +52,16 @@
 					</div>
 				</fieldset>
 				<div>
-					<a class="btn btn-default" href="<%=domain%>/admin/wechat/action/keywordAdd">
+					<a class="btn btn-info btn-xs" href="${adminPath}/wechat/action/keywordAdd">
 						<i class="glyphicon glyphicon-plus"></i>
 						添加
 					</a>
-					<a class="btn btn-default" onclick="searchDatagrid();" href="javascript:void(0);">
+					<a class="btn btn-warning btn-xs" onclick="searchDatagrid();" href="javascript:void(0);">
 						<i class="glyphicon glyphicon-refresh"></i>
 						刷新
 					</a>
-					<a class="btn btn-default" onclick="$table.bootstrapTable('uncheckAll');" href="javascript:void(0);">
-						<i class="glyphicon glyphicon-check"></i>
+					<a class="btn btn-default btn-xs" onclick="$table.bootstrapTable('uncheckAll');" href="javascript:void(0);">
+						<i class="glyphicon glyphicon-ban-circle"></i>
 						取消选中
 					</a>
 				</div>
@@ -71,15 +71,15 @@
 	</div>
 
 
-<script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
-<script src="<%=resourceUrl%>/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl %>/script/wechat/admin/keyword_action.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>
+<script src="${resourceUrl}/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/keyword_action.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
 

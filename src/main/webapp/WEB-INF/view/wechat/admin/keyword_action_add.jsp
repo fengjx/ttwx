@@ -5,8 +5,8 @@
 <head>
     <meta name="decorator" content="wechat"/>
     <title>添加关键字</title>
-    <link href="<%=resourceUrl%>/css/menu.css?v=2015060801" rel="stylesheet" type="text/css"/>
-    <link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
+    <link href="${resourceUrl}/css/menu.css?v=2015060801" rel="stylesheet" type="text/css"/>
+    <link href="${resourceUrl}/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
     <script>
       var actionId = '${id}';
     </script>
@@ -14,9 +14,9 @@
 <body>
     <div class="breadcrumbs" id="breadcrumbs">
         <ol class="breadcrumb">
-          <li><a href="<%=domain %>/admin">后台管理</a></li>
-          <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
-          <li><a href="<%=domain %>/admin/wechat/action/keyword">关键字回复</a></li>
+          <li><a href="${adminPath}">后台管理</a></li>
+          <li><a href="${adminPath}/wechat">平台管理</a></li>
+          <li><a href="${adminPath}/wechat/action/keyword">关键字回复</a></li>
           <li class="active">添加规则</li>
         </ol>
     </div>
@@ -35,11 +35,11 @@
       </div>
     </div>
 
-<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
-<script src="<%=resourceUrl%>/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl %>/script/wechat/admin/keyword_action_add.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>
+<script src="${resourceUrl}/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/keyword_action_add.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
 

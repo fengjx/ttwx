@@ -1,5 +1,6 @@
 $(function () {
     $.fn.bootstrapTable.defaults = $.extend($.fn.bootstrapTable.defaults,{
+        iconSize : "xs",
         ajaxOptions:{
             beforeSend : function(XMLHttpRequest) {
                 app.loadingModal();

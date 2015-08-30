@@ -1487,11 +1487,6 @@ a:hover .icon18_common.edit_gray {
     -webkit-box-shadow: inset 0 1px 0 #fbfbfb
 }
 
-.dialog_ft .btn {
-    margin-left: 1em;
-    margin-right: 1em
-}
-
 .simple_dialog_content {
     display: inline-block;
     *display: inline;
@@ -2398,10 +2393,6 @@ body {
     text-align: right
 }
 
-.mod_opr .btn {
-    margin-top: -0.2em
-}
-
 .status_tips {
     color: #b11516
 }
@@ -2540,10 +2531,6 @@ body {
     clear: both
 }
 
-.tool_bar .btn {
-    margin-right: 1em
-}
-
 .tool_bar.with_form {
     margin-top: 15px
 }
@@ -2553,16 +2540,6 @@ body {
     box-shadow: inset 0 1px 0 #fbfbfb;
     -moz-box-shadow: inset 0 1px 0 #fbfbfb;
     -webkit-box-shadow: inset 0 1px 0 #fbfbfb
-}
-
-.tool_bar.tc .btn {
-    margin-left: .5em;
-    margin-right: .5em
-}
-
-.tool_bar.tr .btn {
-    margin-left: 1em;
-    margin-right: 0
 }
 
 .tool_area {
@@ -2766,246 +2743,6 @@ body {
     padding: 0 20px
 }
 
-.btn button {
-    display: block;
-    height: 100%;
-    background-color: transparent;
-    border: 0;
-    outline: 0;
-    overflow: visible;
-    padding: 0 36px
-}
-
-.btn.btn_input {
-    padding: 0
-}
-
-.btn.btn_input.btn_vcode {
-    margin-left: 5px
-}
-
-.btn.btn_input.btn_vcode button {
-    width: 110px;
-    padding: 0
-}
-
-.btn.btn_vcode {
-    padding: 0;
-    width: 110px;
-    margin-left: 5px
-}
-
-.btn {
-    display: inline-block;
-    overflow: visible;
-    padding: 0 36px;
-    height: 30px;
-    line-height: 30px;
-    *line-height: 28px;
-    vertical-align: middle;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    font-size: 14px;
-    border-width: 1px;
-    border-style: solid;
-    cursor: pointer
-}
-
-.btn:hover {
-    text-decoration: none
-}
-
-.btn.btn_mini {
-    height: 21px;
-    line-height: 21px;
-    *line-height: 19px;
-    padding: 0 10px
-}
-
-.btn.btn_small {
-    height: 25px;
-    line-height: 25px;
-    *line-height: 23px;
-    padding: 0 12px
-}
-
-.btn.btn_large {
-    height: 38px;
-    line-height: 38px;
-    *line-height: 36px;
-    padding: 0 70px
-}
-
-.btn.btn_p20 {
-    padding: 0 20px
-}
-
-.btn.btn_p30 {
-    padding: 0 30px
-}
-
-.btn.btn_w125 {
-    width: 125px;
-    padding: 0
-}
-
-.btn.btn_w150 {
-    width: 150px;
-    padding: 0
-}
-
-.btn.btn_w220 {
-    width: 220px;
-    padding: 0
-}
-
-.btn_primary {
-    background-color: #5aaa4b;
-    background-image: -moz-linear-gradient(top, #60b452 0, #56a447 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#60b452),
-    to(#56a447));
-    background-image: -webkit-linear-gradient(top, #60b452 0, #56a447 100%);
-    background-image: -o-linear-gradient(top, #60b452 0, #56a447 100%);
-    background-image: linear-gradient(to bottom, #60b452 0, #56a447 100%);
-    border-color: #3d810c;
-    color: #fff
-}
-
-.btn_primary:hover {
-    background-color: #53a046;
-    background-image: -moz-linear-gradient(top, #5aab4d 0, #4f9841 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5aab4d),
-    to(#4f9841));
-    background-image: -webkit-linear-gradient(top, #5aab4d 0, #4f9841 100%);
-    background-image: -o-linear-gradient(top, #5aab4d 0, #4f9841 100%);
-    background-image: linear-gradient(to bottom, #5aab4d 0, #4f9841 100%);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    color: #fff
-}
-
-.btn_primary button {
-    color: #fff
-}
-
-.btn_default {
-    background-color: #f4f4f4;
-    background-image: -moz-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9),
-    to(#f0f0f0));
-    background-image: -webkit-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: -o-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: linear-gradient(to bottom, #f9f9f9 0, #f0f0f0 100%);
-    border-color: #c3c3c3;
-    color: #000
-}
-
-.btn_default:hover {
-    background-color: #f8f8f8;
-    background-image: -moz-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9),
-    to(#f8f8f8));
-    background-image: -webkit-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: -o-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: linear-gradient(to bottom, #f9f9f9 0, #f8f8f8 100%);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    color: #000
-}
-
-.btn_default button {
-    color: #000
-}
-
-.btn_disabled {
-    background-color: #d1d1d1;
-    background-image: -moz-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d1d1d1),
-    to(#d1d1d1));
-    background-image: -webkit-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: -o-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: linear-gradient(to bottom, #d1d1d1 0, #d1d1d1 100%);
-    border-color: #cacaca;
-    color: #eee;
-    cursor: default
-}
-
-.btn_disabled:hover {
-    background-color: #d1d1d1;
-    background-image: -moz-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d1d1d1),
-    to(#d1d1d1));
-    background-image: -webkit-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: -o-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: linear-gradient(to bottom, #d1d1d1 0, #d1d1d1 100%);
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    color: #eee
-}
-
-.btn_disabled button {
-    color: #eee;
-    cursor: default
-}
-
-.btn_loading {
-    background-color: #d1d1d1;
-    background-image: -moz-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d1d1d1),
-    to(#d1d1d1));
-    background-image: -webkit-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: -o-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: linear-gradient(to bottom, #d1d1d1 0, #d1d1d1 100%);
-    border-color: #cacaca;
-    color: #eee;
-    cursor: default;
-    position: relative;
-    padding-left: 42px;
-    padding-right: 30px
-}
-
-.btn_loading:hover {
-    background-color: #d1d1d1;
-    background-image: -moz-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d1d1d1),
-    to(#d1d1d1));
-    background-image: -webkit-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: -o-linear-gradient(top, #d1d1d1 0, #d1d1d1 100%);
-    background-image: linear-gradient(to bottom, #d1d1d1 0, #d1d1d1 100%);
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    color: #eee
-}
-
-.btn_loading button {
-    color: #eee;
-    cursor: default
-}
-
-.btn_loading button {
-    position: relative;
-    padding-left: 42px;
-    padding-right: 30px
-}
-
-.btn_loading i {
-    position: absolute;
-    top: 50%;
-    left: 16px;
-    margin-top: -8px;
-    background: transparent url(/mpres/htmledition/common/images/icon/common/icon16_loading_light1c01ee.gif) no-repeat 0 0;
-    width: 16px;
-    height: 16px;
-    vertical-align: middle;
-    display: inline-block
-}
 
 .icon_msg {
     width: 56px;
@@ -3212,10 +2949,6 @@ body {
     margin-top: 20px
 }
 
-.popover .popover_bar .btn {
-    padding: 0 2em
-}
-
 .popover .arrow {
     position: absolute;
     left: 138px
@@ -3268,11 +3001,6 @@ body {
     *letter-spacing: normal
 }
 
-.page_nav_area .btn {
-    letter-spacing: normal;
-    *margin: 0 3px
-}
-
 .page_nav_area .gap_prev, .page_nav_area .gap_next {
     letter-spacing: normal;
     display: inline-block;
@@ -3282,133 +3010,6 @@ body {
     margin-right: 4px
 }
 
-.btn.page_nav {
-    background-color: #f4f4f4;
-    background-image: -moz-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9),
-    to(#f0f0f0));
-    background-image: -webkit-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: -o-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: linear-gradient(to bottom, #f9f9f9 0, #f0f0f0 100%);
-    border-color: #c3c3c3;
-    color: #000;
-    height: 21px;
-    line-height: 21px;
-    *line-height: 19px;
-    width: auto;
-    padding-left: 8px;
-    padding-right: 8px
-}
-
-.btn.page_nav:hover {
-    background-color: #f8f8f8;
-    background-image: -moz-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9),
-    to(#f8f8f8));
-    background-image: -webkit-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: -o-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: linear-gradient(to bottom, #f9f9f9 0, #f8f8f8 100%);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    color: #000
-}
-
-.btn.page_nav button {
-    color: #000
-}
-
-.btn.page_nav.current {
-    border: 0;
-    background: 0;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    cursor: default
-}
-
-.btn.page_prev, .btn.page_next {
-    position: relative;
-    font-size: 0;
-    letter-spacing: -5px;
-    background-color: #f4f4f4;
-    background-image: -moz-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9),
-    to(#f0f0f0));
-    background-image: -webkit-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: -o-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: linear-gradient(to bottom, #f9f9f9 0, #f0f0f0 100%);
-    border-color: #c3c3c3;
-    color: #000;
-    height: 21px;
-    line-height: 21px;
-    *line-height: 19px;
-    width: auto;
-    padding-left: 20px;
-    padding-right: 20px
-}
-
-.btn.page_prev:hover, .btn.page_next:hover {
-    background-color: #f8f8f8;
-    background-image: -moz-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9),
-    to(#f8f8f8));
-    background-image: -webkit-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: -o-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: linear-gradient(to bottom, #f9f9f9 0, #f8f8f8 100%);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    color: #000
-}
-
-.btn.page_prev button, .btn.page_next button {
-    color: #000
-}
-
-.btn.page_prev .arrow, .btn.page_next .arrow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -6px;
-    margin-left: -3px
-}
-
-.btn.page_first, .btn.page_last, .btn.page_go {
-    background-color: #f4f4f4;
-    background-image: -moz-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9),
-    to(#f0f0f0));
-    background-image: -webkit-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: -o-linear-gradient(top, #f9f9f9 0, #f0f0f0 100%);
-    background-image: linear-gradient(to bottom, #f9f9f9 0, #f0f0f0 100%);
-    border-color: #c3c3c3;
-    color: #000;
-    height: 21px;
-    line-height: 21px;
-    *line-height: 19px;
-    width: auto;
-    padding-left: 12px;
-    padding-right: 12px
-}
-
-.btn.page_first:hover, .btn.page_last:hover, .btn.page_go:hover {
-    background-color: #f8f8f8;
-    background-image: -moz-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f9f9f9),
-    to(#f8f8f8));
-    background-image: -webkit-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: -o-linear-gradient(top, #f9f9f9 0, #f8f8f8 100%);
-    background-image: linear-gradient(to bottom, #f9f9f9 0, #f8f8f8 100%);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    color: #000
-}
-
-.btn.page_first button, .btn.page_last button, .btn.page_go button {
-    color: #000
-}
 
 .page_next .arrow {
     display: inline-block;

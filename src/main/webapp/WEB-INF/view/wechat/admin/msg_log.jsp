@@ -5,14 +5,14 @@
 <head>
     <meta name="decorator" content="wechat"/>
     <title>后台管理</title>
-    <link href="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
-    <link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
+    <link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${resourceUrl}/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <div class="breadcrumbs">
         <ol class="breadcrumb">
-            <li><a href="<%=domain %>/admin">后台管理</a></li>
-            <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+            <li><a href="${adminPath}">后台管理</a></li>
+            <li><a href="${adminPath}/wechat">平台管理</a></li>
             <li class="active">消息记录</li>
         </ol>
     </div>
@@ -58,11 +58,11 @@
                             </div>
 
                             <span class="columns-right pull-right">
-                                <button onclick="searchDatagrid();" type="button" class="btn">
+                                <button onclick="searchDatagrid();" type="button" class="btn btn-white btn-info btn-sm">
                                     <i class="glyphicon glyphicon-search"></i>
                                     查询
                                 </button>
-                                <button onclick="clearDatagrid();" type="button" class="btn">
+                                <button onclick="clearDatagrid();" type="button" class="btn btn-white btn-sm">
                                     <i class="glyphicon glyphicon-transfer"></i>
                                     重置
                                 </button>
@@ -74,13 +74,13 @@
         </div>
         <table id="data-table"></table>
     </div>
-<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/script/wechat/admin/material_util.js?v=201552001" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/script/wechat/admin/msg_log.js?v=2014110102" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/material_util.js?v=201552001" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/msg_log.js?v=2014110102" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

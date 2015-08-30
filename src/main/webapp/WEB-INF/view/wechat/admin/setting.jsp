@@ -5,7 +5,6 @@
 <head>
 	<meta name="decorator" content="wechat"/>
 	<title>授权设置</title>
-	<link href="<%=resourceUrl%>/css/setting.css" rel="stylesheet" type="text/css"/>
 	<script type="text/javascript">
 		var valid_state = '${wechatAccount.valid_state}';
 	</script>
@@ -14,8 +13,8 @@
 
 	<div class="breadcrumbs" id="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="<%=domain %>/admin">后台管理</a></li>
-			<li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+			<li><a href="${adminPath}">后台管理</a></li>
+			<li><a href="${adminPath}/wechat">平台管理</a></li>
 			<li class="active">授权配置</li>
 		</ol>
 	</div>
@@ -71,8 +70,8 @@
 		</form>
 
 	</div>
-	<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl %>/script/wechat/admin/setting.js?v=20141005" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/setting.js?v=20141005" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
 

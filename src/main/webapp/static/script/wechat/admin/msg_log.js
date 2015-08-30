@@ -9,7 +9,7 @@ $(function () {
         method: 'post',
         toolbar: "#qry-toolbar",
         contentType: "application/x-www-form-urlencoded",
-        url: domain + '/admin/wechat/msglog/pageList',
+        url: adminPath + '/wechat/msglog/pageList',
         queryParamsType: "limit",
         queryParams: queryParams,
         cache: false,
@@ -69,7 +69,7 @@ $(function () {
                 if (!value || value == '') {
                     return "无";
                 }
-                var html = '<a class="btn btn-info" onclick="view(' + index + ');" href="javascript:void(0);">查看</a>';
+                var html = '<a class="btn btn-info btn-xs" onclick="view(' + index + ');" href="javascript:void(0);">查看</a>';
                 return html;
             }
         }, {

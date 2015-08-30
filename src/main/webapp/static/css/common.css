@@ -1,45 +1,28 @@
-body {
-	margin: 0;
-	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-size: 14px;
-	line-height: 20px;
-	color: #333333;
-	background-color: #ffffff;
+input.span4 {
+	width: 280px;
 }
 
-h2 {
-    font-size: 16px;
-	font-weight: 400;
-	font-style: normal;
-}
-h3 {
-	font-weight: 400;
-	font-style: normal;
-	font-size: 13px;
-	color:#7b7b7b;
-}
-p {
-	color:#7b7b7b;
+.form-horizontal .control-group {
+	margin-bottom: 20px;
 }
 
-table form {
-	
+.controls {
+	width: 800px;
 }
 
-table form th {
+.form-horizontal .controls {
+	margin-left: 180px;
+}
+
+.form-horizontal .control-label {
+	float: left;
+	width: 160px;
+	padding-top: 5px;
 	text-align: right;
 }
 
-table form td input {
-	width: 150px;
-}
-
-.clear {
-	clear: both;
-}
-
-.maroon {
-	color: #D20000;
-	padding-left: 2px;
-	font-family: "宋体";
+.form-search input, .form-inline input, .form-horizontal input, .form-search textarea, .form-inline textarea, .form-horizontal textarea, .form-search select, .form-inline select, .form-horizontal select, .form-search .help-inline, .form-inline .help-inline, .form-horizontal .help-inline, .form-search .uneditable-input, .form-inline .uneditable-input, .form-horizontal .uneditable-input, .form-search .input-prepend, .form-inline .input-prepend, .form-horizontal .input-prepend, .form-search .input-append, .form-inline .input-append, .form-horizontal .input-append {
+	display: inline-block;
+	margin-bottom: 0;
+	vertical-align: middle;
 }

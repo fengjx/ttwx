@@ -49,7 +49,7 @@ $(function () {
 
     msgActionForm = $("#msgActionForm").submit(function () {
         $(this).ajaxSubmit({
-            url: domain + "/admin/wechat/action/save",
+            url: adminPath + "/wechat/action/save",
             dataType: 'json',
             beforeSubmit: function () {
                 app.loadingModal("数据提交中....");
@@ -75,7 +75,7 @@ $(function () {
 function loadMenu() {
 
     $.ajax({
-        url: domain + '/admin/wechat/menu/load',
+        url: adminPath + '/wechat/menu/load',
         type: 'post',
         data: {},
         dataType: "json",
@@ -153,7 +153,7 @@ function append(level, pid) {
             return false;
         }
         $.ajax({
-            url: domain + '/admin/wechat/menu/save',
+            url: adminPath + '/wechat/menu/save',
             type: 'post',
             data: {
                 parent_id: pid,
@@ -302,7 +302,7 @@ function thowSetting(node) {
         }
     } else if (node.type == 'view') {//菜单动作为点击链接
         tips = msg.e;
-        viewHtml = node.url + '<a target="_blamk" class="btn btn-default" href="' + node.url + '" role="button">查看</a>';
+        viewHtml = node.url + '<a target="_blamk" class="btn btn-sm btn-white" href="' + node.url + '" role="button">查看</a>';
     }
     $("#view").find(".action_tips").html(tips);
     $("#viewDiv").html(viewHtml);

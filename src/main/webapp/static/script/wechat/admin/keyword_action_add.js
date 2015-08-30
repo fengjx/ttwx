@@ -11,7 +11,7 @@ $(function () {
 
     msgActionForm = $("#msgActionForm").submit(function () {
         $(this).ajaxSubmit({
-            url: domain + "/admin/wechat/action/save",
+            url: adminPath + "/wechat/action/save",
             dataType: 'json',
             beforeSubmit: function () {
                 app.loadingModal("数据提交中....");
@@ -21,7 +21,7 @@ $(function () {
                 if (res && '1' == res.code) {
                     app.alertModal("保存成功！", {
                         ok: function () {
-                            window.location.href = domain + "/admin/wechat/action/keyword";
+                            window.location.href = adminPath + "/wechat/action/keyword";
                         }
                     });
                 } else {
@@ -83,7 +83,7 @@ function submitMsgActionForm(respType) {
 
 function editMsgAction(id) {
     $.ajax({
-        url: domain + "/admin/wechat/action/load",
+        url: adminPath + "/wechat/action/load",
         type: 'post',
         data: {id: id},
         dataType: "json",

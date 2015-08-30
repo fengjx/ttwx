@@ -14,7 +14,7 @@
 	var req_type = '${param.req_type}';
 	var event_type = '${param.event_type}';
 </script>
-<script src="<%=resourceUrl %>/script/wechat/admin/action_inc.js?v=2015060501" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/action_inc.js?v=2015060501" type="text/javascript" charset="UTF-8"></script>
 <form id="msgActionForm" method="post" class="form-inline" role="form">
 	<!-- 这个参数区分是更新还是保存 -->
 	<input type="hidden" id="editType" name="editType" value="">
@@ -30,7 +30,7 @@
 
 	<c:if test="${param.req_type eq 'text' }">
 	<div class="control-group">
-		<label class="control-label divider">关键字：</label>
+		<label class="control-label" for="msgKeyWord">关键字：</label>
 		<input id="msgKeyWord" name="key_word" value="" class="form-control" type="text" placeholder="用户发送的文字">
 		<hr/>
 	</div>
@@ -91,15 +91,11 @@
 					<textarea class="textarea field" id="replyText" name="replyText" ></textarea>
 				</div>
 				<div class="clear"></div>
-				<div id="txt_btn" style="float: left;">
+				<div id="txt_btn">
 					<c:if test="${ !('hide' eq param.btn_return) }">
-					 <span class="btn btn_input btn_default">
-						<button onclick="showActionContent('action_index')">返回</button>
-					 </span>
+						<button class="btn btn-default btn-sm" onclick="showActionContent('action_index')">返回</button>
 					</c:if>
-				 <span class="btn btn_input btn_primary">
-					<button onclick="submitMsgActionForm('text')">保存</button>
-				 </span>
+					<button class="btn btn-primary btn-sm" onclick="submitMsgActionForm('text')">保存</button>
 				</div>
 			</div>
 		</div>
@@ -114,26 +110,19 @@
 		</div>
 		<div class="tab-pane" id="tab5">
 			<input class="field" type="hidden" id="newsId" value="">
-			<div style="width: 100%;">
+			<div class="control-group">
 				<label class="control-label">图文预览</label>
-				<div class="clear"></div>
-				<div style="float: left;">
-					<div id="preview_news" style="min-height:300px;max-height:500px; width:350px;float: left; border: solid 1px #E0ECFF;">
+				<div style="mix-height:300px;" class="controls">
+					<div id="preview_news" style="width:350px;border: solid 1px #E0ECFF;">
 						<!-- js加载 预览效果 -->
 					</div>
-					<div style="height:35px; float: left;margin-top: 270px; ">
-						<span class="btn btn_input btn_default">
-							<input type="hidden" id="newsId" name="newsId" style="width:250px;">
-							<button onclick="openMaterialDialog();">选择</button>
-						 </span>
-							<c:if test="${ !('hide' eq param.btn_return) }">
-							 <span class="btn btn_input btn_default">
-								<button onclick="showActionContent('action_index');">返回</button>
-							 </span>
-							</c:if>
-						 <span class="btn btn_input btn_primary">
-							<button onclick="submitMsgActionForm('news');">保存</button>
-						 </span>
+					<div style="height:35px;">
+						<input type="hidden" id="newsId" name="newsId" style="width:250px;">
+						<c:if test="${ !('hide' eq param.btn_return) }">
+							<button class="btn btn-default btn-sm" onclick="showActionContent('action_index');">返回</button>
+						</c:if>
+						<button class="btn btn-info btn-sm" onclick="openMaterialDialog();">选择</button>
+						<button class="btn btn-primary btn-sm" onclick="submitMsgActionForm('news');">保存</button>
 					 </div>
 				</div>
 				<%--<div class="clear"></div>
@@ -151,7 +140,7 @@
 			<div class="form-inline" style="width: 500px;">
 				<div class="form-group">
 					<label class="control-label">选择扩展插件：</label>
-					<jsp:include page="/admin/sys/ext/selecter">
+					<jsp:include page="${fns:getConst('ADMIN_PATH')}/sys/ext/selecter">
 						<jsp:param name="showAll" value="1"/>
 						<jsp:param name="id" value="busiapp_id"/>
 						<jsp:param name="name" value="busiapp_id"/>
@@ -163,14 +152,14 @@
 				<div style="height:200px;border: solid 1px #E0ECFF;">
 					<!-- js加载 预览效果 -->
 				</div>
-				<div id="txt_btn" style="float: left;">
+				<div id="txt_btn">
 					<c:if test="${ !('hide' eq param.btn_return) }">
-					 <span id="js_preview" class="btn btn_input btn_default">
-						<button onclick="showActionContent('action_index');">返回</button>
+					 <span id="js_preview">
+						<button class="btn btn-default btn-sm" onclick="showActionContent('action_index');">返回</button>
 					 </span>
 					</c:if>
-					 <span id="js_submit" class="btn btn_input btn_primary">
-						<button onclick="submitMsgActionForm('api');">保存</button>
+					 <span id="js_submit">
+						<button class="btn btn-primary btn-sm" onclick="submitMsgActionForm('api');">保存</button>
 					 </span>
 				</div>
 			</div>

@@ -1,5 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/common/inc/path.jsp"%>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -8,41 +7,43 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>多图文本</title>
-<link href="<%=resourceUrl%>/css/material.css?v=2014030901"
+<link href="${resourceUrl}/css/material.css?v=2014030901"
 	rel="stylesheet" type="text/css" />
-<link href="<%=resourceUrl%>/css/appmsg_edit.css?v=2015053001"
+<link href="${resourceUrl}/css/appmsg_edit.css?v=2015053001"
 	rel="stylesheet" type="text/css" />
 <jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/view/common/inc/ueditor.jsp"></jsp:include>
-<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js"
+<script src="${resourceUrl}/js/jquery.json-2.4.min.js"
 	type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.xml2json.js"
+<script src="${resourceUrl}/js/jquery.xml2json.js"
 	type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
+<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>
 <script
-	src="<%=resourceUrl%>/script/wechat/admin/multiple_news.js?v=2015053003"
+	src="${resourceUrl}/script/wechat/admin/multiple_news.js?v=2015053003"
 	type="text/javascript" charset="UTF-8"></script>
 </head>
 <script type="text/javascript">
 	var material_id = '${id}';
 </script>
-<body>
+<body class="no-skin">
 	<jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>
-	<div class="container-fluid">
-		<div class="row">
-			<jsp:include page="/WEB-INF/view/wechat/admin/inc_menu.jsp">
-				<jsp:param name="index" value="4" />
-			</jsp:include>
-			<div id="context"
-				class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<ol class="breadcrumb">
-					<li><a href="<%=domain%>/admin">后台管理</a></li>
-					<li><a href="<%=domain%>/admin/wechat">平台管理</a></li>
-					<li><a href="<%=domain%>/admin/wechat/material">素材管理</a></li>
-					<li class="active">添加素材</li>
-				</ol>
+	<div class="main-container">
+		<jsp:include page="/WEB-INF/view/wechat/admin/inc_menu.jsp">
+			<jsp:param name="index" value="4" />
+		</jsp:include>
+		<div class="main-content">
+			<div id="context" class="main-content-inner">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<ol class="breadcrumb">
+						<li><a href="${adminPath}">后台管理</a></li>
+						<li><a href="${adminPath}/wechat">平台管理</a></li>
+						<li><a href="${adminPath}/wechat/material">素材管理</a></li>
+						<li class="active">添加素材</li>
+					</ol>
+				</div>
 
-				<div class="main_bd">
+				<div class="page-content">
+					<div class="main_bd">
 					<div class="media_preview_area">
 						<div class="appmsg multi editing">
 							<div class="appmsg_content" id="js_appmsg_preview">
@@ -153,14 +154,14 @@
 												class="frm_checkbox"> 链接地址：<span class="tips l">（用户点击图文跳转的URL）</span>
 										</label>
 										</label> <span id="span_url" style="display: none;"> <jsp:include
-												page="/admin/sys/ext/selecter">
-												<jsp:param name="showAll" value="1" />
-												<jsp:param name="id" value="busiapp_url" />
-												<jsp:param name="name" value="busiapp_url" />
-												<jsp:param name="app_type" value="web" />
-												<jsp:param name="msg_type" value="" />
-												<jsp:param name="event_type" value="" />
-											</jsp:include>
+												page="${fns:getConst('ADMIN_PATH')}/sys/ext/selecter">
+													<jsp:param name="showAll" value="1" />
+													<jsp:param name="id" value="busiapp_url" />
+													<jsp:param name="name" value="busiapp_url" />
+													<jsp:param name="app_type" value="web" />
+													<jsp:param name="msg_type" value="" />
+													<jsp:param name="event_type" value="" />
+												</jsp:include>
 										</span>
 									</div>
 									<div class="appmsg_edit_item content_edit" id="js_ueditor">
@@ -188,11 +189,15 @@
 					</div>
 					<div class="tool_area">
 						<div class="tool_bar border tc">
-							<span class="btn btn_input btn_primary" style="margin-right: 40px;" id="js_submit"><button
-									onclick="submitNewsForm();">保存</button> </span>
-								<span id="js_preview" class="btn btn_input btn_default"><button onclick="submitNewsForm(true);">预览消息</button></span>			
+							<span style="margin-right: 40px;" id="js_submit">
+								<button class="btn btn-primary btn-sm"	onclick="submitNewsForm();">保存</button>
+							</span>
+							<span id="js_preview">
+								<button class="btn btn-info btn-sm" onclick="submitNewsForm(true);">预览消息</button>
+							</span>
 						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 

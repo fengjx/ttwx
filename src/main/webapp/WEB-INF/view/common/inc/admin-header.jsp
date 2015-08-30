@@ -14,9 +14,9 @@
         天天微信平台
       </span>
       <ul class="nav navbar-nav">
-        <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+        <li><a href="${adminPath}/wechat">平台管理</a></li>
         <li><a href="#">天天小店</a></li>
-        <li><a href="<%=domain %>/admin/sys">系统管理</a></li>
+        <li><a href="${adminPath}/sys">系统管理</a></li>
       </ul>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -34,7 +34,7 @@
             </li>
             <li class="divider"></li>
             <li>
-              <a href="<%=domain %>/loginout"><i class="glyphicon glyphicon-off"></i> 退出</a>
+              <a href="${domain}/loginout"><i class="glyphicon glyphicon-off"></i> 退出</a>
             </li>
           </ul>
           <!-- /.dropdown-user -->

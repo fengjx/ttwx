@@ -9,7 +9,7 @@ $(function(){
 	loadSubscribeMsg();
 	msgActionForm = $("#msgActionForm").submit(function () {
 		$(this).ajaxSubmit({
-			url: domain + "/admin/wechat/action/save",
+			url: adminPath + "/wechat/action/save",
 			dataType: 'json',
 			beforeSubmit: function () {
 				app.loadingModal("数据提交中....");
@@ -38,7 +38,7 @@ $(function(){
 
 function loadSubscribeMsg(){
 	$.ajax({
-		url :  domain + '/admin/wechat/action/load',
+		url :  adminPath + '/wechat/action/load',
 		data : {
 			"req_type" : "event",
 			"event_type" : "subscribe"

@@ -5,13 +5,13 @@
 <head>
 	<meta name="decorator" content="wechat"/>
 	<title>粉丝管理</title>
-	<link href="<%=resourceUrl%>/css/user.css?v=2014031901" rel="stylesheet" type="text/css"/>
+	<link href="${resourceUrl}/css/user.css?v=2014031901" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<div class="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="<%=domain %>/admin">后台管理</a></li>
-			<li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+			<li><a href="${adminPath}">后台管理</a></li>
+			<li><a href="${adminPath}/wechat">平台管理</a></li>
 			<li class="active">粉丝管理</li>
 		</ol>
 	</div>
@@ -94,11 +94,11 @@
 		</div>
 	</div>
 
-<script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl %>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl %>/script/wechat/admin/user.js?v=2014051801" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/user.js?v=2014051801" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

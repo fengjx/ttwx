@@ -18,7 +18,7 @@ $(function() {
 		method: 'post',
 		toolbar: "#toolbar",
 		contentType: "application/x-www-form-urlencoded",
-		url: domain + '/admin/wechat/user/userPageList',
+		url: adminPath + '/wechat/user/userPageList',
 		queryParamsType: "limit",
 		queryParams: queryParams,
 		cache: false,
@@ -74,7 +74,7 @@ $(function() {
 			valign: 'middle',
 			formatter: function (value,row,index) {
 				///admin/wechat/msglog?openid
-				var html = '<a class="btn btn-info" href="'+domain+'/admin/wechat/msglog?openid='+row.openid+'">消息记录</a>';
+				var html = '<a class="btn btn-info btn-xs" href="'+adminPath+'/wechat/msglog?openid='+row.openid+'">消息记录</a>';
 				return html;
 			}
 		}]
@@ -136,7 +136,7 @@ function clearDatagrid() {
 
 function loadGroupList() {
 	$.ajax({
-		url : domain + '/admin/wechat/user/groupList.action',
+		url : adminPath + '/wechat/user/groupList.action',
 		cache : false,
 		dataType : "json",
 		success : function(data) {
@@ -182,7 +182,7 @@ function loadGroupList() {
 function deleteGroup(groupId, groupName) {
 	app.confirmModal('确认要删除分组【' + groupName + '】吗', function () {
 		$.ajax({
-			url : domain + '/admin/wechat/user/deleteGroup',
+			url : adminPath + '/wechat/user/deleteGroup',
 			data : 'id=' + groupId,
 			dataType : "json",
 			success : function(data) {
@@ -211,7 +211,7 @@ function editGroup(id,name) {
 			return false;
 		}
 		$.ajax({
-			url: domain + '/admin/wechat/user/saveGroup',
+			url: adminPath + '/wechat/user/saveGroup',
 			type: 'post',
 			data: {
 				id: id,
@@ -259,7 +259,7 @@ function groupSelect(record) {
 		"group_id" : group_id
 	};
 	$.ajax({
-		url : domain + '/admin/user/updateUser.action',
+		url : adminPath + '/user/updateUser.action',
 		cache : false,
 		data : data,
 		dataType : "json",
@@ -280,7 +280,7 @@ function groupSelect(record) {
  */
 function viewLog(openid){
 	app.loadingModal();
-	var href = domain+'/admin/wechat/msglog?openid='+openid;
+	var href = adminPath + '/wechat/msglog?openid='+openid;
 	parent.addTab({
 		src : href,
 		title : '消息管理'

@@ -7,13 +7,13 @@
     <jsp:include page="/WEB-INF/view/common/inc/meta.jsp">
         <jsp:param value="联系我们" name="title"/>
     </jsp:include>
-    <script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
+    <script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>
 </head>
 <body>
 	<!-- container -->
 	<div class="container page-wrapper">
 		<ol class="breadcrumb">
-			<li><a href="<%=domain %>">首页</a></li>
+			<li><a href="${domain}">首页</a></li>
 			<li class="active">联系我们</li>
 		</ol>
 		<div class="row">
@@ -74,6 +74,6 @@
 		</div>
 	</div>	<!-- /container -->
 	
-	<script src="<%=resourceUrl%>/script/wechat/display/contact.js" type="text/javascript"></script>
+	<script src="${resourceUrl}/script/wechat/display/contact.js" type="text/javascript"></script>
 </body>
 </html>

@@ -5,15 +5,15 @@
 <head>
     <meta name="decorator" content="wechat"/>
     <title>菜单管理</title>
-    <link href="<%=resourceUrl%>/css/menu.css?v=2014111501" rel="stylesheet" type="text/css"/>
-    <link href="<%=resourceUrl%>/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
-    <link href="<%=resourceUrl%>/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${resourceUrl}/css/menu.css?v=2014111501" rel="stylesheet" type="text/css"/>
+    <link href="${resourceUrl}/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
+    <link href="${resourceUrl}/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <div class="breadcrumbs">
         <ol class="breadcrumb">
-            <li><a href="<%=domain %>/admin">后台管理</a></li>
-            <li><a href="<%=domain %>/admin/wechat">平台管理</a></li>
+            <li><a href="${adminPath}">后台管理</a></li>
+            <li><a href="${adminPath}/wechat">平台管理</a></li>
             <li class="active">菜单管理</li>
         </ol>
     </div>
@@ -21,28 +21,28 @@
         <div class="row" >
             <h4>可创建最多3个一级菜单，每个一级菜单下可创建最多5个二级菜单。编辑中的菜的那不会马上被用户看到，请放心调试。</h4>
         </div>
-        <div class="row" style="border:1px solid #ddd;min-height: 530px;">
-            <div class="col-md-3 nopadding" style="border-right:1px solid #ddd;min-height: 530px;">
+        <div class="row" style="border:1px solid #ddd;min-height: 600px;">
+            <div class="col-md-3 nopadding" style="border-right:1px solid #ddd;min-height: 600px;">
                 <div style="text-align: left;">
-                    <button type="button" onclick="append(1)" class="btn btn-default btn-sm sorted" title="添加">
+                    <button type="button" onclick="append(1)" class="btn btn-default btn-xs sorted" title="添加">
                         <i class="glyphicon glyphicon-plus"></i>
                     </button>
-                    <button type="button" onclick="updatedMenu()" class="btn btn-default btn-sm sorted" title="修改">
+                    <button type="button" onclick="updatedMenu()" class="btn btn-default btn-xs sorted" title="修改">
                         <i class="glyphicon glyphicon-edit"></i>
                     </button>
-                    <button type="button" onclick="removeMenu()" class="btn btn-default btn-sm sorted" title="删除">
+                    <button type="button" onclick="removeMenu()" class="btn btn-default btn-xs sorted" title="删除">
                         <i class="glyphicon glyphicon-trash"></i>
                     </button>
-                    <button type="button" onclick="release()" class="btn btn-default btn-sm sorted" title="发布">
+                    <button type="button" onclick="release()" class="btn btn-default btn-xs sorted" title="发布">
                         <i class="glyphicon glyphicon-phone"></i>
                     </button>
-                    <button type="button" onclick="sort();" class="btn btn-default btn-sm sorted" title="排序">
+                    <button type="button" onclick="sort();" class="btn btn-default btn-xs sorted" title="排序">
                         <i class="glyphicon glyphicon-align-justify"></i>
                     </button>
-                    <button type="button" onclick="saveSort();" class="btn btn-success btn-sm hide sort" title="完成排序">
+                    <button type="button" onclick="saveSort();" class="btn btn-success btn-xs hide sort" title="完成排序">
                         完成
                     </button>
-                    <button type="button" onclick="cancelSort();" class="btn btn-default btn-sm hide sort" title="完成排序">
+                    <button type="button" onclick="cancelSort();" class="btn btn-default btn-xs hide sort" title="完成排序">
                         取消
                     </button>
                 </div>
@@ -83,9 +83,8 @@
                             <table>
                                 <tr>
                                     <td>
-                                    <span class="">
                                         链接地址：
-                                        <jsp:include page="/admin/sys/ext/selecter">
+                                        <jsp:include page="${fns:getConst('ADMIN_PATH')}/sys/ext/selecter">
                                             <jsp:param name="showAll" value="1"/>
                                             <jsp:param name="id" value="busiapp_url"/>
                                             <jsp:param name="name" value="busiapp_url"/>
@@ -93,18 +92,13 @@
                                             <jsp:param name="msg_type" value=""/>
                                             <jsp:param name="event_type" value=""/>
                                         </jsp:include>
-                                    </span>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="tool_bar">
-                            <span class="btn btn_input btn_default">
-                                <button onclick="showActionContent('action_index')">返回</button>
-                             </span>
-                             <span class="btn btn_input btn_primary">
-                                <button onclick="submitMsgActionForm('url');">保存</button>
-                             </span>
+                            <button class="btn btn-default btn-sm" onclick="showActionContent('action_index')">返回</button>
+                            <button class="btn btn-primary btn-sm" onclick="submitMsgActionForm('url');">保存</button>
                         </div>
                     </div>
 
@@ -115,9 +109,7 @@
                                 订阅者点击该子菜单会受到以下信息
                             </div>
                             <div style="float:right;">
-                                <span class="btn btn_input btn_primary">
-                                    <button onclick="updateMsgView();" type="button">修&nbsp;&nbsp;改</button>
-                                 </span>
+                                <button class="btn btn-info btn-sm" onclick="updateMsgView();" type="button">修&nbsp;&nbsp;改</button>
                             </div>
                         </div>
                         <div class="clear"></div>
@@ -132,11 +124,11 @@
 
     </div>
 
-<script src="<%=resourceUrl%>/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
-<script src="<%=resourceUrl%>/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-<script src="<%=resourceUrl%>/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
-<script src="<%=resourceUrl %>/script/wechat/admin/menu.js?v=2015061701" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>
+<script src="${resourceUrl}/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="${resourceUrl}/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/menu.js?v=2015061701" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

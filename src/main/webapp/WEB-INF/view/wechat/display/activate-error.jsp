@@ -12,7 +12,7 @@
 	<!-- container -->
 	<div class="container page-wrapper">
 		<ol class="breadcrumb">
-			<li><a href="<%=domain %>">首页</a></li>
+			<li><a href="${domain}">首页</a></li>
 			<li class="active">激活成功</li>
 		</ol>
 		<div class="row">

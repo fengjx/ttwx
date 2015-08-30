@@ -17,7 +17,7 @@ $(function(){
 function loadMaterials(page,isAppend){
 	var pageSize = 5;
 	$.ajax({
-		url :  domain + '/admin/wechat/material/page?msg_type=news',
+		url :  adminPath + '/wechat/material/page?msg_type=news',
 		data : "pageNumber="+page+"&pageSize="+pageSize,
 		cache : false,
 		dataType : "json",
@@ -51,7 +51,7 @@ function loadMaterials(page,isAppend){
 function deleteMaterial(id){
 	app.confirmModal("确定要刪除素材？删除后无法恢复！", function () {
 		$.ajax({
-			url :  domain + '/admin/wechat/material/delete',
+			url :  adminPath + '/wechat/material/delete',
 			data : "id="+id,
 			cache : false,
 			dataType : "json",

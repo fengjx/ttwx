@@ -12,13 +12,13 @@
 			margin-top: 40px;
 		}
 	</style>
-	<script src="<%=resourceUrl%>/js/jquery.form.js" type="text/javascript"></script>
+	<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>
 </head>
 <body>
 	<!-- container -->
 	<div class="container page-wrapper">
 		<ol class="breadcrumb">
-			<li><a href="<%=domain %>">首页</a></li>
+			<li><a href="${domain}">首页</a></li>
 			<li class="active">用户登录</li>
 		</ol>
 		<div class="row">
@@ -47,7 +47,7 @@
 										<label class="login-field-icon fui-clip label-icon" style="margin-right: 15px;" for="valid_code"></label>
 									</div>
 									<div class="col-lg-4" style="margin-top: 40px;">
-										<img id="valid-img" title="点击刷新" width="90" height="42" src="<%=domain %>/common/verification_code.jpg">
+										<img id="valid-img" title="点击刷新" width="90" height="42" src="${domain}/common/verification_code.jpg">
 										<a id="ref-valid-img" href="javascript:void(-1);">刷新</a>
 									</div>
 								</div>
@@ -71,6 +71,6 @@
 		</div>
 	</div>	<!-- /container -->
 	
-	<script src="<%=resourceUrl%>/script/wechat/display/login.js" type="text/javascript"></script>
+	<script src="${resourceUrl}/script/wechat/display/login.js" type="text/javascript"></script>
 </body>
 </html>

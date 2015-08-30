@@ -1,8 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/common/inc/url.jsp"%>
-<!-- 素材列表包含页 material.jsp | menu.jsp-->
 <div>
-	<button id="btn-refresh" type="button" class="btn btn-outline btn-primary btn-block">
+	<button id="btn-refresh" type="button" class="btn btn-primary btn-block">
 		<i class="glyphicon glyphicon-refresh"></i>
 		刷&nbsp;&nbsp;&nbsp;&nbsp;新
 	</button>
@@ -12,8 +11,8 @@
 		<div id="appmsgList1" class="inner">
 			<span class="create_access"> 
 				<i class="icon42_common add_gray"></i> 
-				<a href="<%=domain %>/admin/wechat/material/single"><i class="icon_appmsg_create"></i><strong>单图消息</strong></a>
-				<a href="<%=domain %>/admin/wechat/material/multiple"><i class="icon_appmsg_create multi"></i><strong>多图消息</strong></a>
+				<a href="${domain}/admin/wechat/material/single"><i class="icon_appmsg_create"></i><strong>单图消息</strong></a>
+				<a href="${domain}/admin/wechat/material/multiple"><i class="icon_appmsg_create multi"></i><strong>多图消息</strong></a>
 			</span>
 		</div>
 	</div>
@@ -44,10 +43,6 @@
 		});
 		loadMaterials(curPage);
 	});
-
-	function appendMaterial() {
-
-	}
 	function loadMaterials(page,isAppend){
 		$.ajax({
 			url :  domain + '/admin/wechat/material/page?msg_type=news',
@@ -69,7 +64,7 @@
 					var material_id = rowData.id;
 					var msg_type = rowData.msg_type;
 					var in_time = rowData.in_time;
-					var file_name=rowData.file_name;
+					var file_name = rowData.file_name;
 					html = xml2NewsHtml(rowData.xml_data,in_time,material_id,showType,file_name);
 					if(i%2 == 0){
 						$("#appmsgList2").append(html);
