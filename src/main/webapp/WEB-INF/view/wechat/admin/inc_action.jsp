@@ -156,8 +156,7 @@
 						<jsp:param name="id" value="busiapp_id"/>
 						<jsp:param name="name" value="busiapp_id"/>
 						<jsp:param name="app_type" value="api"/>
-						<jsp:param name="msg_type" value=""/>
-						<jsp:param name="event_type" value=""/>
+						 
 					</jsp:include>
 				</div>
 				<div style="height:200px;border: solid 1px #E0ECFF;">
