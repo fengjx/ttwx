@@ -89,8 +89,6 @@
                                             <jsp:param name="id" value="busiapp_url"/>
                                             <jsp:param name="name" value="busiapp_url"/>
                                             <jsp:param name="app_type" value="web"/>
-                                            <jsp:param name="msg_type" value=""/>
-                                            <jsp:param name="event_type" value=""/>
                                         </jsp:include>
                                     </td>
                                 </tr>

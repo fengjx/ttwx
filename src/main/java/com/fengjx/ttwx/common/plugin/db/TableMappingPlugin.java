@@ -40,6 +40,7 @@ public class TableMappingPlugin implements IPlugin {
                 TableMapping.me().putTable(table);
             }
         } catch (Exception e) {
+        	LogUtil.error(LOG, "Can not init table mapping",e);
             throw new MyDbException("Can not init table mapping");
         }
     }

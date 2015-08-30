@@ -123,15 +123,13 @@
 												class="icon_checkbox"></i> <input type="checkbox"
 												class="frm_checkbox"> 链接地址<span class="tips l">（用户点击图文跳转的URL）</span>
 										</label>
-										</label> <span id="span_url" style="display: none;"> <jsp:include
-												page="${fns:getConst('ADMIN_PATH')}/sys/ext/selecter">
-													<jsp:param name="showAll" value="1" />
-													<jsp:param name="id" value="busiapp_url" />
-													<jsp:param name="name" value="busiapp_url" />
-													<jsp:param name="app_type" value="web" />
-													<jsp:param name="msg_type" value="" />
-													<jsp:param name="event_type" value="" />
-												</jsp:include>
+										</label> <span id="span_url" style="display: none;">
+											<jsp:include page="${fns:getConst('ADMIN_PATH')}/sys/ext/selecter">
+												<jsp:param name="showAll" value="1" />
+												<jsp:param name="id" value="busiapp_url" />
+												<jsp:param name="name" value="busiapp_url" />
+												<jsp:param name="app_type" value="web" />
+											</jsp:include>
 										</span>
 									</div>
 									<div id="js_ueditor" class="appmsg_edit_item content_edit">
