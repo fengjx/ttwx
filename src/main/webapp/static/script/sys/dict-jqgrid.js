@@ -15,14 +15,6 @@ $(function () {
 
     $table = $('#data-table').jqGrid({
         url: adminPath + '/sys/dict/pageList',
-        mtype: "post",
-        styleUI: 'Bootstrap',
-        datatype: "json",
-        viewrecords: true,
-        height: 'auto',
-        autowidth: true,
-        rowNum: 10,
-        pager: "#tablePager",
         colModel: [{
             name: 'id',
             hidden: true,
@@ -74,6 +66,47 @@ $(function () {
             }
         }]
     });
+
+    $table.jqGrid('navGrid','#tablePager',{
+        edit: false,
+        add: false,
+        del: false,
+        search: false,
+        refresh: true,
+        view: false,
+        position: "left",
+        cloneToTop: true
+    }).jqGrid('navButtonAdd','#tablePager',
+        {
+            buttonicon: "glyphicon glyphicon-plus",
+            title: "add",
+            caption: "",
+            position: "first",
+            onClickButton: function () {
+                edit()
+            }
+        }
+    ).jqGrid('navButtonAdd','#tablePager',
+        {
+            buttonicon: "glyphicon glyphicon-remove",
+            title: "add",
+            caption: "",
+            position: "first",
+            onClickButton: function () {
+                alert('remove');
+            }
+        }
+    ).jqGrid('navButtonAdd','#tablePager',
+        {
+            buttonicon: "glyphicon glyphicon-edit",
+            title: "add",
+            caption: "",
+            position: "first",
+            onClickButton: function () {
+                alert('unchecked');
+            }
+        }
+    );
 
     function queryParams(params) {
         var start_time = $('#toolbar input[name="start_time"]').val();

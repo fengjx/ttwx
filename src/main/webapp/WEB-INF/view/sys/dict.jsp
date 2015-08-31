@@ -37,19 +37,6 @@
 						</div>
 					</div>
 				</fieldset>
-				<a onclick="edit();" class="btn btn-info btn-xs" href="javascript:void(-1);">
-					<i class="glyphicon glyphicon-plus"></i>
-					添加
-				</a>
-				<a class="btn btn-warning btn-xs" onclick="searchDatagrid();" href="javascript:void(0);">
-					<i class="glyphicon glyphicon-refresh"></i>
-					刷新
-				</a>
-				<a class="btn btn-default btn-xs" onclick="$table.bootstrapTable('uncheckAll');" href="javascript:void(0);">
-					<i class="glyphicon glyphicon-ban-circle"></i>
-					取消选中
-				</a>
-
 			</div>
 		</div>
 		<table id="data-table"></table>
@@ -125,6 +112,7 @@
 		<link href="${resourceUrl}/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css"/>
 		<script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/jqGrid/grid-opt.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="${resourceUrl}/script/sys/dict-jqgrid.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
 	</c:when>
 	<c:otherwise>
