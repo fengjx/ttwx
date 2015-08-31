@@ -6,4 +6,5 @@
     var adminPath = "${adminPath}";
     var resourceUrl = "${resourceUrl}";
     var staticDomain = "${staticDomain}";
+    var adapterPageName = "${adapterPageName}";
 </script>

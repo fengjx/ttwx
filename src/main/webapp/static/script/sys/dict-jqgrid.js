@@ -13,80 +13,63 @@ $(function () {
         show: false
     });
 
-    $table = $('#data-table').bootstrapTable({
-        method: 'post',
-        toolbar: "#toolbar",
-        contentType: "application/x-www-form-urlencoded",
+    $table = $('#data-table').jqGrid({
         url: adminPath + '/sys/dict/pageList',
-        queryParamsType: "limit",
-        queryParams: queryParams,
-        cache: false,
+        mtype: "post",
+        styleUI: 'Bootstrap',
+        datatype: "json",
+        viewrecords: true,
         height: 'auto',
-        striped: true,
-        sidePagination: "server",
-        pagination: true,
-        pageSize: 10,
-        pageList: [10, 15, 20],
-        minimumCountColumns: 2,
-        clickToSelect: true,
-        idField: "id",
-        columns: [{
-            field: 'id',
-            valign: 'middle',
-            radio: true
+        autowidth: true,
+        rowNum: 10,
+        pager: "#tablePager",
+        colModel: [{
+            name: 'id',
+            hidden: true,
+            key: true
         }, {
-            field: 'dict_value',
-            title: '字典值',
+            name: 'dict_value',
+            label: '字典值',
+            sortable: false,
+            align: 'left'
+        }, {
+            name: 'dict_name',
+            label: '字典名称',
+            align: 'left'
+        }, {
+            name: 'dict_desc',
+            label: '字典描述',
+            align: 'left'
+        }, {
+            name: 'group_code',
+            label: '字典组',
+            align: 'left'
+        }, {
+            name: 'group_name',
+            label: '组名称',
             align: 'left',
-            valign: 'middle'
         }, {
-            field: 'dict_name',
-            title: '字典名称',
+            name: 'order_num',
+            label: '排序',
+            width: 40,
+            align: 'left'
+        }, {
+            name: 'is_valid',
+            label: '是否启用',
+            width: 70,
+            align: 'left'
+        }, {
+            name: 'in_time',
+            label: '接入时间',
             align: 'left',
-            valign: 'middle'
         }, {
-            field: 'dict_desc',
-            title: '字典描述',
-            align: 'left',
-            width: '30%',
-            valign: 'middle'
-        }, {
-            field: 'group_code',
-            title: '字典组',
-            align: 'left',
-            valign: 'middle'
-        }, {
-            field: 'group_name',
-            title: '组名称',
-            align: 'left',
-            width: '15%',
-            valign: 'middle'
-        }, {
-            field: 'order_num',
-            title: '排序',
-            align: 'left',
-            valign: 'middle'
-        }, {
-            field: 'is_valid',
-            title: '是否启用',
-            align: 'left',
-            valign: 'middle'
-        }, {
-            field: 'in_time',
-            title: '接入时间',
-            align: 'left',
-            width: '15%',
-            valign: 'middle'
-        }, {
-            field: 'op',
-            title: '操作',
-            width: '15%',
+            name: 'op',
+            label: '操作',
             align: 'center',
-            valign: 'middle',
-            formatter : function(value, row, index) {
-                var html = '<a class="btn btn-xs btn-success" onclick="view(\''+index+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
-                html += '<a class="btn btn-xs btn-info" onclick="updateData(\''+index+'\')" href="javascript:void(-1);"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
-                html += '<a class="btn btn-xs btn-danger" onclick="deleteData(\''+row.id+'\',\''+row.dict_name+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
+            formatter : function(value, opt, row) {
+                var html = '<a class="btn btn-minier btn-success" onclick="view(\''+row.id+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
+                html += '<a class="btn btn-minier btn-info" onclick="updateData(\''+row.id+'\')" href="javascript:void(-1);"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
+                html += '<a class="btn btn-minier btn-danger" onclick="deleteData(\''+row.id+'\',\''+row.dict_name+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
                 return html;
             }
         }]

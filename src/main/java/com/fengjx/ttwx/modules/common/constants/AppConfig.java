@@ -29,6 +29,7 @@ public final class AppConfig {
     public static final String STATIC_PATH = GetPropertiesVal.getLabel("staticPath");
     public static final String SUPPORT_EMAIL = GetPropertiesVal.getLabel("mail.username");
     public static final String ADMIN_PATH = GetPropertiesVal.getLabel("adminPath");
+    public static final String ADAPTER_PAGE_NAME = GetPropertiesVal.getLabel("adapterPageName");
 
     /**
      * 是/否

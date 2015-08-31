@@ -5,7 +5,6 @@
 <head>
 	<meta name="decorator" content="sys"/>
 	<title>字典管理</title>
-	<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<div class="breadcrumbs">
@@ -21,8 +20,10 @@
 				<fieldset>
 					<div class="form-group">
 						<div class="control-group">
-							<label class="control-label">openid：</label>
-							<input name="qry_openid" class="form-control" type="text" placeholder="用户发送的文字">
+							<label class="control-label">字典组：</label>
+							<input name="qry_openid" class="form-control" type="text">
+							<label class="control-label">字典描述：</label>
+							<input name="desc" class="form-control" type="text" placeholder="字典描述">
 							<span class="columns-right pull-right">
 								<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-primary">
 									<i class="glyphicon glyphicon-search"></i>
@@ -36,9 +37,23 @@
 						</div>
 					</div>
 				</fieldset>
+				<a onclick="edit();" class="btn btn-info btn-xs" href="javascript:void(-1);">
+					<i class="glyphicon glyphicon-plus"></i>
+					添加
+				</a>
+				<a class="btn btn-warning btn-xs" onclick="searchDatagrid();" href="javascript:void(0);">
+					<i class="glyphicon glyphicon-refresh"></i>
+					刷新
+				</a>
+				<a class="btn btn-default btn-xs" onclick="$table.bootstrapTable('uncheckAll');" href="javascript:void(0);">
+					<i class="glyphicon glyphicon-ban-circle"></i>
+					取消选中
+				</a>
+
 			</div>
 		</div>
 		<table id="data-table"></table>
+		<div id="tablePager"></div>
 
 		<div id="editModal" class="modal fade">
 			<div class="modal-dialog">
@@ -103,10 +118,22 @@
 		</div><!-- /.modal -->
 	</div>
 
-<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/script/sys/dict.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.formautofill.min.js" type="text/javascript" charset="UTF-8"></script>
+<c:choose>
+	<c:when test="${'JqGridPage' eq adapterPageName}">
+		<link href="${resourceUrl}/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css"/>
+		<script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/script/sys/dict-jqgrid.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
+	</c:when>
+	<c:otherwise>
+		<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+		<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/script/sys/dict.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
+	</c:otherwise>
+</c:choose>
 </body>
 </html>

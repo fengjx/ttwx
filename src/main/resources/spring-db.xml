@@ -45,7 +45,7 @@
 
     <bean id="tableMappingPlugin" class="com.fengjx.ttwx.common.plugin.db.TableMappingPlugin">
         <property name="dataSource" ref="dataSource"/>
-        <property name="adapterPageName" value="BootstrapPage"/>
+        <property name="adapterPageName" value="${adapterPageName}"/>
         <property name="packages">
             <value>
                 com.fengjx.ttwx.modules.wechat.model,
