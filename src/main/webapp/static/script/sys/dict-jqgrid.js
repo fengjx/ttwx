@@ -59,13 +59,20 @@ $(function () {
             label: '操作',
             align: 'center',
             formatter: function (value, opt, row) {
-                var html = '<a class="btn btn-minier btn-success" onclick="view(\'' + row.id + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
+                var html = '<a class="btn btn-minier btn-success" onclick="append(\'' + row.id + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
                 html += '<a class="btn btn-minier btn-info" onclick="updateData(\'' + row.id + '\')" href="javascript:void(-1);"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
                 html += '<a class="btn btn-minier btn-danger" onclick="deleteData(\'' + row.id + '\',\'' + row.dict_name + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
                 return html;
             }
         }]
     });
+
+    $table.jqGrid('filterToolbar',{
+
+    });
+    //jQuery("#toolbar").filterGrid('#data-table',{
+    //
+    //});
 
     $table.jqGrid('navGrid', '#tablePager', {
         edit: false,
@@ -93,7 +100,7 @@ $(function () {
             caption: "",
             position: "first",
             onClickButton: function () {
-                alert('unchecked');
+                updateData();
             }
         }
     ).jqGrid('navButtonAdd', '#tablePager',
@@ -103,7 +110,7 @@ $(function () {
             caption: "",
             position: "first",
             onClickButton: function () {
-                edit()
+                append();
             }
         }
     );
@@ -171,7 +178,31 @@ function clearDatagrid() {
     $table.bootstrapTable('refresh');
 }
 
+/**
+ * 添加
+ * @param id
+ */
+function append(id) {
+    if (!id) {
+        id = $table.jqGrid('getGridParam', "selrow");
+    }
+    if(!id){
+        edit();
+    }else{
+        var row = $table.jqGrid('getRowData', id);
+        edit({
+            group_code:row.group_code,
+            group_name:row.group_name
+        });
+    }
+}
+
+/**
+ * 编辑（添加/修改）
+ * @param data
+ */
 function edit(data) {
+    dataForm.find("#id").val('');
     dataForm.clearForm();
     if (data) {
         $("#form-dict").autofill(data);
@@ -179,14 +210,29 @@ function edit(data) {
     editModal.modal('show');
 }
 
-function updateData(index) {
-    $table.bootstrapTable('uncheckAll');
-    $table.bootstrapTable('check', index);
-    var row = $table.bootstrapTable('getSelections')[0];
+/**
+ * 修改
+ * @param id
+ * @returns {boolean}
+ */
+function updateData(id) {
+    if (!id) {
+        id = $table.jqGrid('getGridParam', "selrow");
+        if (!id) {
+            app.alertModal("请选中要编辑的数据");
+            return false;
+        }
+    }
+    var row = $table.jqGrid('getRowData', id);
     edit(row);
 }
 
-
+/**
+ * 删除
+ * @param id
+ * @param name
+ * @returns {boolean}
+ */
 function deleteData(id, name) {
     if (!id) {
         id = $table.jqGrid('getGridParam', "selrow");

@@ -42,7 +42,7 @@
 		<table id="data-table"></table>
 		<div id="tablePager"></div>
 
-		<div id="editModal" class="modal fade">
+		<div id="editModal" class="modal">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -51,7 +51,7 @@
 					</div>
 					<form action="${adminPath}/sys/dict/save" class="form-horizontal" id="form-dict" method="POST" role="form">
 						<div class="modal-body">
-							<input type="hidden" id="id" name="id" value="${wechatAccount.id }" />
+							<input type="hidden" id="id" name="id" value="" />
 							<div class="control-group" >
 								<label class="control-label" for="dict_value">字典值:</label>
 								<div class="controls">
