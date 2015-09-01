@@ -26,11 +26,11 @@
 							<input name="desc" class="form-control" type="text" placeholder="字典描述">
 							<span class="columns-right pull-right">
 								<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-primary">
-									<i class="glyphicon glyphicon-search"></i>
+									<i class="icon-search"></i>
 									查询
 								</button>
 								<button onclick="clearDatagrid();" type="button" class="btn btn-white">
-									<i class="glyphicon glyphicon-transfer"></i>
+									<i class="icon-circle-blank"></i>
 									重置
 								</button>
 							</span>

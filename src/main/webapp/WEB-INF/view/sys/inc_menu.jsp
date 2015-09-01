@@ -5,14 +5,14 @@
     <ul class="nav nav-sidebar nav-list" id="side-menu">
         <li>
             <a href="${adminPath}/sys/ext">
-                <i class="glyphicon glyphicon-open menu-icon"></i>
+                <i class="icon-retweet menu-icon"></i>
                 <span class="menu-text"> 接口管理 </span>
             </a>
             <b class="arrow"></b>
         </li>
         <li>
             <a href="${adminPath}/sys/dict">
-                <i class="glyphicon glyphicon-open menu-icon"></i>
+                <i class="icon-credit-card menu-icon"></i>
                 <span class="menu-text"> 字典管理 </span>
             </a>
             <b class="arrow"></b>

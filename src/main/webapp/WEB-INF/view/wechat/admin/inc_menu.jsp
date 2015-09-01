@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/view/common/inc/path.jsp" %>
 <script src="${resourceUrl}/script/common/leftMenu.js?v=2015082001" type="text/javascript"></script>
-<div class="sidebar responsive">
+<div class="sidebar responsive menu-min">
     <ul class="nav nav-sidebar nav-list" id="side-menu">
         <li>
             <a href="${adminPath}/wechat/setting">
@@ -66,6 +66,6 @@
     </ul>
     <!-- #section:basics/sidebar.layout.minimize -->
     <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-        <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        <i class="ace-icon fa fa-angle-double-left  icon-arrow-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
     </div>
 </div>

@@ -58,16 +58,16 @@ $(function () {
             name: 'op',
             label: '操作',
             align: 'center',
-            formatter : function(value, opt, row) {
-                var html = '<a class="btn btn-minier btn-success" onclick="view(\''+row.id+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
-                html += '<a class="btn btn-minier btn-info" onclick="updateData(\''+row.id+'\')" href="javascript:void(-1);"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
-                html += '<a class="btn btn-minier btn-danger" onclick="deleteData(\''+row.id+'\',\''+row.dict_name+'\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
+            formatter: function (value, opt, row) {
+                var html = '<a class="btn btn-minier btn-success" onclick="view(\'' + row.id + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
+                html += '<a class="btn btn-minier btn-info" onclick="updateData(\'' + row.id + '\')" href="javascript:void(-1);"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
+                html += '<a class="btn btn-minier btn-danger" onclick="deleteData(\'' + row.id + '\',\'' + row.dict_name + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
                 return html;
             }
         }]
     });
 
-    $table.jqGrid('navGrid','#tablePager',{
+    $table.jqGrid('navGrid', '#tablePager', {
         edit: false,
         add: false,
         del: false,
@@ -76,7 +76,27 @@ $(function () {
         view: false,
         position: "left",
         cloneToTop: true
-    }).jqGrid('navButtonAdd','#tablePager',
+    }).jqGrid('navButtonAdd', '#tablePager',
+        {
+            buttonicon: "glyphicon glyphicon-remove",
+            title: "remove",
+            caption: "",
+            position: "first",
+            onClickButton: function () {
+                deleteData();
+            }
+        }
+    ).jqGrid('navButtonAdd', '#tablePager',
+        {
+            buttonicon: "glyphicon glyphicon-edit",
+            title: "edit",
+            caption: "",
+            position: "first",
+            onClickButton: function () {
+                alert('unchecked');
+            }
+        }
+    ).jqGrid('navButtonAdd', '#tablePager',
         {
             buttonicon: "glyphicon glyphicon-plus",
             title: "add",
@@ -84,26 +104,6 @@ $(function () {
             position: "first",
             onClickButton: function () {
                 edit()
-            }
-        }
-    ).jqGrid('navButtonAdd','#tablePager',
-        {
-            buttonicon: "glyphicon glyphicon-remove",
-            title: "add",
-            caption: "",
-            position: "first",
-            onClickButton: function () {
-                alert('remove');
-            }
-        }
-    ).jqGrid('navButtonAdd','#tablePager',
-        {
-            buttonicon: "glyphicon glyphicon-edit",
-            title: "add",
-            caption: "",
-            position: "first",
-            onClickButton: function () {
-                alert('unchecked');
             }
         }
     );
@@ -138,7 +138,7 @@ $(function () {
                 not_empty: "请输入字典组标识"
             }
         },
-        wrapper:'.control-group'
+        wrapper: '.control-group'
     });
 
     dataForm = $("#form-dict").submit(function () {
@@ -152,7 +152,7 @@ $(function () {
                 if (res && "1" == res.code) {
                     editModal.modal('hide');
                     app.ok(res.msg);
-                    $table.bootstrapTable('refresh');
+                    $table.trigger("reloadGrid");
                 } else {
                     app.error(res.msg);
                 }
@@ -171,9 +171,9 @@ function clearDatagrid() {
     $table.bootstrapTable('refresh');
 }
 
-function edit(data){
+function edit(data) {
     dataForm.clearForm();
-    if(data){
+    if (data) {
         $("#form-dict").autofill(data);
     }
     editModal.modal('show');
@@ -188,6 +188,14 @@ function updateData(index) {
 
 
 function deleteData(id, name) {
+    if (!id) {
+        id = $table.jqGrid('getGridParam', "selrow");
+        if (!id) {
+            app.alertModal("请选中要删除的数据");
+            return false;
+        }
+        name = $table.jqGrid('getRowData', id).dict_name;
+    }
     app.confirmModal("你要删除字典【" + name + "】吗？", function () {
         $.ajax({
             url: adminPath + '/sys/dict/delete',
@@ -197,7 +205,7 @@ function deleteData(id, name) {
             success: function (res) {
                 if (res && '1' === res.code) {
                     app.ok('刪除成功');
-                    $table.bootstrapTable('refresh');
+                    $table.trigger("reloadGrid");
                 } else {
                     app.error(res.msg ? res.msg : '刪除失败');
                 }
