@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/view/common/inc/path.jsp" %>
 <script src="${resourceUrl}/script/common/leftMenu.js?v=2015082001" type="text/javascript"></script>
-<div class="sidebar responsive">
+<div id="side-menu" class="sidebar responsive">
     <ul class="nav nav-sidebar nav-list" id="side-menu">
         <li>
             <a href="${adminPath}/sys/ext">
@@ -18,4 +18,7 @@
             <b class="arrow"></b>
         </li>
     </ul>
+    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+        <i class="ace-icon fa fa-angle-double-left icon-arrow-left"></i>
+    </div>
 </div>

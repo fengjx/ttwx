@@ -75,13 +75,6 @@ $(function () {
         }
     });
 
-    //$table.jqGrid('filterToolbar',{
-    //
-    //});
-    //jQuery("#toolbar").filterGrid('#data-table',{
-    //    gridModel: true,
-    //});
-
     $table.jqGrid('navGrid', '#tablePager', {
         edit: false,
         add: false,

@@ -5,7 +5,6 @@
 <head>
 	<meta name="decorator" content="wechat"/>
 	<title>关键字回复</title>
-	<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
 	<link href="${resourceUrl}/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -38,48 +37,50 @@
 									<i class="glyphicon glyphicon-calendar"></i>
 								</div>
 							</div>
-						<span class="columns-right pull-right">
-							<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-info btn-sm">
-								<i class="glyphicon glyphicon-search"></i>
-								查看
-							</button>
-							<button onclick="clearDatagrid();" type="button" class="btn btn-white btn-sm">
-								<i class="glyphicon glyphicon-transfer"></i>
-								重置
-							</button>
-						</span>
+							<span class="columns-right pull-right">
+								<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-primary">
+									<i class="icon-search"></i>
+									查询
+								</button>
+								<button onclick="clearDatagrid();" type="button" class="btn btn-white">
+									<i class="icon-circle-blank"></i>
+									重置
+								</button>
+							</span>
+
 						</div>
 					</div>
 				</fieldset>
-				<div>
-					<a class="btn btn-info btn-xs" href="${adminPath}/wechat/action/keywordAdd">
-						<i class="glyphicon glyphicon-plus"></i>
-						添加
-					</a>
-					<a class="btn btn-warning btn-xs" onclick="searchDatagrid();" href="javascript:void(0);">
-						<i class="glyphicon glyphicon-refresh"></i>
-						刷新
-					</a>
-					<a class="btn btn-default btn-xs" onclick="$table.bootstrapTable('uncheckAll');" href="javascript:void(0);">
-						<i class="glyphicon glyphicon-ban-circle"></i>
-						取消选中
-					</a>
-				</div>
 			</div>
 		</div>
 		<table id="data-table"></table>
+		<div id="tablePager"></div>
+
 	</div>
 
-
-<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.formautofill.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>
 <script src="${resourceUrl}/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/script/wechat/admin/keyword_action.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
+<c:choose>
+	<c:when test="${'JqGridPage' eq adapterPageName}">
+		<link href="${resourceUrl}/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css"/>
+		<script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/jqGrid/grid-opt.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/script/wechat/admin/keyword-action-jqgrid.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
+	</c:when>
+	<c:otherwise>
+		<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+		<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/script/sys/dict.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/script/wechat/admin/keyword_action.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
+	</c:otherwise>
+</c:choose>
 </body>
 </html>
 
