@@ -3,20 +3,18 @@ package com.fengjx.ttwx.common.web;
 
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.common.utils.WebUtil;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * 控制器基类
@@ -38,10 +36,18 @@ public abstract class BaseController {
         return map;
     }
 
+    protected Map<String, String> getParams(HttpServletRequest request) {
+        return WebUtil.getRequestParams(request);
+    }
+
     protected Map<String, Object> getNotBlankRequestMap(HttpServletRequest request) {
         Map<String, Object> map = new HashMap();
         map.putAll(WebUtil.getNotBlankRequestParams(request));
         return map;
+    }
+
+    protected Map<String, String> getNotBlankParams(HttpServletRequest request) {
+        return WebUtil.getNotBlankRequestParams(request);
     }
 
     /**

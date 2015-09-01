@@ -11,7 +11,7 @@ $(function () {
     $.jgrid.defaults.pager = "#tablePager";
     $.jgrid.defaults.rownumbers = true;
     $.jgrid.defaults.sortable = false;
-    $.jgrid.defaults.rowList = [10,15,20];
+    $.jgrid.defaults.rowList = [10, 15, 20];
 
 
 });

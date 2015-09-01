@@ -4,13 +4,11 @@ package com.fengjx.ttwx.modules.sys.model;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 
+import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Created by FengJianxin on 2015/8/22.
@@ -70,4 +68,25 @@ public class Dict extends Model {
         }
     }
 
+    /**
+     * 分页查询
+     *
+     * @param attrs
+     * @return
+     */
+    public AdapterPage page(Map<String, String> attrs) {
+        StringBuilder sql = new StringBuilder(getSelectSql("a"));
+        sql.append(" where 1 = 1");
+        List<Object> params = new ArrayList();
+        if (StringUtils.isNoneBlank(attrs.get("group_code"))) {
+            sql.append(" and group_code like CONCAT('%',?,'%')");
+            params.add(attrs.get("group_code"));
+        }
+        if (StringUtils.isNoneBlank(attrs.get("dict_desc"))) {
+            sql.append(" and dict_desc like CONCAT('%',?,'%')");
+            params.add(attrs.get("dict_desc"));
+        }
+        sql.append(" order by in_time desc");
+        return paginate(sql.toString(), params.toArray()).convert();
+    }
 }

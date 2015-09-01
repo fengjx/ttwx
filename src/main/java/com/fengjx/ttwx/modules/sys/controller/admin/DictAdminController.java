@@ -35,8 +35,7 @@ public class DictAdminController extends MyController {
     @RequestMapping("pageList")
     @ResponseBody
     public AdapterPage pageList(HttpServletRequest request) {
-        Map<String, Object> attrs = getRequestMap(request);
-        return dict.paginate(attrs, "order by in_time desc").convert();
+        return dict.page(getNotBlankParams(request));
     }
 
     @RequestMapping("save")

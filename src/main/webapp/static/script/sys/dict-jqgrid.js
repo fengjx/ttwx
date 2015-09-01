@@ -15,6 +15,7 @@ $(function () {
 
     $table = $('#data-table').jqGrid({
         url: adminPath + '/sys/dict/pageList',
+        toolbar: [true, "top"],
         colModel: [{
             name: 'id',
             hidden: true,
@@ -64,14 +65,21 @@ $(function () {
                 html += '<a class="btn btn-minier btn-danger" onclick="deleteData(\'' + row.id + '\',\'' + row.dict_name + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
                 return html;
             }
-        }]
+        }],
+        serializeGridData: function (postData) {
+            postData = $.extend(postData,{
+                "group_code": $('#toolbar input[name="qry_group_code"]').val(),
+                "dict_desc": $('#toolbar input[name="qry_dict_desc"]').val()
+            });
+            return postData;
+        }
     });
 
-    $table.jqGrid('filterToolbar',{
-
-    });
-    //jQuery("#toolbar").filterGrid('#data-table',{
+    //$table.jqGrid('filterToolbar',{
     //
+    //});
+    //jQuery("#toolbar").filterGrid('#data-table',{
+    //    gridModel: true,
     //});
 
     $table.jqGrid('navGrid', '#tablePager', {
@@ -115,27 +123,15 @@ $(function () {
         }
     );
 
-    function queryParams(params) {
-        var start_time = $('#toolbar input[name="start_time"]').val();
-        var end_time = $('#toolbar input[name="end_time"]').val();
-        params = $.extend(params, {
-            "app_name": $('#toolbar input[name="qry_key_word"]').val(),
-            "start_time": start_time,
-            "end_time": end_time
-        });
-        return params;
-    }
-
     formValid = $.scojs_valid('#form-dict', {
         rules: {
-            dict_value: ['not_empty', {'min_length': 2}, {'max_length': 20}],
+            dict_value: ['not_empty', {'max_length': 20}],
             dict_name: ['not_empty'],
             group_code: ['not_empty']
         },
         messages: {
             dict_value: {
                 not_empty: "请输入字典值",
-                min_length: "字典值不少于2个字符",
                 max_length: "字典值不能超过20个字符"
             },
             dict_name: {
@@ -170,12 +166,12 @@ $(function () {
 });
 
 function searchDatagrid() {
-    $table.bootstrapTable('refresh');
+    $table.trigger("reloadGrid");
 }
 
 function clearDatagrid() {
     $('#toolbar input').val('');
-    $table.bootstrapTable('refresh');
+    $table.trigger("reloadGrid");
 }
 
 /**

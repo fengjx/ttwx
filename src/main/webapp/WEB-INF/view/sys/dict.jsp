@@ -21,9 +21,9 @@
 					<div class="form-group">
 						<div class="control-group">
 							<label class="control-label">字典组：</label>
-							<input name="qry_openid" class="form-control" type="text">
+							<input name="qry_group_code" class="form-control" type="text" placeholder="group_code">
 							<label class="control-label">字典描述：</label>
-							<input name="desc" class="form-control" type="text" placeholder="字典描述">
+							<input name="qry_dict_desc" class="form-control" type="text" placeholder="字典描述">
 							<span class="columns-right pull-right">
 								<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-primary">
 									<i class="icon-search"></i>
