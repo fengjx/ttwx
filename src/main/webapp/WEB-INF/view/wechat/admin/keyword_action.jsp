@@ -58,8 +58,6 @@
 
 	</div>
 
-<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.formautofill.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
@@ -77,8 +75,7 @@
 		<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/script/sys/dict.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/script/wechat/admin/keyword_action.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/script/wechat/admin/keyword_action.js?v=2015090101" type="text/javascript" charset="UTF-8"></script>
 	</c:otherwise>
 </c:choose>
 </body>

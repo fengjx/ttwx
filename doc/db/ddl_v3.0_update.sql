@@ -1,4 +1,4 @@
--- 2.x update to 3.x
+-- 1.x update to 2.x
 
 ALTER TABLE 'wechat_ext_app'
 DROP COLUMN 'method_name',
@@ -29,3 +29,7 @@ alter table 'wechat_data_dict' rename 'sys_dict';
 
 ALTER TABLE `sys_dict`
 MODIFY COLUMN `is_valid`  tinyint NULL DEFAULT 0 AFTER `in_time`;
+
+ALTER TABLE `sys_dict`
+MODIFY COLUMN `order_num`  tinyint(255) NULL DEFAULT 0 COMMENT 'ÅÅÐò×Ö¶Î' AFTER `is_valid`;
+
