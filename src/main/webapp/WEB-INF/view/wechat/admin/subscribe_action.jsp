@@ -40,8 +40,8 @@
                     用户关注时会收到以下信息
                 </div>
                 <div style="float:right;">
-                    <button onclick="updateMsgView();" type="button" class="btn btn-info btn-sm">修&nbsp;&nbsp;改</button>
-                    <button onclick="deleteById(msgAction.id);" type="button" class="btn btn-danger btn-sm">删&nbsp;&nbsp;除</button>
+                    <button onclick="updateMsgView();" type="button" class="btn btn-info btn-sm">修改</button>
+                    <button onclick="deleteById(msgAction.id);" type="button" class="btn btn-danger btn-sm">删除</button>
                 </div>
             </div>
             <div class="clear"></div>

@@ -5,6 +5,8 @@
 <head>
     <meta name="decorator" content="wechat"/>
 	<title>LBS地理位置</title>
+    <link href="${resourceUrl}/css/menu.css?v=2015060801" rel="stylesheet" type="text/css"/>
+    <link href="${resourceUrl}/css/material.css?v=2015090301" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <div class="breadcrumbs">
@@ -36,8 +38,8 @@
                     用户向公众号发送地理位置时，会收到以下信息
                 </div>
                 <div style="float:right;">
-                    <button onclick="updateMsgView();" type="button" class="btn btn-info btn-sm">修&nbsp;&nbsp;改</button>
-                    <button onclick="deleteById(msgAction.id);" type="button" class="btn btn-danger btn-sm">删&nbsp;&nbsp;除</button>
+                    <button onclick="updateMsgView();" type="button" class="btn btn-info btn-sm">修改</button>
+                    <button onclick="deleteById(msgAction.id);" type="button" class="btn btn-danger btn-sm">删除</button>
                 </div>
             </div>
             <div class="clear"></div>
@@ -47,8 +49,6 @@
         </div>
     </div>
 
-<link href="${resourceUrl}/css/menu.css?v=2015060801" rel="stylesheet" type="text/css"/>
-<link href="${resourceUrl}/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
 <script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>

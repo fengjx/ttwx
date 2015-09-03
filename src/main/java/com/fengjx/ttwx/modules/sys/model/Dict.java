@@ -5,6 +5,12 @@ import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 
 import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
+import com.fengjx.ttwx.common.plugin.freemarker.FreemarkerUtil;
+import com.fengjx.ttwx.common.utils.JsonUtil;
+import com.fengjx.ttwx.common.utils.StrUtil;
+import com.fengjx.ttwx.modules.common.constants.FtlFilenameConstants;
+import com.google.common.collect.Maps;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -89,4 +95,38 @@ public class Dict extends Model {
         sql.append(" order by in_time desc");
         return paginate(sql.toString(), params.toArray()).convert();
     }
+
+    /**
+     * 查询所有字典列表，当缓存里没有数据时候，从数据库取
+     *
+     * @return
+     */
+    public List<Map<String, Object>> all() {
+        return findList(null);
+    }
+
+    public String jsTemplate() {
+        StringBuilder groupSql = new StringBuilder("select distinct(group_code) group_code from ");
+        groupSql.append(getTableName());
+        List<Map<String, Object>> groupList = findList(groupSql.toString());
+        if (CollectionUtils.isEmpty(groupList)) {
+            return "{}";
+        }
+        Map<String, Object> res = Maps.newHashMap();
+        for (Map<String, Object> group : groupList) {
+            String groupCode = (String) group.get("group_code");
+            List<Map<String, Object>> dataList = findList(createSql(), groupCode);
+            res.put(groupCode, dataList);
+        }
+        Map<String, String> attr = Maps.newHashMap();
+        attr.put("data", StrUtil.replaceBlank(JsonUtil.toJson(res)));
+        return FreemarkerUtil.process(attr, FtlFilenameConstants.DICT_JS);
+    }
+
+    private String createSql() {
+        StringBuilder sql = new StringBuilder(getSelectSql());
+        sql.append(" where group_code = ?");
+        return sql.toString();
+    }
+
 }

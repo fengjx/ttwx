@@ -24,7 +24,7 @@ function xml2NewsHtml(xmlStr, in_time, material_id, type,fileName) {
             '<div id="' + material_id + '" class="appmsg">' +
             '<div class="appmsg_content">' +
             '<h4 class="appmsg_title">' +
-            '<a target="_blank" href="' + getUrl(xml_data.Articles.item.Url, domain) + '">' + xml_data.Articles.item.Title + '</a>' +
+            '<a target="_blank" href="' + app.getUrl(xml_data.Articles.item.Url, domain) + '">' + xml_data.Articles.item.Title + '</a>' +
             '</h4>' +
             '<div class="appmsg_info">' +
             '<em class="appmsg_date">' + in_time + '</em>' +
@@ -47,7 +47,7 @@ function xml2NewsHtml(xmlStr, in_time, material_id, type,fileName) {
         $.each(items, function (j, item) {
             if (j == 0) {	//第一张图文
                 html += '<div class="cover_appmsg_item">' +
-                    '<h4 class="appmsg_title"><a target="_blank" href="' + getUrl(item.Url, domain) + '">' + item.Title + '</a></h4>' +
+                    '<h4 class="appmsg_title"><a target="_blank" href="' + app.getUrl(item.Url, domain) + '">' + item.Title + '</a></h4>' +
                     '<div class="appmsg_thumb_wrp">' +
                     '<img class="appmsg_thumb" alt="" src="' + item.PicUrl + '">' +
                     '</div>' +
@@ -55,7 +55,7 @@ function xml2NewsHtml(xmlStr, in_time, material_id, type,fileName) {
             } else {
                 html += '<div class="appmsg_item">' +
                     '<img class="appmsg_thumb" alt="" src="' + item.PicUrl + '">' +
-                    '<h4 class="appmsg_title"><a target="_blank" href="' + getUrl(item.Url, domain) + '">' + item.Title + '</a></h4>' +
+                    '<h4 class="appmsg_title"><a target="_blank" href="' + app.getUrl(item.Url, domain) + '">' + item.Title + '</a></h4>' +
                     '</div>';
             }
         });

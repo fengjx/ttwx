@@ -28,5 +28,10 @@ public final class FtlFilenameConstants {
 	 * 邮箱验证成功返回消息
 	 */
 	public static final String REGISTER_VALID_MAIN = "register-valid-mail.ftl";
-	
+
+	/**
+	 * 数据字典js模板
+	 */
+	public static final String DICT_JS = "dict-js.ftl";
+
 }

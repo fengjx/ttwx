@@ -49,14 +49,22 @@ $(function () {
                 if (!value || value == '') {
                     return "无";
                 }
-                var html = '<a class="btn btn-info btn-xs" onclick="view(' + row.id + ');" href="javascript:void(0);">查看</a>';
+                var html = '<a class="btn btn-info btn-minier" onclick="view(\'' + row.id + '\');" href="javascript:void(0);">查看</a>';
                 return html;
             }
         },{
             name: 'resp_time',
             label: '响应时间',
-            sortable: false,
+            sortable: false
+
+        }, {
+            name: 'resp_xml',
+            hidden: true,
+            formatter: function (value, opt, row) {
+                return $.jgrid.htmlEncode(value);
+            }
         }],
+
         serializeGridData: function (postData) {
             var start_time = $('#qry-toolbar input[name="start_time"]').val();
             var end_time = $('#qry-toolbar input[name="end_time"]').val();

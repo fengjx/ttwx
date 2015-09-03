@@ -39,9 +39,9 @@ $(function(){
 			align: 'center',
 			sortable: false,
 			formatter: function (value, opt, row) {
-				var html = '<a class="btn btn-xs btn-success" onclick="view(\''+row.id+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-eye-open"></i></a>';
-				html += '<a class="btn btn-xs btn-info" href="'+adminPath+'/wechat/action/keywordAdd?id='+row.id+'"><i class="glyphicon glyphicon-edit"></i></a>';
-				html += '<a class="btn btn-xs btn-danger" onclick="deleteData(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i></a>';
+				var html = '<a class="btn btn-minier btn-success" onclick="view(\''+row.id+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-eye-open"></i></a>';
+				html += '<a class="btn btn-minier btn-info" href="'+adminPath+'/wechat/action/keywordAdd?id='+row.id+'"><i class="glyphicon glyphicon-edit"></i></a>';
+				html += '<a class="btn btn-minier btn-danger" onclick="deleteData(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i></a>';
 				return html;
 			}
 		},{

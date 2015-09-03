@@ -10,6 +10,7 @@
   <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
 </head>
 <body>
 <jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>
@@ -120,17 +121,6 @@
   </div>
 </footer>
 
-<jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
-<script>
-
-  $(function () {
-    $('#side-menu').metisMenu({
-      toggle: false
-    });
-  });
-
-
-</script>
 </body>
 </html>
 
