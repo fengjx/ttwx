@@ -1,7 +1,7 @@
 /* 全局对象 */
 var app = $.extend({}, app);
 var dictjs = domain + '/dict/js';
-document.write('<script src="'+dictjs+'" type="text/javascript" charset="UTF-8"></script>');
+document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF-8"></script>');
 (function ($) {
     /**
      * 将json字符串转成json对象
@@ -322,7 +322,7 @@ document.write('<script src="'+dictjs+'" type="text/javascript" charset="UTF-8">
             fixed: true,
             cancel: false,
             ok: function () {
-                if(okCallBack){
+                if (okCallBack) {
                     okCallBack();
                 }
             }
@@ -341,7 +341,7 @@ document.write('<script src="'+dictjs+'" type="text/javascript" charset="UTF-8">
             fixed: true,
             cancel: false,
             ok: function () {
-                if(okCallBack){
+                if (okCallBack) {
                     okCallBack();
                 }
             }
@@ -374,11 +374,11 @@ document.write('<script src="'+dictjs+'" type="text/javascript" charset="UTF-8">
     app.getDictVal = function (groupCode, dictName) {
         var val = "";
         var dictList = app.getDict(groupCode);
-        if(dictList){
+        if (dictList) {
             var dict;
-            for(var i = 0; i < dictList.length; i++){
+            for (var i = 0; i < dictList.length; i++) {
                 dict = dictList[i];
-                if(dict.dict_name == dictName){
+                if (dict.dict_name == dictName) {
                     val = dict["dict_value"];
                     break;
                 }
@@ -390,11 +390,11 @@ document.write('<script src="'+dictjs+'" type="text/javascript" charset="UTF-8">
     app.getDictName = function (groupCode, dictVal) {
         var val = "";
         var dictList = app.getDict(groupCode);
-        if(dictList){
+        if (dictList) {
             var dict;
-            for(var i = 0; i < dictList.length; i++){
+            for (var i = 0; i < dictList.length; i++) {
                 dict = dictList[i];
-                if(dict.dict_value == dictVal){
+                if (dict.dict_value == dictVal) {
                     val = dict["dict_name"];
                     break;
                 }
@@ -407,6 +407,35 @@ document.write('<script src="'+dictjs+'" type="text/javascript" charset="UTF-8">
         return app.dict[groupCode];
     };
 
+    // 自定义渲染组件
+    app.parser = {
+        auto: true,
+        parse: function ($selector) {
+            if ($selector) {
+                render($($selector));
+            } else {
+                var $elements = $(".app-element");
+                $.each($elements, function (i, dom) {
+                    app.parser.render($(dom));
+                });
+            }
+        },
+        render: function ($dom) {
+            var type = $dom.attr("data-type");
+            if (type == 'dict') {
+                if (!$dom.is("select")) {
+                    return false;
+                }
+                var groupCode = $dom.attr("data-group");
+                var dictArr = app.getDict(groupCode);
+                var options = '';
+                for (var i = 0; i < dictArr.length; i++) {
+                    options += "<option value='" + dictArr[i].dict_value + "'>" + dictArr[i].dict_name + "</option>";
+                }
+                $dom.append(options);
+            }
+        }
+    };
 
 
     /* 定义jquery AJAX 默认设置 */
@@ -451,6 +480,7 @@ document.write('<script src="'+dictjs+'" type="text/javascript" charset="UTF-8">
  * 页面初始化
  */
 $(function () {
+    app.parser.parse();
     try {
         // 链接去掉虚框
         $("a").bind("focus", function () {

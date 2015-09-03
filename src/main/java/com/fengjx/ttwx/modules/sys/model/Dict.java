@@ -4,6 +4,7 @@ package com.fengjx.ttwx.modules.sys.model;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 
+import com.fengjx.ttwx.common.plugin.db.ParamHelper;
 import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.plugin.freemarker.FreemarkerUtil;
 import com.fengjx.ttwx.common.utils.JsonUtil;
@@ -64,36 +65,30 @@ public class Dict extends Model {
         return findList(attrs);
     }
 
-    public void saveOrUpdate(Map<String, Object> attrs) {
-        String id = (String) attrs.get("id");
-        attrs.put("in_time", new Date());
-        if (StringUtils.isBlank(id)) {
-            insert(attrs);
-        } else {
-            update(attrs);
-        }
-    }
-
     /**
      * 分页查询
      *
-     * @param attrs
+     * @param params 查询参数
      * @return
      */
-    public AdapterPage page(Map<String, String> attrs) {
+    public AdapterPage page(ParamHelper params) {
         StringBuilder sql = new StringBuilder(getSelectSql("a"));
         sql.append(" where 1 = 1");
-        List<Object> params = new ArrayList();
-        if (StringUtils.isNoneBlank(attrs.get("group_code"))) {
+        List<Object> qryParams = new ArrayList();
+        if (StringUtils.isNoneBlank(params.getStr("group_code"))) {
             sql.append(" and group_code like CONCAT('%',?,'%')");
-            params.add(attrs.get("group_code"));
+            qryParams.add(params.get("group_code"));
         }
-        if (StringUtils.isNoneBlank(attrs.get("dict_desc"))) {
+        if (StringUtils.isNoneBlank(params.getStr("dict_desc"))) {
             sql.append(" and dict_desc like CONCAT('%',?,'%')");
-            params.add(attrs.get("dict_desc"));
+            qryParams.add(params.get("dict_desc"));
+        }
+        if (null != params.get("is_valid")) {
+            sql.append(" and is_valid = ?");
+            qryParams.add(params.get("is_valid"));
         }
         sql.append(" order by in_time desc");
-        return paginate(sql.toString(), params.toArray()).convert();
+        return paginate(sql.toString(), qryParams.toArray()).convert();
     }
 
     /**

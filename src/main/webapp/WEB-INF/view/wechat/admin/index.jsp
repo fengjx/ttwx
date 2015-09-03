@@ -4,7 +4,7 @@
 <html lang="zh-CN">
 <head>
     <meta name="decorator" content="wechat"/>
-    <title>后台管理</title>
+    <title>平台管理</title>
 </head>
 <body>
   <div class="breadcrumbs" id="breadcrumbs">

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -35,14 +36,15 @@ public class DictAdminController extends MyController {
     @RequestMapping("pageList")
     @ResponseBody
     public AdapterPage pageList(HttpServletRequest request) {
-        return dict.page(getNotBlankParams(request));
+        return dict.page(getParamHelper(Dict.class, request));
     }
 
     @RequestMapping("save")
     @ResponseBody
     public Map<String, String> save(HttpServletRequest request) {
         Map<String, Object> attrs = getRequestMap(request);
-        dict.saveOrUpdate(attrs);
+        attrs.put("in_time", new Date());
+        dict.insertOrUpdate(attrs);
         return retSuccess();
     }
 

@@ -24,19 +24,13 @@
                             <label class="control-label">关 键 字：</label>
                             <input name="qry_key_word" class="form-control" type="text" placeholder="用户发送的文字">
                             <label class="control-label">消息类型：</label>
-                            <jsp:include page="/dict/selecter">
-                                <jsp:param name="showAll" value="1"/>
-                                <jsp:param name="id" value="qry_req_type"/>
-                                <jsp:param name="name" value="qry_req_type"/>
-                                <jsp:param name="groupCode" value="req_type"/>
-                            </jsp:include>
+                            <select data-type="dict" data-group="req_type" name="qry_req_type" id="qry_req_type" class="app-element">
+                                <option value="">全部</option>
+                            </select>
                             <label class="control-label">事件类型：</label>
-                            <jsp:include page="/dict/selecter">
-                                <jsp:param name="showAll" value="1"/>
-                                <jsp:param name="id" value="qry_event_type"/>
-                                <jsp:param name="name" value="qry_event_type"/>
-                                <jsp:param name="groupCode" value="event_type"/>
-                            </jsp:include>
+                            <select data-type="dict" data-group="event_type" name="qry_event_type" id="qry_event_type" class="app-element">
+                                <option value="">全部</option>
+                            </select>
                         </div>
                         <div class="control-group">
                             <label class="control-label">openid：</label>

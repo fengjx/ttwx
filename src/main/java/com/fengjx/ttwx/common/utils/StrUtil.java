@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * String工具
+ * String宸ュ叿
  *
  * @Created by FengJianxin on 2015/9/3.
  * @Email xd-fjx@qq.com
@@ -16,7 +16,7 @@ public class StrUtil extends StringUtils {
 
 
     /**
-     * 删除空格、回车、制表符
+     * 鍒犻櫎瀛楃涓查噷鐨勭┖鏍笺�佸洖杞︺�佸埗琛ㄧ
      *
      * @param str
      * @return

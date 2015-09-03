@@ -24,6 +24,11 @@
 							<input name="qry_group_code" class="form-control" type="text" placeholder="group_code">
 							<label class="control-label">字典描述：</label>
 							<input name="qry_dict_desc" class="form-control" type="text" placeholder="字典描述">
+							<label class="control-label">启用：</label>
+							<select data-type="dict" data-group="yesNo" name="qry_is_valid" id="qry_is_valid" class="app-element">
+								<option value="">全部</option>
+							</select>
+
 							<span class="columns-right pull-right">
 								<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-primary">
 									<i class="icon-search"></i>

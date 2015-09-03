@@ -1,6 +1,8 @@
 
 package com.fengjx.ttwx.common.web;
 
+import com.fengjx.ttwx.common.plugin.db.Model;
+import com.fengjx.ttwx.common.plugin.db.ParamHelper;
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.common.utils.WebUtil;
 import org.apache.commons.io.IOUtils;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Writer;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +31,19 @@ public abstract class BaseController {
 
     protected HttpSession getSession(HttpServletRequest request) {
         return request.getSession();
+    }
+
+    protected ParamHelper getParamHelper(HttpServletRequest request) {
+        return new ParamHelper().fromMap(WebUtil.getRequestParams(request));
+    }
+
+    protected <T extends Model> ParamHelper getParamHelper(Class<T> modelCls,
+            HttpServletRequest request) {
+        try {
+            return new ParamHelper().fromMap(modelCls, WebUtil.getRequestParams(request));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected Map<String, Object> getRequestMap(HttpServletRequest request) {

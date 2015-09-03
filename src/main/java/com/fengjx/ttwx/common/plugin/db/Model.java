@@ -41,6 +41,20 @@ public abstract class Model {
         return insert(getClass(), attrs);
     }
 
+    public void insertOrUpdate(Map<String, Object> attrs) {
+        insertOrUpdate(getClass(), attrs);
+    }
+
+    public void insertOrUpdate(Class<? extends Model> cls, Map<String, Object> attrs) {
+        Table table = TableUtil.getTable(cls);
+        String pk = table.getPrimaryKey();
+        if (StringUtils.isBlank((String) attrs.get(pk))) {
+            insert(attrs);
+        } else {
+            update(attrs);
+        }
+    }
+
     /**
      * Delete model by id.
      *

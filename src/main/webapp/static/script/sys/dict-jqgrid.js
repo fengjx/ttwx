@@ -69,7 +69,8 @@ $(function () {
         serializeGridData: function (postData) {
             postData = $.extend(postData,{
                 "group_code": $('#toolbar input[name="qry_group_code"]').val(),
-                "dict_desc": $('#toolbar input[name="qry_dict_desc"]').val()
+                "dict_desc": $('#toolbar input[name="qry_dict_desc"]').val(),
+                "is_valid": $('#qry_is_valid').val()
             });
             return postData;
         }
@@ -164,6 +165,7 @@ function searchDatagrid() {
 
 function clearDatagrid() {
     $('#toolbar input').val('');
+    $('#qry_is_valid').val('');
     $table.trigger("reloadGrid");
 }
 
