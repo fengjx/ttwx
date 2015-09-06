@@ -31,8 +31,8 @@ ALTER TABLE `sys_dict`
 MODIFY COLUMN `is_valid`  tinyint NULL DEFAULT 0 AFTER `in_time`;
 
 ALTER TABLE `sys_dict`
-MODIFY COLUMN `order_num`  tinyint(255) NULL DEFAULT 0 COMMENT '≈≈–Ú◊÷∂Œ' AFTER `is_valid`;
+MODIFY COLUMN `order_num`  tinyint(255) NULL DEFAULT 0 COMMENT 'ÊéíÂ∫èÂ≠óÊÆµ' AFTER `is_valid`;
 
 ALTER TABLE `sys_dict`
-CHANGE COLUMN `order_num` `order_no`  tinyint(255) NULL DEFAULT 0 COMMENT '≈≈–Ú◊÷∂Œ' AFTER `is_valid`;
+CHANGE COLUMN `order_num` `order_no`  tinyint(255) NULL DEFAULT 0 COMMENT 'ÊéíÂ∫èÂ≠óÊÆµ' AFTER `is_valid`;
 
