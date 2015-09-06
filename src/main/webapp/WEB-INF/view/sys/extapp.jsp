@@ -22,8 +22,8 @@
 				<fieldset>
 					<div class="form-group">
 						<div class="control-group">
-							<label class="control-label">关键字：</label>
-							<input name="qry_key_word" class="form-control" type="text" placeholder="用户发送的文字">
+							<label class="control-label">应用名称：</label>
+							<input name="qry_name" class="form-control" type="text" placeholder="用户发送的文字">
 							<label class="control-label">发送时间：</label>
 							<div class="input-group">
 								<input class="form-control" onClick="WdatePicker()" data-options="dateFmt:'yyyy-M-d H:m:s',readOnly:true,skin:'twoer'" name="start_time" type="text" style="width: 120px;" />

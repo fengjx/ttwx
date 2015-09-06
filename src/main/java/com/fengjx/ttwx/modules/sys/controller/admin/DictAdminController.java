@@ -2,10 +2,12 @@
 package com.fengjx.ttwx.modules.sys.controller.admin;
 
 import com.fengjx.ttwx.common.plugin.cache.ehcache.EhCacheUtil;
+import com.fengjx.ttwx.common.plugin.db.ParamHelper;
 import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.sys.model.Dict;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,9 +46,12 @@ public class DictAdminController extends MyController {
     @RequestMapping("save")
     @ResponseBody
     public Map<String, String> save(HttpServletRequest request) {
-        Map<String, Object> attrs = getRequestMap(request);
-        attrs.put("in_time", new Date());
-        dict.insertOrUpdate(attrs);
+        ParamHelper paramHelper = getParamHelper(request);
+        paramHelper.set("in_time", new Date());
+        if (StringUtils.isBlank(paramHelper.getStr("is_valid"))) {
+            paramHelper.set("is_valid", 0);
+        }
+        dict.insertOrUpdate(paramHelper.getParams());
         EhCacheUtil.removeAll(AppConfig.EhcacheName.DICT_CACHE);
         return retSuccess();
     }

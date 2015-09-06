@@ -26,6 +26,12 @@ import java.util.Map;
 @Component
 public class ExtApp extends Model {
 
+    public static class AppType {
+        public static final String TYPE_WEB = "web";
+        public static final String TYPE_API = "api";
+        public static final String TYPE_RESTFUL = "restful";
+    }
+
     @Autowired
     private ExtAppSupport extAppSupport;
 
@@ -54,7 +60,7 @@ public class ExtApp extends Model {
             sql.append("and s.event_type = ?");
             params.add(event_type);
         }
-        sql.append(" order by in_time desc");
+        sql.append(" order by order_no desc");
         return findList(sql.toString(), params.toArray());
     }
 
@@ -83,7 +89,7 @@ public class ExtApp extends Model {
             sql.append("and s.event_type = ?");
             qryParams.add(params.get("event_type"));
         }
-        sql.append(" order by in_time desc");
+        sql.append(" order by in_time desc, order_no desc");
         return paginate(sql.toString(), qryParams.toArray()).convert();
     }
 
@@ -92,9 +98,9 @@ public class ExtApp extends Model {
         StringBuilder sql = new StringBuilder("select DISTINCT(a.id) d_id,");
         sql.append(getColumnsStr(alias));
         sql.append(
-                ",(select GROUP_CONCAT(DISTINCT(msg_type)) msg_types from wechat_ext_app_support_type where ext_app_id = a.id )");
+                ",(select GROUP_CONCAT(DISTINCT(msg_type)) msg_types from wechat_ext_app_support_type where ext_app_id = a.id ) msg_types");
         sql.append(
-                ",(select GROUP_CONCAT(DISTINCT(event_type)) event_types from wechat_ext_app_support_type where ext_app_id = a.id ) FROM ");
+                ",(select GROUP_CONCAT(DISTINCT(event_type)) event_types from wechat_ext_app_support_type where ext_app_id = a.id ) event_types FROM ");
         sql.append(getTableName()).append(" ").append(alias);
         sql.append(" left join wechat_ext_app_support_type e on e.ext_app_id = a.id");
         sql.append(" where 1 = 1 ");
@@ -113,7 +119,9 @@ public class ExtApp extends Model {
         } else {
             update(params.getParams());
         }
-        reSaveSupportType(apiId, msgTypes, eventTypes);
+        if (AppType.TYPE_API.equals(params.getStr("app_type"))) {
+            reSaveSupportType(apiId, msgTypes, eventTypes);
+        }
     }
 
     /**

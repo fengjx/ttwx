@@ -36,3 +36,5 @@ MODIFY COLUMN `order_num`  tinyint(255) NULL DEFAULT 0 COMMENT '排序字段' AF
 ALTER TABLE `sys_dict`
 CHANGE COLUMN `order_num` `order_no`  tinyint(255) NULL DEFAULT 0 COMMENT '排序字段' AFTER `is_valid`;
 
+ALTER TABLE `wechat_ext_app`
+MODIFY COLUMN `is_valid`  tinyint(1) NULL DEFAULT NULL AFTER `description`;

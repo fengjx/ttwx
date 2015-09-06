@@ -159,6 +159,7 @@ function edit(data){
     dataForm.clearForm();
     if(data){
         $("#form-dict").autofill(data);
+        $("input[name='is_valid']").attr("checked", data.is_valid);
     }
     editModal.modal('show');
 }

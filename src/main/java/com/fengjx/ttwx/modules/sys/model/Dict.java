@@ -134,7 +134,7 @@ public class Dict extends Model {
 
     private String createSql() {
         StringBuilder sql = new StringBuilder(getSelectSql());
-        sql.append(" where group_code = ? ").append(ORDER_BY);
+        sql.append(" where group_code = ? ").append(" order by order_no desc, in_time desc");
         return sql.toString();
     }
 

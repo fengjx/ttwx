@@ -50,6 +50,9 @@ $(function () {
             align: 'left',
             formatter: function (value, opt, row) {
                 return app.getDictName("yesNo", value);
+            },
+            unformat: function (cellValue, options, cellObject) {
+                return app.getDictVal("yesNo", cellValue);
             }
         }, {
             name: 'in_time',
@@ -66,13 +69,32 @@ $(function () {
                 html += '<a class="btn btn-minier btn-danger" onclick="deleteData(\'' + row.id + '\',\'' + row.dict_name + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
                 return html;
             }
+        }, {
+            name: 'msg_types',
+            align: 'left',
+            hidden: true
+        }, {
+            name: 'event_types',
+            align: 'left',
+            hidden: true
+        }, {
+            name: 'bean_name',
+            align: 'left',
+            hidden: true
+        }, {
+            name: 'app_url',
+            align: 'left',
+            hidden: true
+        }, {
+            name: 'restful_url',
+            align: 'left',
+            hidden: true
         }],
         serializeGridData: function (postData) {
             var start_time = $('#toolbar input[name="start_time"]').val();
             var end_time = $('#toolbar input[name="end_time"]').val();
             postData = $.extend(postData, {
-                "group_code": "text",
-                "app_name": $('#toolbar input[name="qry_key_word"]').val(),
+                "name": $('#toolbar input[name="qry_name"]').val(),
                 "start_time": start_time,
                 "end_time": end_time
             });
@@ -123,8 +145,7 @@ $(function () {
 
     $("#app_type").change(function () {
         var appType = $(this).val();
-        $("[name='web'],[name='api'],[name='restful']").addClass("hide");
-        $("[name='" + appType + "']").removeClass("hide");
+        changeType(appType);
     });
 
     //事件消息类型的checkbox绑定事件
@@ -158,9 +179,28 @@ function clearDatagrid() {
 function edit(data) {
     $("#form-data").find("#id").val('');
     $("#form-data").clearForm();
-    $("#app_type").val("web");
     if (data) {
         $("#form-data").autofill(data);
+        var appType = data.app_type;
+        changeType(appType);
+        if (data.is_valid == '1') {
+            $("input[name='is_valid']").prop("checked", true);
+        }
+        if ('api' == appType) {
+            var msgTypes = data.msg_types.split(",");
+            for (var i = 0; i < msgTypes.length; i++) {
+                $("input[group='check-req_type'][value='" + msgTypes[i] + "']").prop("checked", true);
+                if ('event' == msgTypes[i]) {
+                    var eventTypes = data.event_types.split(",");
+                    for (var j = 0; j < eventTypes.length; j++) {
+                        $("input[group='check-event_type'][value='" + eventTypes[j] + "']").prop("checked", true);
+                    }
+                }
+            }
+        }
+    } else {
+        $("#app_type").val("web");
+        changeType('web');
     }
     editModal.modal('show');
 }
@@ -169,19 +209,8 @@ function edit(data) {
  * 添加
  * @param id
  */
-function append(id) {
-    if (!id) {
-        id = $table.jqGrid('getGridParam', "selrow");
-    }
-    if (!id) {
-        edit();
-    } else {
-        var row = $table.jqGrid('getRowData', id);
-        edit({
-            group_code: row.group_code,
-            group_name: row.group_name
-        });
-    }
+function append() {
+    edit();
 }
 
 /**
@@ -204,10 +233,8 @@ function updateData(id) {
 /**
  * 删除
  * @param id
- * @param name
- * @returns {boolean}
  */
-function deleteData(id, name) {
+function deleteData(id) {
     if (!id) {
         id = $table.jqGrid('getGridParam', "selrow");
         if (!id) {
@@ -321,7 +348,7 @@ function submitData() {
         eventTypes: eventTypes,
         reqTypes: reqTypes,
         order_no: $("#order_no").val(),
-        is_valid: $("#is_valid").attr("checked") ? 1 : 0
+        is_valid: $("#is_valid").is(":checked") ? 1 : 0
     };
 
     $.ajax({
@@ -341,4 +368,9 @@ function submitData() {
             }
         }
     });
+}
+
+function changeType(appType) {
+    $("[name='web'],[name='api'],[name='restful']").addClass("hide");
+    $("[name='" + appType + "']").removeClass("hide");
 }

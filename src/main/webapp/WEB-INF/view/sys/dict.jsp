@@ -118,7 +118,7 @@
 		<script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="${resourceUrl}/jqGrid/grid-opt.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/script/sys/dict-jqgrid.js?v=2015090601" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/script/sys/dict-jqgrid.js?v=2015090602" type="text/javascript" charset="UTF-8"></script>
 	</c:when>
 	<c:otherwise>
 		<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>

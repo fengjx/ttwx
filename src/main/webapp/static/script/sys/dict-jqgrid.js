@@ -59,6 +59,9 @@ $(function () {
             align: 'left',
             formatter: function (value, opt, row) {
                 return app.getDictName("yesNo", value);
+            },
+            unformat: function (cellValue, options, cellObject) {
+                return app.getDictVal("yesNo", cellValue);
             }
         }, {
             name: 'in_time',
@@ -207,6 +210,9 @@ function edit(data) {
     dataForm.clearForm();
     if (data) {
         $("#form-data").autofill(data);
+        if (data.is_valid == '1') {
+            $("input[name='is_valid']").prop("checked", true);
+        }
     }
     editModal.modal('show');
 }
@@ -258,39 +264,5 @@ function deleteData(id) {
                 }
             }
         });
-    });
-}
-
-
-/**
- * 预览
- * @param {} id
- * @return {Boolean}
- */
-function view(index) {
-    $table.bootstrapTable('uncheckAll');
-    $table.bootstrapTable('check', index);
-    var row = $table.bootstrapTable('getSelections')[0];
-
-    var viewHtml = "";		//预览效果HTML
-    if (row.action_type == 'material') {//数据源从素材读取
-        var json = $.xml2json(row.xml_data);
-        var msgType = json.MsgType;
-        if (msgType == "text") {		//文本消息
-            viewHtml = json.Content;
-        } else if (msgType == "news") {	//图文消息
-            viewHtml = xml2NewsHtml(row.xml_data, row.in_time, row.material_id);	//(wechat.js)
-        }
-    } else if (row.action_type == 'api') {
-        if (row.app_name) {
-            viewHtml = "从接口【" + row.app_name + "】中获得响应数据";
-        } else {
-            viewHtml = "配置的接口已经失效，请重新配置";
-        }
-    }
-    app.alertModal(viewHtml, {
-        title: "用户发送文字消息【" + row.key_word + "】将收到以下内容",
-        height: "auto",
-        width: 300
     });
 }
