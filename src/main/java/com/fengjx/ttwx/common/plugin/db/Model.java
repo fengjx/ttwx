@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author fengjx.
- * @date：2015/5/8 0008
+ * @author fengjx. @date：2015/5/8 0008
  */
 public abstract class Model {
 
@@ -172,7 +171,18 @@ public abstract class Model {
      * @return
      */
     public List<Map<String, Object>> findList(Map<String, Object> attrs) {
-        return findList(this.getClass(), attrs);
+        return findList(attrs, null);
+    }
+
+    /**
+     * 查询多条记录
+     *
+     * @param attrs
+     * @param orderby 排序艾段
+     * @return
+     */
+    public List<Map<String, Object>> findList(Map<String, Object> attrs, String orderby) {
+        return findList(this.getClass(), attrs, orderby);
     }
 
     /**
@@ -182,11 +192,25 @@ public abstract class Model {
      * @param attrs 查询条件及参数
      * @return
      */
-    public List<Map<String, Object>> findList(Class<? extends Model> cls, Map<String, Object> attrs) {
+    public List<Map<String, Object>> findList(Class<? extends Model> cls,
+            Map<String, Object> attrs) {
+        return findList(cls, attrs, null);
+    }
+
+    /**
+     * 根据Model查询多条记录
+     *
+     * @param cls
+     * @param attrs
+     * @param orderby 排序 "order by in_time"
+     * @return
+     */
+    public List<Map<String, Object>> findList(Class<? extends Model> cls, Map<String, Object> attrs,
+            String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList();
-        Config.dialect.forModelFind(table, sql, "*", null, attrs, paras);
+        Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
         return findList(sql.toString(), paras.toArray());
     }
 
@@ -222,7 +246,8 @@ public abstract class Model {
      * @param attrs
      * @return
      */
-    public Page<Map<String, Object>> paginate(Class<? extends Model> cls, Map<String, Object> attrs) {
+    public Page<Map<String, Object>> paginate(Class<? extends Model> cls,
+            Map<String, Object> attrs) {
         return paginate(cls, attrs, null);
     }
 
@@ -234,8 +259,8 @@ public abstract class Model {
      * @param orderby
      * @return
      */
-    public Page<Map<String, Object>> paginate(Class<? extends Model> cls,
-            Map<String, Object> attrs, String orderby) {
+    public Page<Map<String, Object>> paginate(Class<? extends Model> cls, Map<String, Object> attrs,
+            String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList();
@@ -273,8 +298,7 @@ public abstract class Model {
         int totalPage = 0;
         totalRow = getCount(sql, paras);
         if (totalRow < 1) {
-            return new Page(new ArrayList<Map<String, Object>>(0), pageNumber,
-                    pageSize, 0, 0L);
+            return new Page(new ArrayList<Map<String, Object>>(0), pageNumber, pageSize, 0, 0L);
         }
         totalPage = totalRow.intValue() / pageSize;
         if (totalRow % pageSize != 0) {

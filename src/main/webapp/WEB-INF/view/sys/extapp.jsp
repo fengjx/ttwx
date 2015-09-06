@@ -31,7 +31,7 @@
 									<i class="glyphicon glyphicon-calendar"></i>
 								</div>
 							</div>
-							<label class="control-label">--------------</label>
+							<label class="control-label">-</label>
 							<div class="input-group">
 								<input class="form-control" onClick="WdatePicker()" data-options="dateFmt:'yyyy-M-d H:m:s',readOnly:true,skin:'twoer'" name="end_time" type="text" style="width: 120px;" />
 								<div class="input-group-addon">
@@ -115,9 +115,9 @@
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="order_num">排序:</label>
+								<label class="control-label" for="order_no">排序:</label>
 								<div class="controls">
-									<input id="order_num" name="order_num" value="" type="number" class="span4 form-control">
+									<input id="order_no" name="order_no" value="" type="number" class="span4 form-control">
 								</div>
 							</div>
 							<div class="control-group">
@@ -142,6 +142,7 @@
 <script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/jqGrid/grid-opt.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/js/jquery.formautofill.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/script/sys/extapp.js?v=2015090501" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

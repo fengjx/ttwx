@@ -62,7 +62,7 @@ $(function () {
             width: '15%',
             valign: 'middle'
         }, {
-            field: 'order_num',
+            field: 'order_no',
             title: '排序',
             align: 'left',
             valign: 'middle'

@@ -33,3 +33,6 @@ MODIFY COLUMN `is_valid`  tinyint NULL DEFAULT 0 AFTER `in_time`;
 ALTER TABLE `sys_dict`
 MODIFY COLUMN `order_num`  tinyint(255) NULL DEFAULT 0 COMMENT 'ÅÅÐò×Ö¶Î' AFTER `is_valid`;
 
+ALTER TABLE `sys_dict`
+CHANGE COLUMN `order_num` `order_no`  tinyint(255) NULL DEFAULT 0 COMMENT 'ÅÅÐò×Ö¶Î' AFTER `is_valid`;
+

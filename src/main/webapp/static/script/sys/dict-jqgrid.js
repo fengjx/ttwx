@@ -28,27 +28,33 @@ $(function () {
         }, {
             name: 'dict_name',
             label: '字典名称',
+            sortable: false,
             align: 'left'
         }, {
             name: 'dict_desc',
             label: '字典描述',
+            sortable: false,
             align: 'left'
         }, {
             name: 'group_code',
             label: '字典组',
+            sortable: false,
             align: 'left'
         }, {
             name: 'group_name',
             label: '组名称',
+            sortable: false,
             align: 'left',
         }, {
-            name: 'order_num',
+            name: 'order_no',
             label: '排序',
+            sortable: false,
             width: 40,
             align: 'left'
         }, {
             name: 'is_valid',
             label: '是否启用',
+            sortable: false,
             width: 70,
             align: 'left',
             formatter: function (value, opt, row) {
@@ -56,16 +62,17 @@ $(function () {
             }
         }, {
             name: 'in_time',
-            label: '接入时间',
-            align: 'left',
+            label: '更新时间',
+            align: 'left'
         }, {
             name: 'op',
             label: '操作',
+            sortable: false,
             align: 'center',
             formatter: function (value, opt, row) {
                 var html = '<a class="btn btn-minier btn-success" onclick="append(\'' + row.id + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
                 html += '<a class="btn btn-minier btn-info" onclick="updateData(\'' + row.id + '\')" href="javascript:void(-1);"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
-                html += '<a class="btn btn-minier btn-danger" onclick="deleteData(\'' + row.id + '\',\'' + row.dict_name + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
+                html += '<a class="btn btn-minier btn-danger" onclick="deleteData(\'' + row.id + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
                 return html;
             }
         }],
@@ -227,16 +234,16 @@ function updateData(id) {
  * @param name
  * @returns {boolean}
  */
-function deleteData(id, name) {
+function deleteData(id) {
     if (!id) {
         id = $table.jqGrid('getGridParam', "selrow");
         if (!id) {
             app.alertModal("请选中要删除的数据");
             return false;
         }
-        name = $table.jqGrid('getRowData', id).dict_name;
     }
-    app.confirmModal("你要删除字典【" + name + "】吗？", function () {
+    var row = $table.jqGrid('getRowData', id);
+    app.confirmModal("你要删除字典【" + row.dict_name + "】吗？", function () {
         $.ajax({
             url: adminPath + '/sys/dict/delete',
             data: 'id=' + id,

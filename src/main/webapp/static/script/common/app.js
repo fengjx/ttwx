@@ -400,6 +400,9 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             if (type == 'dict') {
                 var groupCode = $dom.attr("data-group");
                 var dictArr = app.getDict(groupCode);
+                if (!dictArr) {
+                    return false;
+                }
                 if ($dom.is("select")) {
                     var options = '';
                     for (var i = 0; i < dictArr.length; i++) {
@@ -409,11 +412,11 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
                     if ($dom.attr("data-default")) {
                         $dom.val($dom.attr("data-default"));
                     }
-                }else if($dom.is("input")){
-                    if($dom.attr("type").toLowerCase() == 'checkbox'){
+                } else if ($dom.is("input")) {
+                    if ($dom.attr("type").toLowerCase() == 'checkbox') {
                         var ckecks = '';
                         for (var i = 0; i < dictArr.length; i++) {
-                            ckecks += '<label><input group="check-'+groupCode+'" type="checkbox" value="'+dictArr[i].dict_value+'"></label>'+dictArr[i].dict_name+'&nbsp;';
+                            ckecks += '<label><input group="check-' + groupCode + '" type="checkbox" value="' + dictArr[i].dict_value + '"></label>' + dictArr[i].dict_name + '&nbsp;';
                         }
                         $dom.after(ckecks);
                         $dom.remove();

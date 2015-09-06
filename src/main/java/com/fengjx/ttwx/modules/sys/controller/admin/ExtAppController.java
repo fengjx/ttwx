@@ -19,8 +19,7 @@ import java.util.Map;
 /**
  * 业务扩展
  *
- * @author fengjx.
- * @date：2015/5/30 0030
+ * @author fengjx. @date：2015/5/30 0030
  */
 @Controller
 @RequestMapping("/admin/sys/ext")
@@ -59,4 +58,10 @@ public class ExtAppController extends MyController {
         return retSuccess();
     }
 
+    @RequestMapping("delete")
+    @ResponseBody
+    public Map<String, String> delete(String id, String app_type) {
+        extApp.deleteApp(id, app_type);
+        return retSuccess();
+    }
 }

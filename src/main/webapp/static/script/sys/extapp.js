@@ -22,9 +22,26 @@ $(function () {
             sortable: false,
             align: 'left'
         }, {
+            name: 'app_type',
+            label: '应用类型',
+            sortable: false,
+            align: 'left',
+            formatter: function (value, opt, row) {
+                return app.getDictName("app_type", value);
+            },
+            unformat: function (cellValue, options, cellObject) {
+                return app.getDictVal("app_type", cellValue);
+            }
+        }, {
             name: 'description',
             label: '接口描述',
             sortable: false,
+            align: 'left'
+        }, {
+            name: 'order_no',
+            label: '排序',
+            sortable: false,
+            width: 40,
             align: 'left'
         }, {
             name: 'is_valid',
@@ -139,11 +156,12 @@ function clearDatagrid() {
  * @param data
  */
 function edit(data) {
-    //dataForm.find("#id").val('');
-    //dataForm.clearForm();
-    //if (data) {
-    //    $("#form-data").autofill(data);
-    //}
+    $("#form-data").find("#id").val('');
+    $("#form-data").clearForm();
+    $("#app_type").val("web");
+    if (data) {
+        $("#form-data").autofill(data);
+    }
     editModal.modal('show');
 }
 
@@ -196,12 +214,15 @@ function deleteData(id, name) {
             app.alertModal("请选中要删除的数据");
             return false;
         }
-        name = $table.jqGrid('getRowData', id).dict_name;
     }
-    app.confirmModal("你要删除应用【" + name + "】吗？", function () {
+    var row = $table.jqGrid('getRowData', id);
+    app.confirmModal("你要删除应用【" + row.name + "】吗？", function () {
         $.ajax({
             url: adminPath + '/sys/ext/delete',
-            data: 'id=' + id,
+            data: {
+                id: id,
+                app_type: row.app_type
+            },
             cache: false,
             dataType: "json",
             success: function (res) {
@@ -219,7 +240,7 @@ function deleteData(id, name) {
 /**
  * 提交表单
  */
-function submitData () {
+function submitData() {
     var app_url;
     var restful_url;
     var description;
@@ -229,24 +250,24 @@ function submitData () {
 
 
     var app_type = $("#app_type").val();
-    if(app_type == ''){
+    if (app_type == '') {
         app.alert("请选择应用类型！");
         return false;
-    }else if (app_type == 'web') {
+    } else if (app_type == 'web') {
         app_url = $("#app_url").val();
         if (app_url == '') {
             app.alert("请输入链接！");
             return false;
         }
-    }else if (app_type == 'restful') {
+    } else if (app_type == 'restful') {
         restful_url = $("#restful_url").val();
         if (restful_url == '') {
             app.alert("请输入restful_url！");
             return false;
         }
-    }else if (app_type == 'api') {
+    } else if (app_type == 'api') {
         bean_name = $.trim($("input[name='bean_name']").val());
-        if(bean_name === ''){
+        if (bean_name === '') {
             app.alert("请输入spring id！");
             return false;
         }
@@ -255,32 +276,32 @@ function submitData () {
             app.alert("请选择消息类型！");
             return false;
         }
-        $reqTypes.each(function(i){
+        $reqTypes.each(function (i) {
             var $this = $(this);
             if (i == 0) {
                 reqTypes += $this.val();
-            }else{
-                reqTypes += ","+$this.val();
+            } else {
+                reqTypes += "," + $this.val();
             }
         });
         if (reqTypes.search("event") !== -1) {
-            var $eventTypes = $("input[group='check-event_types']:checked");
+            var $eventTypes = $("input[group='check-event_type']:checked");
             if ($eventTypes.length == 0) {
                 app.alert("请选择事件类型！");
                 return false;
             }
-            $eventTypes.each(function(i){
+            $eventTypes.each(function (i) {
                 var $this = $(this);
                 if (i == 0) {
                     eventTypes += $this.val();
-                }else{
+                } else {
                     eventTypes += "," + $this.val();
                 }
             });
         }
     }
     var app_name = $("#name").val();
-    if(app_name == ''){
+    if (app_name == '') {
         app.alert("请输入应用名称！");
         return false;
     }
@@ -290,16 +311,17 @@ function submitData () {
     description = $("#description").val();
 
     var data = {
-        id : $("#id").val(),
-        app_type : app_type,
-        name : app_name,
-        app_url : app_url,
-        restful_url : restful_url,
-        bean_name : bean_name,
-        description : description,
-        eventTypes : eventTypes,
-        reqTypes : reqTypes,
-        is_valid: $("#is_valid").attr("checked")?1:0
+        id: $("#id").val(),
+        app_type: app_type,
+        name: app_name,
+        app_url: app_url,
+        restful_url: restful_url,
+        bean_name: bean_name,
+        description: description,
+        eventTypes: eventTypes,
+        reqTypes: reqTypes,
+        order_no: $("#order_no").val(),
+        is_valid: $("#is_valid").attr("checked") ? 1 : 0
     };
 
     $.ajax({
@@ -312,10 +334,10 @@ function submitData () {
         success: function (data) {
             if (data && '1' == data.code) {
                 editModal.modal('hide');
-                app.ok(data.msg?data.msg:'操作成功！');
+                app.ok(data.msg ? data.msg : '操作成功！');
                 $table.trigger("reloadGrid");
             } else {
-                app.error(data? data.msg:'操作失败');
+                app.error(data ? data.msg : '操作失败');
             }
         }
     });

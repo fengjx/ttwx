@@ -20,8 +20,7 @@ import java.util.Map;
 /**
  * 扩展应用
  *
- * @author fengjx.
- * @date：2015/5/30 0030
+ * @author fengjx. @date：2015/5/30 0030
  */
 @Mapper(table = "wechat_ext_app")
 @Component
@@ -36,7 +35,8 @@ public class ExtApp extends Model {
      * @param event_type
      * @return
      */
-    public List<Map<String, Object>> listByType(String app_type, String msg_type, String event_type) {
+    public List<Map<String, Object>> listByType(String app_type, String msg_type,
+            String event_type) {
         if (StringUtils.isBlank(app_type)) {
             throw new IllegalArgumentException("app_type不能为空！");
         }
@@ -91,8 +91,10 @@ public class ExtApp extends Model {
         String alias = "a";
         StringBuilder sql = new StringBuilder("select DISTINCT(a.id) d_id,");
         sql.append(getColumnsStr(alias));
-        sql.append(",(select GROUP_CONCAT(DISTINCT(msg_type)) msg_types from wechat_ext_app_support_type where ext_app_id = a.id )");
-        sql.append(",(select GROUP_CONCAT(DISTINCT(event_type)) event_types from wechat_ext_app_support_type where ext_app_id = a.id ) FROM ");
+        sql.append(
+                ",(select GROUP_CONCAT(DISTINCT(msg_type)) msg_types from wechat_ext_app_support_type where ext_app_id = a.id )");
+        sql.append(
+                ",(select GROUP_CONCAT(DISTINCT(event_type)) event_types from wechat_ext_app_support_type where ext_app_id = a.id ) FROM ");
         sql.append(getTableName()).append(" ").append(alias);
         sql.append(" left join wechat_ext_app_support_type e on e.ext_app_id = a.id");
         sql.append(" where 1 = 1 ");
@@ -122,12 +124,8 @@ public class ExtApp extends Model {
      * @param eventTypes
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void reSaveSupportType(String apiId, String[] msgTypes, String[] eventTypes) {
-        StringBuilder delSql = new StringBuilder("delete from ");
-        delSql.append(extAppSupport.getTableName());
-        delSql.append(" where ext_app_id = ?");
-        execute(delSql.toString(), apiId);
-
+    private void reSaveSupportType(String apiId, String[] msgTypes, String[] eventTypes) {
+        deleteSupportTypeByAppId(apiId);
         StringBuilder insertSql = new StringBuilder("insert into ");
         insertSql.append(extAppSupport.getTableName());
         insertSql.append("( ").append(extAppSupport.getColumnsStr()).append(" )");
@@ -154,6 +152,32 @@ public class ExtApp extends Model {
             }
         }
         batchExecute(insertSql.toString(), batchArgs);
+    }
+
+    /**
+     * 删除api消息类型关联
+     *
+     * @param appid
+     */
+    private void deleteSupportTypeByAppId(String appid) {
+        StringBuilder delSql = new StringBuilder("delete from ");
+        delSql.append(extAppSupport.getTableName());
+        delSql.append(" where ext_app_id = ?");
+        execute(delSql.toString(), appid);
+    }
+
+    /**
+     * 删除应用
+     *
+     * @param id
+     * @param app_type
+     */
+    public void deleteApp(String id, String app_type) {
+        // web应用，没有消息类型关联，不需要删除
+        if ("api".equals(app_type) || "restful".equals(app_type)) {
+            deleteSupportTypeByAppId(id);
+        }
+        deleteById(id);
     }
 
 }

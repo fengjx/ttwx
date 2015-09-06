@@ -30,6 +30,8 @@ public class Dict extends Model {
 
     public static final String DICT_JSON_MAP = "dictJsonMap";
 
+    private static final String ORDER_BY = " order by in_time desc, order_no desc";
+
     /**
      * 根据字典值获得字典名称
      *
@@ -67,7 +69,7 @@ public class Dict extends Model {
     public List<Map<String, Object>> findDictList(String group) {
         Map<String, Object> attrs = new HashMap();
         attrs.put("group_code", group);
-        return findList(attrs);
+        return findList(attrs, ORDER_BY);
     }
 
     /**
@@ -92,7 +94,7 @@ public class Dict extends Model {
             sql.append(" and is_valid = ?");
             qryParams.add(params.get("is_valid"));
         }
-        sql.append(" order by in_time desc");
+        sql.append(ORDER_BY);
         return paginate(sql.toString(), qryParams.toArray()).convert();
     }
 
@@ -132,7 +134,7 @@ public class Dict extends Model {
 
     private String createSql() {
         StringBuilder sql = new StringBuilder(getSelectSql());
-        sql.append(" where group_code = ?");
+        sql.append(" where group_code = ? ").append(ORDER_BY);
         return sql.toString();
     }
 

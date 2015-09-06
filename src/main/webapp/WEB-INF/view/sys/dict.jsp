@@ -88,9 +88,9 @@
 								</div>
 							</div>
 							<div class="control-group">
-								<label class="control-label" for="order_num">排序:</label>
+								<label class="control-label" for="order_no">排序:</label>
 								<div class="controls">
-									<input id="order_num" name="order_num" value="" type="number" class="span4 form-control">
+									<input id="order_no" name="order_no" value="" type="number" class="span4 form-control">
 								</div>
 							</div>
 							<div class="control-group">
@@ -118,7 +118,7 @@
 		<script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="${resourceUrl}/jqGrid/grid-opt.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/script/sys/dict-jqgrid.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/script/sys/dict-jqgrid.js?v=2015090601" type="text/javascript" charset="UTF-8"></script>
 	</c:when>
 	<c:otherwise>
 		<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
