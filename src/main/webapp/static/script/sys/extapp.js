@@ -1,166 +1,322 @@
 /**
  * 扩展接口管理
  */
-
-var viewDialog;
+var editModal;
 var $table;
 
-$(function(){
+$(function () {
 
-    //$("#btn-add").click(function () {
-    //    var test = $.scojs_modal({
-    //        title : "test",
-    //        target : "#target",
-    //        width : 300,
-    //        height : 300
-    //    });
-    //    test.show();
-    //});
-
-
-    //消息预览dialog
-    //viewDialog = $('#viewDialog').modal({
-    //    keyboard : true,
-    //    show : false
-    //});
-
-    $table = $('#data-table').bootstrapTable({
-        method: 'post',
-        toolbar: "#toolbar",
-        contentType: "application/x-www-form-urlencoded",
-        url: domain + '/admin/sys/ext/pageList',
-        queryParamsType: "limit",
-        queryParams: queryParams,
-        cache: false,
-        height: 'auto',
-        striped: true,
-        sidePagination: "server",
-        pagination: true,
-        pageSize: 10,
-        pageList: [10, 15, 20],
-        minimumCountColumns: 2,
-        clickToSelect: true,
-        idField:"id",
-        columns: [{
-            field: 'id',
-            valign: 'middle',
-            radio:true
-        },{
-            field: 'name',
-            title: '接口名称',
-            align: 'left',
-            valign: 'middle'
-        },{
-            field: 'description',
-            title: '接口描述',
-            align: 'left',
-            width: '20%',
-            valign: 'middle'
-        },{
-            field: 'app_type',
-            title: '接口类型',
-            align: 'left',
-            width: '20%',
-            valign: 'middle'
-        },{
-            field: 'is_valid',
-            title: '是否启用',
-            align: 'left',
-            width: '20%',
-            valign: 'middle'
-        },{
-            field: 'in_time',
-            title: '接入时间',
-            align: 'left',
-            width: '15%',
-            valign: 'middle'
-        },{
-            field: 'op',
-            title: '操作',
-            width: '12%',
-            align: 'center',
-            valign: 'middle',
-            formatter : function(value, row, index) {
-                var html = '<a class="btn btn-sm btn-success" onclick="view(\''+index+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-eye-open"></i></a>';
-                html += '<a class="btn btn-sm btn-info" href="'+domain+'/admin/wechat/action/keywordAdd?id='+row.id+'"><i class="glyphicon glyphicon-edit"></i></a>';
-                html += '<a class="btn btn-sm btn-warning" onclick="deleteMsgAction(\''+row.id+'\',\''+row.key_word+'\');" href="javascript:void(0);"><i class="glyphicon glyphicon-remove"></i></a>';
-                return html;
-            }
-        }]
+    editModal = $('#editModal').modal({
+        show: false
     });
 
-    function queryParams(params) {
-        var start_time = $('#toolbar input[name="start_time"]').val();
-        var end_time = $('#toolbar input[name="end_time"]').val();
-        params = $.extend(params,{
-            "group_code": "text",
-            "app_name": $('#toolbar input[name="qry_key_word"]').val(),
-            "start_time": start_time,
-            "end_time": end_time
-        });
-        return params;
-    }
+    $table = $('#data-table').jqGrid({
+        url: adminPath + '/sys/ext/pageList',
+        colModel: [{
+            name: 'id',
+            hidden: true,
+            key: true
+        }, {
+            name: 'name',
+            label: '应用名称',
+            sortable: false,
+            align: 'left'
+        }, {
+            name: 'description',
+            label: '接口描述',
+            sortable: false,
+            align: 'left'
+        }, {
+            name: 'is_valid',
+            label: '是否启用',
+            sortable: false,
+            align: 'left',
+            formatter: function (value, opt, row) {
+                return app.getDictName("yesNo", value);
+            }
+        }, {
+            name: 'in_time',
+            label: '入库时间',
+            align: 'left'
+        }, {
+            name: 'op',
+            label: '操作',
+            align: 'center',
+            sortable: false,
+            formatter: function (value, opt, row) {
+                var html = '<a class="btn btn-minier btn-success" onclick="append(\'' + row.id + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
+                html += '<a class="btn btn-minier btn-info" onclick="updateData(\'' + row.id + '\')" href="javascript:void(-1);"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
+                html += '<a class="btn btn-minier btn-danger" onclick="deleteData(\'' + row.id + '\',\'' + row.dict_name + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
+                return html;
+            }
+        }],
+        serializeGridData: function (postData) {
+            var start_time = $('#toolbar input[name="start_time"]').val();
+            var end_time = $('#toolbar input[name="end_time"]').val();
+            postData = $.extend(postData, {
+                "group_code": "text",
+                "app_name": $('#toolbar input[name="qry_key_word"]').val(),
+                "start_time": start_time,
+                "end_time": end_time
+            });
+            return postData;
+        }
+    });
+
+    $table.jqGrid('navGrid', '#tablePager', {
+        edit: false,
+        add: false,
+        del: false,
+        search: false,
+        refresh: true,
+        view: false,
+        position: "left",
+        cloneToTop: true
+    }).jqGrid('navButtonAdd', '#tablePager',
+        {
+            buttonicon: "glyphicon glyphicon-remove",
+            title: "remove",
+            caption: "",
+            position: "first",
+            onClickButton: function () {
+                deleteData();
+            }
+        }
+    ).jqGrid('navButtonAdd', '#tablePager',
+        {
+            buttonicon: "glyphicon glyphicon-edit",
+            title: "edit",
+            caption: "",
+            position: "first",
+            onClickButton: function () {
+                updateData();
+            }
+        }
+    ).jqGrid('navButtonAdd', '#tablePager',
+        {
+            buttonicon: "glyphicon glyphicon-plus",
+            title: "add",
+            caption: "",
+            position: "first",
+            onClickButton: function () {
+                append();
+            }
+        }
+    );
+
+    $("#app_type").change(function () {
+        var appType = $(this).val();
+        $("[name='web'],[name='api'],[name='restful']").addClass("hide");
+        $("[name='" + appType + "']").removeClass("hide");
+    });
+
+    //事件消息类型的checkbox绑定事件
+    $("input[group='reqTypes'][value='event']").click(function () {
+        if (!$(this).attr("checked")) {   //如果取消选中事件消息
+            $("input[group='eventTypes']").attr("checked", false);
+        }
+    });
+    //事件类型的checkbox绑定事件
+    $("input[group='eventTypes']").click(function () {
+        var length = $("input[group='eventTypes']:checked").length;
+        //length == 0没有被选中的事件类型
+        $("input[value='event'][group='reqTypes']").attr("checked", length != 0);
+    });
 
 });
 
 function searchDatagrid() {
-    $table.bootstrapTable('refresh');
+    $table.trigger("reloadGrid");
 }
 
 function clearDatagrid() {
     $('#toolbar input').val('');
-    $table.bootstrapTable('refresh');
+    $table.trigger("reloadGrid");
 }
 
-function deleteExt(id, appName){
-    app.confirmModal("你要删除关键字【"+appName+"】的响应规则吗？", function () {
+/**
+ * 编辑（添加/修改）
+ * @param data
+ */
+function edit(data) {
+    //dataForm.find("#id").val('');
+    //dataForm.clearForm();
+    //if (data) {
+    //    $("#form-data").autofill(data);
+    //}
+    editModal.modal('show');
+}
+
+/**
+ * 添加
+ * @param id
+ */
+function append(id) {
+    if (!id) {
+        id = $table.jqGrid('getGridParam', "selrow");
+    }
+    if (!id) {
+        edit();
+    } else {
+        var row = $table.jqGrid('getRowData', id);
+        edit({
+            group_code: row.group_code,
+            group_name: row.group_name
+        });
+    }
+}
+
+/**
+ * 修改
+ * @param id
+ * @returns {boolean}
+ */
+function updateData(id) {
+    if (!id) {
+        id = $table.jqGrid('getGridParam', "selrow");
+        if (!id) {
+            app.alertModal("请选中要编辑的数据");
+            return false;
+        }
+    }
+    var row = $table.jqGrid('getRowData', id);
+    edit(row);
+}
+
+/**
+ * 删除
+ * @param id
+ * @param name
+ * @returns {boolean}
+ */
+function deleteData(id, name) {
+    if (!id) {
+        id = $table.jqGrid('getGridParam', "selrow");
+        if (!id) {
+            app.alertModal("请选中要删除的数据");
+            return false;
+        }
+        name = $table.jqGrid('getRowData', id).dict_name;
+    }
+    app.confirmModal("你要删除应用【" + name + "】吗？", function () {
         $.ajax({
-            url :  domain + '/admin/wechat/action/delete',
-            data : 'id='+id,
-            cache : false,
-            dataType : "json",
-            success : function(res) {
-                if(res && '1' === res.code){
-                    app.alertModal('刪除成功');
-                    $table.bootstrapTable('refresh');
-                }else{
-                    app.alertModal(res.msg?res.msg:'刪除失败');
+            url: adminPath + '/sys/ext/delete',
+            data: 'id=' + id,
+            cache: false,
+            dataType: "json",
+            success: function (res) {
+                if (res && '1' === res.code) {
+                    app.ok('刪除成功');
+                    $table.trigger("reloadGrid");
+                } else {
+                    app.error(res.msg ? res.msg : '刪除失败');
                 }
             }
         });
     });
 }
 
-
 /**
- * 预览
- * @param {} id
- * @return {Boolean}
+ * 提交表单
  */
-function view (index){
-    $table.bootstrapTable('uncheckAll');
-    $table.bootstrapTable('check', index);
-    var row = $table.bootstrapTable('getSelections')[0];
+function submitData () {
+    var app_url;
+    var restful_url;
+    var description;
+    var bean_name;
+    var reqTypes = "";
+    var eventTypes = "";
 
-    var viewHtml = "";		//预览效果HTML
-    if(row.action_type == 'material'){//数据源从素材读取
-        var json = $.xml2json(row.xml_data);
-        var msgType = json.MsgType;
-        if(msgType == "text"){		//文本消息
-            viewHtml = json.Content;
-        }else if(msgType == "news"){	//图文消息
-            viewHtml = xml2NewsHtml(row.xml_data,row.in_time,row.material_id);	//(wechat.js)
+
+    var app_type = $("#app_type").val();
+    if(app_type == ''){
+        app.alert("请选择应用类型！");
+        return false;
+    }else if (app_type == 'web') {
+        app_url = $("#app_url").val();
+        if (app_url == '') {
+            app.alert("请输入链接！");
+            return false;
         }
-    }else if(row.action_type == 'api'){
-        if (row.app_name) {
-            viewHtml = "从接口【"+row.app_name+"】中获得响应数据";
-        }else{
-            viewHtml = "配置的接口已经失效，请重新配置";
+    }else if (app_type == 'restful') {
+        restful_url = $("#restful_url").val();
+        if (restful_url == '') {
+            app.alert("请输入restful_url！");
+            return false;
+        }
+    }else if (app_type == 'api') {
+        bean_name = $.trim($("input[name='bean_name']").val());
+        if(bean_name === ''){
+            app.alert("请输入spring id！");
+            return false;
+        }
+        var $reqTypes = $("input[group='check-req_type']:checked");
+        if ($reqTypes.length == 0) {
+            app.alert("请选择消息类型！");
+            return false;
+        }
+        $reqTypes.each(function(i){
+            var $this = $(this);
+            if (i == 0) {
+                reqTypes += $this.val();
+            }else{
+                reqTypes += ","+$this.val();
+            }
+        });
+        if (reqTypes.search("event") !== -1) {
+            var $eventTypes = $("input[group='check-event_types']:checked");
+            if ($eventTypes.length == 0) {
+                app.alert("请选择事件类型！");
+                return false;
+            }
+            $eventTypes.each(function(i){
+                var $this = $(this);
+                if (i == 0) {
+                    eventTypes += $this.val();
+                }else{
+                    eventTypes += "," + $this.val();
+                }
+            });
         }
     }
-    app.alertModal(viewHtml,{
-        title:"用户发送文字消息【"+row.key_word+"】将收到以下内容",
-        height:"auto",
-        width:300
+    var app_name = $("#name").val();
+    if(app_name == ''){
+        app.alert("请输入应用名称！");
+        return false;
+    }
+
+    app_url = $("#app_url").val();
+    restful_url = $("#restful_url").val();
+    description = $("#description").val();
+
+    var data = {
+        id : $("#id").val(),
+        app_type : app_type,
+        name : app_name,
+        app_url : app_url,
+        restful_url : restful_url,
+        bean_name : bean_name,
+        description : description,
+        eventTypes : eventTypes,
+        reqTypes : reqTypes,
+        is_valid: $("#is_valid").attr("checked")?1:0
+    };
+
+    $.ajax({
+        url: adminPath + '/sys/ext/save',
+        type: 'post',
+        data: data,
+        dataType: "json",
+        cache: false,
+        async: true,
+        success: function (data) {
+            if (data && '1' == data.code) {
+                editModal.modal('hide');
+                app.ok(data.msg?data.msg:'操作成功！');
+                $table.trigger("reloadGrid");
+            } else {
+                app.error(data? data.msg:'操作失败');
+            }
+        }
     });
 }

@@ -2,6 +2,7 @@
 package com.fengjx.ttwx.common.plugin.db.dialect;
 
 import com.fengjx.ttwx.common.plugin.db.Table;
+import com.fengjx.ttwx.common.utils.StrUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -30,16 +31,24 @@ public abstract class Dialect {
 
     public abstract String forModelFindById(Table table, String columns);
 
-    public abstract void forModelFind(Table table, StringBuilder sql,String orderby, String columns,
+    public abstract void forModelFind(Table table, StringBuilder sql, String orderby,
+            String columns,
             Map<String, Object> attrs, List<Object> paras);
 
     public abstract void forPaginate(StringBuilder pageSql, int pageNumber, int pageSize, String sql);
 
     public void forCount(StringBuilder countSql, String sql) {
         sql = replaceFormatSqlOrderBy(sql.toLowerCase(Locale.ENGLISH));
-        int index = sql.indexOf(" from ");
-        countSql.append("select count(*) ");
-        countSql.append(sql.substring(index));
+        // 如果sql语句里出现多个from关键字，约定只能包含一个大写的from，并且只能有一个
+        if (StrUtil.countStr(sql, "from") > 1) {
+            countSql.append("select count(*) from ( ");
+            countSql.append(sql).append(" ) as totalSql");
+        } else {
+            int index;
+            index = sql.indexOf(" from ");
+            countSql.append("select count(*) ");
+            countSql.append(sql.substring(index));
+        }
     }
 
     protected static String replaceFormatSqlOrderBy(String sql) {

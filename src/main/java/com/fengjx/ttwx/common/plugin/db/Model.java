@@ -324,6 +324,17 @@ public abstract class Model {
     /**
      * 批量执行新增、更新、删除语句
      *
+     * @param sql
+     * @param batchArgs 每次执行的参数
+     * @return
+     */
+    public int[] batchExecute(String sql, List<Object[]> batchArgs) {
+        return jdbcTemplate.batchUpdate(sql, batchArgs);
+    }
+
+    /**
+     * 批量执行新增、更新、删除语句
+     *
      * @param sqls
      * @return
      */
@@ -341,6 +352,16 @@ public abstract class Model {
     }
 
     /**
+     * 获得当前Model全部字段名
+     *
+     * @param alias 别名
+     * @return
+     */
+    public String getColumnsStr(String alias) {
+        return getColumnsStr(this.getClass(), alias);
+    }
+
+    /**
      * 通过class获得映射table的字段（如：id,name,age）
      *
      * @param cls
@@ -352,7 +373,7 @@ public abstract class Model {
     }
 
     /**
-     * 通过class获得映射table的字段（如：id,name,age）
+     * 通过class获得映射table的字段（如：a.id, a.name, a.age）
      *
      * @param cls
      * @return

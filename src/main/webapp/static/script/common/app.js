@@ -109,10 +109,12 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     }
 
     app.art = undefined;
+    app.artZindex = 10240;
     app.loadingModal = function (title, opt) {
         app.closeDialog();
         var _title = title || "正在请求...";
         var _opt = $.extend({
+            zIndex: app.artZindex,
             "title": _title,
             "width": "200"
         }, opt || {});
@@ -123,6 +125,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     app.loading = function (title, opt) {
         app.closeDialog();
         var _opt = $.extend({
+            zIndex: app.artZindex,
             "title": "正在请求...",
             "width": "200"
         }, opt || {});
@@ -133,10 +136,12 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     app.alert = function (msg, opt) {
         app.closeDialog();
         var _opt = $.extend({
+            zIndex: app.artZindex,
             title: '提示',
             width: "200",
             content: msg,
             fixed: true,
+            zIndex: 10240,
             cancel: false,
             ok: function () {
             }
@@ -148,6 +153,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     app.alertModal = function (msg, opt) {
         app.closeDialog();
         var _opt = $.extend({
+            zIndex: app.artZindex,
             title: '提示',
             width: "200",
             content: msg,
@@ -163,6 +169,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     app.confirm = function (msg, okCallBack, opt) {
         app.closeDialog();
         var _opt = $.extend({
+            zIndex: app.artZindex,
             title: '请确认',
             width: "200",
             content: msg,
@@ -183,6 +190,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     app.confirmModal = function (msg, okCallBack, opt) {
         app.closeDialog();
         var _opt = $.extend({
+            zIndex: app.artZindex,
             title: '请确认',
             width: "200",
             content: msg,
@@ -203,6 +211,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     app.prompt = function (title, okCallBack, opt) {
         app.closeDialog();
         var _opt = $.extend({
+            zIndex: app.artZindex,
             title: title,
             width: "200",
             content: "<input id='art-content' type='text' autofocus />",
@@ -226,6 +235,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     app.promptModal = function (title, okCallBack, opt) {
         app.closeDialog();
         var _opt = $.extend({
+            zIndex: app.artZindex,
             title: title,
             width: "200",
             content: "<input id='art-content' style='width:185px;' type='text' autofocus />",
@@ -249,6 +259,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     app.tusiModal = function (msg, time, opt) {
         app.closeDialog();
         var _opt = $.extend({
+            zIndex: app.artZindex,
             "content": msg,
             fixed: true,
             "width": "200"
@@ -272,6 +283,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     app.tusiAlert = function (msg, time, opt) {
         app.closeDialog();
         var _opt = $.extend({
+            zIndex: app.artZindex,
             "content": msg,
             fixed: true,
             "width": "200"
@@ -296,6 +308,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     app.tip = function (id, msg, time, opt) {
         app.closeDialog();
         var _opt = $.extend({
+            zIndex: app.artZindex,
             quickClose: true,// 点击空白处快速关闭
             content: msg,
             onclose: function () {
@@ -310,44 +323,6 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
                 app.closeDialog();
             }, time * 1000);
         }
-    };
-
-    app.win = function ($select, title, okCallBack, opt) {
-        app.closeDialog();
-        var _opt = $.extend({
-            title: title ? title : '',
-            width: "auto",
-            height: "auto",
-            content: $($select).show(),
-            fixed: true,
-            cancel: false,
-            ok: function () {
-                if (okCallBack) {
-                    okCallBack();
-                }
-            }
-        }, opt || {});
-        app.art = dialog(_opt);
-        app.art.show();
-    };
-
-    app.winModal = function ($select, title, okCallBack, opt) {
-        app.closeDialog();
-        var _opt = $.extend({
-            title: title ? title : '',
-            width: "auto",
-            height: "auto",
-            content: $($select).show(),
-            fixed: true,
-            cancel: false,
-            ok: function () {
-                if (okCallBack) {
-                    okCallBack();
-                }
-            }
-        }, opt || {});
-        app.art = dialog(_opt);
-        app.art.showModal();
     };
 
     app.closeDialog = function () {
@@ -423,16 +398,27 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
         render: function ($dom) {
             var type = $dom.attr("data-type");
             if (type == 'dict') {
-                if (!$dom.is("select")) {
-                    return false;
-                }
                 var groupCode = $dom.attr("data-group");
                 var dictArr = app.getDict(groupCode);
-                var options = '';
-                for (var i = 0; i < dictArr.length; i++) {
-                    options += "<option value='" + dictArr[i].dict_value + "'>" + dictArr[i].dict_name + "</option>";
+                if ($dom.is("select")) {
+                    var options = '';
+                    for (var i = 0; i < dictArr.length; i++) {
+                        options += "<option value='" + dictArr[i].dict_value + "'>" + dictArr[i].dict_name + "</option>";
+                    }
+                    $dom.append(options);
+                    if ($dom.attr("data-default")) {
+                        $dom.val($dom.attr("data-default"));
+                    }
+                }else if($dom.is("input")){
+                    if($dom.attr("type").toLowerCase() == 'checkbox'){
+                        var ckecks = '';
+                        for (var i = 0; i < dictArr.length; i++) {
+                            ckecks += '<label><input group="check-'+groupCode+'" type="checkbox" value="'+dictArr[i].dict_value+'"></label>'+dictArr[i].dict_name+'&nbsp;';
+                        }
+                        $dom.after(ckecks);
+                        $dom.remove();
+                    }
                 }
-                $dom.append(options);
             }
         }
     };

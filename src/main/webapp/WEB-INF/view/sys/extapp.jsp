@@ -5,8 +5,7 @@
 <head>
 	<meta name="decorator" content="sys"/>
 	<title>接口管理</title>
-	<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
-	<link href="${resourceUrl}/css/setting.css" rel="stylesheet" type="text/css"/>
+	<link href="${resourceUrl}/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<div class="breadcrumbs">
@@ -40,44 +39,109 @@
 								</div>
 							</div>
 							<span class="columns-right pull-right">
-								<button onclick="searchDatagrid();" type="button" class="btn">
-									<i class="glyphicon glyphicon-search"></i>
-									查看
+								<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-primary">
+									<i class="icon-search"></i>
+									查询
 								</button>
-								<button onclick="clearDatagrid();" type="button" class="btn">
-									<i class="glyphicon glyphicon-transfer"></i>
+								<button onclick="clearDatagrid();" type="button" class="btn btn-white">
+									<i class="icon-circle-blank"></i>
 									重置
 								</button>
 							</span>
 						</div>
 					</div>
 				</fieldset>
-				<div>
-					<a id="btn-add" class="btn btn-default" href="javascript:void(0);">
-						<i class="glyphicon glyphicon-plus"></i>
-						添加
-					</a>
-					<a class="btn btn-default" onclick="searchDatagrid();" href="javascript:void(0);">
-						<i class="glyphicon glyphicon-refresh"></i>
-						刷新
-					</a>
-					<a class="btn btn-default" onclick="$table.bootstrapTable('uncheckAll');" href="javascript:void(0);">
-						<i class="glyphicon glyphicon-check"></i>
-						取消选中
-					</a>
-				</div>
 			</div>
 		</div>
 		<table id="data-table"></table>
+		<div id="tablePager"></div>
 
-		<div id="model" style="display: none;">
-			ssssssssssssssssssssssssss
-		</div>
+		<div id="editModal" class="modal" tabindex="-1" role="dialog" >
+			<div class="modal-dialog" style="width: 800px">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">应用编辑</h4>
+					</div>
+					<form action="${adminPath}/sys/dict/save" class="form-horizontal" id="form-data" method="POST" role="form">
+						<div class="modal-body">
+							<input type="hidden" id="id" name="id" value="" />
+							<div class="control-group" >
+								<label class="control-label">应用类型：</label>
+								<div class="controls">
+									<select data-type="dict" data-group="app_type" id="app_type" data-default="web" name="app_type" class="app-element"></select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="name">应用名称：</label>
+								<div class="controls">
+									<input type="text" id="name" name="name" class="span4 form-control"/>
+								</div>
+							</div>
+							<div name="web" class="control-group">
+								<label class="control-label" for="app_url">链接：</label>
+								<div class="controls">
+									<input id="app_url" name="app_url" type="text" class="span4 form-control"/>
+								</div>
+							</div>
+							<div name="restful" class="control-group hide">
+								<label class="control-label">resful url：</label>
+								<div class="controls">
+									<input id="restful_url" name="restful_url" type="text" class="span4 form-control"/>
+								</div>
+							</div>
+							<div name="api" class="control-group hide">
+								<label class="control-label">spring id：</label>
+								<div class="controls">
+									<input name="bean_name" id="bean_name" type="text" class="span4 form-control"/>
+								</div>
+							</div>
+							<div name="api" class="control-group hide">
+								<label class="control-label">消息类型：</label>
+								<div id="msgType" class="controls">
+									<input type="checkbox" data-type="dict" data-group="req_type" class="app-element"/>
+								</div>
+							</div>
+							<div name="api" class="control-group hide">
+								<label class="control-label">事件类型：</label>
+								<div id="eventType" class="controls">
+									<input type="checkbox" data-type="dict" data-group="event_type" class="app-element"/>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">应用说明：</label>
+								<div class="controls">
+									<textarea id="description" name="description"></textarea>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="order_num">排序:</label>
+								<div class="controls">
+									<input id="order_num" name="order_num" value="" type="number" class="span4 form-control">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="is_valid">是否启用:</label>
+								<div class="controls">
+									<input id="is_valid" name="is_valid" value="1" type="checkbox">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+							<button type="button" class="btn btn-primary btn-sm" data-loading-text="正在提交..." onclick="submitData();">保存</button>
+						</div>
+					</form>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 	</div>
-<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
+
+<script src="${resourceUrl}/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/jqGrid/grid-opt.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/script/sys/extapp.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/sys/extapp.js?v=2015090501" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

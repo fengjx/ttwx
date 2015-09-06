@@ -24,15 +24,12 @@
         overflowToDisk：内存不足时，是否启用磁盘缓存。
         memoryStoreEvictionPolicy：缓存满了之后的淘汰算法。
     -->
-    <cache name="sampleCache1"
-           maxEntriesLocalHeap="10000"
-           maxEntriesLocalDisk="1000"
-           eternal="false"
-           diskSpoolBufferSizeMB="20"
-           timeToIdleSeconds="300"
-           timeToLiveSeconds="600"
-           memoryStoreEvictionPolicy="LFU"
-           transactionalMode="off">
-        <persistence strategy="localTempSwap"/>
-    </cache>
+
+    <!-- 默认缓存-->
+    <cache name="defaultCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+
+    <!-- 字典缓存 -->
+    <cache name="dictCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+
+
 </ehcache>

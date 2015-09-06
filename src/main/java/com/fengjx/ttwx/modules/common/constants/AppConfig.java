@@ -68,4 +68,12 @@ public final class AppConfig {
         return null;
     }
 
+    /**
+     * ehcache名称
+     */
+    public static class EhcacheName{
+        public static final String DEFAULT_CACHE = "defaultCache";
+        public static final String DICT_CACHE = "dictCache";
+    }
+
 }

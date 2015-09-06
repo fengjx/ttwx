@@ -54,7 +54,7 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title">字典编辑</h4>
 					</div>
-					<form action="${adminPath}/sys/dict/save" class="form-horizontal" id="form-dict" method="POST" role="form">
+					<form action="${adminPath}/sys/dict/save" class="form-horizontal" id="form-data" method="POST" role="form">
 						<div class="modal-body">
 							<input type="hidden" id="id" name="id" value="" />
 							<div class="control-group" >

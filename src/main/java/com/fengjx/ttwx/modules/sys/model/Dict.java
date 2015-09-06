@@ -1,6 +1,8 @@
 
 package com.fengjx.ttwx.modules.sys.model;
 
+import com.fengjx.ttwx.common.plugin.cache.IDataLoader;
+import com.fengjx.ttwx.common.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 
@@ -9,6 +11,7 @@ import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.plugin.freemarker.FreemarkerUtil;
 import com.fengjx.ttwx.common.utils.JsonUtil;
 import com.fengjx.ttwx.common.utils.StrUtil;
+import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.constants.FtlFilenameConstants;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
@@ -24,6 +27,8 @@ import java.util.*;
 @Mapper(table = "sys_dict")
 @Component
 public class Dict extends Model {
+
+    public static final String DICT_JSON_MAP = "dictJsonMap";
 
     /**
      * 根据字典值获得字典名称
@@ -101,21 +106,28 @@ public class Dict extends Model {
     }
 
     public String jsTemplate() {
-        StringBuilder groupSql = new StringBuilder("select distinct(group_code) group_code from ");
-        groupSql.append(getTableName());
-        List<Map<String, Object>> groupList = findList(groupSql.toString());
-        if (CollectionUtils.isEmpty(groupList)) {
-            return "{}";
-        }
-        Map<String, Object> res = Maps.newHashMap();
-        for (Map<String, Object> group : groupList) {
-            String groupCode = (String) group.get("group_code");
-            List<Map<String, Object>> dataList = findList(createSql(), groupCode);
-            res.put(groupCode, dataList);
-        }
-        Map<String, String> attr = Maps.newHashMap();
-        attr.put("data", StrUtil.replaceBlank(JsonUtil.toJson(res)));
-        return FreemarkerUtil.process(attr, FtlFilenameConstants.DICT_JS);
+        return EhCacheUtil.get(AppConfig.EhcacheName.DICT_CACHE, DICT_JSON_MAP,
+                new IDataLoader<String>() {
+                    @Override
+                    public String load() {
+                        StringBuilder groupSql = new StringBuilder(
+                                "select distinct(group_code) group_code from ");
+                        groupSql.append(getTableName());
+                        List<Map<String, Object>> groupList = findList(groupSql.toString());
+                        if (CollectionUtils.isEmpty(groupList)) {
+                            return "{}";
+                        }
+                        Map<String, Object> res = Maps.newHashMap();
+                        for (Map<String, Object> group : groupList) {
+                            String groupCode = (String) group.get("group_code");
+                            List<Map<String, Object>> dataList = findList(createSql(), groupCode);
+                            res.put(groupCode, dataList);
+                        }
+                        Map<String, String> attr = Maps.newHashMap();
+                        attr.put("data", StrUtil.replaceBlank(JsonUtil.toJson(res)));
+                        return FreemarkerUtil.process(attr, FtlFilenameConstants.DICT_JS);
+                    }
+                });
     }
 
     private String createSql() {

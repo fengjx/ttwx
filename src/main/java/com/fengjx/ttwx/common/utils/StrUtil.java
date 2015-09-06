@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
  */
 public class StrUtil extends StringUtils {
 
-
     /**
      * 删除字符串里的空格、回车、制表符
      *
@@ -31,4 +30,41 @@ public class StrUtil extends StringUtils {
         return dest;
     }
 
+    /**
+     * 统计字符串个数
+     *
+     * @param srcStr
+     * @param findStr
+     * @return
+     */
+    public static int countStr(String srcStr, String findStr) {
+        return countStr(srcStr, findStr, true);
+    }
+
+    /**
+     * 统计字符串个数
+     *
+     * @param srcStr
+     * @param findStr
+     * @param ignoreCase true：忽略大小写
+     * @return
+     */
+    public static int countStr(String srcStr, String findStr, boolean ignoreCase) {
+        if (ignoreCase) {
+            findStr = findStr.toLowerCase();
+            srcStr = srcStr.toLowerCase();
+        }
+        Pattern pattern = Pattern.compile(findStr.toLowerCase());
+        Matcher matcher = pattern.matcher(srcStr);
+        int count = 0;
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        String ss = "aaagdfgdasda";
+        System.out.println(countStr(ss, "a"));
+    }
 }

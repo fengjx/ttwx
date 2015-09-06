@@ -50,7 +50,10 @@ $(function () {
             name: 'is_valid',
             label: '是否启用',
             width: 70,
-            align: 'left'
+            align: 'left',
+            formatter: function (value, opt, row) {
+                return app.getDictName("yesNo", value);
+            }
         }, {
             name: 'in_time',
             label: '接入时间',
@@ -67,7 +70,7 @@ $(function () {
             }
         }],
         serializeGridData: function (postData) {
-            postData = $.extend(postData,{
+            postData = $.extend(postData, {
                 "group_code": $('#toolbar input[name="qry_group_code"]').val(),
                 "dict_desc": $('#toolbar input[name="qry_dict_desc"]').val(),
                 "is_valid": $('#qry_is_valid').val()
@@ -117,7 +120,7 @@ $(function () {
         }
     );
 
-    formValid = $.scojs_valid('#form-dict', {
+    formValid = $.scojs_valid('#form-data', {
         rules: {
             dict_value: ['not_empty', {'max_length': 20}],
             dict_name: ['not_empty'],
@@ -138,7 +141,7 @@ $(function () {
         wrapper: '.control-group'
     });
 
-    dataForm = $("#form-dict").submit(function () {
+    dataForm = $("#form-data").submit(function () {
         $(this).ajaxSubmit({
             url: adminPath + "/sys/dict/save",
             dataType: 'json',
@@ -177,13 +180,13 @@ function append(id) {
     if (!id) {
         id = $table.jqGrid('getGridParam', "selrow");
     }
-    if(!id){
+    if (!id) {
         edit();
-    }else{
+    } else {
         var row = $table.jqGrid('getRowData', id);
         edit({
-            group_code:row.group_code,
-            group_name:row.group_name
+            group_code: row.group_code,
+            group_name: row.group_name
         });
     }
 }
@@ -196,7 +199,7 @@ function edit(data) {
     dataForm.find("#id").val('');
     dataForm.clearForm();
     if (data) {
-        $("#form-dict").autofill(data);
+        $("#form-data").autofill(data);
     }
     editModal.modal('show');
 }

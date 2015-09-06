@@ -10,7 +10,7 @@ import com.fengjx.ttwx.common.plugin.cache.SimpleCache;
  */
 public class SimpleEhCache implements SimpleCache {
 
-    private static final String CACHE_NAME = "simpleCache1";
+    private static final String CACHE_NAME = "defaultCache";
 
     /**
      * 添加缓存

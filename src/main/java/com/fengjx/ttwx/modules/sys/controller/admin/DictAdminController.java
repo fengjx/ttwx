@@ -1,7 +1,9 @@
 
 package com.fengjx.ttwx.modules.sys.controller.admin;
 
+import com.fengjx.ttwx.common.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
+import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.sys.model.Dict;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,7 @@ public class DictAdminController extends MyController {
         Map<String, Object> attrs = getRequestMap(request);
         attrs.put("in_time", new Date());
         dict.insertOrUpdate(attrs);
+        EhCacheUtil.removeAll(AppConfig.EhcacheName.DICT_CACHE);
         return retSuccess();
     }
 
@@ -52,6 +55,7 @@ public class DictAdminController extends MyController {
     @ResponseBody
     public Map<String, String> delete(String id) {
         dict.deleteById(id);
+        EhCacheUtil.removeAll(AppConfig.EhcacheName.DICT_CACHE);
         return retSuccess();
     }
 }

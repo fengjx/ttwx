@@ -14,6 +14,41 @@
     <!-- 加载配置属性文件 -->
     <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties"/>
 
+    <!-- 使用Annotation自动注册Bean,只扫描@Controller -->
+    <context:component-scan base-package="com.fengjx.ttwx" use-default-filters="false"><!-- base-package 如果多个，用“,”分隔 -->
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+        <mvc:message-converters register-defaults="true">
+            <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <!-- supportedMediaTypes增加[text/html;charset=UTF-8]值,是为了兼容IE6
+                     否则[application/json]值在IE6中会导致弹出对话框询问是否保存文件,而firefox等高级浏览器会正常打印json字符串-->
+                <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+                <property name="features">
+                    <array>
+                        <value>WriteMapNullValue</value>
+                        <value>WriteNullStringAsEmpty</value>
+                        <value>WriteDateUseDateFormat</value>
+                        <value>WriteEnumUsingToString</value>
+                    </array>
+                </property>
+                <!--
+                    QuoteFieldNames         输出key时是否使用双引号,默认为true
+                    WriteMapNullValue       是否输出值为null的字段,默认为false
+                    WriteNullNumberAsZero   数值字段如果为null,输出为0,而非null
+                    WriteNullListAsEmpty    List字段如果为null,输出为[],而非null
+                    WriteNullStringAsEmpty  字符类型字段如果为null,输出为"",而非null
+                    WriteNullBooleanAsFalse Boolean字段如果为null,输出为false,而非null
+                -->
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
     <!-- 静态资源(js/image)的访问 -->
     <mvc:resources location="/static/" mapping="/static/**" cache-period="31536000"/>
     <mvc:resources location="/upload/" mapping="/upload/**"/>
