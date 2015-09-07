@@ -6,6 +6,7 @@ import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.ParamHelper;
 import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.utils.CommonUtils;
+import com.fengjx.ttwx.common.utils.DateUtils;
 import me.chanjar.weixin.common.api.WxConsts;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,9 @@ public class ExtApp extends Model {
 
     public static class AppType {
         public static final String TYPE_WEB = "web";
+
         public static final String TYPE_API = "api";
+
         public static final String TYPE_RESTFUL = "restful";
     }
 
@@ -73,13 +76,25 @@ public class ExtApp extends Model {
     public AdapterPage pageList(ParamHelper params) {
         List<Object> qryParams = new ArrayList();
         StringBuilder sql = createListSql();
-        if (null != params.getStr("is_valid")) {
+        if (null != params.get("is_valid")) {
             sql.append(" and a.is_valid = ?");
             qryParams.add(params.get("is_valid"));
         }
         if (StringUtils.isNotBlank(params.getStr("app_type"))) {
             sql.append(" and e.app_type = ?");
             qryParams.add(params.get("app_type"));
+        }
+        if (StringUtils.isNoneBlank(params.getStr("name"))) {
+            sql.append(" and name like CONCAT('%',?,'%')");
+            qryParams.add(params.get("name"));
+        }
+        if (StringUtils.isNoneBlank(params.getStr("start_time"))) {
+            sql.append(" and in_time >= ?");
+            qryParams.add(DateUtils.parseDate(params.get("start_time")));
+        }
+        if (StringUtils.isNoneBlank(params.getStr("end_time"))) {
+            sql.append(" and in_time >= ?");
+            qryParams.add(DateUtils.parseDate(params.get("end_time")));
         }
         if (StringUtils.isNotBlank(params.getStr("msg_type"))) {
             sql.append("and e.msg_type = ?");

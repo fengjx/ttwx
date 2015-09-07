@@ -95,6 +95,8 @@ $(function () {
             var end_time = $('#toolbar input[name="end_time"]').val();
             postData = $.extend(postData, {
                 "name": $('#toolbar input[name="qry_name"]').val(),
+                "app_type": $('#qry_app_type').val(),
+                "is_valid": $('#is_valid').val(),
                 "start_time": start_time,
                 "end_time": end_time
             });
@@ -164,7 +166,7 @@ $(function () {
 });
 
 function searchDatagrid() {
-    $table.trigger("reloadGrid");
+    $table.setGridParam({page: 1}).trigger("reloadGrid");
 }
 
 function clearDatagrid() {

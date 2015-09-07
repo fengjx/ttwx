@@ -18,13 +18,21 @@
 
 	<div class="page-content">
 		<div id="toolbar">
-			<div class="form-inline" role="form" style="width: 1000px;">
+			<div class="form-inline" role="form">
 				<fieldset>
 					<div class="form-group">
 						<div class="control-group">
 							<label class="control-label">应用名称：</label>
-							<input name="qry_name" class="form-control" type="text" placeholder="用户发送的文字">
-							<label class="control-label">发送时间：</label>
+							<input name="qry_name" class="form-control" type="text" placeholder="模糊匹配">
+							<label class="control-label">应用类型：</label>
+							<select data-type="dict" data-group="app_type" name="qry_app_type" id="qry_app_type" class="app-element">
+								<option value="">全部</option>
+							</select>
+							<label class="control-label">启用：</label>
+							<select data-type="dict" data-group="yesNo" name="qry_is_valid" id="qry_is_valid" class="app-element">
+								<option value="">全部</option>
+							</select>
+							<label class="control-label">入库时间：</label>
 							<div class="input-group">
 								<input class="form-control" onClick="WdatePicker()" data-options="dateFmt:'yyyy-M-d H:m:s',readOnly:true,skin:'twoer'" name="start_time" type="text" style="width: 120px;" />
 								<div class="input-group-addon">

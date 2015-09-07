@@ -173,7 +173,7 @@ $(function () {
 });
 
 function searchDatagrid() {
-    $table.trigger("reloadGrid");
+    $table.setGridParam({page: 1}).trigger("reloadGrid");
 }
 
 function clearDatagrid() {
