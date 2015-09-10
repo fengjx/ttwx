@@ -32,6 +32,8 @@
 	<div class="control-group">
 		<label class="control-label" for="msgKeyWord">关键字：</label>
 		<input id="msgKeyWord" name="key_word" value="" class="form-control" type="text" placeholder="用户发送的文字">
+		<select data-type="dict" data-group="keywordFuzzy" name="fuzzy" id="fuzzy" class="app-element">
+		</select>
 		<hr/>
 	</div>
 	</c:if>

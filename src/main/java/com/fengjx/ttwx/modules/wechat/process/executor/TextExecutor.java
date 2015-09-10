@@ -10,16 +10,17 @@ import com.fengjx.ttwx.modules.api.restful.YoukuVideoServiceApi;
 import com.fengjx.ttwx.modules.api.tuling.client.TulingApiClient;
 import com.fengjx.ttwx.modules.api.tuling.vo.req.RequestBean;
 import com.fengjx.ttwx.modules.wechat.process.utils.ExecutorNameUtil;
-
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.bean.*;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 文本消息处理器
@@ -39,12 +40,25 @@ public class TextExecutor extends BaseServiceExecutor {
                 inMessage.getContent(), accountRecord.getStr("sys_user_id"));
         // 没有找到匹配规则
         if (null == actionRecord || actionRecord.isEmpty()) {
+            List<Map<String, Object>> keywords = respMsgAction.loadKeywordActions(
+                    inMessage.getContent(), accountRecord.getStr("sys_user_id"));
+
             String res = extHandel(inMessage);
             if (StringUtils.isNotBlank(res)) { // 如果有数据则直接返回
                 return doAction(res);
             }
         }
         return doAction(actionRecord);
+    }
+
+    private Map<String, Object> fuzzy(String content, List<Map<String, Object>> keywords) {
+        if (CollectionUtils.isEmpty(keywords)) {
+            return null;
+        }
+        for (Map<String, Object> action : keywords) {
+            String fuzzy = action.get("fuzzy") + "";
+        }
+        return null;
     }
 
     @Override
@@ -62,9 +76,7 @@ public class TextExecutor extends BaseServiceExecutor {
                 .toUser("fromUserName").build();
         // 接收用户发送的文本消息内容
         // 创建图文消息
-        WxMpXmlOutNewsMessage m = WxMpXmlOutMessage.NEWS()
-                .fromUser(fromUserName)
-                .toUser(toUserName)
+        WxMpXmlOutNewsMessage m = WxMpXmlOutMessage.NEWS().fromUser(fromUserName).toUser(toUserName)
                 .build();
         if (content.startsWith("歌曲")) {
             // 文本消息内容
@@ -144,8 +156,7 @@ public class TextExecutor extends BaseServiceExecutor {
                 text.setContent(WeatherServiceApi.queryhWeather(keyWord));
             }
             respMessage = text.toXml();
-        }
-        else if (content.startsWith("留言")) {
+        } else if (content.startsWith("留言")) {
             text.setContent("<a href=\"http://blog.fengjx.com/?page_id=31\">留言</a>");
             respMessage = text.toXml();
         } else {

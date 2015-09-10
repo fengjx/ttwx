@@ -15,26 +15,39 @@ public final class AppConfig {
     }
 
     public static final String TEST_FALG = GetPropertiesVal.getLabel("test_flag");
+
     // 用户登录信息在session中的key
     public static final String LOGIN_FLAG = "sys_user_login_key";
+
     public static final String REQUEST_ERROE_MSG_KEY = "errorMsg";
+
     public static final String REQUEST_FLAG_AJAX = "ajax";
 
     public static final String APP_NAME = GetPropertiesVal.getLabel("app_name");
+
     public static final String KEYWORDS = GetPropertiesVal.getLabel("keywords");
+
     public static final String DESCRIPTION = GetPropertiesVal.getLabel("description");
+
     public static final String DOMAIN_PAGE = GetPropertiesVal.getLabel("domain.page");
+
     public static final String RESOURCE_URL = GetPropertiesVal.getLabel("resource.url");
+
     public static final String STATIC_DOMAIN = GetPropertiesVal.getLabel("staticDomain");
+
     public static final String STATIC_PATH = GetPropertiesVal.getLabel("staticPath");
+
     public static final String SUPPORT_EMAIL = GetPropertiesVal.getLabel("mail.username");
+
     public static final String ADMIN_PATH = GetPropertiesVal.getLabel("adminPath");
+
     public static final String ADAPTER_PAGE_NAME = GetPropertiesVal.getLabel("adapterPageName");
 
     /**
      * 是/否
      */
     public static final String YES = "1";
+
     public static final String NO = "0";
 
     /**
@@ -71,9 +84,14 @@ public final class AppConfig {
     /**
      * ehcache名称
      */
-    public static class EhcacheName{
+    public static class EhcacheName {
         public static final String DEFAULT_CACHE = "defaultCache";
+
         public static final String DICT_CACHE = "dictCache";
+
+        public static final String WECHAT_ACTION_CACHE = "wechatActionCache";
+
+        public static final String WECHAT_KEYWORD_ACTION_CACHE = "wechatKeywordActionCache";
     }
 
 }

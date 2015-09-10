@@ -25,8 +25,7 @@ import java.util.Map;
 /**
  * 消息动作规则
  *
- * @author fengjx.
- * @date：2015/6/5 0005
+ * @author fengjx. @date：2015/6/5 0005
  */
 @Controller
 @RequestMapping("${adminPath}/wechat/action")
@@ -109,8 +108,9 @@ public class RespMsgActionController extends MyController {
         String req_type = request.getParameter("req_type");
         String event_type = request.getParameter("event_type");
         String key_word = request.getParameter("key_word");
-        return respMsgAction.loadMsgAction(ext_type, req_type, event_type, key_word,
-                getLoginSysUserId(request)).toJson();
+        return respMsgAction
+                .loadMsgAction(ext_type, req_type, event_type, key_word, getLoginSysUserId(request))
+                .toJson();
     }
 
     /**
@@ -151,8 +151,8 @@ public class RespMsgActionController extends MyController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> delete(String id) {
-        respMsgAction.deleteById(id);
+    public Map<String, String> delete(String id, HttpServletRequest request) {
+        respMsgAction.deleteMsgActionById(id, getLoginSysUserId(request));
         return retSuccess();
     }
 
@@ -190,8 +190,7 @@ public class RespMsgActionController extends MyController {
             materialMap = new HashMap();
             materialMap.put("xml_data",
                     WxMpXmlOutMessage.TEXT().content((String) reqMap.get("materiaContent"))
-                            .fromUser("")
-                            .toUser("").build().toXml());
+                            .fromUser("").toUser("").build().toXml());
             materialMap.put("msg_type", WxConsts.XML_MSG_TEXT);
         }
         return materialMap;

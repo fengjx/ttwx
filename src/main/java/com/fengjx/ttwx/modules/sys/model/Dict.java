@@ -98,15 +98,6 @@ public class Dict extends Model {
         return paginate(sql.toString(), qryParams.toArray()).convert();
     }
 
-    /**
-     * 查询所有字典列表，当缓存里没有数据时候，从数据库取
-     *
-     * @return
-     */
-    public List<Map<String, Object>> all() {
-        return findList(null);
-    }
-
     public String jsTemplate() {
         return EhCacheUtil.get(AppConfig.EhcacheName.DICT_CACHE, DICT_JSON_MAP,
                 new IDataLoader<String>() {
@@ -134,7 +125,7 @@ public class Dict extends Model {
 
     private String createSql() {
         StringBuilder sql = new StringBuilder(getSelectSql());
-        sql.append(" where group_code = ? ").append(" order by order_no desc, in_time desc");
+        sql.append(" where group_code = ? ").append(" order by order_no , in_time desc");
         return sql.toString();
     }
 
