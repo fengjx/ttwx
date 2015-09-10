@@ -1,6 +1,7 @@
 
 package com.fengjx.ttwx.modules.wechat.controller.admin.interceptor;
 
+import com.fengjx.ttwx.common.utils.CookieUtils;
 import com.fengjx.ttwx.common.utils.WebUtil;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
@@ -14,15 +15,15 @@ import javax.servlet.http.HttpSession;
 
 public class AdminInterceptor implements HandlerInterceptor {
 
-    public void afterCompletion(HttpServletRequest request,
-            HttpServletResponse response, Object handler, Exception e)
-            throws Exception {
+    private static final String LAST_URI = "last_uri";
+
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+            Object handler, Exception e) throws Exception {
 
     }
 
-    public void postHandle(HttpServletRequest request,
-            HttpServletResponse response, Object handler, ModelAndView arg3)
-            throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView arg3) throws Exception {
 
     }
 
@@ -38,6 +39,8 @@ public class AdminInterceptor implements HandlerInterceptor {
         SysUserEntity user = (SysUserEntity) session.getAttribute(AppConfig.LOGIN_FLAG);
         // 登陆超时
         if (null == user) {
+            CookieUtils.setCookie(response, LAST_URI,
+                    request.getRequestURI().replace(request.getContextPath(), ""), 60 * 60);
             // 如果是ajax请求
             if (WebUtil.validAjax(request)) {
                 request.getRequestDispatcher("/common/loginTimeoutAjax").forward(request, response);

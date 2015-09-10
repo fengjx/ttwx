@@ -31,5 +31,10 @@
     <!-- 字典缓存 -->
     <cache name="dictCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
 
+    <!-- wechat action cache -->
+    <cache name="wechatActionCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+
+    <!-- wechat keyword action cache -->
+    <cache name="wechatKeywordActionCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
 
 </ehcache>
