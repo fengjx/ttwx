@@ -40,5 +40,5 @@ ALTER TABLE `wechat_ext_app`
 MODIFY COLUMN `is_valid`  tinyint(1) NULL DEFAULT NULL AFTER `description`;
 
 ALTER TABLE `wechat_resp_msg_action`
-ADD COLUMN `fuzzy`  tinyint(1) NULL COMMENT '关键字匹配方式（1：完全匹配，2：包含，3：关键字开头，4：关键字结尾）' AFTER `key_word`;
+ADD COLUMN `fuzzy`  tinyint(2) NULL COMMENT '关键字匹配方式（1：完全匹配，2：包含，3：关键字开头，4：关键字结尾）' AFTER `key_word`;
 
