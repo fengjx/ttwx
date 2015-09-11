@@ -154,7 +154,7 @@ public abstract class Model {
      * @return
      */
     public Record findOne(String sql, Object... params) {
-        List<Map<String, Object>> list = jdbcTemplate.queryForList(sql, params);
+        List<Map<String, Object>> list = findList(sql, params);
         if (CollectionUtils.isEmpty(list)) {
             return new Record();
         } else if (list.size() > 1) {

@@ -15,7 +15,6 @@ $(function () {
 
     $table = $('#data-table').jqGrid({
         url: adminPath + '/sys/dict/pageList',
-        toolbar: [true, "top"],
         colModel: [{
             name: 'id',
             hidden: true,

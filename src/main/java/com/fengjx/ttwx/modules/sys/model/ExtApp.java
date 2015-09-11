@@ -81,7 +81,7 @@ public class ExtApp extends Model {
             qryParams.add(params.get("is_valid"));
         }
         if (StringUtils.isNotBlank(params.getStr("app_type"))) {
-            sql.append(" and e.app_type = ?");
+            sql.append(" and a.app_type = ?");
             qryParams.add(params.get("app_type"));
         }
         if (StringUtils.isNoneBlank(params.getStr("name"))) {
@@ -93,7 +93,7 @@ public class ExtApp extends Model {
             qryParams.add(DateUtils.parseDate(params.get("start_time")));
         }
         if (StringUtils.isNoneBlank(params.getStr("end_time"))) {
-            sql.append(" and in_time >= ?");
+            sql.append(" and in_time <= ?");
             qryParams.add(DateUtils.parseDate(params.get("end_time")));
         }
         if (StringUtils.isNotBlank(params.getStr("msg_type"))) {

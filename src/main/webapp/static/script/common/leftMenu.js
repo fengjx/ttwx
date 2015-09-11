@@ -2,8 +2,8 @@
  * 后台管理左侧菜单
  * 2015-8-20
  */
-
-window.onload = function () {
+$(function () {
+    sidebar($.cookie("isOpen"));
     var curUrl = window.location.href;
     var ul = document.getElementById('side-menu');
     var lis = ul.getElementsByTagName("li");
@@ -16,16 +16,22 @@ window.onload = function () {
     }
     $("#sidebar-collapse").click(function () {
         var isOpen = $("#side-menu").hasClass("menu-min");
-        var $this = $(this);
-        if (isOpen) {
-            $("#side-menu").removeClass("menu-min");
-            $this.find("i").addClass("icon-arrow-left");
-            $this.find("i").removeClass("icon-arrow-right");
-        } else {
-            $("#side-menu").addClass("menu-min");
-            $this.find("i").removeClass("icon-arrow-left");
-            $this.find("i").addClass("icon-arrow-right");
-        }
+        sidebar(isOpen?1:0);
     });
 
-};
+});
+
+function sidebar(isOpen) {
+    var $sidebar = $("#sidebar-collapse");
+    if (1 == isOpen) {
+        $("#side-menu").removeClass("menu-min");
+        $sidebar.find("i").addClass("icon-arrow-left");
+        $sidebar.find("i").removeClass("icon-arrow-right");
+        $.cookie("isOpen", 1);
+    } else {
+        $("#side-menu").addClass("menu-min");
+        $sidebar.find("i").removeClass("icon-arrow-left");
+        $sidebar.find("i").addClass("icon-arrow-right");
+        $.cookie("isOpen", 0);
+    }
+}

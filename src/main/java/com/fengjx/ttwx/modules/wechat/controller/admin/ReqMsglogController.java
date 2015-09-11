@@ -1,6 +1,7 @@
 
 package com.fengjx.ttwx.modules.wechat.controller.admin;
 
+import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.utils.WebUtil;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.wechat.model.ReqMsgLog;
@@ -33,9 +34,8 @@ public class ReqMsglogController extends MyController {
 
     @RequestMapping(value = "/pageList")
     @ResponseBody
-    public String pageList(HttpServletRequest request) {
-        return reqMsgLog.pageList(WebUtil.getRequestParams(request), getLoginSysUserId(request))
-                .toJson();
+    public AdapterPage pageList(HttpServletRequest request) {
+        return reqMsgLog.pageList(WebUtil.getRequestParams(request), getLoginSysUserId(request));
     }
 
 }

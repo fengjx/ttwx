@@ -180,7 +180,7 @@ public class Material extends Model {
         return conten;
     }
 
-  
+
     public void previewMsg(final List<Map<String, Object>> contents, String xmlData, String userId,
             String wxUserId) throws WxErrorException {
 

@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("${adminPath}/wechat")
 public class WechatController extends MyController {
 
-    @RequestMapping(value = {
-            "", "index"
-    })
+    @RequestMapping(value = "")
     public String view() {
         return "wechat/admin/index";
     }

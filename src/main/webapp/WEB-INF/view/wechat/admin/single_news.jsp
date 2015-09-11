@@ -28,9 +28,7 @@
 <body class="no-skin">
 	<jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>
 	<div class="main-container">
-		<jsp:include page="/WEB-INF/view/wechat/admin/inc_menu.jsp">
-			<jsp:param name="index" value="4" />
-		</jsp:include>
+		<jsp:include page="/WEB-INF/view/wechat/admin/inc_menu.jsp"></jsp:include>
 		<div class="main-content">
 			<div id="context" class="main-content-inner">
 				<div class="breadcrumbs" id="breadcrumbs">
@@ -138,11 +136,13 @@
 										</label>
 										<div id="js_editor" class="edui_editor_wrp edui-default">
 											<div class="w_left">
-												<jsp:include
-													page="/WEB-INF/view/wechat/admin/wechart_template.jsp"></jsp:include>
+												<jsp:include page="/WEB-INF/view/wechat/admin/wechart_template.jsp"></jsp:include>
 											</div>
-										
 											<div class="w_right">
+												<button id="btn-refresh" type="button" class="btn btn-primary btn-block">
+													<i class="glyphicon glyphicon-refresh"></i>
+													刷&nbsp;&nbsp;&nbsp;&nbsp;新
+												</button>
 												<script id="container" name="content" type="text/plain"></script>
 											</div>
 										</div>

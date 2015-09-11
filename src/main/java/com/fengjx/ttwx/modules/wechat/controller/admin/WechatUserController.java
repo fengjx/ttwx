@@ -1,7 +1,7 @@
 
 package com.fengjx.ttwx.modules.wechat.controller.admin;
 
-import com.fengjx.ttwx.common.utils.JsonUtil;
+import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.utils.WebUtil;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.wechat.model.WechatUser;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,15 +38,14 @@ public class WechatUserController extends MyController {
 
     @RequestMapping(value = "/groupList")
     @ResponseBody
-    public String groupList(HttpServletRequest request) {
-        return JsonUtil.toJson(wechatUserGroup.list(getLoginSysUserId(request)));
+    public List<Map<String, Object>> groupList(HttpServletRequest request) {
+        return wechatUserGroup.list(getLoginSysUserId(request));
     }
 
     @RequestMapping(value = "/userPageList")
     @ResponseBody
-    public String userList(HttpServletRequest request) {
-        return wechatUser.pageList(WebUtil.getRequestParams(request), getLoginSysUserId(request))
-                .toJson();
+    public AdapterPage userList(HttpServletRequest request) {
+        return wechatUser.pageList(WebUtil.getRequestParams(request), getLoginSysUserId(request));
     }
 
     /**
