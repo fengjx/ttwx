@@ -94,6 +94,7 @@ function editMsgAction(id) {
                 $("#msgActionId").val(row.id);
                 $("#editType").val("edit");
                 $("#msgKeyWord").val(row.key_word);
+                $("#fuzzy").val(row.fuzzy);
                 var tabIndex;
                 if (row.action_type == 'material') {//数据源从素材读取
                     var json = $.xml2json(row.xml_data);
@@ -108,7 +109,7 @@ function editMsgAction(id) {
                 } else if (row.action_type == 'api') {
                     tabIndex = 5;
                     if (row.app_id) {
-                        $("#busiapp_id").val(row.app_id)
+                        $("#busiapp_id").val(row.app_id);
                     }
                 }
                 $('#edit_tabs a:eq(' + tabIndex + ')').tab('show');

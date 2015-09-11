@@ -9,6 +9,7 @@ import com.fengjx.ttwx.modules.api.restful.WeatherServiceApi;
 import com.fengjx.ttwx.modules.api.restful.YoukuVideoServiceApi;
 import com.fengjx.ttwx.modules.api.tuling.client.TulingApiClient;
 import com.fengjx.ttwx.modules.api.tuling.vo.req.RequestBean;
+import com.fengjx.ttwx.modules.wechat.model.RespMsgAction;
 import com.fengjx.ttwx.modules.wechat.process.utils.ExecutorNameUtil;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.WxSession;
@@ -36,13 +37,11 @@ public class TextExecutor extends BaseServiceExecutor {
     public WxMpXmlOutMessage execute(WxMpXmlMessage inMessage, Record accountRecord,
             WxMpConfigStorage wxMpConfig, WxSession session) {
         LogUtil.info(LOG, "进入文本消息处理器fromUserName=" + inMessage.getFromUserName());
-        Record actionRecord = respMsgAction.loadMsgAction(null, WxConsts.XML_MSG_TEXT, null,
-                inMessage.getContent(), accountRecord.getStr("sys_user_id"));
+        List<Map<String, Object>> keywords = respMsgAction
+                .loadKeywordActions(inMessage.getContent(), accountRecord.getStr("sys_user_id"));
+        Record actionRecord = matching(inMessage.getContent(), keywords);
         // 没有找到匹配规则
         if (null == actionRecord || actionRecord.isEmpty()) {
-            List<Map<String, Object>> keywords = respMsgAction.loadKeywordActions(
-                    inMessage.getContent(), accountRecord.getStr("sys_user_id"));
-
             String res = extHandel(inMessage);
             if (StringUtils.isNotBlank(res)) { // 如果有数据则直接返回
                 return doAction(res);
@@ -51,12 +50,36 @@ public class TextExecutor extends BaseServiceExecutor {
         return doAction(actionRecord);
     }
 
-    private Map<String, Object> fuzzy(String content, List<Map<String, Object>> keywords) {
+    /**
+     * 查找匹配规则
+     *
+     * @param content
+     * @param keywords
+     * @return
+     */
+    private Record matching(String content, List<Map<String, Object>> keywords) {
         if (CollectionUtils.isEmpty(keywords)) {
             return null;
         }
         for (Map<String, Object> action : keywords) {
             String fuzzy = action.get("fuzzy") + "";
+            String keyword = action.get("key_word") + "";
+            // 完全匹配
+            if (RespMsgAction.FUZZY_EXACT.equals(fuzzy) && content.equals(keyword)) {
+                return new Record(action);
+            }
+            // 包含
+            if (RespMsgAction.FUZZY_CONTAIN.equals(fuzzy) && content.contains(keyword)) {
+                return new Record(action);
+            }
+            // 关键字开始
+            if (RespMsgAction.FUZZY_START.equals(fuzzy) && content.startsWith(keyword)) {
+                return new Record(action);
+            }
+            // 关键字结束
+            if (RespMsgAction.FUZZY_END.equals(fuzzy) && content.endsWith(keyword)) {
+                return new Record(action);
+            }
         }
         return null;
     }

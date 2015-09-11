@@ -30,7 +30,7 @@
 									<i class="glyphicon glyphicon-calendar"></i>
 								</div>
 							</div>
-							<label class="control-label">--------------</label>
+							<label class="control-label">-</label>
 							<div class="input-group">
 								<input class="form-control" onClick="WdatePicker()" data-options="dateFmt:'yyyy-M-d H:m:s',readOnly:true,skin:'twoer'" name="end_time" type="text" style="width: 120px;" />
 								<div class="input-group-addon">
@@ -75,7 +75,7 @@
 		<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/script/wechat/admin/keyword_action.js?v=2015090101" type="text/javascript" charset="UTF-8"></script>
+		<script src="${resourceUrl}/script/wechat/admin/keyword_action.js?v=2015091101" type="text/javascript" charset="UTF-8"></script>
 	</c:otherwise>
 </c:choose>
 </body>

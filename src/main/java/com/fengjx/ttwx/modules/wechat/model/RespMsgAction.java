@@ -40,6 +40,14 @@ public class RespMsgAction extends Model {
 
     public static final String ACTION_TYPE_API = "api";
 
+    public static final String FUZZY_EXACT = "1";
+
+    public static final String FUZZY_CONTAIN = "2";
+
+    public static final String FUZZY_START = "3";
+
+    public static final String FUZZY_END = "4";
+
     /**
      * 保存消息响应规则
      *
@@ -226,7 +234,7 @@ public class RespMsgAction extends Model {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ps.setObject(1, userId);
-                ps.setObject(1, _ids[i - 1]);
+                ps.setObject(2, _ids[i]);
             }
 
             @Override
@@ -343,17 +351,14 @@ public class RespMsgAction extends Model {
      */
     private String detailSql() {
         StringBuffer sql = new StringBuffer(
-                "select a.id as id, a.req_type as req_type, a.action_type as action_type, a.key_word as key_word, a.material_id as material_id, a.app_id as app_id, a.in_time as in_time,");
+                "select a.id as id, a.req_type as req_type, a.action_type as action_type, a.key_word as key_word, a.fuzzy as fuzzy, a.material_id as material_id, a.app_id as app_id, a.in_time as in_time,");
         sql.append(" b.bean_name as bean_name, b.name as app_name,");
-        sql.append(" c.xml_data as xml_data, c.msg_type as msg_type,");
-        sql.append(" d.dict_name as dict_name");
+        sql.append(" c.xml_data as xml_data, c.msg_type as msg_type");
         sql.append(" from wechat_resp_msg_action a");
         sql.append(" left join wechat_ext_app b ");
         sql.append(" on a.app_id = b.id");
         sql.append(" left join wechat_material c");
         sql.append(" on a.material_id = c.id");
-        sql.append(" left join wechat_data_dict d");
-        sql.append(" on a.action_type = d.dict_value and d.group_code = 'action_type'");
         return sql.toString();
     }
 

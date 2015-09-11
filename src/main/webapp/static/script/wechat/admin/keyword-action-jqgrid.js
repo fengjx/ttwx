@@ -15,7 +15,7 @@ $(function(){
 
 
 	$table = $('#data-table').jqGrid({
-		url: adminPath + '/wechat/action/pageList',
+		url: adminPath + '/wechat/action/pageList?req_type=text',
 		toolbar: [true, "top"],
 		colModel: [{
 			name: 'id',
@@ -24,14 +24,34 @@ $(function(){
 		}, {
 			name: 'key_word',
 			label: '关键字',
+			align: 'left',
 			sortable: false
 		}, {
-			name: 'dict_name',
+			name: 'fuzzy',
+			label: '匹配方式',
+			sortable: false,
+			align: 'left',
+			formatter: function (value, opt, row) {
+				return app.getDictName("keywordFuzzy", value);
+			},
+			unformat: function (cellValue, options, cellObject) {
+				return app.getDictVal("keywordFuzzy", cellValue);
+			}
+		}, {
+			name: 'action_type',
 			label: '动作响应类型',
-			sortable: false
+			sortable: false,
+			align: 'left',
+			formatter: function (value, opt, row) {
+				return app.getDictName("action_type", value);
+			},
+			unformat: function (cellValue, options, cellObject) {
+				return app.getDictVal("action_type", cellValue);
+			}
 		}, {
 			name: 'in_time',
 			label: '编辑时间',
+			align: 'left',
 			sortable: false
 		}, {
 			name: 'op',
