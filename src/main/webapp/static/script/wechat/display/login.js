@@ -16,7 +16,8 @@ $(function () {
             beforeSubmit: validForm,
             success: function (res) {
                 if (res && "1" == res.code) {
-                    window.location.href = domain + "/" + $.cookie("last_uri");
+                    var last_uri = $.cookie("last_uri") ? ("/" + $.cookie("last_uri")) : "";
+                    window.location.href = domain + last_uri;
                 } else {
                     app.error(res.msg ? res.msg : '登录失败');
                     $("#btn-login").button('reset');
