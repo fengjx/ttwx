@@ -13,10 +13,8 @@ $(function(){
 		show : false
 	});
 
-
 	$table = $('#data-table').jqGrid({
 		url: adminPath + '/wechat/action/pageList',
-		toolbar: [true, "top"],
 		colModel: [{
 			name: 'id',
 			hidden: true,
