@@ -55,29 +55,10 @@
 		</div>
 		<table id="data-table"></table>
 		<div id="tablePager"></div>
-
 	</div>
 
-<script src="${resourceUrl}/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
-<c:choose>
-	<c:when test="${'JqGridPage' eq adapterPageName}">
-		<link href="${resourceUrl}/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css"/>
-		<script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/jqGrid/grid-opt.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/script/wechat/admin/keyword-action-jqgrid.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
-	</c:when>
-	<c:otherwise>
-		<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
-		<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/script/wechat/admin/keyword_action.js?v=2015091101" type="text/javascript" charset="UTF-8"></script>
-	</c:otherwise>
-</c:choose>
+<script src="${resourceUrl}/script/wechat/admin/keyword-action-jqgrid.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
 

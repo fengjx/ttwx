@@ -142,13 +142,7 @@
 			<div class="form-inline" style="width: 500px;">
 				<div class="form-group">
 					<label class="control-label">选择扩展插件：</label>
-					<jsp:include page="${fns:getConst('ADMIN_PATH')}/sys/ext/selecter">
-						<jsp:param name="showAll" value="1"/>
-						<jsp:param name="id" value="busiapp_id"/>
-						<jsp:param name="name" value="busiapp_id"/>
-						<jsp:param name="app_type" value="api"/>
-						 
-					</jsp:include>
+					<sys:extapp id="busiapp_id" name="busiapp_id" appType="api" msgType="${req_type}" eventType="${eventType}"></sys:extapp>
 				</div>
 				<div style="height:200px;border: solid 1px #E0ECFF;">
 					<!-- js加载 预览效果 -->

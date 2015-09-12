@@ -70,7 +70,6 @@
 		</form>
 
 	</div>
-<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/script/wechat/admin/setting.js?v=20141005" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

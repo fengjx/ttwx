@@ -15,7 +15,7 @@ import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.ext.WxMpServiceExt;
+import com.fengjx.ttwx.modules.wechat.process.sdk.api.WxMpServiceExt;
 import me.chanjar.weixin.mp.bean.WxMpMassGroupMessage;
 import me.chanjar.weixin.mp.bean.WxMpMassNews;
 import me.chanjar.weixin.mp.bean.WxMpMassNews.WxMpMassNewsArticle;

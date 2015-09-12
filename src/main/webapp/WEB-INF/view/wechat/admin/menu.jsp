@@ -7,7 +7,6 @@
     <title>菜单管理</title>
     <link href="${resourceUrl}/css/menu.css?v=2014111501" rel="stylesheet" type="text/css"/>
     <link href="${resourceUrl}/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
-    <link href="${resourceUrl}/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <div class="breadcrumbs">
@@ -122,10 +121,7 @@
 
     </div>
 
-<script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>
-<script src="${resourceUrl}/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+
 <script src="${resourceUrl}/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/script/wechat/admin/menu.js?v=2015061701" type="text/javascript" charset="UTF-8"></script>
 </body>

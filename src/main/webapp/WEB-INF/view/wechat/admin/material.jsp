@@ -6,7 +6,6 @@
     <meta name="decorator" content="wechat"/>
 	<title>素材管理</title>
     <link href="${resourceUrl}/css/material.css?v=2014030901" rel="stylesheet" type="text/css"/>
-    <link href="${resourceUrl}/css/common.css?v=2014030901" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <div class="breadcrumbs">
@@ -24,8 +23,6 @@
         </div>
     </div>
 
-<script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
