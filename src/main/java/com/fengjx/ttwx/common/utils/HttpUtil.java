@@ -5,12 +5,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import javax.net.ssl.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -22,18 +19,9 @@ import java.security.cert.X509Certificate;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import javax.servlet.http.HttpServletRequest;
-
 public class HttpUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(HttpUtil.class);
+    private static final Logger LOG = Logger.getLogger(HttpUtil.class);
 
     private static final String GET = "GET";
     private static final String POST = "POST";
@@ -87,7 +75,7 @@ public class HttpUtil {
     private static HttpURLConnection getHttpConnection(String url, String method,
             Map<String, String> headers) throws IOException, NoSuchAlgorithmException,
             NoSuchProviderException, KeyManagementException {
-        LOGGER.info("getHttpConnection url=[" + url + "], method=[" + method + "], header=["
+        LOG.debug("getHttpConnection url=[" + url + "], method=[" + method + "], header=["
                 + headers + "]");
         URL _url = new URL(url);
         HttpURLConnection conn = (HttpURLConnection) _url.openConnection();
@@ -154,7 +142,7 @@ public class HttpUtil {
 
             OutputStream out = conn.getOutputStream();
             out.write(data.getBytes(CHARSET));
-            LOGGER.info("post write data:{" + data + "}");
+            LOG.debug("post write data:{" + data + "}");
             out.flush();
             out.close();
 
@@ -191,7 +179,7 @@ public class HttpUtil {
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append("\n");
             }
-            LOGGER.info("readResponseString resStr=" + sb + "");
+            LOG.debug("readResponseString resStr=" + sb + "");
             return sb.toString();
         } catch (Exception e) {
             throw new RuntimeException(e);
