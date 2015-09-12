@@ -5,7 +5,6 @@
 <head>
 	<meta name="decorator" content="sys"/>
 	<title>接口管理</title>
-	<link href="${resourceUrl}/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 	<div class="breadcrumbs">
@@ -145,12 +144,6 @@
 		</div><!-- /.modal -->
 	</div>
 
-<script src="${resourceUrl}/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/jqGrid/grid-opt.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.formautofill.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/script/sys/extapp.js?v=2015090501" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

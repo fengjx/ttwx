@@ -51,9 +51,6 @@
     </div>
 
 
-<script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript"></script>
 <script src="${resourceUrl}/script/wechat/admin/material_util.js?v=2014091101" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/script/wechat/admin/default_action.js?v=2015060701" type="text/javascript" charset="UTF-8"></script>
 </body>

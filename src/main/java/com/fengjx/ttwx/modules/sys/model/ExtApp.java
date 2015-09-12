@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 扩展应用
@@ -39,35 +38,6 @@ public class ExtApp extends Model {
     private ExtAppSupport extAppSupport;
 
     /**
-     * @param app_type 应用类型 web、api、restful
-     * @param msg_type
-     * @param event_type
-     * @return
-     */
-    public List<Map<String, Object>> listByType(String app_type, String msg_type,
-            String event_type) {
-        if (StringUtils.isBlank(app_type)) {
-            throw new IllegalArgumentException("app_type不能为空！");
-        }
-        List<Object> params = new ArrayList();
-        StringBuilder sql = createListSql();
-        if (StringUtils.isNotBlank(app_type)) {
-            sql.append(" and e.app_type = ?");
-            params.add(app_type);
-        }
-        if (StringUtils.isNotBlank(msg_type)) {
-            sql.append("and e.msg_type = ?");
-            params.add(msg_type);
-        }
-        if (StringUtils.isNotBlank(event_type)) {
-            sql.append("and s.event_type = ?");
-            params.add(event_type);
-        }
-        sql.append(" order by order_no desc");
-        return findList(sql.toString(), params.toArray());
-    }
-
-    /**
      * 分页查询
      *
      * @param params
@@ -85,23 +55,23 @@ public class ExtApp extends Model {
             qryParams.add(params.get("app_type"));
         }
         if (StringUtils.isNoneBlank(params.getStr("name"))) {
-            sql.append(" and name like CONCAT('%',?,'%')");
+            sql.append(" and a.name like CONCAT('%',?,'%')");
             qryParams.add(params.get("name"));
         }
         if (StringUtils.isNoneBlank(params.getStr("start_time"))) {
-            sql.append(" and in_time >= ?");
+            sql.append(" and a.in_time >= ?");
             qryParams.add(DateUtils.parseDate(params.get("start_time")));
         }
         if (StringUtils.isNoneBlank(params.getStr("end_time"))) {
-            sql.append(" and in_time <= ?");
+            sql.append(" and a.in_time <= ?");
             qryParams.add(DateUtils.parseDate(params.get("end_time")));
         }
         if (StringUtils.isNotBlank(params.getStr("msg_type"))) {
-            sql.append("and e.msg_type = ?");
+            sql.append(" and e.msg_type = ?");
             qryParams.add(params.get("msg_type"));
         }
         if (StringUtils.isNotBlank(params.getStr("event_type"))) {
-            sql.append("and s.event_type = ?");
+            sql.append(" and e.event_type = ?");
             qryParams.add(params.get("event_type"));
         }
         sql.append(" order by in_time desc, order_no desc");

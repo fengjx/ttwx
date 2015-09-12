@@ -154,12 +154,7 @@
 												class="frm_checkbox"> 链接地址：<span class="tips l">（用户点击图文跳转的URL）</span>
 										</label>
 										</label> <span id="span_url" style="display: none;">
-											<jsp:include page="${fns:getConst('ADMIN_PATH')}/sys/ext/selecter">
-												<jsp:param name="showAll" value="1" />
-												<jsp:param name="id" value="busiapp_url" />
-												<jsp:param name="name" value="busiapp_url" />
-												<jsp:param name="app_type" value="web" />
-											</jsp:include>
+											<sys:extapp id="busiapp_url" name="busiapp_url" appType="web" allowInput="true" />
 										</span>
 									</div>
 									<div class="appmsg_edit_item content_edit" id="js_ueditor">

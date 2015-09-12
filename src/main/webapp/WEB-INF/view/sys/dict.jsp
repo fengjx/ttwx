@@ -110,23 +110,6 @@
 		</div><!-- /.modal -->
 	</div>
 
-<script src="${resourceUrl}/js/jquery.form.js" type="text/javascript" charset="UTF-8"></script>
-<script src="${resourceUrl}/js/jquery.formautofill.min.js" type="text/javascript" charset="UTF-8"></script>
-<c:choose>
-	<c:when test="${'JqGridPage' eq adapterPageName}">
-		<link href="${resourceUrl}/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css"/>
-		<script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/jqGrid/grid-opt.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/script/sys/dict-jqgrid.js?v=2015090602" type="text/javascript" charset="UTF-8"></script>
-	</c:when>
-	<c:otherwise>
-		<link href="${resourceUrl}/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
-		<script src="${resourceUrl}/bootstrap-table/bootstrap-table.min.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/bootstrap-table/bootstrap-table-option.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="${resourceUrl}/script/sys/dict.js?v=2015072601" type="text/javascript" charset="UTF-8"></script>
-	</c:otherwise>
-</c:choose>
+<script src="${resourceUrl}/script/sys/dict-jqgrid.js?v=2015090602" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

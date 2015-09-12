@@ -8,8 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><sitemesh:title/></title>
-    <sitemesh:head/>
     <jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
+    <sitemesh:head/>
 </head>
 <body class="no-skin">
 <jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>

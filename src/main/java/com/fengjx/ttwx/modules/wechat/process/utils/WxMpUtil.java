@@ -7,9 +7,8 @@ import com.fengjx.ttwx.modules.wechat.process.bean.MyWxMpConfigStorage;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.WxMpServiceImpl;
-import me.chanjar.weixin.mp.api.ext.WxMpServiceExt;
-import me.chanjar.weixin.mp.api.ext.WxMpServiceImplExt;
+import com.fengjx.ttwx.modules.wechat.process.sdk.api.WxMpServiceExt;
+import com.fengjx.ttwx.modules.wechat.process.sdk.api.WxMpServiceImplExt;
 import me.chanjar.weixin.mp.bean.*;
 
 /**
