@@ -13,8 +13,17 @@ var curDataId;
 var editor;
 //图片上传
 var uploader;
+var $templateModal;
 
 $(function(){
+
+	$templateModal = $('#templateModal').modal({
+		show: false
+	});
+
+	$("#btn-template").click(function () {
+		$templateModal.modal('show');
+	});
 
 	//默认编辑第一条消息
 	curDataId = 1;	//当前编辑的图文

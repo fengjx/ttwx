@@ -53,14 +53,14 @@
 		data-color="section.main:border-color;section.main2:border-color;section.main2:background-color;section.main3:border-color;section.main4:background-color;"
 		class="element-item selected">
 		<div class="content">
-	
+
 	<fieldset style="border: 0px; margin: 0.5em 0px; padding: 0px; box-sizing: border-box;" >
                       <h2 style="margin: 8px 0px 0px; padding: 0px; font-weight:bold;font-size:16px;line-height:28px;  max-width: 100%;color:rgb(0, 112, 192); min-height: 32px;border-bottom: 2px solid rgb(0, 112, 192); text-align: justify;"><span title="" data-original-title="" style="background-color:rgb(0, 112, 192); border-radius:80% 100% 90% 20%; color:rgb(255, 255, 255); display:block; float:left; line-height:20px; margin:0px 8px 0px 0px; max-width:100%; padding:4px 10px; word-wrap:break-word !important" placeholder="1" class="autonum">1</span><strong data-brushtype="text" class="135brush">第一标题</strong></h2>
                     </fieldset>
 	</div>
 	</div>
-	
-	
+
+
 	<div title=""
 		data-color="section.main:border-color;section.main2:border-color;section.main2:background-color;section.main3:border-color;section.main4:background-color;"
 		class="element-item">
@@ -2680,7 +2680,7 @@
 </div>
 
 <div class="clearfix"></div>
-<!-- 
+<!--
 <div contenteditable="true"
 	style="float: left; width: 100%; height: 195px; overflow-y: auto; overflow-x: hidden; background: white; margin-top: 10px; padding: 0px; border: 1px solid #d4d4d4;"
 	id="preview_content"></div>

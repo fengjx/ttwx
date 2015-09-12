@@ -130,16 +130,10 @@
 											<span class="tips l">（如果不填写链接地址，可以从编辑器中编辑內容，系統会生成编辑內容的URL地址）</span>
 										</label>
 										<div id="js_editor" class="edui_editor_wrp edui-default">
-											<div class="w_left">
-												<jsp:include page="/WEB-INF/view/wechat/admin/wechart_template.jsp"></jsp:include>
-											</div>
-											<div class="w_right">
-												<button id="btn-refresh" type="button" class="btn btn-primary btn-block">
-													<i class="glyphicon glyphicon-refresh"></i>
-													刷&nbsp;&nbsp;&nbsp;&nbsp;新
-												</button>
-												<script id="container" name="content" type="text/plain"></script>
-											</div>
+											<button id="btn-template" type="button" class="btn btn-primary btn-block">
+												选择模板
+											</button>
+											<script id="container" name="content" type="text/plain"></script>
 										</div>
 									</div>
 								</div>
@@ -177,6 +171,25 @@
 			</div>
 		</div>
 	</div>
+
+
+	<div id="templateModal" class="modal" tabindex="-1" role="dialog" >
+		<div class="modal-dialog" style="width: 550px;right: 413px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">应用编辑</h4>
+				</div>
+				<div class="modal-body">
+					<jsp:include page="/WEB-INF/view/wechat/admin/wechart_template.jsp"></jsp:include>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">关闭</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 </body>
 </html>
 
