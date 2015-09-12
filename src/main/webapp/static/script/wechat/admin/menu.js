@@ -395,6 +395,7 @@ function updateMsgView() {
             tabIndex = 5;
             if (selectNode.app_id) {
                 $("#busiapp_id").val(selectNode.app_id);
+                $("#label-busiapp_id").val(selectNode.app_name);
             }
         }
         $('#edit_tabs a:eq(' + tabIndex + ')').tab('show');

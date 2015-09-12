@@ -4,15 +4,12 @@
 <%@ attribute name="name" type="java.lang.String" required="true" description="元素name"%>
 <%@ attribute name="cssClass" type="java.lang.String" required="false" description="元素class"%>
 <%@ attribute name="cssStyle" type="java.lang.String" required="false" description=""%>
-<%@ attribute name="readonly" type="java.lang.Boolean" required="false" description="是否允许编辑"%>
+<%@ attribute name="allowInput" type="java.lang.Boolean" required="false" description="是否允许编辑"%>
 <%@ attribute name="appType" type="java.lang.String" required="true" description="应用类型"%>
 <%@ attribute name="msgType" type="java.lang.String" required="false" description="应用支持的消息类型"%>
 <%@ attribute name="eventType" type="java.lang.String" required="false" description="应用支持的事件类型"%>
 <input id="${id}" name="${name}" type="hidden" value=""/>
-<input type="hidden" id="appType" name="appType" value="${appType}"/>
-<input type="hidden" id="msgType" name="msgType" value="${msgType}"/>
-<input type="hidden" id="eventType" name="eventType" value="${eventType}"/>
-<input id="label-${id}" name="label-${name}" ${readonly?'':'readonly="readonly"'} type="text" value="" class="${cssClass}" style="${cssStyle}"/>
+<input id="label-${id}" name="label-${name}" ${allowInput?'':'readonly="readonly"'} type="text" value="" class="${cssClass}" style="${cssStyle}"/>
 <a id="button-${id}" name="button-search-app" href="javascript:" class="btn btn-xs btn-default">
     &nbsp;<i class="icon-search"></i>&nbsp;
 </a>
@@ -78,6 +75,7 @@
     $(function () {
         var $extappModal;
         var $extappTable;
+        var appType = '${appType}';
 
         $extappModal = $('#extappModal').modal({
             show: false
@@ -101,7 +99,6 @@
                 return false;
             }
             var row = $extappTable.jqGrid('getRowData', id);
-            var appType = $("#appType").val();
             if('web' == appType){
                 $("#label-${id}").val(row.app_url);
                 $("#${id}").val(row.app_url);
@@ -111,7 +108,11 @@
             }
             $extappModal.modal('hide');
         });
-
+        <c:if test="${allowInput}">
+            $("#label-${id}").blur(function () {
+                $("#${id}").val($(this).val());
+            });
+        </c:if>
         $("a[name='button-search-app']").click(function () {
             if(!$extappTable){
                 $extappTable = $('#data-table').jqGrid({
@@ -190,9 +191,9 @@
                         var end_time = $('#toolbar input[name="extapp_end_time"]').val();
                         postData = $.extend(postData, {
                             "name": $('#toolbar input[name="qry_name"]').val(),
-                            "app_type": $('#appType').val(),
-                            "app_type": $('#appType').val(),
-                            "app_type": $('#appType').val(),
+                            "app_type": appType,
+                            "msg_type": '${msgType}',
+                            "event_type": '${eventType}',
                             "is_valid": $('#extapp_is_valid').val(),
                             "start_time": start_time,
                             "end_time": end_time

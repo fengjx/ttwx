@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/view/common/inc/url.jsp"%>
+<%@include file="/WEB-INF/view/common/inc/path.jsp"%>
 <div>
 	<button id="btn-refresh" type="button" class="btn btn-primary btn-block">
 		<i class="glyphicon glyphicon-refresh"></i>
@@ -45,7 +45,7 @@
 	});
 	function loadMaterials(page,isAppend){
 		$.ajax({
-			url :  domain + '/admin/wechat/material/page?msg_type=news',
+			url : '${domain}/admin/wechat/material/page?msg_type=news',
 			data : "pageNumber="+page+"&pageSize="+pageSize,
 			cache : false,
 			dataType : "json",
@@ -83,7 +83,7 @@
 	function deleteMaterial(id){
 		app.confirmModal("确定要刪除素材？删除后无法恢复！", function () {
 			$.ajax({
-				url :  domain + '/admin/wechat/material/delete',
+				url : '${domain}/admin/wechat/material/delete',
 				data : "id="+id,
 				cache : false,
 				dataType : "json",
