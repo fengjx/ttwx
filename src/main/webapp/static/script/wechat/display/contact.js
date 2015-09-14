@@ -10,7 +10,7 @@ $(function(){
 	
 	$("#form-guestbook").submit(function(){
 		$(this).ajaxSubmit({
-			url : domain + "/contact/guestbook/save",
+			url : domain + "/portal/guestbook/save",
 	        dataType : 'json', 
 	        beforeSubmit : validForm,
 	        success : function(res){

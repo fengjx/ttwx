@@ -50,7 +50,8 @@
             <value>
                 com.fengjx.ttwx.modules.wechat.model,
                 com.fengjx.ttwx.modules.common.model,
-                com.fengjx.ttwx.modules.sys.model
+                com.fengjx.ttwx.modules.sys.model,
+                com.fengjx.ttwx.modules.portal.model
             </value>
         </property>
     </bean>
