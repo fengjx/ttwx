@@ -5,6 +5,7 @@
 	<decorator name="display" page="common/layout/display_layout.jsp" />
 	<decorator name="wechat" page="common/layout/admin_wechat_layout.jsp" />
 	<decorator name="sys" page="common/layout/admin_sys_layout.jsp" />
+	<decorator name="portal" page="common/layout/admin_portal_layout.jsp" />
 
 
 </decorators>

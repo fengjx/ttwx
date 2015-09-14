@@ -2,7 +2,7 @@
 <%@include file="/WEB-INF/view/common/inc/path.jsp" %>
 <script src="${resourceUrl}/script/common/leftMenu.js?v=2015082001" type="text/javascript"></script>
 <div id="side-menu" class="sidebar responsive">
-    <ul class="nav nav-sidebar nav-list" id="side-menu">
+    <ul class="nav nav-sidebar nav-list">
         <li>
             <a href="${adminPath}/sys/ext">
                 <i class="icon-retweet menu-icon"></i>

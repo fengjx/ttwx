@@ -14,7 +14,7 @@
 <body class="no-skin">
 <jsp:include page="/WEB-INF/view/common/inc/admin-header.jsp"></jsp:include>
 <div class="main-container">
-    <jsp:include page="/WEB-INF/view/sys/admin/inc_menu.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/view/portal/admin/inc_menu.jsp"></jsp:include>
     <div class="main-content">
         <div id="context" class="main-content-inner">
             <sitemesh:body/>

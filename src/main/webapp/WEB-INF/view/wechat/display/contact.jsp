@@ -74,6 +74,6 @@
 		</div>
 	</div>	<!-- /container -->
 	
-	<script src="${resourceUrl}/script/wechat/display/contact.js" type="text/javascript"></script>
+<script src="${resourceUrl}/script/portal/display/contact.js" type="text/javascript"></script>
 </body>
 </html>

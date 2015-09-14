@@ -1,12 +1,7 @@
-
 /**
  * 联系我们
  */
 $(function(){
-	
-	if(window.parent != window){
-		window.parent.location = window.location;
-	}
 	
 	$("#form-guestbook").submit(function(){
 		$(this).ajaxSubmit({

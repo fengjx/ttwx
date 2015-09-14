@@ -33,7 +33,7 @@ public class DictAdminController extends MyController {
 
     @RequestMapping(value = "")
     public ModelAndView view() {
-        ModelAndView mv = new ModelAndView("sys/dict");
+        ModelAndView mv = new ModelAndView("sys/admin/dict");
         return mv;
     }
 

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -30,15 +29,7 @@ public class ExtAppController extends MyController {
 
     @RequestMapping("")
     public String view() {
-        return "sys/extapp";
-    }
-
-    @RequestMapping("selecter")
-    public ModelAndView selecter(String app_type, String msg_type, String event_type) {
-        ModelAndView mv = new ModelAndView("sys/inc_ext_app");
-        // mv.addObject("apps", extApp.listByType(app_type, msg_type,
-        // event_type));
-        return mv;
+        return "sys/admin/extapp";
     }
 
     @RequestMapping("pageList")

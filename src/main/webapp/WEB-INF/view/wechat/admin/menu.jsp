@@ -83,12 +83,7 @@
                                 <tr>
                                     <td>
                                         链接地址：
-                                        <jsp:include page="${fns:getConst('ADMIN_PATH')}/sys/ext/selecter">
-                                            <jsp:param name="showAll" value="1"/>
-                                            <jsp:param name="id" value="busiapp_url"/>
-                                            <jsp:param name="name" value="busiapp_url"/>
-                                            <jsp:param name="app_type" value="web"/>
-                                        </jsp:include>
+                                        <sys:extapp id="busiapp_url" name="busiapp_url" appType="web" allowInput="true" />
                                     </td>
                                 </tr>
                             </table>
