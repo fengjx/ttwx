@@ -1,9 +1,8 @@
 
-package com.fengjx.ttwx.modules.wechat.controller.display;
+package com.fengjx.ttwx.modules.portal.controller.display;
 
 import com.fengjx.ttwx.modules.common.controller.MyController;
-import com.fengjx.ttwx.modules.wechat.model.GuestBook;
-
+import com.fengjx.ttwx.modules.portal.model.GuestBook;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,11 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 联系我们
@@ -24,13 +22,13 @@ import javax.servlet.http.HttpServletRequest;
  * @date：2015/5/17 0017
  */
 @Controller
-@RequestMapping("/contact")
-public class ContactConyroller extends MyController {
+@RequestMapping("/portal/guestbook")
+public class GuestbookController extends MyController {
 
     @Autowired
     private GuestBook guestBook;
 
-    @RequestMapping(value = "/guestbook/save", method = RequestMethod.POST)
+    @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> save(HttpServletRequest request) {
         Map<String, String> resMap = new HashMap<String, String>();

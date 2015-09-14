@@ -14,13 +14,13 @@
 	<div class="container page-wrapper">
 		<ol class="breadcrumb">
 			<li><a href="${domain}">首页</a></li>
-			<li class="active">联系我们</li>
+			<li class="active">建议反馈</li>
 		</ol>
 		<div class="row">
 			<!-- Article main content -->
 			<article class="col-sm-9 maincontent" style="margin-bottom: 20px;">
 				<p>
-					我们很乐意听取你的意见。如果在使用过程中有任何疑问，或者有兴趣加入我们。请填写下面表单的相关信息，我们会尽快给你回应。
+					我们很乐意听取你的意见。如果在使用过程中有任何疑问，或者功能上有什么需求，可以填下一下信息，我们回看到并相应你的反馈。
 				</p>
 				<br>
 					<form id="form-guestbook" method="POST">
@@ -38,7 +38,7 @@
 						<br>
 						<div class="row">
 							<div class="col-sm-12">
-								<textarea id="msg" name="msg" placeholder="编辑你要发送的信息（必填）..." class="form-control" rows="9"></textarea>
+								<textarea id="msg" name="msg" placeholder="你的建议或者功能需求（必填）..." class="form-control" rows="9"></textarea>
 							</div>
 						</div>
 						<br>

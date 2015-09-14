@@ -1,4 +1,4 @@
-package com.fengjx.ttwx.modules.wechat.model;
+package com.fengjx.ttwx.modules.portal.model;
 
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;

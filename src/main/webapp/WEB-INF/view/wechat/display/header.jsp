@@ -32,7 +32,7 @@
             </li>
           </ul>
         </li>
-        <li><a href="${domain}/contact">联系我们</a></li>
+        <li><a href="${domain}/contact">建议反馈</a></li>
         <%-- <li><a href="${domain}/about">关于我们</a></li> --%>
         <li><a href="http://fengjx.com" target="_blank">关于我们</a></li>
         <form role="search" class="navbar-form navbar-left">
