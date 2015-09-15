@@ -325,6 +325,27 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
         }
     };
 
+    app.winModal = function (title, url, onclose, opt) {
+        app.closeDialog();
+        var _opt = $.extend({
+            zIndex: app.artZindex,
+            fixed: true,
+            title: title,
+            url: url,
+            onclose: function () {
+                // 处理返回值
+                if (this.returnValue && onclose) {
+                    onclose(this.returnValue);
+                }
+            },
+            ok: function () {
+            }
+        }, opt || {});
+        app.art = dialog(_opt);
+        app.art.showModal();
+    };
+
+
     app.closeDialog = function () {
         if (app.art) {
             app.art.close().remove();

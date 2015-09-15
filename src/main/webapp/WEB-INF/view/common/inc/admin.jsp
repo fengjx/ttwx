@@ -15,9 +15,8 @@
 <script src="${resourceUrl}/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/scojs/js/sco.message.js" type="text/javascript"></script>
 <script src="${resourceUrl}/scojs/js/sco.valid.js" type="text/javascript"></script>
-<script src="${resourceUrl}/artDialog/dist/dialog-min.js" type="text/javascript"></script>
+<script src="${resourceUrl}/artDialog/dist/dialog.js" type="text/javascript"></script>
 <script src="${resourceUrl}/nprogress/nprogress.js" type="text/javascript"></script>
-<script src="${resourceUrl}/script/common/app.js" type="text/javascript"></script>
 <script src="${resourceUrl}/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/jqGrid/js/i18n/grid.locale-cn.js" type="text/javascript" charset="UTF-8"></script>
@@ -27,6 +26,7 @@
 <script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="${resourceUrl}/script/common/app.js?v=2015091501" type="text/javascript"></script>
 
 <!--[if lte IE 8]>
 <script src="${resourceUrl}/js/excanvas.min.js" type="text/javascript"></script>
