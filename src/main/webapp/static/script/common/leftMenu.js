@@ -16,7 +16,7 @@ $(function () {
     }
     $("#sidebar-collapse").click(function () {
         var isOpen = $("#side-menu").hasClass("menu-min");
-        sidebar(isOpen?1:0);
+        sidebar(isOpen ? 1 : 0);
     });
 
 });
@@ -27,11 +27,11 @@ function sidebar(isOpen) {
         $("#side-menu").removeClass("menu-min");
         $sidebar.find("i").addClass("icon-arrow-left");
         $sidebar.find("i").removeClass("icon-arrow-right");
-        $.cookie("isOpen", 1);
+        $.cookie("isOpen", 1, {expires: 7, path: '/'});
     } else {
         $("#side-menu").addClass("menu-min");
         $sidebar.find("i").removeClass("icon-arrow-left");
         $sidebar.find("i").addClass("icon-arrow-right");
-        $.cookie("isOpen", 0);
+        $.cookie("isOpen", 0, {expires: 7, path: '/'});
     }
 }

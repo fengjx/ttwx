@@ -97,4 +97,12 @@
         <example>${fns:toJson(object)}</example>
     </function>
 
+    <function>
+        <description>获取当前时间戳</description>
+        <name>currentTimeMillis</name>
+        <function-class>com.fengjx.ttwx.common.utils.DateUtils</function-class>
+        <function-signature>long currentTimeMillis()</function-signature>
+        <example>${fns:currentTimeMillis()}</example>
+    </function>
+
 </taglib>

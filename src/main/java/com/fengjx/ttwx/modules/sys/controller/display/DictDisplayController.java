@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 数据字典
@@ -21,19 +20,6 @@ public class DictDisplayController extends MyController {
 
     @Autowired
     private Dict dict;
-
-    /**
-     * 查询字典列表
-     *
-     * @param groupCode
-     * @return
-     */
-    @RequestMapping("selecter")
-    public ModelAndView selecter(String groupCode) {
-        ModelAndView mv = new ModelAndView("common/inc/dict");
-        mv.addObject("dicts", dict.findDictList(groupCode));
-        return mv;
-    }
 
     @RequestMapping("label")
     @ResponseBody
