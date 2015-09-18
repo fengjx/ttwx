@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import com.ext.qiniu.QiNiuUti;
+import com.fengjx.ttwx.common.ext.qiniu.QiNiuUti;
 
 @Component
 public class ImageManager {

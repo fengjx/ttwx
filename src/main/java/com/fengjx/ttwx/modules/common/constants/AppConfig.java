@@ -43,6 +43,10 @@ public final class AppConfig {
 
     public static final String ADAPTER_PAGE_NAME = GetPropertiesVal.getLabel("adapterPageName");
 
+    public static final String UEDITOR_SAVEPATH = GetPropertiesVal.getLabel("ueditor.savePath");
+    public static final String UEDITOR_FILENAMEFORMAT = GetPropertiesVal
+            .getLabel("ueditor.fileNameFormat");
+
     /**
      * 是/否
      */

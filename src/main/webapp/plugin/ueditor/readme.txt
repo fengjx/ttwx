@@ -1,2 +1,2 @@
 百度编辑器
-版本1_3_6
+版本ueditor_release-ueditor1_4_3_1-utf8-jsp

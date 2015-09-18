@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ext.qiniu.QiNiuUti;
+import com.fengjx.ttwx.common.ext.qiniu.QiNiuUti;
 
 /**
  * 七牛图片列表
