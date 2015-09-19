@@ -59,14 +59,12 @@
 					<span class="text-primary">未认证的订阅号可留空</span>
 				</div>
 			</div>
-			<c:choose>
-				<c:when test="${ null == wechatAccount.id || '' eq wechatAccount.id }">
-					<input style="margin-left: 180px;" class="btn btn-danger" type="submit" id="btn-submit" value="&nbsp;生&nbsp;成&nbsp;授&nbsp;权&nbsp;" />
-				</c:when>
-				<c:otherwise>
-					<input style="margin-left: 180px;" class="btn btn-info" type="submit" id="btn-submit" value="&nbsp;更&nbsp;新&nbsp;授&nbsp;权&nbsp;" />
-				</c:otherwise>
-			</c:choose>
+			<div class="control-group">
+				<div class="controls">
+					<input class="btn btn-info" type="submit" id="btn-submit" value="保存" />
+					<input class="btn btn-info" type="submit" id="btn-reset" value="重置" />
+				</div>
+			</div>
 		</form>
 
 	</div>

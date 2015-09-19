@@ -4,7 +4,7 @@ package com.fengjx.ttwx.modules.common.controller;
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.common.web.BaseController;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
-import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
+import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

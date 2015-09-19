@@ -11,11 +11,10 @@ import com.fengjx.ttwx.common.utils.FileUtil;
 import com.fengjx.ttwx.common.utils.HttpUtil;
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
-
+import com.fengjx.ttwx.modules.wechat.process.sdk.api.WxMpServiceExt;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
-import com.fengjx.ttwx.modules.wechat.process.sdk.api.WxMpServiceExt;
 import me.chanjar.weixin.mp.bean.WxMpMassGroupMessage;
 import me.chanjar.weixin.mp.bean.WxMpMassNews;
 import me.chanjar.weixin.mp.bean.WxMpMassNews.WxMpMassNewsArticle;
@@ -25,11 +24,8 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutNewsMessage.Item;
 import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
 import me.chanjar.weixin.mp.bean.result.WxMpMassUploadResult;
 import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
-
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +50,6 @@ import java.util.Map;
 @Mapper(table = "wechat_material")
 public class Material extends Model {
 
-    private static final Log logger = LogFactory.getLog(Material.class);
     @Autowired
     private PublicAccount publicAccount;
 
@@ -118,11 +113,11 @@ public class Material extends Model {
                             QiNiuUti.uploadFile(temp, htmlUrl, true);
                             temp.delete();
 
-                            logger.debug("path:" + path);
+                            LOG.debug("path:" + path);
                         } catch (IOException e) {
-                            logger.error(e.getMessage(), e);
+                            LOG.error(e.getMessage(), e);
                         } catch (Exception e) {
-                            logger.error(e.getMessage(), e);
+                            LOG.error(e.getMessage(), e);
                         }
 
                     } else {
@@ -193,7 +188,7 @@ public class Material extends Model {
         massMessage.setMediaId(uploadResult.getMediaId());
         massMessage.getToUsers().add(wxUserId);// .add("oaXuSv4_0mXijafuTFuJ6DqeX7Jo");
         WxMpMassSendResult sendResult = mpService.massPreviewMessage(massMessage);
-        logger.debug("send mass message news:" + sendResult);
+        LOG.debug("send mass message news:" + sendResult);
     }
 
     private WxMpMassUploadResult uploadMedia(
@@ -221,7 +216,7 @@ public class Material extends Model {
                 break;
             }
             Map<String, Object> content = contents.get(i);
-            // logger.debug("content:" + content);
+            // LOG.debug("content:" + content);
             String picUrl = item.getPicUrl();
             WxMpMassNewsArticle art = new WxMpMassNewsArticle();
             art.setAuthor(AppConfig.APP_NAME);
@@ -229,7 +224,7 @@ public class Material extends Model {
             // art.setContentSourceUrl(contentSourceUrl);;
             art.setTitle(item.getTitle());
             Object content2 = content.get("content");
-            logger.debug("content2:" + content2);
+            LOG.debug("content2:" + content2);
             art.setContent((String) content2);
 
             if (picUrl != null) {
@@ -247,7 +242,7 @@ public class Material extends Model {
                 } catch (WxErrorException e) {
                     e.printStackTrace();
                 }
-                logger.debug("uploadImageResult:" + uploadMediaResult);
+                LOG.debug("uploadImageResult:" + uploadMediaResult);
                 if (uploadMediaResult != null
                         && uploadMediaResult.getMediaId() != null) {
                     art.setThumbMediaId(uploadMediaResult.getMediaId());
@@ -272,8 +267,7 @@ public class Material extends Model {
         message.setMsgtype(WxConsts.MASS_MSG_NEWS);
         message.setMediaId(uploadResult.getMediaId());
         WxMpMassSendResult result = mpService.massGroupMessageSend(message);
-        logger.debug(result);
-
+        LOG.debug(result.toString());
     }
 
 }

@@ -5,8 +5,8 @@
   </head>
   <body>
     ${userEmail!}，您好：<br>
-    	请点击以下链接进行校验：${validUrl}
+    	请点击以下链接进行激活：<a href="${validUrl}">${validUrl}</a>
     	<p>--------</p>
-    	<p>天天微信</p>
+    	<p>${appName}</p>
   </body>
 </html>

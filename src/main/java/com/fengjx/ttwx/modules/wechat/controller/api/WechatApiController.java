@@ -37,7 +37,7 @@ public class WechatApiController extends MyController {
     /**
      * 接口认证
      */
-    @RequestMapping(value = "/wechat/api", method = RequestMethod.GET)
+    @RequestMapping(value = "${apiPath}", method = RequestMethod.GET)
     @ResponseBody
     public String valid(HttpServletRequest request) {
         // 拦截器里已经做了消息签名校验，这里直接返回就可以了
@@ -53,7 +53,7 @@ public class WechatApiController extends MyController {
      *
      * @throws Exception
      */
-    @RequestMapping(value = "/wechat/api", produces = "text/javascript;charset=UTF-8", method = RequestMethod.POST)
+    @RequestMapping(value = "${apiPath}", produces = "text/javascript;charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
     public String responseMsg(HttpServletRequest request) {
         String res = serviceEngine.processRequest();

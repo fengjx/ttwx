@@ -41,6 +41,8 @@ public final class AppConfig {
 
     public static final String ADMIN_PATH = GetPropertiesVal.getLabel("adminPath");
 
+    public static final String API_PATH = GetPropertiesVal.getLabel("apiPath");
+
     public static final String ADAPTER_PAGE_NAME = GetPropertiesVal.getLabel("adapterPageName");
 
     public static final String UEDITOR_SAVEPATH = GetPropertiesVal.getLabel("ueditor.savePath");

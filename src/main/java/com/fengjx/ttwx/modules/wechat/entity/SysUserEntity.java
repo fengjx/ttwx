@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.wechat.bean;
+package com.fengjx.ttwx.modules.wechat.entity;
 
 import com.fengjx.ttwx.common.bean.ToStringBase;
 

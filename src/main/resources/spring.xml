@@ -20,11 +20,12 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <aop:aspectj-autoproxy/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <import resource="spring-db.xml"/>
     <import resource="spring-beans.xml"/>
     <import resource="spring-aop.xml"/>
     <import resource="spring-email.xml"/>
+    <import resource="spring-scheduled.xml"/>
 
 </beans>

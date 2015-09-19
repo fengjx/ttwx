@@ -1,6 +1,8 @@
 
 package com.fengjx.ttwx.common.plugin.mail;
 
+import com.fengjx.ttwx.common.bean.ToStringBase;
+
 import java.io.File;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  * @Created by FengJianxin on 2015/8/23.
  * @Email xd-fjx@qq.com
  */
-public class SendMailBean {
+public class SendMailBean extends ToStringBase {
 
     public static final String TYPE_TEXT = "text"; // 文本格式
     public static final String TYPE_HTML = "html"; // html格式

@@ -16,8 +16,7 @@ import java.util.Map;
 /**
  * 授权设置
  *
- * @author fengjx.
- * @date：2015/5/17 0017
+ * @author fengjx. @date：2015/5/17 0017
  */
 @Controller
 @RequestMapping("${adminPath}/wechat/setting")
@@ -29,8 +28,8 @@ public class SettingController extends MyController {
     @RequestMapping(value = "")
     public ModelAndView view(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("wechat/admin/setting");
-        mv.addObject("wechatAccount", publicAccount.getAccountSetting(getLoginSysUserId(request))
-                .getColumns());
+        mv.addObject("wechatAccount",
+                publicAccount.getAccountByUserId(getLoginSysUserId(request)).getColumns());
         return mv;
     }
 

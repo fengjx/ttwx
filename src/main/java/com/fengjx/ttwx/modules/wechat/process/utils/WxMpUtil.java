@@ -12,11 +12,9 @@ import com.fengjx.ttwx.modules.wechat.process.sdk.api.WxMpServiceImplExt;
 import me.chanjar.weixin.mp.bean.*;
 
 /**
- * @author fengjx.
- * @date：2015/6/24 0024
+ * @author fengjx. @date：2015/6/24 0024
  */
 public final class WxMpUtil {
-
 
     /**
      * 通过数据创建ConfigStorage对象
@@ -25,6 +23,9 @@ public final class WxMpUtil {
      * @return
      */
     public static WxMpConfigStorage buildConfigStorage(Record accountRecord) {
+        if (null == accountRecord || accountRecord.isEmpty()) {
+            return null;
+        }
         MyWxMpConfigStorage config = new MyWxMpConfigStorage();
         // 设置微信公众号的appid
         config.setAppId(accountRecord.getStr("app_id"));
@@ -42,7 +43,7 @@ public final class WxMpUtil {
      * @return
      */
     public static WxMpService getWxMpServiceByConfig(WxMpConfigStorage config) {
-    	WxMpServiceExt wxMpService = new WxMpServiceImplExt();
+        WxMpServiceExt wxMpService = new WxMpServiceImplExt();
         wxMpService.setWxMpConfigStorage(config);
         return wxMpService;
     }

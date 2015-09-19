@@ -4,16 +4,14 @@ package com.fengjx.ttwx.modules.wechat.model;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.Record;
-import com.fengjx.ttwx.common.plugin.freemarker.FreemarkerUtil;
-import com.fengjx.ttwx.common.plugin.mail.EmailUtil;
-import com.fengjx.ttwx.common.plugin.mail.SendMailBean;
 import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.AesUtil;
 import com.fengjx.ttwx.common.utils.CommonUtils;
-import com.fengjx.ttwx.modules.common.constants.AppConfig;
-import com.fengjx.ttwx.modules.common.constants.FtlFilenameConstants;
-import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
+import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
+import com.fengjx.ttwx.modules.wechat.listener.RegisterEvent;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,12 +23,14 @@ import java.util.Map;
 /**
  * 系统用户管理
  *
- * @author fengjx.
- * @date：2015/5/6 0006
+ * @author fengjx. @date：2015/5/6 0006
  */
 @Component
 @Mapper(table = "wechat_sys_user", id = "id")
 public class SysUser extends Model {
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     /**
      * 登录
@@ -43,7 +43,7 @@ public class SysUser extends Model {
         Map<String, Object> attrs = new HashMap();
         attrs.put("username", username);
         Record record = findOne(attrs);
-        String md5Hex = DigestUtils.md5Hex(pwd);
+        String md5Hex = DigestUtils.md5Hex(pwd + record.getStr("email"));
         if (null != record && record.getStr("pwd").equalsIgnoreCase(md5Hex)) {
             return record.toBean(SysUserEntity.class);
         }
@@ -64,35 +64,16 @@ public class SysUser extends Model {
         if (validEmail((String) attrs.get("email"))) {
             throw new MyRuntimeException("邮箱已被占用");
         }
-        attrs.put("pwd", DigestUtils.md5Hex((String) attrs.get("pwd")));
+        attrs.put("id", CommonUtils.getPrimaryKey());
+        attrs.put("pwd", DigestUtils.md5Hex(((String) attrs.get("pwd") + attrs.get("email"))));
         attrs.put("is_valid", "0");
         attrs.put("valid_uid", CommonUtils.getPrimaryKey());
         attrs.put("in_time", new Date());
         // 默认积分
         attrs.put("score", 0);
         insert(attrs);
-        sendRegisterMail(attrs);
-    }
-
-    /**
-     * 发送账号激活邮件
-     *
-     * @param attrs
-     * @throws Exception
-     */
-    public void sendRegisterMail(Map<String, Object> attrs) throws Exception {
-        SendMailBean mail = new SendMailBean();
-        mail.setType(SendMailBean.TYPE_HTML);
-        mail.setToUser((String) attrs.get("email"));
-        mail.setSubject("邮箱验证");
-        Map<String, String> root = new HashMap();
-        root.put("userEmail", (String) attrs.get("email"));
-        root.put(
-                "validUrl",
-                AppConfig.DOMAIN_PAGE + "/activate?ser="
-                        + AesUtil.encrypt((String) attrs.get("valid_uid")));
-        mail.setContent(FreemarkerUtil.process(root, FtlFilenameConstants.REGISTER_VALID_MAIN));
-        EmailUtil.send(mail);
+        // 推送注册消息，监听了RegisterEvent的listener将会收到此消息
+        applicationContext.publishEvent(new RegisterEvent(attrs));
     }
 
     /**

@@ -4,7 +4,7 @@ package com.fengjx.ttwx.modules.wechat.controller.admin.interceptor;
 import com.fengjx.ttwx.common.utils.CookieUtils;
 import com.fengjx.ttwx.common.utils.WebUtil;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
-import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
+import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

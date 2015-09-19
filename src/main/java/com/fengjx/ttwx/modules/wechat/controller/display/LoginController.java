@@ -5,9 +5,8 @@ import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.common.web.MyExecuteCallback;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.controller.MyController;
-import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
+import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
 import com.fengjx.ttwx.modules.wechat.model.SysUser;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * 用户登录注册

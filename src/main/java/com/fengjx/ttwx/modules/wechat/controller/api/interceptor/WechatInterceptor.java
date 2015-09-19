@@ -2,17 +2,14 @@
 package com.fengjx.ttwx.modules.wechat.controller.api.interceptor;
 
 import com.fengjx.ttwx.common.plugin.db.Record;
-import com.fengjx.ttwx.common.utils.AesUtil;
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.wechat.model.PublicAccount;
 import com.fengjx.ttwx.modules.wechat.process.bean.WechatContext;
 import com.fengjx.ttwx.modules.wechat.process.utils.WxMpUtil;
-
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -21,10 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.ByteArrayInputStream;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 
 public class WechatInterceptor implements HandlerInterceptor {
 
@@ -33,15 +29,13 @@ public class WechatInterceptor implements HandlerInterceptor {
 
     private static final Logger LOG = LoggerFactory.getLogger(WechatInterceptor.class);
 
-    public void afterCompletion(HttpServletRequest request,
-            HttpServletResponse response, Object handler, Exception e)
-            throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+            Object handler, Exception e) throws Exception {
         WechatContext.removeAll();
     }
 
-    public void postHandle(HttpServletRequest request,
-            HttpServletResponse response, Object handler, ModelAndView arg3)
-            throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView arg3) throws Exception {
 
     }
 
@@ -54,8 +48,8 @@ public class WechatInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object handler) throws Exception {
         // 在request.getParameter之后读取InputStream会导致流没有读取完整，所以这里临时保存
-        ByteArrayInputStream in = new ByteArrayInputStream(IOUtils.toByteArray(request
-                .getInputStream()));
+        ByteArrayInputStream in = new ByteArrayInputStream(
+                IOUtils.toByteArray(request.getInputStream()));
         try {
             String ticket = request.getParameter("ticket");
             if (StringUtils.isBlank(ticket)) {
@@ -63,12 +57,11 @@ public class WechatInterceptor implements HandlerInterceptor {
                 return false;
             }
             // 解密
-            String id =  AesUtil.decrypt(ticket); 
             String signature = request.getParameter("signature");
             String nonce = request.getParameter("nonce");
             String timestamp = request.getParameter("timestamp");
             // 将公众号配置信息放到微信请求上下文
-            Record record = publicAccount.findById(id);
+            Record record = publicAccount.findByTicket(ticket);
             if (record.isEmpty()) {
                 LogUtil.info(LOG, "ticket无效，找不到对应公众号信息");
                 return false;
@@ -90,9 +83,8 @@ public class WechatInterceptor implements HandlerInterceptor {
                 // 说明是一个仅仅用来验证的请求
                 return true;
             }
-            String encryptType = StringUtils.isBlank(request.getParameter("encrypt_type")) ?
-                    "raw" :
-                    request.getParameter("encrypt_type");
+            String encryptType = StringUtils.isBlank(request.getParameter("encrypt_type")) ? "raw"
+                    : request.getParameter("encrypt_type");
             WxMpXmlMessage inMessage = null;
             if ("raw".equals(encryptType)) {
                 // 明文传输的消息

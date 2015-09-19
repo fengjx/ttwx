@@ -3,7 +3,7 @@ package com.fengjx.ttwx.modules.wechat.controller.admin;
 
 import com.fengjx.ttwx.common.utils.JsonUtil;
 import com.fengjx.ttwx.modules.common.controller.MyController;
-import com.fengjx.ttwx.modules.wechat.bean.SysUserEntity;
+import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
 import com.fengjx.ttwx.modules.wechat.model.Material;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
