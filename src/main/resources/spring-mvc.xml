@@ -19,6 +19,7 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <!-- 添加注解驱动 -->
     <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
         <mvc:message-converters register-defaults="true">
             <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
@@ -90,5 +91,7 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="${web.maxUploadSize}"/>
     </bean>
+
+    <import resource="spring-mvc-interceptor.xml"/>
 
 </beans>
