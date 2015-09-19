@@ -22,7 +22,7 @@ public class FileManager {
 	public FileManager ( Map<String, Object> conf ) {
 
 		this.rootPath = (String)conf.get( "rootPath" );
-		this.dir = this.rootPath + (String)conf.get( "dir" );
+		this.dir = this.rootPath + conf.get( "dir" );
 		this.allowFiles = this.getAllowFiles( conf.get("allowFiles") );
 		this.count = (Integer)conf.get( "count" );
 		

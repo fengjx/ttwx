@@ -164,6 +164,27 @@ public final class ConfigManager {
             if (null == jsonConfig.get("imageUrlPrefix")) {
                 jsonConfig.put("imageUrlPrefix", AppConfig.STATIC_DOMAIN);
             }
+            if (null == jsonConfig.get("scrawlUrlPrefix")) {
+                jsonConfig.put("scrawlUrlPrefix", AppConfig.STATIC_DOMAIN);
+            }
+            if (null == jsonConfig.get("snapscreenUrlPrefix")) {
+                jsonConfig.put("snapscreenUrlPrefix", AppConfig.STATIC_DOMAIN);
+            }
+            if (null == jsonConfig.get("catcherUrlPrefix")) {
+                jsonConfig.put("catcherUrlPrefix", AppConfig.STATIC_DOMAIN);
+            }
+            if (null == jsonConfig.get("videoUrlPrefix")) {
+                jsonConfig.put("videoUrlPrefix", AppConfig.STATIC_DOMAIN);
+            }
+            if (null == jsonConfig.get("fileUrlPrefix")) {
+                jsonConfig.put("fileUrlPrefix", AppConfig.STATIC_DOMAIN);
+            }
+            if (null == jsonConfig.get("imageManagerUrlPrefix")) {
+                jsonConfig.put("imageManagerUrlPrefix", AppConfig.STATIC_DOMAIN);
+            }
+            if (null == jsonConfig.get("fileManagerUrlPrefix")) {
+                jsonConfig.put("fileManagerUrlPrefix", AppConfig.STATIC_DOMAIN);
+            }
             this.jsonConfig = jsonConfig;
         } catch (Exception e) {
             this.jsonConfig = null;
