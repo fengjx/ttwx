@@ -1,14 +1,6 @@
 
 package com.fengjx.ttwx.common.ext.qiniu;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fengjx.ttwx.common.utils.GetPropertiesVal;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
@@ -16,6 +8,13 @@ import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QiNiuUti {
     private static final Logger LOG = LoggerFactory.getLogger(QiNiuUti.class);
@@ -42,15 +41,15 @@ public class QiNiuUti {
                 bucketManager = new BucketManager(auth);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("init qiniu error", e);
         }
     }
 
     /**
      * 上传文件
-     * 
+     *
+     * @param byteOrFile
      * @param key
-     * @param file
      * @throws Exception
      */
     public static void uploadFile(byte[] byteOrFile, String key) throws Exception {
@@ -81,7 +80,8 @@ public class QiNiuUti {
         }
     }
 
-    public static void uploadFile(File byteOrFile, String key, boolean overwrite) throws Exception {
+    public static void uploadFile(File byteOrFile, String key, boolean overwrite)
+            throws QiniuException {
         try {
             if (key.startsWith("/"))
                 key = key.substring(1, key.length());
@@ -91,14 +91,13 @@ public class QiNiuUti {
                 // System.out.println(res);
                 LOG.debug("upload success");
             } else {
-                throw new Exception("status:" + res.statusCode + ",error:" + res.error);
+                throw new RuntimeException("status:" + res.statusCode + ",error:" + res.error);
             }
         } catch (QiniuException e) {
             LOG.error(e.getMessage(), e);
             Response r = e.response;
             // 请求失败时简单状态信息
             LOG.error(r.error);
-
             try {
                 // 响应的文本信息
                 LOG.error(r.bodyString());
@@ -119,18 +118,18 @@ public class QiNiuUti {
 
     public static List<String> listFile(String prefix, int limit, String delimiter) {
         BucketManager.FileListIterator it = bucketManager.createFileListIterator(bucket, prefix,
-				limit, delimiter);
-        List<String> list = new ArrayList<String>();
+                limit, delimiter);
+        List<String> list = new ArrayList();
         while (it.hasNext()) {
             FileInfo[] items = it.next();
             if (items.length > 0) {
                 for (int i = 0; i < items.length; i++) {
                     FileInfo fi = items[i];
-                    if (fi != null)
+                    if (fi != null) {
                         list.add(fi.key);
+                    }
                 }
             }
-
         }
         return list;
     }

@@ -1,3 +1,4 @@
+
 package com.fengjx.ttwx.common.ext.baidu.ueditor.upload;
 
 import com.fengjx.ttwx.common.ext.baidu.ueditor.PathFormat;
@@ -5,48 +6,50 @@ import com.fengjx.ttwx.common.ext.baidu.ueditor.define.AppInfo;
 import com.fengjx.ttwx.common.ext.baidu.ueditor.define.BaseState;
 import com.fengjx.ttwx.common.ext.baidu.ueditor.define.FileType;
 import com.fengjx.ttwx.common.ext.baidu.ueditor.define.State;
+import org.apache.commons.codec.binary.Base64;
 
 import java.util.Map;
 
-import org.apache.commons.codec.binary.Base64;
-
 public final class Base64Uploader {
 
-	public static State save(String content, Map<String, Object> conf) {
-		
-		byte[] data = decode(content);
+    public static State save(String content, Map<String, Object> conf) {
 
-		long maxSize = ((Long) conf.get("maxSize")).longValue();
+        byte[] data = decode(content);
 
-		if (!validSize(data, maxSize)) {
-			return new BaseState(false, AppInfo.MAX_SIZE);
-		}
+        long maxSize = ((Long) conf.get("maxSize")).longValue();
 
-		String suffix = FileType.getSuffix("JPG");
+        if (!validSize(data, maxSize)) {
+            return new BaseState(false, AppInfo.MAX_SIZE);
+        }
 
-		String savePath = PathFormat.parse((String) conf.get("savePath"),
-				(String) conf.get("filename"));
-		
-		savePath = savePath + suffix;
-		String physicalPath = (String) conf.get("rootPath") + savePath;
+        String suffix = FileType.getSuffix("JPG");
 
-		State storageState = StorageManager.saveBinaryFile(data, physicalPath);
+        String savePath = PathFormat.parse((String) conf.get("savePath"),
+                (String) conf.get("filename"));
 
-		if (storageState.isSuccess()) {
-			storageState.putInfo("url", PathFormat.format(savePath));
-			storageState.putInfo("type", suffix);
-			storageState.putInfo("original", "");
-		}
+        savePath = savePath + suffix;
+        String physicalPath = conf.get("rootPath") + savePath;
 
-		return storageState;
-	}
+        // 从配置文件读取文件存储方式
+        IStorageManager storageManager = StorageFactory.createStorageManager((String) conf
+                .get("storageType"));
+        State storageState = storageManager.saveBinaryFile(data, physicalPath);
 
-	private static byte[] decode(String content) {
-		return Base64.decodeBase64(content);
-	}
+        if (storageState.isSuccess()) {
+            storageState.putInfo("url", PathFormat.format(savePath));
+            storageState.putInfo("type", suffix);
+            storageState.putInfo("original", "");
+        }
 
-	private static boolean validSize(byte[] data, long length) {
-		return data.length <= length;
-	}
-	
+        return storageState;
+    }
+
+    private static byte[] decode(String content) {
+        return Base64.decodeBase64(content);
+    }
+
+    private static boolean validSize(byte[] data, long length) {
+        return data.length <= length;
+    }
+
 }

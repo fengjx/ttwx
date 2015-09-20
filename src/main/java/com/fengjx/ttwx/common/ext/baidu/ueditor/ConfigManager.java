@@ -143,6 +143,8 @@ public final class ConfigManager {
 
         conf.put("savePath", savePath);
         conf.put("rootPath", this.rootPath);
+        // 文件存储方式
+        conf.put("storageType", AppConfig.getConfig("storage.type"));
         return conf;
 
     }

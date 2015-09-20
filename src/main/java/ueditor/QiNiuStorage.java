@@ -1,11 +1,10 @@
 package ueditor;
 
-import java.io.File;
-import java.util.List;
-
+import com.fengjx.ttwx.common.ext.qiniu.QiNiuUti;
 import org.springframework.stereotype.Component;
 
-import com.fengjx.ttwx.common.ext.qiniu.QiNiuUti;
+import java.io.File;
+import java.util.List;
 
 /**
  * 七牛图片列表
@@ -19,7 +18,6 @@ public class QiNiuStorage implements IImagesStorage  {
 	public   String getImages() {
 		String prefix="upload/images/";
 		List<String> listKey=QiNiuUti.listFile(prefix,1000,null);
-		 
 		StringBuffer sb = new StringBuffer();
 		for (String key : listKey) {
 			sb.append("/");

@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
-public class FileManager {
+public class FileManager implements IFileManager {
 
 	private String dir = null;
 	private String rootPath = null;
@@ -20,27 +20,22 @@ public class FileManager {
 	private int count = 0;
 	
 	public FileManager ( Map<String, Object> conf ) {
-
 		this.rootPath = (String)conf.get( "rootPath" );
 		this.dir = this.rootPath + conf.get( "dir" );
 		this.allowFiles = this.getAllowFiles( conf.get("allowFiles") );
 		this.count = (Integer)conf.get( "count" );
-		
 	}
-	
+
+	@Override
 	public State listFile ( int index ) {
-		
 		File dir = new File( this.dir );
 		State state = null;
-
 		if ( !dir.exists() ) {
 			return new BaseState( false, AppInfo.NOT_EXIST );
 		}
-		
 		if ( !dir.isDirectory() ) {
 			return new BaseState( false, AppInfo.NOT_DIRECTORY );
 		}
-		
 		Collection<File> list = FileUtils.listFiles( dir, this.allowFiles, true );
 		
 		if ( index < 0 || index > list.size() ) {
@@ -79,10 +74,8 @@ public class FileManager {
 	}
 	
 	private String getPath ( File file ) {
-		
-		String path = file.getAbsolutePath();
-		
-		return path.replace( this.rootPath, "/" );
+		String path = file.getAbsolutePath().replace("\\", "/");
+		return path.replace( this.rootPath, "" );
 		
 	}
 	

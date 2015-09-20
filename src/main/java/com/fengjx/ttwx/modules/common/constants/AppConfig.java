@@ -33,6 +33,8 @@ public final class AppConfig {
 
     public static final String RESOURCE_URL = GetPropertiesVal.getLabel("resource.url");
 
+    public static final String STORAGE_TYPE = GetPropertiesVal.getLabel("storage.type");
+
     public static final String STATIC_DOMAIN = GetPropertiesVal.getLabel("staticDomain");
 
     public static final String STATIC_PATH = GetPropertiesVal.getLabel("staticPath");
@@ -61,6 +63,15 @@ public final class AppConfig {
      */
     public static boolean isTest() {
         return YES.equals(AppConfig.TEST_FALG);
+    }
+
+    /**
+     * 是否使用七牛云存储
+     *
+     * @return
+     */
+    public static boolean isQiniu() {
+        return "qiniu".equals(STORAGE_TYPE);
     }
 
     /**

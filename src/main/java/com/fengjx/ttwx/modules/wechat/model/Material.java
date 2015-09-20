@@ -50,10 +50,12 @@ import java.util.Map;
 @Mapper(table = "wechat_material")
 public class Material extends Model {
 
+    private static final Logger LOG = LoggerFactory.getLogger(Material.class);
+
+    private static final String STORE_PREFIX = "/upload/html/material/";
+
     @Autowired
     private PublicAccount publicAccount;
-
-    private static final Logger LOG = LoggerFactory.getLogger(Material.class);
 
     /**
      * 分页查询
@@ -92,47 +94,23 @@ public class Material extends Model {
                 String xml_data = (String) params.get("xml_data");
                 int l = contents.size();
                 for (int i = 0; i < l; i++) {
-                    String htmlPath = AppConfig.STATIC_PATH;
-                    String primaryKey = StringUtils.isBlank(fileName) ? CommonUtils.getPrimaryKey()
+                    String targetFileName = StringUtils.isBlank(fileName) ? CommonUtils
+                            .getPrimaryKey()
                             : fileName + i;
-                    String storePrefix = "/upload/html/material/";
-                    String htmlUrl = storePrefix + primaryKey
-                            + ".html";
-
+                    String htmlUrl = STORE_PREFIX + targetFileName + ".html";
                     Map<String, Object> content = contents.get(i);
                     content.put("app_name", AppConfig.APP_NAME);
                     content.put("date", CommonUtils.date2String(now_date));
                     content.put("email", AppConfig.SUPPORT_EMAIL);
-
-                    if (QiNiuUti.isStoreInQiNiu()) {
-                        try {
-                            // 创建临时文件，上传完成后删除
-                            File temp = File.createTempFile("uphtml", ".temp");
-                            String path = FreemarkerUtil.createHTML(content, "html/material.ftl",
-                                    temp.getAbsolutePath());
-                            QiNiuUti.uploadFile(temp, htmlUrl, true);
-                            temp.delete();
-
-                            LOG.debug("path:" + path);
-                        } catch (IOException e) {
-                            LOG.error(e.getMessage(), e);
-                        } catch (Exception e) {
-                            LOG.error(e.getMessage(), e);
-                        }
-
-                    } else {
-                        // 如果不存在则创建文件夹
-                        FileUtil.makeDirectory(htmlPath + storePrefix);
-                        htmlPath = htmlPath + htmlUrl;
-                        // 通过freemarker生成静态页面，并返回URL
-                        FreemarkerUtil.createHTML(content, "html/material.ftl", htmlPath);
-                    }
+                    // 生成html文件
+                    createHtml(targetFileName, htmlUrl, content);
                     String uri = AppConfig.STATIC_DOMAIN + htmlUrl;
                     // 避免出现abc//abc.html的情况
-                    if (AppConfig.STATIC_DOMAIN.endsWith("/") && htmlUrl.startsWith("/")) {
-                        // uri= AppConfig.STATIC_DOMAIN +
-                        // htmlUrl.substring(1,htmlUrl.length());
-                    }
+                    // if (AppConfig.STATIC_DOMAIN.endsWith("/") &&
+                    // htmlUrl.startsWith("/")) {
+                    // uri = AppConfig.STATIC_DOMAIN + htmlUrl.substring(1,
+                    // htmlUrl.length());
+                    // }
                     xml_data = xml_data.replaceAll("\\<Url_" + i + ">(.*?)\\</Url_" + i + ">",
                             "<Url><![CDATA[" + uri + "]]></Url>");
                 }
@@ -149,6 +127,30 @@ public class Material extends Model {
         }
     }
 
+    private void createHtml(String targetFileName, String htmlUrl,
+            Map<String, Object> content) {
+        if (AppConfig.isQiniu()) {
+            try {
+                // 创建临时文件，上传完成后删除
+                File temp = File.createTempFile(targetFileName, ".temp");
+                String path = FreemarkerUtil.createHTML(content, "html/material.ftl",
+                        temp.getAbsolutePath());
+                QiNiuUti.uploadFile(temp, htmlUrl, true);
+                temp.delete();
+                LOG.debug("path:" + path);
+            } catch (IOException e) {
+                LOG.error(e.getMessage(), e);
+            }
+        } else {
+            String htmlPath = AppConfig.STATIC_PATH;
+            // 如果不存在则创建文件夹
+            FileUtil.makeDirectory(htmlPath + STORE_PREFIX);
+            htmlPath = htmlPath + htmlUrl;
+            // 通过freemarker生成静态页面，并返回URL
+            FreemarkerUtil.createHTML(content, "html/material.ftl", htmlPath);
+        }
+    }
+
     /**
      * 通过URL读取页面内容
      *
@@ -158,8 +160,7 @@ public class Material extends Model {
     public String loadMaterialContentByUrl(String url) {
         String conten = "页面丢失，请重新编辑！";
         try {
-            if (url.startsWith("http://"))
-            {
+            if (url.startsWith("http://")) {
                 url = url.substring("http://".length(), url.length());
                 url = "http://" + url.replace("//", "/");// 替换url中的双斜杠
             } else if (url.startsWith("https://")) {
@@ -175,13 +176,9 @@ public class Material extends Model {
         return conten;
     }
 
-
     public void previewMsg(final List<Map<String, Object>> contents, String xmlData, String userId,
             String wxUserId) throws WxErrorException {
-
-        WxMpMassUploadResult uploadResult = uploadMedia(contents, xmlData,
-                userId);
-
+        WxMpMassUploadResult uploadResult = uploadMedia(contents, xmlData, userId);
         WxMpServiceExt mpService = (WxMpServiceExt) publicAccount.getWxMpService(userId);
         WxMpMassOpenIdsMessage massMessage = new WxMpMassOpenIdsMessage();
         massMessage.setMsgType(WxConsts.MASS_MSG_NEWS);
@@ -191,8 +188,8 @@ public class Material extends Model {
         LOG.debug("send mass message news:" + sendResult);
     }
 
-    private WxMpMassUploadResult uploadMedia(
-            final List<Map<String, Object>> contents, String xmlData,
+    private WxMpMassUploadResult uploadMedia(final List<Map<String, Object>> contents,
+            String xmlData,
             String userId) throws WxErrorException {
         WxMpXmlOutNewsMessage outNewsMessage = XStreamTransformer.fromXml(
                 WxMpXmlOutNewsMessage.class, xmlData);
@@ -210,7 +207,6 @@ public class Material extends Model {
                 art.setShowCoverPic(false);
                 // art.setContentSourceUrl(contentSourceUrl);;
                 art.setTitle(item.getTitle());
-
                 art.setContent("Test");
                 massNews.addArticle(art);
                 break;
@@ -233,16 +229,17 @@ public class Material extends Model {
                 try {
                     // 上传图片获得 media id
                     is = new URL(picUrl).openStream();
-                    uploadMediaResult = mpService.mediaUpload(
-                            WxConsts.MEDIA_IMAGE, WxConsts.FILE_JPG, is);
+                    uploadMediaResult = mpService.mediaUpload(WxConsts.MEDIA_IMAGE,
+                            WxConsts.FILE_JPG, is);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
+                    LogUtil.error(LOG, e.getMessage(), e);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LogUtil.error(LOG, e.getMessage(), e);
                 } catch (WxErrorException e) {
-                    e.printStackTrace();
+                    LogUtil.error(LOG, e.getMessage(), e);
                 }
-                LOG.debug("uploadImageResult:" + uploadMediaResult);
+                LogUtil.debug(LOG, "uploadImageResult:" + uploadMediaResult);
                 if (uploadMediaResult != null
                         && uploadMediaResult.getMediaId() != null) {
                     art.setThumbMediaId(uploadMediaResult.getMediaId());
@@ -251,10 +248,8 @@ public class Material extends Model {
             massNews.addArticle(art);
             i++;
         }
-
         // upload news and get media id
-        WxMpMassUploadResult uploadResult = mpService
-                .massNewsUpload(massNews);
+        WxMpMassUploadResult uploadResult = mpService.massNewsUpload(massNews);
         return uploadResult;
     }
 
