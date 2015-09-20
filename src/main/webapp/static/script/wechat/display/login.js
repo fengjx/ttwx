@@ -16,18 +16,14 @@ $(function () {
             beforeSubmit: validForm,
             success: function (res) {
                 if (res && "1" == res.code) {
-                    var last_uri = $.cookie("last_uri") ? ("/" + $.cookie("last_uri")) : "";
-                    window.location.href = domain + last_uri;
+                    alert($.cookie("last_uri"));
+                    var last_uri = app.getUrl($.cookie("last_uri"), domain);
+                    alert(last_uri);
+                    window.location.href = last_uri;
                 } else {
                     app.error(res.msg ? res.msg : '登录失败');
                     $("#btn-login").button('reset');
                     refreshValidCode();
-                    //app.alert(res.msg?res.msg:'登录失败',{
-                    //	ok: function () {
-                    //		$("#btn-login").button('reset');
-                    //		refreshValidCode();
-                    //	}
-                    //});
                 }
             }
         });

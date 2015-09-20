@@ -719,12 +719,9 @@
 		<!--样式14 -->
 		<div data-color="" class="element-item">
 			<div class="content">
-				<section
-					style="text-align: center; margin: 0 1em; line-height: 1.6em;">
-					<img src="/static/wechart/template/images/640.png"
-						style="height: 36px !important; width: 100%; vertical-align: middle;">
-					<section
-						style="color: white; font-size: 1em; margin-top: -2.1em; white-space: nowrap;">请输入标题</section>
+				<section style="text-align: center; margin: 0 1em; line-height: 1.6em;">
+					<section style="color: white; font-size: 1em; margin-top: -2.1em; white-space: nowrap;">请输入标题
+					</section>
 				</section>
 			</div>
 		</div>
