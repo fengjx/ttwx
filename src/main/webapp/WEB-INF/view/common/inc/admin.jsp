@@ -27,7 +27,6 @@
 <script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/script/common/app.js?v=2015091501" type="text/javascript"></script>
-
 <!--[if lte IE 8]>
 <script src="${resourceUrl}/js/excanvas.min.js" type="text/javascript"></script>
 <![endif]-->
@@ -37,4 +36,3 @@ js IE8 support of HTML5 elements and media queries -->
 <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-<link rel="shortcut icon" type="image/x-icon" href="${resourceUrl}/img/favicon_wx.ico" />

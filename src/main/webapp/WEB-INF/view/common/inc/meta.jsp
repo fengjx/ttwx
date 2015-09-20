@@ -26,4 +26,3 @@
 </c:choose>
 <meta charset="utf-8" />
 <meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<link rel="shortcut icon" type="image/x-icon" href="${resourceUrl}/img/favicon_wx.ico" />

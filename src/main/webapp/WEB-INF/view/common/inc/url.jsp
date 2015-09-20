@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/view/common/inc/path.jsp" %>
+<link rel="shortcut icon" type="image/x-icon" href="${domain}/favicon.ico" />
 <script>
     var appName = "${appName}";
     var domain = "${domain}";
