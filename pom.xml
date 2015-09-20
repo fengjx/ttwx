@@ -271,6 +271,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>*.*</include>
+                    <include>**/conf/**</include>
                     <include>**/env/${environment}/*.*</include>
                 </includes>
                 <excludes>
@@ -306,7 +307,7 @@
                 <version>1.3.0</version>
                 <executions>
                     <execution>
-                        <phase>prepare-package</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>compress</goal>
                         </goals>
@@ -352,7 +353,7 @@
                     </execution>
                     <execution>
                         <id>zip</id>
-                        <phase>prepare-package</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -370,19 +371,6 @@
                                         <include name="**/css/**"/>
                                     </fileset>
                                 </zip>
-                            </target>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>delete</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <!-- 压缩的资源打包完成后删除目录，避免打到war包里-->
-                                <delete dir="${project.build.directory}/${project.build.finalName}/static" />
                             </target>
                         </configuration>
                     </execution>

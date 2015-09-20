@@ -12,7 +12,7 @@
 
 
     <!-- 加载配置属性文件 -->
-    <import resource="spring-config.xml"/>
+    <import resource="conf/spring/spring-config.xml"/>
 
     <!-- 开启注解 -->
     <!-- 使用Annotation自动注册Bean，解决事物失效问题：在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解。  -->
@@ -22,10 +22,10 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-    <import resource="spring-db.xml"/>
-    <import resource="spring-beans.xml"/>
-    <import resource="spring-aop.xml"/>
-    <import resource="spring-email.xml"/>
-    <import resource="spring-scheduled.xml"/>
+    <import resource="conf/spring/spring-db.xml"/>
+    <import resource="conf/spring/spring-beans.xml"/>
+    <import resource="conf/spring/spring-aop.xml"/>
+    <import resource="conf/spring/spring-email.xml"/>
+    <import resource="conf/spring/spring-scheduled.xml"/>
 
 </beans>

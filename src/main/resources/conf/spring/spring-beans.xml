@@ -29,7 +29,7 @@
     </bean>
     <!-- EhCache library setup -->
     <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation" value="classpath:ehcache.xml"/>
+        <property name="configLocation" value="classpath:conf/ehcache/ehcache.xml"/>
     </bean>
 
     <bean id="ehCachePlugin" class="com.fengjx.ttwx.common.plugin.cache.ehcache.EhCachePlugin">
