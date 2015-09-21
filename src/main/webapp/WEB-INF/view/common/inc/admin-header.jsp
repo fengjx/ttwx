@@ -30,6 +30,9 @@
       <ul id="head-menu" class="nav navbar-nav pull-left">
         <li><a href="${adminPath}/wechat">平台管理</a></li>
         <li><a href="${adminPath}/portal">门户</a></li>
+        <li><a href="#">天天小店</a></li>
+        <li><a href="#">微社区</a></li>
+        <li><a href="#">微门户</a></li>
         <li><a href="${adminPath}/sys">系统管理</a></li>
       </ul>
     </div>
