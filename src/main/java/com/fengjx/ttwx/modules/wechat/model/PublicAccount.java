@@ -14,6 +14,8 @@ import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -71,6 +73,7 @@ public class PublicAccount extends Model {
      * @param userId
      * @return
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     public Record reset(String id, String userId) {
         Map<String, Object> attrs = resetAttrs(id, userId);
         update(attrs);

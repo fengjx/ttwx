@@ -62,7 +62,7 @@
 			<div class="control-group">
 				<div class="controls">
 					<input class="btn btn-info" type="submit" id="btn-submit" value="保存" />
-					<input class="btn btn-info" type="submit" id="btn-reset" value="重置" />
+					<input class="btn btn-warning" type="button" id="btn-reset" value="重置" />
 				</div>
 			</div>
 		</form>
