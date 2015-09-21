@@ -434,6 +434,26 @@ public abstract class Model {
     }
 
     /**
+     * 获得指定Model的主键名称
+     *
+     * @param cls
+     * @return
+     */
+    public String getPrimaryKey(Class<? extends Model> cls) {
+        Table t = TableUtil.getTable(cls);
+        return t.getPrimaryKey();
+    }
+
+    /**
+     * 获得主键名称
+     *
+     * @return
+     */
+    public String getPrimaryKey() {
+        return getPrimaryKey(this.getClass());
+    }
+
+    /**
      * 获得单表查询sql（如：select id, name, age from user）
      *
      * @param cls
