@@ -6,10 +6,7 @@ import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.page.Page;
 import com.fengjx.ttwx.common.plugin.freemarker.FreemarkerUtil;
-import com.fengjx.ttwx.common.utils.CommonUtils;
-import com.fengjx.ttwx.common.utils.FileUtil;
-import com.fengjx.ttwx.common.utils.HttpUtil;
-import com.fengjx.ttwx.common.utils.LogUtil;
+import com.fengjx.ttwx.common.utils.*;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.wechat.process.sdk.api.WxMpServiceExt;
 import me.chanjar.weixin.common.api.WxConsts;
@@ -43,8 +40,7 @@ import java.util.Map;
 /**
  * 素材管理
  *
- * @author fengjx.
- * @date：2015/5/28 0028
+ * @author fengjx. @date：2015/5/28 0028
  */
 @Component
 @Mapper(table = "wechat_material")
@@ -94,28 +90,21 @@ public class Material extends Model {
                 String xml_data = (String) params.get("xml_data");
                 int l = contents.size();
                 for (int i = 0; i < l; i++) {
-                    String targetFileName = StringUtils.isBlank(fileName) ? CommonUtils
-                            .getPrimaryKey()
-                            : fileName + i;
+                    String targetFileName = StringUtils.isBlank(fileName)
+                            ? CommonUtils.getPrimaryKey() : fileName + i;
                     String htmlUrl = STORE_PREFIX + targetFileName + ".html";
                     Map<String, Object> content = contents.get(i);
                     content.put("app_name", AppConfig.APP_NAME);
-                    content.put("date", CommonUtils.date2String(now_date));
+                    content.put("date", DateUtils.parseDate(now_date));
                     content.put("email", AppConfig.SUPPORT_EMAIL);
                     // 生成html文件
                     createHtml(targetFileName, htmlUrl, content);
                     String uri = AppConfig.STATIC_DOMAIN + htmlUrl;
-                    // 避免出现abc//abc.html的情况
-                    // if (AppConfig.STATIC_DOMAIN.endsWith("/") &&
-                    // htmlUrl.startsWith("/")) {
-                    // uri = AppConfig.STATIC_DOMAIN + htmlUrl.substring(1,
-                    // htmlUrl.length());
-                    // }
                     xml_data = xml_data.replaceAll("\\<Url_" + i + ">(.*?)\\</Url_" + i + ">",
                             "<Url><![CDATA[" + uri + "]]></Url>");
                 }
-                xml_data.replaceAll("\\<ArticleCount>(.*?)\\</ArticleCount>", "<ArticleCount>" + l
-                        + "</ArticleCount>");
+                xml_data.replaceAll("\\<ArticleCount>(.*?)\\</ArticleCount>",
+                        "<ArticleCount>" + l + "</ArticleCount>");
                 params.put("xml_data", xml_data);
             }
         }
@@ -127,8 +116,7 @@ public class Material extends Model {
         }
     }
 
-    private void createHtml(String targetFileName, String htmlUrl,
-            Map<String, Object> content) {
+    private void createHtml(String targetFileName, String htmlUrl, Map<String, Object> content) {
         if (AppConfig.isQiniu()) {
             try {
                 // 创建临时文件，上传完成后删除
@@ -189,10 +177,9 @@ public class Material extends Model {
     }
 
     private WxMpMassUploadResult uploadMedia(final List<Map<String, Object>> contents,
-            String xmlData,
-            String userId) throws WxErrorException {
-        WxMpXmlOutNewsMessage outNewsMessage = XStreamTransformer.fromXml(
-                WxMpXmlOutNewsMessage.class, xmlData);
+            String xmlData, String userId) throws WxErrorException {
+        WxMpXmlOutNewsMessage outNewsMessage = XStreamTransformer
+                .fromXml(WxMpXmlOutNewsMessage.class, xmlData);
         outNewsMessage.setCreateTime(System.currentTimeMillis());
 
         // 微信服务器交互
@@ -240,8 +227,7 @@ public class Material extends Model {
                     LogUtil.error(LOG, e.getMessage(), e);
                 }
                 LogUtil.debug(LOG, "uploadImageResult:" + uploadMediaResult);
-                if (uploadMediaResult != null
-                        && uploadMediaResult.getMediaId() != null) {
+                if (uploadMediaResult != null && uploadMediaResult.getMediaId() != null) {
                     art.setThumbMediaId(uploadMediaResult.getMediaId());
                 }
             }
@@ -253,10 +239,9 @@ public class Material extends Model {
         return uploadResult;
     }
 
-    public void sendGroupMsg(List<Map<String, Object>> contents,
-            String xmlData, String userId) throws WxErrorException {
-        WxMpMassUploadResult uploadResult = uploadMedia(contents, xmlData,
-                userId);
+    public void sendGroupMsg(List<Map<String, Object>> contents, String xmlData, String userId)
+            throws WxErrorException {
+        WxMpMassUploadResult uploadResult = uploadMedia(contents, xmlData, userId);
         WxMpServiceExt mpService = (WxMpServiceExt) publicAccount.getWxMpService(userId);
         WxMpMassGroupMessage message = new WxMpMassGroupMessage();
         message.setMsgtype(WxConsts.MASS_MSG_NEWS);

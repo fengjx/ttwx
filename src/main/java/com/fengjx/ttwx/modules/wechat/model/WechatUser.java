@@ -4,7 +4,7 @@ package com.fengjx.ttwx.modules.wechat.model;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
-import com.fengjx.ttwx.common.utils.CommonUtils;
+import com.fengjx.ttwx.common.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +15,7 @@ import java.util.Map;
 /**
  * 粉丝管理
  *
- * @author fengjx.
- * @date：2015/6/19 0019
+ * @author fengjx. @date：2015/6/19 0019
  */
 @Mapper(table = "wechat_user_info", id = "id")
 @Component
@@ -42,11 +41,11 @@ public class WechatUser extends Model {
         }
         if (StringUtils.isNotBlank(attrs.get("start_time"))) {
             sql.append(" and u.subscribe_time > ?");
-            params.add(CommonUtils.string2Date(attrs.get("start_time") + " 00:00:00"));
+            params.add(DateUtils.parseDate(attrs.get("start_time") + " 00:00:00"));
         }
         if (StringUtils.isNotBlank(attrs.get("end_time"))) {
             sql.append(" and u.subscribe_time < ?");
-            params.add(CommonUtils.string2Date(attrs.get("end_time") + " 23:59:59"));
+            params.add(DateUtils.parseDate(attrs.get("end_time") + " 23:59:59"));
         }
         if ("".equals(attrs.get("group_id"))) { // 空字符串表示查未分组用户
             sql.append(" and (u.group_id = null or u.group_id = '') ");

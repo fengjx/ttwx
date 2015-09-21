@@ -6,6 +6,7 @@ import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.utils.CommonUtils;
+import com.fengjx.ttwx.common.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,8 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author fengjx.
- * @date：2015/5/15 0015
+ * @author fengjx. @date：2015/5/15 0015
  */
 @Mapper(table = "wechat_req_msg_log")
 @Component
@@ -51,11 +51,11 @@ public class ReqMsgLog extends Model {
         }
         if (StringUtils.isNotBlank(attrs.get("start_time"))) {
             sql.append(" and l.in_time > ?");
-            params.add(CommonUtils.string2Date(attrs.get("start_time") + " 00:00:00"));
+            params.add(DateUtils.parseDate(attrs.get("start_time") + " 00:00:00"));
         }
         if (StringUtils.isNotBlank(attrs.get("end_time"))) {
             sql.append(" and l.in_time < ?");
-            params.add(CommonUtils.string2Date(attrs.get("end_time") + " 23:59:59"));
+            params.add(DateUtils.parseDate(attrs.get("end_time") + " 23:59:59"));
         }
         sql.append(" order by l.in_time desc");
         return paginate(sql.toString(), params.toArray()).convert();

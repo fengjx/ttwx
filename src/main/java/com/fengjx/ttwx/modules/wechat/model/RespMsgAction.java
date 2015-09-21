@@ -9,6 +9,7 @@ import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.CommonUtils;
+import com.fengjx.ttwx.common.utils.DateUtils;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import me.chanjar.weixin.common.api.WxConsts;
 import org.apache.commons.collections.MapUtils;
@@ -111,11 +112,11 @@ public class RespMsgAction extends Model {
         }
         if (StringUtils.isNotBlank(params.get("start_time"))) {
             sql.append(" and a.in_time >= ?");
-            parameters.add(CommonUtils.string2Date(params.get("start_time").trim() + " 00:00:00"));
+            parameters.add(DateUtils.parseDate(params.get("start_time").trim() + " 00:00:00"));
         }
         if (StringUtils.isNotBlank(params.get("end_time"))) {
             sql.append(" and a.in_time < ?");
-            parameters.add(CommonUtils.string2Date(params.get("end_time").trim() + " 23:59:59"));
+            parameters.add(DateUtils.parseDate(params.get("end_time").trim() + " 23:59:59"));
         }
         sql.append(" order by a.in_time desc");
         return paginate(sql.toString(), parameters.toArray()).convert();

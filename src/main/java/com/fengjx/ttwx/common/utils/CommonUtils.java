@@ -4,26 +4,16 @@ package com.fengjx.ttwx.common.utils;
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
-import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 
-import java.io.File;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
 
 /**
  * @author peng
  */
 public final class CommonUtils {
-
-    public static final String DATA_FORMAT_ALL = "yyyy-MM-dd HH:mm:ss";
-    public static final String DATA_FORMAT_DD = "yyyy-MM-dd";
 
     /**
      * 生成1-9位随机数
@@ -48,85 +38,12 @@ public final class CommonUtils {
     }
 
     /**
-     * @param date
-     * @return
-     */
-    public static String date2String(Date date) {
-        return date2String(date, DATA_FORMAT_ALL);
-    }
-
-    /**
-     * @param date
-     * @param dataFormat 默认为yyyy-MM-dd HH:mm:ss
-     * @return
-     */
-    public static String date2String(Date date, String dataFormat) {
-        if (null == date) {
-            return null;
-        }
-        String dateFmt = DATA_FORMAT_ALL;
-        if (StringUtils.isNotBlank(dataFormat)) {
-            dateFmt = dataFormat;
-        }
-        DateFormat fmt = new SimpleDateFormat(dateFmt);
-        return fmt.format(date);
-    }
-
-    /**
-     * @param date
-     * @return
-     * @throws ParseException
-     */
-    public static Date string2Date(String date) {
-        return string2Date(date, DATA_FORMAT_ALL);
-    }
-
-    /**
-     * @param date
-     * @param dataFormat 默认为yyyy-MM-dd
-     * @return
-     * @throws ParseException
-     */
-    public static Date string2Date(String date, String dataFormat) {
-        String dateFmt = DATA_FORMAT_ALL;
-        if (StringUtils.isNotBlank(dataFormat)) {
-            dateFmt = dataFormat;
-        }
-        DateFormat fmt = new SimpleDateFormat(dateFmt);
-        try {
-            return fmt.parse(date);
-        } catch (ParseException e) {
-            throw new MyRuntimeException(e);
-        }
-    }
-
-    /**
-     * 获得生成html文件模板路径
-     *
-     * @return
-     */
-    public static String getFtlHtmlPath() {
-        String baseUrl = File.separator + "ftl" + File.separator + "html";
-        String classPath = Thread.currentThread().getContextClassLoader().getResource("")
-                .getPath();
-        if (SystemUtils.IS_OS_WINDOWS) {
-            classPath = classPath.substring(1);
-        }
-        return classPath.substring(0, classPath.lastIndexOf("classes")) + baseUrl;
-    }
-
-    /**
      * 获得项目classPath
      *
      * @return
      */
     public static String getClassPath() {
-        String classPath = Thread.currentThread().getContextClassLoader().getResource("/")
-                .getPath();
-        if (SystemUtils.IS_OS_WINDOWS) {
-            classPath = classPath.substring(1, classPath.length());
-        }
-        return classPath;
+        return getClassPath(null);
     }
 
     /**
@@ -135,12 +52,15 @@ public final class CommonUtils {
      * @return
      */
     public static String getClassPath(String path) {
+        if (StringUtils.isBlank(path)) {
+            path = "/";
+        }
         String classPath = Thread.currentThread().getContextClassLoader().getResource(path)
                 .getPath();
         if (SystemUtils.IS_OS_WINDOWS) {
             classPath = classPath.substring(1, classPath.length());
         }
-        return classPath;
+        return Encodes.urlDecode(classPath);
     }
 
 }
