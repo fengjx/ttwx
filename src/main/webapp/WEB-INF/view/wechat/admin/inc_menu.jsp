@@ -18,13 +18,6 @@
             <b class="arrow"></b>
         </li>
         <li>
-            <a href="${adminPath}/wechat/menu">
-                <i class="glyphicon glyphicon-menu-hamburger menu-icon"></i>
-                <span class="menu-text"> 菜单管理 </span>
-            </a>
-            <b class="arrow"></b>
-        </li>
-        <li>
             <a href="${adminPath}/wechat/msglog">
                 <i class="glyphicon glyphicon-comment menu-icon"></i>
                 <span class="menu-text"> 消息管理 </span>
@@ -35,6 +28,13 @@
             <a href="${adminPath}/wechat/material">
                 <i class="glyphicon glyphicon-edit menu-icon"></i>
                 <span class="menu-text"> 素材管理 </span>
+            </a>
+            <b class="arrow"></b>
+        </li>
+        <li>
+            <a href="${adminPath}/wechat/menu">
+                <i class="glyphicon glyphicon-menu-hamburger menu-icon"></i>
+                <span class="menu-text"> 菜单管理 </span>
             </a>
             <b class="arrow"></b>
         </li>
