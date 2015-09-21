@@ -68,16 +68,16 @@ public class TextExecutor extends BaseServiceExecutor {
             if (RespMsgAction.FUZZY_EXACT.equals(fuzzy) && content.equals(keyword)) {
                 return new Record(action);
             }
-            // 包含
-            if (RespMsgAction.FUZZY_CONTAIN.equals(fuzzy) && content.contains(keyword)) {
-                return new Record(action);
-            }
             // 关键字开始
             if (RespMsgAction.FUZZY_START.equals(fuzzy) && content.startsWith(keyword)) {
                 return new Record(action);
             }
             // 关键字结束
             if (RespMsgAction.FUZZY_END.equals(fuzzy) && content.endsWith(keyword)) {
+                return new Record(action);
+            }
+            // 包含
+            if (RespMsgAction.FUZZY_CONTAIN.equals(fuzzy) && content.contains(keyword)) {
                 return new Record(action);
             }
         }

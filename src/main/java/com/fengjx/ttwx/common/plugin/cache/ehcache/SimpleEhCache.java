@@ -3,6 +3,7 @@ package com.fengjx.ttwx.common.plugin.cache.ehcache;
 
 import com.fengjx.ttwx.common.plugin.cache.IDataLoader;
 import com.fengjx.ttwx.common.plugin.cache.SimpleCache;
+import com.fengjx.ttwx.modules.common.constants.AppConfig;
 
 /**
  * @author fengjx.
@@ -10,7 +11,7 @@ import com.fengjx.ttwx.common.plugin.cache.SimpleCache;
  */
 public class SimpleEhCache implements SimpleCache {
 
-    private static final String CACHE_NAME = "defaultCache";
+    private static final String CACHE_NAME = AppConfig.EhcacheName.DEFAULT_CACHE;
 
     /**
      * 添加缓存

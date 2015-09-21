@@ -41,13 +41,13 @@ public class RespMsgAction extends Model {
 
     public static final String ACTION_TYPE_API = "api";
 
-    public static final String FUZZY_EXACT = "1";
+    public static final String FUZZY_EXACT = "1"; // 完全匹配
 
-    public static final String FUZZY_CONTAIN = "2";
+    public static final String FUZZY_CONTAIN = "2"; // 包含匹配
 
-    public static final String FUZZY_START = "3";
+    public static final String FUZZY_START = "3"; // 关键字开始
 
-    public static final String FUZZY_END = "4";
+    public static final String FUZZY_END = "4"; // 关键字结束
 
     /**
      * 保存消息响应规则
@@ -145,9 +145,17 @@ public class RespMsgAction extends Model {
      * @param userId
      * @return
      */
-    public Record loadMsgAction(String ext_type, String req_type, String event_type,
-            String key_word, String userId) {
-        return loadMsgAction(ext_type, req_type, event_type, key_word, null, userId);
+    public Record loadMsgAction(final String ext_type, final String req_type,
+            final String event_type, final String key_word, final String userId) {
+        return EhCacheUtil.get(AppConfig.EhcacheName.WECHAT_ACTION_CACHE,
+                buildCacheKey(ext_type, req_type, event_type, key_word, userId),
+                new IDataLoader<Record>() {
+                    @Override
+                    public Record load() {
+                        return loadMsgAction(ext_type, req_type, event_type, key_word, null,
+                                userId);
+                    }
+                });
     }
 
     /**
@@ -243,18 +251,6 @@ public class RespMsgAction extends Model {
                 return _ids.length;
             }
         });
-    }
-
-    /**
-     * 根据关键字删除规则
-     *
-     * @param key_word
-     * @param userId
-     */
-    public void deleteMsgActionByKey(String key_word, String userId) {
-        StringBuilder sql = new StringBuilder("delete from ");
-        sql.append(getTableName()).append(" where key_word = ? and user_id = ?");
-        execute(sql.toString(), key_word, userId);
     }
 
     /**

@@ -41,8 +41,15 @@ public class SettingController extends MyController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> addOrUpdate(final HttpServletRequest request) {
-        publicAccount.update(getRequestMap(request));
+    public Map<String, String> update(final HttpServletRequest request) {
+        publicAccount.updateAccount(getRequestMap(request), getLoginSysUserId(request));
+        return retSuccess();
+    }
+
+    @RequestMapping(value = "/reset", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> reset(HttpServletRequest request, String id) {
+        publicAccount.reset(id, getLoginSysUserId(request));
         return retSuccess();
     }
 

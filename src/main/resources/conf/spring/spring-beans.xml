@@ -120,5 +120,6 @@
         <property name="configurer" ref="freemarkerConfigurer"/>
     </bean>
 
+    <bean id="simpleCache" class="com.fengjx.ttwx.common.plugin.cache.ehcache.SimpleEhCache"/>
 
 </beans>
