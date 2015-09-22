@@ -116,6 +116,13 @@ public class Material extends Model {
         }
     }
 
+    /**
+     * 生产静态文件
+     *
+     * @param targetFileName
+     * @param htmlUrl
+     * @param content
+     */
     private void createHtml(String targetFileName, String htmlUrl, Map<String, Object> content) {
         if (AppConfig.isQiniu()) {
             try {

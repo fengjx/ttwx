@@ -32,18 +32,18 @@
 							<form id="form-login" method="post" class="login-form">
 								<div class="top-margin control-group">
 									<label>用户名<span class="text-danger">*</span></label>
-									<input id="username" name="username" type="text" class="form-control login-field" placeholder="输入用户名" value="fjx" />
+									<input id="username" name="username" type="text" class="form-control login-field" placeholder="输入用户名" value="<c:if test="${isDebug}">fjx</c:if>" />
 									<label class="login-field-icon fui-user label-icon" for="username"></label>
 								</div>
 								<div class="top-margin control-group">
 									<label>密码<span class="text-danger">*</span></label>
-									<input id="pwd" name="pwd" type="password" class="form-control login-field" placeholder="输入密码" value="fjx" />
+									<input id="pwd" name="pwd" type="password" class="form-control login-field" placeholder="输入密码" value="<c:if test="${isDebug}">fjx</c:if>" />
 									<label class="login-field-icon fui-lock label-icon" for="pwd"></label>
 								</div>
 								<div class="row top-margin control-group">
 									<div class="col-lg-8">
 										<label>验证码<span class="text-danger">*</span></label>
-										<input id="valid_code" name="valid_code" maxlength="4" type="text" class="form-control login-field" placeholder="输入验证码" value="AAAA" />
+										<input id="valid_code" name="valid_code" maxlength="4" type="text" class="form-control login-field" placeholder="输入验证码" value="<c:if test="${isDebug}">AAAA</c:if>" />
 										<label class="login-field-icon fui-clip label-icon" style="margin-right: 15px;" for="valid_code"></label>
 									</div>
 									<div class="col-lg-4" style="margin-top: 40px;">

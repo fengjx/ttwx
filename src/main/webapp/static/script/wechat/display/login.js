@@ -17,7 +17,7 @@ $(function () {
             success: function (res) {
                 if (res && "1" == res.code) {
                     var last_uri = app.getUrl($.cookie("last_uri"), domain);
-                    window.location.href = last_uri;
+                    window.location.href = last_uri ? last_uri : domain;
                 } else {
                     app.error(res.msg ? res.msg : '登录失败');
                     $("#btn-login").button('reset');

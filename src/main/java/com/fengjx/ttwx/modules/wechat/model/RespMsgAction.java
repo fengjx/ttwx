@@ -11,6 +11,7 @@ import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.common.utils.DateUtils;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
+import com.fengjx.ttwx.modules.common.constants.Constants;
 import me.chanjar.weixin.common.api.WxConsts;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -75,11 +76,30 @@ public class RespMsgAction extends Model {
      */
     public void updateAction(Map<String, Object> actionMap, Map<String, Object> menuMap,
             Map<String, Object> materialMap) {
-        String action_id = (String) actionMap.get("id");
-        if (StringUtils.isNotBlank(action_id)) {
-            deleteMsgActionById(action_id, (String) actionMap.get("user_id"));
+        String actionId = (String) actionMap.get("id");
+        // 如果是更新，则删除之前的数据在新增新数据
+        if (StringUtils.isNotBlank(actionId)) {
+            String ationType = (String) actionMap.get("action_type");
+            // 如果是文本素材，则删除旧数据
+            if (Constants.ACTION_MATERIAL.equals(ationType)) {
+                deleteTextMaterial(actionId);
+            }
+            deleteMsgActionById(actionId, (String) actionMap.get("user_id"));
         }
         saveAction(actionMap, menuMap, materialMap);
+    }
+
+    /**
+     * 删除文本素材
+     *
+     * @param actionId
+     */
+    private void deleteTextMaterial(String actionId) {
+        StringBuilder sql = new StringBuilder("delete from ");
+        sql.append(getTableName(Material.class));
+        sql.append(" where id = (select material_id from ").append(getTableName());
+        sql.append(" where id = ?) and msg_type = ?");
+        execute(sql.toString(), actionId, WxConsts.CUSTOM_MSG_TEXT);
     }
 
     /**

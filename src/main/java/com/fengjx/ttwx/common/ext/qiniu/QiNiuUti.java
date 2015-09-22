@@ -69,13 +69,8 @@ public class QiNiuUti {
             Response r = e.response;
             // 请求失败时简单状态信息
             LOG.error(r.error);
-
-            try {
-                // 响应的文本信息
-                LOG.error(r.bodyString());
-            } catch (QiniuException e1) {
-                // ignore
-            }
+            // 响应的文本信息
+            LOG.error(r.bodyString());
             throw e;
         }
     }
@@ -98,12 +93,7 @@ public class QiNiuUti {
             Response r = e.response;
             // 请求失败时简单状态信息
             LOG.error(r.error);
-            try {
-                // 响应的文本信息
-                LOG.error(r.bodyString());
-            } catch (QiniuException e1) {
-                // ignore
-            }
+            LOG.error(r.bodyString());
             throw e;
         }
     }

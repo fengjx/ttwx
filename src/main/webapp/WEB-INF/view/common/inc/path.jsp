@@ -12,3 +12,4 @@
 <c:set var="resourceUrl" value="${fns:getConst('RESOURCE_URL')}"/>
 <c:set var="staticDomain" value="${fns:getConst('STATIC_DOMAIN')}"/>
 <c:set var="adapterPageName" value="${fns:getConst('ADAPTER_PAGE_NAME')}"/>
+<c:set var="isDebug" value="${fns:getConst('YES') eq fns:getConst('TEST_FALG')}"/>
