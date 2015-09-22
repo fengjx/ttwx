@@ -44,3 +44,11 @@ ADD COLUMN `fuzzy`  tinyint(2) NULL COMMENT '关键字匹配方式（1：完全�
 
 ALTER TABLE `portal_guestbook`
 DROP COLUMN `nsg`;
+
+-- 修改唯一约束
+ALTER TABLE `wechat_resp_msg_action`
+DROP INDEX `key_word` ,
+ADD UNIQUE INDEX `key_word` (`key_word`, `user_id`, `fuzzy`) USING BTREE ;
+
+ALTER TABLE `wechat_resp_msg_action`
+ADD COLUMN `order_no`  tinyint(2) NULL DEFAULT 1 AFTER `user_id`;

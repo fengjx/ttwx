@@ -34,6 +34,8 @@
 		<input id="msgKeyWord" name="key_word" value="" class="form-control" type="text" placeholder="用户发送的文字">
 		<select data-type="dict" data-group="keywordFuzzy" name="fuzzy" id="fuzzy" class="app-element">
 		</select>
+		<input id="orderNo" name="order_no" value="" class="form-control" type="number" placeholder="优先级" style="width: 80px;">
+		<span>数字越小，优先级越高</span>
 		<hr/>
 	</div>
 	</c:if>

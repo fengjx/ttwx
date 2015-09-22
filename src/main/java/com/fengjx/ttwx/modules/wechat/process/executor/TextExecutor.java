@@ -38,7 +38,7 @@ public class TextExecutor extends BaseServiceExecutor {
             WxMpConfigStorage wxMpConfig, WxSession session) {
         LogUtil.info(LOG, "进入文本消息处理器fromUserName=" + inMessage.getFromUserName());
         List<Map<String, Object>> keywords = respMsgAction
-                .loadKeywordActions(inMessage.getContent(), accountRecord.getStr("sys_user_id"));
+                .loadKeywordActions(accountRecord.getStr("sys_user_id"));
         Record actionRecord = matching(inMessage.getContent(), keywords);
         // 没有找到匹配规则
         if (null == actionRecord || actionRecord.isEmpty()) {

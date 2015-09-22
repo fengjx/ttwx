@@ -95,6 +95,7 @@ function editMsgAction(id) {
                 $("#editType").val("edit");
                 $("#msgKeyWord").val(row.key_word);
                 $("#fuzzy").val(row.fuzzy);
+                $("#orderNo").val(row.order_no);
                 var tabIndex;
                 if (row.action_type == 'material') {//数据源从素材读取
                     var json = $.xml2json(row.xml_data);

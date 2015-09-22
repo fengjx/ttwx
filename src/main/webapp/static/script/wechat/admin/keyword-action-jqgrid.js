@@ -29,6 +29,7 @@ $(function(){
 			label: '匹配方式',
 			sortable: false,
 			align: 'left',
+			width:60,
 			formatter: function (value, opt, row) {
 				return app.getDictName("keywordFuzzy", value);
 			},
@@ -46,6 +47,12 @@ $(function(){
 			unformat: function (cellValue, options, cellObject) {
 				return app.getDictVal("action_type", cellValue);
 			}
+		}, {
+			name: 'order_no',
+			label: '优先级',
+			align: 'left',
+			width:40,
+			sortable: false
 		}, {
 			name: 'in_time',
 			label: '编辑时间',

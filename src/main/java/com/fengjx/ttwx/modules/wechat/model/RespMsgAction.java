@@ -12,6 +12,7 @@ import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.common.utils.DateUtils;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.constants.Constants;
+import com.fengjx.ttwx.modules.sys.model.ExtApp;
 import me.chanjar.weixin.common.api.WxConsts;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -221,22 +222,20 @@ public class RespMsgAction extends Model {
     /**
      * 查询关键字列表（关键字存在，模糊匹配的情况，所以可能有多条）
      *
-     * @param key_word
      * @param userId
      * @return
      */
-    public List<Map<String, Object>> loadKeywordActions(final String key_word,
-            final String userId) {
+    public List<Map<String, Object>> loadKeywordActions(final String userId) {
         return EhCacheUtil.get(AppConfig.EhcacheName.WECHAT_KEYWORD_ACTION_CACHE, userId,
                 new IDataLoader<List<Map<String, Object>>>() {
                     @Override
                     public List<Map<String, Object>> load() {
                         List<Object> parameters = new ArrayList();
                         StringBuilder sql = new StringBuilder(detailSql());
-                        sql.append(" where a.user_id = ? and a.req_type = ? and a.key_word = ?");
+                        sql.append(
+                                " where a.user_id = ? and a.req_type = ? order by a.order_no");
                         parameters.add(userId);
                         parameters.add(WxConsts.XML_MSG_TEXT);
-                        parameters.add(key_word);
                         return findList(sql.toString(), parameters.toArray());
                     }
                 });
@@ -368,13 +367,13 @@ public class RespMsgAction extends Model {
      */
     private String detailSql() {
         StringBuffer sql = new StringBuffer(
-                "select a.id as id, a.req_type as req_type, a.action_type as action_type, a.key_word as key_word, a.fuzzy as fuzzy, a.material_id as material_id, a.app_id as app_id, a.in_time as in_time,");
+                "select ").append(getColumnsStr("a")).append(", ");
         sql.append(" b.bean_name as bean_name, b.name as app_name,");
         sql.append(" c.xml_data as xml_data, c.msg_type as msg_type");
-        sql.append(" from wechat_resp_msg_action a");
-        sql.append(" left join wechat_ext_app b ");
+        sql.append(" from ").append(getTableName()).append(" a ");
+        sql.append(" left join ").append(getTableName(ExtApp.class)).append(" b ");
         sql.append(" on a.app_id = b.id");
-        sql.append(" left join wechat_material c");
+        sql.append(" left join ").append(getTableName(Material.class)).append(" c ");
         sql.append(" on a.material_id = c.id");
         return sql.toString();
     }
