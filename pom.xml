@@ -362,13 +362,13 @@
                                 <zip destfile="${project.build.directory}/res.zip">
                                     <fileset dir="src/main/webapp/static">
                                         <!--<include name="**/*.*"/>-->
-                                        <exclude name="**/script/**"/>
-                                        <exclude name="**/css/**"/>
+                                        <exclude name="/script/**"/>
+                                        <exclude name="/css/**"/>
                                     </fileset>
                                     <!-- 压缩后的js css-->
                                     <fileset dir="${project.build.directory}/${project.build.finalName}/static">
-                                        <include name="**/script/**"/>
-                                        <include name="**/css/**"/>
+                                        <include name="/script/**"/>
+                                        <include name="/css/**"/>
                                     </fileset>
                                 </zip>
                             </target>
