@@ -1,3 +1,3 @@
 @echo ²âÊÔ°æ±¾´ò°ü
-@mvn -Ptest package
+@mvn -Ptest clean package
 @pause

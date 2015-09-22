@@ -1,3 +1,3 @@
 @echo 正式发布版本打包
-@mvn -Prelease package
+@mvn -Prelease clean package
 @pause
