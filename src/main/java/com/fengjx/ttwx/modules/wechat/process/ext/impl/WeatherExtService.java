@@ -5,17 +5,13 @@ import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.api.restful.WeatherServiceApi;
 import com.fengjx.ttwx.modules.wechat.process.ext.ExtService;
-
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutTextMessage;
-
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 /**
  * 天气查询接口
@@ -23,7 +19,6 @@ import org.springframework.stereotype.Service;
  * @author fengjx.
  * @date：2015/7/20 0020
  */
-@Service("weather")
 public class WeatherExtService implements ExtService {
 
     private static final Logger LOG = LoggerFactory.getLogger(WeatherExtService.class);

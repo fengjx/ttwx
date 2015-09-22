@@ -40,38 +40,6 @@
         <property name="service" ref="dictService"/>
     </bean>
 
-    <bean id="serviceEngine" class="com.fengjx.ttwx.modules.wechat.process.ServiceEngineImpl"/>
-
-    <!-- 微信->商户 请求服务处理工厂 -->
-    <bean id="serviceExecutorFactory" class="com.fengjx.ttwx.modules.wechat.process.executor.ServiceExecutorFactory">
-        <property name="executorList">
-            <list>
-                <ref bean="defaultExecutor"/>
-                <ref bean="eventSubscribeExecutor"/>
-                <ref bean="ImageExecutor"/>
-                <ref bean="locationExecutor"/>
-                <ref bean="memuClickExecutor"/>
-                <ref bean="textExecutor"/>
-                <ref bean="validExecutor"/>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="defaultExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.DefaultExecutor"/>
-    <bean id="eventSubscribeExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.EventSubscribeExecutor"/>
-    <bean id="ImageExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.ImageExecutor"/>
-    <bean id="locationExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.LocationExecutor"/>
-    <bean id="memuClickExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.MemuClickExecutor"/>
-    <bean id="textExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.TextExecutor"/>
-    <bean id="validExecutor" class="com.fengjx.ttwx.modules.wechat.process.executor.ValidExecutor"/>
-
-    <!--
-    &lt;!&ndash; 本地扩展接口start &ndash;&gt;
-    <bean id="myExtService" class="com.fjx.wechat.extension.service.MyExtService"></bean>
-    <bean id="myTextExtService" class="com.fjx.wechat.extension.service.MyTextExtService"></bean>
-
-    &lt;!&ndash; 本地扩展接口end &ndash;&gt;-->
-
     <!-- 验证码组件 -->
     <bean id="kaptchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
         <property name="config">

@@ -24,6 +24,7 @@
 
     <import resource="conf/spring/spring-db.xml"/>
     <import resource="conf/spring/spring-beans.xml"/>
+    <import resource="conf/spring/spring-wechat.xml"/>
     <import resource="conf/spring/spring-aop.xml"/>
     <import resource="conf/spring/spring-email.xml"/>
     <import resource="conf/spring/spring-scheduled.xml"/>
