@@ -3,10 +3,6 @@ package com.fengjx.ttwx.modules.wechat.process.executor;
 
 import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.utils.LogUtil;
-import com.fengjx.ttwx.modules.api.restful.BaiduMusicServiceApi;
-import com.fengjx.ttwx.modules.api.restful.BaiduTranslateServiceApi;
-import com.fengjx.ttwx.modules.api.restful.WeatherServiceApi;
-import com.fengjx.ttwx.modules.api.restful.YoukuVideoServiceApi;
 import com.fengjx.ttwx.modules.api.tuling.client.TulingApiClient;
 import com.fengjx.ttwx.modules.api.tuling.vo.req.RequestBean;
 import com.fengjx.ttwx.modules.wechat.model.RespMsgAction;
@@ -14,7 +10,8 @@ import com.fengjx.ttwx.modules.wechat.process.utils.ExecutorNameUtil;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
-import me.chanjar.weixin.mp.bean.*;
+import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -89,106 +86,19 @@ public class TextExecutor extends BaseServiceExecutor {
         return ExecutorNameUtil.buildName(WxConsts.XML_MSG_TEXT, null);
     }
 
+    /**
+     * 图灵机器人
+     * 
+     * @param inMessage
+     * @return
+     */
     public String extHandel(WxMpXmlMessage inMessage) {
-        String respMessage = null;
         String fromUserName = inMessage.getFromUserName();
-        String toUserName = inMessage.getToUserName();
         String content = inMessage.getContent();
-
-        WxMpXmlOutTextMessage text = WxMpXmlOutMessage.TEXT().fromUser(toUserName)
-                .toUser("fromUserName").build();
-        // 接收用户发送的文本消息内容
-        // 创建图文消息
-        WxMpXmlOutNewsMessage m = WxMpXmlOutMessage.NEWS().fromUser(fromUserName).toUser(toUserName)
-                .build();
-        if (content.startsWith("歌曲")) {
-            // 文本消息内容
-            String respContent = null;
-            // 将歌曲2个字及歌曲后面的+、空格、-等特殊符号去掉
-            String keyWord = content.replaceAll("^歌曲[\\+ ~!@#%^-_=]?", "").trim();
-            // 如果歌曲名称为空
-            if ("".equals(keyWord)) {
-                respContent = BaiduMusicServiceApi.getMusicUsage();
-            } else {
-                String[] kwArr = keyWord.split("@");
-                // 歌曲名称
-                String musicTitle = kwArr[0];
-                // 演唱者默认为空
-                String musicAuthor = "";
-                if (2 == kwArr.length) {
-                    musicAuthor = kwArr[1];
-                }
-                // 搜索音乐
-                WxMpXmlOutMusicMessage music = BaiduMusicServiceApi.searchMusic(musicTitle,
-                        musicAuthor);
-                // 未搜索到音乐
-                if (null == music) {
-                    respContent = "对不起，没有找到你想听的歌曲<" + musicTitle + ">。";
-                } else {
-                    // 音乐消息
-                    respMessage = music.toXml();
-                }
-                // 没有搜索结果
-                if (null != respContent) {
-                    text.setContent(respContent);
-                    respMessage = text.toXml();
-                }
-            }
-        }
-        // 翻译
-        else if (content.startsWith("翻译")) {
-            String keyWord = content.replaceAll("^翻译", "").trim();
-            LogUtil.info(LOG, "翻译：" + keyWord);
-            if ("".equals(keyWord)) {
-                // 返回使用指南
-                text.setContent(BaiduTranslateServiceApi.getTranslateUsage());
-            } else {
-                text.setContent(BaiduTranslateServiceApi.translate(keyWord));
-            }
-            respMessage = text.toXml();
-        }
-        // 搜索视频（优酷）
-        else if (content.startsWith("视频")) {
-            String keyWord = content.replaceAll("^视频", "").trim();
-            LogUtil.info(LOG, "搜索视频：" + keyWord);
-            String textContent = null;
-            if ("".equals(keyWord)) {
-                textContent = YoukuVideoServiceApi.getVideoUsage();
-            } else {
-                WxMpXmlOutNewsMessage news = YoukuVideoServiceApi.searchVideo(keyWord);
-                if (null != news && !CollectionUtils.isEmpty(news.getArticles())) {
-                    respMessage = news.toXml();
-                } else {
-                    textContent = "没有搜索结果...";
-                }
-            }
-            // 没有搜索结果
-            if (null != textContent) {
-                text.setContent(textContent);
-                respMessage = text.toXml();
-            }
-        }
-        // 天气预报
-        else if (content.startsWith("天气")) {
-            String keyWord = content.replaceAll("^天气", "").trim();
-            LogUtil.info(LOG, "天气查询：" + keyWord);
-            if ("".equals(keyWord)) {
-                // 返回使用指南
-                text.setContent(WeatherServiceApi.getWeatherUsage());
-            } else {
-                text.setContent(WeatherServiceApi.queryhWeather(keyWord));
-            }
-            respMessage = text.toXml();
-        } else if (content.startsWith("留言")) {
-            text.setContent("<a href=\"http://blog.fengjx.com/?page_id=31\">留言</a>");
-            respMessage = text.toXml();
-        } else {
-            // 没有匹配规则的消息，交给图灵机器人处理
-            RequestBean req = new RequestBean();
-            req.setInfo(content);
-            req.setUserid(fromUserName);
-            return TulingApiClient.call2WechatMsg(req);
-        }
-        return respMessage;
+        // 没有匹配规则的消息，交给图灵机器人处理
+        RequestBean req = new RequestBean();
+        req.setInfo(content);
+        req.setUserid(fromUserName);
+        return TulingApiClient.call2WechatMsg(req);
     }
 }
