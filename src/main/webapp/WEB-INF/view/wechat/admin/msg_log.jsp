@@ -66,6 +66,7 @@
             </div>
         </div>
         <table id="data-table"></table>
+        <div id="tablePager"></div>
     </div>
 
 <script src="${resourceUrl}/script/wechat/admin/material_util.js?v=201552001" type="text/javascript" charset="UTF-8"></script>
