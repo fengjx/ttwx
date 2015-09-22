@@ -105,6 +105,8 @@ function editMsgAction(id) {
                         $("#replyText").val(json.Content);
                     } else if (msgType == "news") {	//图文消息
                         tabIndex = 4;
+                        var viewHtml = xml2NewsHtml(row.xml_data,row.in_time,row.material_id);
+                        $("#preview_news").html(viewHtml);
                     }
 
                 } else if (row.action_type == 'api') {

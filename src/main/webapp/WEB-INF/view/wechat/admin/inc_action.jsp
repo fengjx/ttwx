@@ -155,11 +155,6 @@
 	</div>
 </div>
 
-<div id="materialDialog" style="display: none;">
-	<div style="width:99.5%;">
-
-	</div>
-</div>
 <div class="modal" id="materialModal" tabindex="-1" role="dialog" aria-labelledby="materialModalLabel"
 	 aria-hidden="true">
 	<div class="modal-dialog" style="width:800px;">

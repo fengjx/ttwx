@@ -135,7 +135,7 @@ public class RespMsgActionController extends MyController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> save(HttpServletRequest request) {
-        Map<String, Object> reqMap = getRequestMap(request);
+        Map<String, Object> reqMap = getNotBlankRequestMap(request);
         Map<String, Object> materialMap = getMaterial(reqMap);
 
         String userId = getLoginSysUserId(request);
