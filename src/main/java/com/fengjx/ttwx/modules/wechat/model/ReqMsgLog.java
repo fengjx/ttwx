@@ -5,7 +5,6 @@ import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
-import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.common.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class ReqMsgLog extends Model {
      */
     public AdapterPage pageList(Map<String, String> attrs, String userId) {
         Record accounRecordt = publicAccount.getAccountByUserId(userId);
-        List<Object> params = new ArrayList();
+        List<Object> params = new ArrayList<>();
         StringBuilder sql = new StringBuilder(getSelectSql());
         sql.append(" l where l.public_account_id = ?");
         params.add(accounRecordt.getStr("id"));

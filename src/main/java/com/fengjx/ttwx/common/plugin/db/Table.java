@@ -17,7 +17,7 @@ public class Table {
     // 组件名称
     private String primaryKey;
     // 字段及类型
-    private Map<String, Class<?>> columnTypeMap = new HashMap();
+    private Map<String, Class<?>> columnTypeMap = new HashMap<>();
     // 查询字段
     private String columnsStr;
 

@@ -163,6 +163,7 @@ public class WechatMenu extends Model {
             for (Map<String, Object> menuMap : menuList) {
                 button = new WxMenuButton();
                 button.setName((String) menuMap.get("name"));
+                @SuppressWarnings("unchecked")
                 List<Map<String, Object>> children = (List<Map<String, Object>>) menuMap
                         .get("children");
                 if (null != children) {

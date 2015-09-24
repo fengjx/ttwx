@@ -101,6 +101,7 @@ public class MemoryCache implements SimpleCache {
      * @param key
      * @return
      */
+    @SuppressWarnings("unchecked")
     public <T> T get(String key) {
         return (T) this.cache.getIfPresent(key);
     }
@@ -113,6 +114,7 @@ public class MemoryCache implements SimpleCache {
      * @return
      */
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T get(String key, IDataLoader<T> dataLoader) {
         Object o = get(key);
         if (null != o) {

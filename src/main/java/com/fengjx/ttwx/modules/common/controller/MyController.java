@@ -5,15 +5,13 @@ import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.common.web.BaseController;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author fengjx.
@@ -32,7 +30,7 @@ public abstract class MyController extends BaseController {
      */
     protected Map<String, String> compareValidCode(HttpServletRequest request,
             String valid_code) {
-        Map<String, String> res = new HashMap();
+        Map<String, String> res = new HashMap<>();
         res.put("code", "1");
         res.put("msg", "验证码正确");
         String code = getSession(request).getAttribute(

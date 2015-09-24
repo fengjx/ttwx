@@ -43,6 +43,7 @@ public final class SerializableUtil {
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     public static <T> T string2Object(String serStr) throws UnsupportedEncodingException,
             IOException, ClassNotFoundException {
         ByteArrayInputStream byteArrayInputStream = null;

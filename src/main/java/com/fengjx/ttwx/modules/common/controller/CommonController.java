@@ -8,7 +8,6 @@ import com.fengjx.ttwx.common.utils.WebUtil;
 import com.fengjx.ttwx.common.web.BaseController;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -19,14 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author fengjx.
@@ -117,7 +115,7 @@ public class CommonController extends BaseController {
     private Map<String, String> getErrorMap(HttpServletRequest request) {
         Exception e = (Exception) request.getAttribute("ex");
         LogUtil.error(LOG, "request error", e);
-        Map<String, String> map = new HashMap();
+        Map<String, String> map = new HashMap<>();
         String errorMsg = "请求失败";
         // 自定义异常
         if (e instanceof MyRuntimeException || e instanceof MyException) {

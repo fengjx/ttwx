@@ -163,7 +163,7 @@ public class RespMsgActionController extends MyController {
      * @return
      */
     private Map<String, Object> getWechatMenu(Map<String, Object> reqMap) {
-        Map<String, Object> menuMap = new HashMap();
+        Map<String, Object> menuMap = new HashMap<>();
         if (MapUtils.isNotEmpty(reqMap) && StringUtils.isNotBlank((String) reqMap.get("menuId"))) {
             menuMap = wechatMenu.findById(reqMap.get("menuId")).getColumns();
             menuMap.put("type", reqMap.get("menuType"));
@@ -179,7 +179,7 @@ public class RespMsgActionController extends MyController {
      * @return
      */
     private Map<String, Object> getMaterial(Map<String, Object> reqMap) {
-        Map<String, Object> materialMap = new HashMap();
+        Map<String, Object> materialMap = new HashMap<>();
         if (MapUtils.isEmpty(reqMap)) {
             return materialMap;
         }
@@ -187,7 +187,7 @@ public class RespMsgActionController extends MyController {
             materialMap = material.findById(reqMap.get("material_id")).getColumns();
         }
         if (StringUtils.isNotBlank((String) reqMap.get("materiaContent"))) {
-            materialMap = new HashMap();
+            materialMap = new HashMap<>();
             materialMap.put("xml_data",
                     WxMpXmlOutMessage.TEXT().content((String) reqMap.get("materiaContent"))
                             .fromUser("").toUser("").build().toXml());

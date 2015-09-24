@@ -20,6 +20,7 @@ public final class BeanUtil {
      * @param bean
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static final Map<String, Object> bean2Map(Object bean) {
         try {
             return BeanUtils.describe(bean);

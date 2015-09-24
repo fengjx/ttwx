@@ -25,6 +25,7 @@ public class TulingApiClient {
         return MsgConvert.strJson2Bean(call2String(request));
     }
 
+    @SuppressWarnings("unchecked")
     public static String call2String(RequestBean request) {
         Map<String, String> param = null;
         try {

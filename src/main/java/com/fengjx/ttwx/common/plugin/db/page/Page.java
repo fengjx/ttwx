@@ -88,9 +88,9 @@ public class Page<T> implements Serializable {
      */
     public AdapterPage convert(String adapterPageName) {
         if (JqGridPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(adapterPageName)) {
-            return new JqGridPage(this);
+            return new JqGridPage<>(this);
         } else if (BootstrapPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(adapterPageName)) {
-            return new BootstrapPage(this);
+            return new BootstrapPage<>(this);
         } else {
             throw new RuntimeException("unknown adapterPage type " + adapterPageName);
         }

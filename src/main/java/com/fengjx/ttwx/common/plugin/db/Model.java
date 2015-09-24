@@ -31,7 +31,7 @@ public abstract class Model {
             attrs.put(pk, CommonUtils.getPrimaryKey());
         }
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList();
+        List<Object> paras = new ArrayList<>();
         Config.dialect.forModelSave(table, attrs, sql, paras);
         return jdbcTemplate.update(sql.toString(), paras.toArray()) >= 1;
     }
@@ -91,7 +91,7 @@ public abstract class Model {
             throw new MyDbException("You can't update model without Primary Key.");
         }
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList();
+        List<Object> paras = new ArrayList<>();
         Config.dialect.forModelUpdate(table, attrs, pKey, id, sql, paras);
         if (paras.size() <= 1) { // Needn't update
             return false;
@@ -141,7 +141,7 @@ public abstract class Model {
     public Record findOne(Class<? extends Model> cls, Map<String, Object> attrs) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList();
+        List<Object> paras = new ArrayList<>();
         Config.dialect.forModelFind(table, sql, "*", null, attrs, paras);
         return findOne(sql.toString(), paras.toArray());
     }
@@ -209,7 +209,7 @@ public abstract class Model {
             String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList();
+        List<Object> paras = new ArrayList<>();
         Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
         return findList(sql.toString(), paras.toArray());
     }
@@ -263,7 +263,7 @@ public abstract class Model {
             String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList();
+        List<Object> paras = new ArrayList<>();
         Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
         return paginate(PageContext.getPageNumber(), PageContext.getPageSize(), sql.toString(),
                 paras.toArray());
@@ -298,7 +298,7 @@ public abstract class Model {
         int totalPage = 0;
         totalRow = getCount(sql, paras);
         if (totalRow < 1) {
-            return new Page(new ArrayList<Map<String, Object>>(0), pageNumber, pageSize, 0, 0L);
+            return new Page<>(new ArrayList<Map<String, Object>>(0), pageNumber, pageSize, 0, 0L);
         }
         totalPage = totalRow.intValue() / pageSize;
         if (totalRow % pageSize != 0) {
@@ -307,7 +307,7 @@ public abstract class Model {
         StringBuilder pageSql = new StringBuilder();
         Config.dialect.forPaginate(pageSql, pageNumber, pageSize, sql);
         List<Map<String, Object>> list = findList(pageSql.toString(), paras);
-        return new Page(list, pageNumber, pageSize, totalPage, totalRow);
+        return new Page<>(list, pageNumber, pageSize, totalPage, totalRow);
     }
 
     /**

@@ -261,7 +261,7 @@ public class FileUtil {
      */
     public static File[] listAll(File file,
                                  javax.swing.filechooser.FileFilter filter) {
-        ArrayList list = new ArrayList();
+        ArrayList<File> list = new ArrayList<>();
         File[] files;
         if (!file.exists() || file.isFile()) {
             return null;
@@ -279,7 +279,7 @@ public class FileUtil {
      * @param filter 过滤器
      * @param file   目录
      */
-    private static void list(ArrayList list, File file,
+    private static void list(ArrayList<File> list, File file,
                              javax.swing.filechooser.FileFilter filter) {
         if (filter.accept(file)) {
             list.add(file);

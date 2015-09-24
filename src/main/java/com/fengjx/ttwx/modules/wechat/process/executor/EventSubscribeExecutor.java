@@ -38,7 +38,7 @@ public class EventSubscribeExecutor extends BaseServiceExecutor {
     public WxMpXmlOutMessage execute(WxMpXmlMessage inMessage, Record accountRecord,
             WxMpConfigStorage wxMpConfig, WxSession session) {
         LogUtil.info(LOG, "进入用户关注消息处理器fromUserName=" + inMessage.getFromUserName());
-        Map<String, Object> attrs = new HashMap();
+        Map<String, Object> attrs = new HashMap<>();
         attrs.put("id", CommonUtils.getPrimaryKey());
         attrs.put("openid", inMessage.getFromUserName());
         attrs.put("subscribe_time", new Date());

@@ -22,7 +22,7 @@ public class ServiceExecutorFactory {
     /**
      * 服务映射
      */
-    private Map<String, ServiceExecutor> executorMaps = new HashMap();
+    private Map<String, ServiceExecutor> executorMaps = new HashMap<>();
 
     /**
      * 根据name查询服务执行器

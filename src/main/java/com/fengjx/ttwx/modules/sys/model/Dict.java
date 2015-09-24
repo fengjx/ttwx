@@ -40,7 +40,7 @@ public class Dict extends Model {
      * @return
      */
     public String getDictLabel(String value, String group) {
-        Map<String, Object> attrs = new HashMap();
+        Map<String, Object> attrs = new HashMap<>();
         attrs.put("dict_value", value);
         attrs.put("group_code", group);
         return findOne(attrs).getStr("dict_name");
@@ -54,7 +54,7 @@ public class Dict extends Model {
      * @return
      */
     public String getDictValue(String label, String group) {
-        Map<String, Object> attrs = new HashMap();
+        Map<String, Object> attrs = new HashMap<>();
         attrs.put("dict_name", label);
         attrs.put("group_code", group);
         return findOne(attrs).getStr("dict_name");
@@ -67,7 +67,7 @@ public class Dict extends Model {
      * @return
      */
     public List<Map<String, Object>> findDictList(String group) {
-        Map<String, Object> attrs = new HashMap();
+        Map<String, Object> attrs = new HashMap<>();
         attrs.put("group_code", group);
         return findList(attrs, ORDER_BY);
     }
@@ -81,7 +81,7 @@ public class Dict extends Model {
     public AdapterPage page(ParamHelper params) {
         StringBuilder sql = new StringBuilder(getSelectSql("a"));
         sql.append(" where 1 = 1");
-        List<Object> qryParams = new ArrayList();
+        List<Object> qryParams = new ArrayList<>();
         if (StringUtils.isNoneBlank(params.getStr("group_code"))) {
             sql.append(" and group_code like CONCAT('%',?,'%')");
             qryParams.add(params.get("group_code"));

@@ -37,7 +37,7 @@ public class WechatLogAop {
             WxMpXmlMessage inMessage = WechatContext.getInMessage();
             // 消息类型
             String msgType = inMessage.getMsgType();
-            Map<String, Object> attrs = new HashMap();
+            Map<String, Object> attrs = new HashMap<>();
             attrs.put("req_type", msgType);
             attrs.put("event_type", inMessage.getEvent());
             attrs.put("to_user_name", inMessage.getToUserName());

@@ -54,20 +54,21 @@ public final class WxMpUtil {
      * @param msgType
      * @return
      */
-    public static <T> Class<T> getXmlOutMsgType(String msgType) {
+    @SuppressWarnings("unchecked")
+    public static Class<?> getXmlOutMsgType(String msgType) {
         switch (msgType) {
             case WxConsts.CUSTOM_MSG_TEXT:
-                return (Class<T>) WxMpXmlOutTextMessage.class;
+                return WxMpXmlOutTextMessage.class;
             case WxConsts.CUSTOM_MSG_NEWS:
-                return (Class<T>) WxMpXmlOutNewsMessage.class;
+                return WxMpXmlOutNewsMessage.class;
             case WxConsts.CUSTOM_MSG_IMAGE:
-                return (Class<T>) WxMpXmlOutImageMessage.class;
+                return WxMpXmlOutImageMessage.class;
             case WxConsts.CUSTOM_MSG_MUSIC:
-                return (Class<T>) WxMpXmlOutMusicMessage.class;
+                return WxMpXmlOutMusicMessage.class;
             case WxConsts.CUSTOM_MSG_VIDEO:
-                return (Class<T>) WxMpXmlOutVideoMessage.class;
+                return WxMpXmlOutVideoMessage.class;
             case WxConsts.CUSTOM_MSG_VOICE:
-                return (Class<T>) WxMpXmlOutVoiceMessage.class;
+                return WxMpXmlOutVoiceMessage.class;
             default:
                 throw new RuntimeException("unkonwn msgType");
         }

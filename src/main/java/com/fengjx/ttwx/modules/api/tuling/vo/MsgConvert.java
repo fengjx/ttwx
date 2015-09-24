@@ -243,6 +243,7 @@ public class MsgConvert {
      * @param <T>
      * @return
      */
+    @SuppressWarnings("unchecked")
     private static <T extends ListBaseBean> ListBean createListBean(JSONObject jsonObject,
             ResutlCode resutlCode) {
         ListBean res = new ListBean();

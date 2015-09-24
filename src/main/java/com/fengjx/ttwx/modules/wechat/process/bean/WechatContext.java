@@ -24,11 +24,11 @@ public class WechatContext {
      * 微信session管理器
      */
     private static final WxSessionManager sessionManager = new StandardSessionManager();
-    private static ThreadLocal<WxMpConfigStorage> wxMpConfigStorage = new InheritableThreadLocal();
-    private static ThreadLocal<Record> inMessageRecord = new InheritableThreadLocal();
-    private static ThreadLocal<String> encryptType = new InheritableThreadLocal();
-    private static ThreadLocal<WxMpXmlMessage> inMessage = new InheritableThreadLocal();
-    private static ThreadLocal<WxMpXmlOutMessage> outMessage = new InheritableThreadLocal();
+    private static ThreadLocal<WxMpConfigStorage> wxMpConfigStorage = new InheritableThreadLocal<>();
+    private static ThreadLocal<Record> inMessageRecord = new InheritableThreadLocal<>();
+    private static ThreadLocal<String> encryptType = new InheritableThreadLocal<>();
+    private static ThreadLocal<WxMpXmlMessage> inMessage = new InheritableThreadLocal<>();
+    private static ThreadLocal<WxMpXmlOutMessage> outMessage = new InheritableThreadLocal<>();
 
     public static WxMpConfigStorage getWxMpConfigStorage() {
         return wxMpConfigStorage.get();

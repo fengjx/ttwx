@@ -33,14 +33,14 @@ public class TableMappingPlugin implements IPlugin {
     public void start() {
         setConfig(adapterPageName, null);
         try {
-            Set<Class<?>> classSet = getModelClasses();
-            for (Class<?> cls : classSet) {
-                Table table = new Table((Class<? extends Model>) cls);
+            Set<Class<? extends Model>> classSet = getModelClasses();
+            for (Class<? extends Model> cls : classSet) {
+                Table table = new Table(cls);
                 bind(table);
                 TableMapping.me().putTable(table);
             }
         } catch (Exception e) {
-        	LogUtil.error(LOG, "Can not init table mapping",e);
+            LogUtil.error(LOG, "Can not init table mapping", e);
             throw new MyDbException("Can not init table mapping");
         }
     }
@@ -66,11 +66,17 @@ public class TableMappingPlugin implements IPlugin {
      *
      * @return
      */
-    private Set<Class<?>> getModelClasses() throws Exception {
-        Set<Class<?>> classSet = new LinkedHashSet<Class<?>>();
+    @SuppressWarnings("unchecked")
+    private Set<Class<? extends Model>> getModelClasses() throws Exception {
+        Set<Class<? extends Model>> classSet = new LinkedHashSet<>();
         try {
             for (String pkg : packages) {
-                classSet.addAll(ClassUtil.getClasses(pkg, true, Mapper.class));
+                Set<Class<?>> getCls = ClassUtil.getClasses(pkg, true, Mapper.class);
+                for (Class<?> cls : getCls) {
+                    if (cls.getSuperclass() == Model.class) {
+                        classSet.add((Class<? extends Model>) cls);
+                    }
+                }
             }
             return classSet;
         } catch (Exception e) {

@@ -289,6 +289,8 @@
                     <encoding>${encoding}</encoding>
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
+                    <!-- 显示编译告警信息-->
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
             </plugin>
             <plugin>

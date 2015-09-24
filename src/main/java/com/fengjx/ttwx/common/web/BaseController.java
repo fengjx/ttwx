@@ -47,7 +47,7 @@ public abstract class BaseController {
     }
 
     protected Map<String, Object> getRequestMap(HttpServletRequest request) {
-        Map<String, Object> map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.putAll(WebUtil.getRequestParams(request));
         return map;
     }
@@ -57,7 +57,7 @@ public abstract class BaseController {
     }
 
     protected Map<String, Object> getNotBlankRequestMap(HttpServletRequest request) {
-        Map<String, Object> map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.putAll(WebUtil.getNotBlankRequestParams(request));
         return map;
     }
@@ -98,7 +98,7 @@ public abstract class BaseController {
     }
 
     protected Map<String, String> retFail(String msg) {
-        Map<String, String> res = new HashMap();
+        Map<String, String> res = new HashMap<>();
         res.put("code", "0");
         res.put("msg", msg);
         return res;

@@ -44,7 +44,7 @@ public class ExtApp extends Model {
      * @return
      */
     public AdapterPage pageList(ParamHelper params) {
-        List<Object> qryParams = new ArrayList();
+        List<Object> qryParams = new ArrayList<>();
         StringBuilder sql = createListSql();
         if (null != params.get("is_valid")) {
             sql.append(" and a.is_valid = ?");
@@ -123,7 +123,7 @@ public class ExtApp extends Model {
         insertSql.append(extAppSupport.getTableName());
         insertSql.append("( ").append(extAppSupport.getColumnsStr()).append(" )");
         insertSql.append(" values (?, ?, ?, ?)");
-        List<Object[]> batchArgs = new ArrayList();
+        List<Object[]> batchArgs = new ArrayList<>();
         Object[] param;
         for (String msgType : msgTypes) {
             if (WxConsts.XML_MSG_EVENT.equals(msgType)) {

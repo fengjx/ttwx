@@ -17,7 +17,7 @@ public class Plugins {
 
     private static final Logger LOG = LoggerFactory.getLogger(Plugins.class);
 
-    private List<IPlugin> pluginList = new ArrayList();
+    private List<IPlugin> pluginList = new ArrayList<>();
 
     public void init() {
         if (CollectionUtils.isEmpty(pluginList)) {

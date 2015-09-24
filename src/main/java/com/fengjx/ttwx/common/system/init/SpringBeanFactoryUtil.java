@@ -32,6 +32,7 @@ public class SpringBeanFactoryUtil {
         return springContext;
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T getBean(String beanName) {
         return (T) getSpringContext().getBean(beanName);
     }

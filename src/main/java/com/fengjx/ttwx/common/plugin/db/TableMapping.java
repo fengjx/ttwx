@@ -9,7 +9,7 @@ import java.util.Map;
  */
 class TableMapping {
 
-    private final Map<Class<? extends Model>, Table> modelToTableMap = new HashMap();
+    private final Map<Class<? extends Model>, Table> modelToTableMap = new HashMap<>();
 
     private static TableMapping me = new TableMapping();
 

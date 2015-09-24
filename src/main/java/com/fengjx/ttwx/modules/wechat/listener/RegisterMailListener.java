@@ -35,6 +35,7 @@ public class RegisterMailListener implements ApplicationListener<RegisterEvent> 
      */
     @Async
     @Override
+    @SuppressWarnings("unchecked")
     public void onApplicationEvent(RegisterEvent event) {
         Map<String, Object> attrs = (Map<String, Object>) event.getSource();
         SendMailBean mail = new SendMailBean();

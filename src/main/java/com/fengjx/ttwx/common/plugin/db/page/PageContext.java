@@ -8,9 +8,9 @@ package com.fengjx.ttwx.common.plugin.db.page;
 public class PageContext {
 
     // 每页显示条数
-    private static ThreadLocal<Integer> pageSize = new ThreadLocal();;
+    private static ThreadLocal<Integer> pageSize = new ThreadLocal<>();;
     // 当前页
-    private static ThreadLocal<Integer> pageNumber = new ThreadLocal();;
+    private static ThreadLocal<Integer> pageNumber = new ThreadLocal<>();;
 
     public static int getPageSize() {
         Integer _pagesize = pageSize.get();

@@ -40,7 +40,7 @@ public class SysUser extends Model {
      * @return
      */
     public SysUserEntity signin(String username, String pwd) {
-        Map<String, Object> attrs = new HashMap();
+        Map<String, Object> attrs = new HashMap<>();
         attrs.put("username", username);
         Record record = findOne(attrs);
         String md5Hex = DigestUtils.md5Hex(pwd + record.getStr("email"));
@@ -109,7 +109,7 @@ public class SysUser extends Model {
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean activate(String ser) {
         String uid = AesUtil.decrypt(ser);
-        Map<String, Object> attrs = new HashMap();
+        Map<String, Object> attrs = new HashMap<>();
         attrs.put("valid_uid", uid);
         Record record = findOne(attrs);
         if (null == record || SysUserEntity.IS_ALIVE.equals(record.getStr("is_valid"))) {

@@ -18,7 +18,7 @@ public class CacheFactory {
         private static Map<CacheName, SimpleCache> cacheMaps;
 
         static {
-            cacheMaps = new HashMap();
+            cacheMaps = new HashMap<>();
             cacheMaps.put(CacheName.CACHE_NAME_MEMORY, MemoryCache.getInstance());
         }
     }

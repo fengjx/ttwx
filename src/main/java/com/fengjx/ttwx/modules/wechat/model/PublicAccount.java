@@ -46,7 +46,7 @@ public class PublicAccount extends Model {
      * @return
      */
     public Record getAccountByUserId(String userId) {
-        Map<String, Object> attrs = new HashMap();
+        Map<String, Object> attrs = new HashMap<>();
         attrs.put("sys_user_id", userId);
         return findOne(attrs);
     }
@@ -90,7 +90,7 @@ public class PublicAccount extends Model {
      * @return
      */
     public static Map<String, Object> resetAttrs(String id, String userId) {
-        Map<String, Object> attrs = new HashMap();
+        Map<String, Object> attrs = new HashMap<>();
         attrs.put("sys_user_id", userId);
         String token = CommonUtils.getPrimaryKey();
         String ticket = CommonUtils.getPrimaryKey();
@@ -126,7 +126,7 @@ public class PublicAccount extends Model {
         return simpleCache.get(AesUtil.decrypt(encryptTicket), new IDataLoader<Record>() {
             @Override
             public Record load() {
-                Map<String, Object> attrs = new HashMap();
+                Map<String, Object> attrs = new HashMap<>();
                 attrs.put("ticket", AesUtil.decrypt(encryptTicket));
                 Record account = findOne(attrs);
                 return account;

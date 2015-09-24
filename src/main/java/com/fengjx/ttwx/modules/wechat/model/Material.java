@@ -95,7 +95,7 @@ public class Material extends Model {
                     String htmlUrl = STORE_PREFIX + targetFileName + ".html";
                     Map<String, Object> content = contents.get(i);
                     content.put("app_name", AppConfig.APP_NAME);
-                    content.put("date", DateUtils.parseDate(now_date));
+                    content.put("date", DateUtils.formatDate(now_date));
                     content.put("email", AppConfig.SUPPORT_EMAIL);
                     // 生成html文件
                     createHtml(targetFileName, htmlUrl, content);

@@ -109,7 +109,7 @@ public class QiNiuUti {
     public static List<String> listFile(String prefix, int limit, String delimiter) {
         BucketManager.FileListIterator it = bucketManager.createFileListIterator(bucket, prefix,
                 limit, delimiter);
-        List<String> list = new ArrayList();
+        List<String> list = new ArrayList<>();
         while (it.hasNext()) {
             FileInfo[] items = it.next();
             if (items.length > 0) {

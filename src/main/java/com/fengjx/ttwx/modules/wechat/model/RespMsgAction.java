@@ -111,7 +111,7 @@ public class RespMsgAction extends Model {
      * @return
      */
     public AdapterPage pageMsgAction(Map<String, String> params, String userId) {
-        List<Object> parameters = new ArrayList();
+        List<Object> parameters = new ArrayList<>();
         StringBuilder sql = new StringBuilder(detailSql());
         sql.append(" where a.user_id = ? ");
         parameters.add(userId);
@@ -192,7 +192,7 @@ public class RespMsgAction extends Model {
      */
     public Record loadMsgAction(String ext_type, String req_type, String event_type,
             String key_word, String fuzzy, String userId) {
-        List<Object> parameters = new ArrayList();
+        List<Object> parameters = new ArrayList<>();
         StringBuilder sql = new StringBuilder(detailSql());
         sql.append(" where a.user_id = ? ");
         parameters.add(userId);
@@ -230,7 +230,7 @@ public class RespMsgAction extends Model {
                 new IDataLoader<List<Map<String, Object>>>() {
                     @Override
                     public List<Map<String, Object>> load() {
-                        List<Object> parameters = new ArrayList();
+                        List<Object> parameters = new ArrayList<>();
                         StringBuilder sql = new StringBuilder(detailSql());
                         sql.append(
                                 " where a.user_id = ? and a.req_type = ? order by a.order_no");

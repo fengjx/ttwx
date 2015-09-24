@@ -29,6 +29,7 @@ public class RegisterCreatePublicAccountListener implements ApplicationListener<
      */
     @Async
     @Override
+    @SuppressWarnings("unchecked")
     public void onApplicationEvent(RegisterEvent event) {
         Map<String, Object> userAttrs = (Map<String, Object>) event.getSource();
         Map<String, Object> attrs = PublicAccount.resetAttrs(CommonUtils.getPrimaryKey(),

@@ -33,7 +33,7 @@ public class WechatUser extends Model {
         sql.append(" where u.public_account_id = (select id from ");
         sql.append(getTableName(PublicAccount.class));
         sql.append(" where sys_user_id = ?) ");
-        List<Object> params = new ArrayList();
+        List<Object> params = new ArrayList<>();
         params.add(userId);
         if (StringUtils.isNotBlank(attrs.get("openid"))) {
             sql.append(" and u.openid = ?");
