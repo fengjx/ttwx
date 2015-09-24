@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOG_HOME" value="${catalina.base}/logs/ttwx-dev"/>
+    <property name="LOG_HOME" value="${catalina.base}/logs/ttwx"/>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/app.log</file>

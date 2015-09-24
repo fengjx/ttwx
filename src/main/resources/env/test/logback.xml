@@ -3,13 +3,6 @@
 
     <property name="LOG_HOME" value="${catalina.base}/logs/ttwx-test"/>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread][%logger{0}]#%method %m%n</pattern>
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/app.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -56,7 +49,6 @@
     </logger>
 
     <root level="INFO">
-        <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
 
