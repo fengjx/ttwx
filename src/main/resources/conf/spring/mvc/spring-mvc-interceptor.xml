@@ -12,7 +12,7 @@
         <mvc:interceptor>
             <mvc:mapping path="${adminPath}"/>
             <mvc:mapping path="${adminPath}/**"/>
-            <bean class="com.fengjx.ttwx.modules.wechat.controller.admin.interceptor.AdminInterceptor"></bean>
+            <bean class="com.fengjx.ttwx.modules.sys.controller.admin.interceptor.AdminInterceptor"></bean>
         </mvc:interceptor>
         <!-- 分页请求拦截器 -->
         <mvc:interceptor>

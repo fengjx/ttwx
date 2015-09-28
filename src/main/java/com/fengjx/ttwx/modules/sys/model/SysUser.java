@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.wechat.model;
+package com.fengjx.ttwx.modules.sys.model;
 
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
@@ -26,7 +26,7 @@ import java.util.Map;
  * @author fengjx. @date：2015/5/6 0006
  */
 @Component
-@Mapper(table = "wechat_sys_user", id = "id")
+@Mapper(table = "sys_user", id = "id")
 public class SysUser extends Model {
 
     @Autowired

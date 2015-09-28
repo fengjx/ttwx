@@ -6,7 +6,7 @@ import com.fengjx.ttwx.common.web.MyExecuteCallback;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
-import com.fengjx.ttwx.modules.wechat.model.SysUser;
+import com.fengjx.ttwx.modules.sys.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class LoginController extends MyController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-        return "/wechat/display/login";
+        return "sys/display/login";
     }
 
     @RequestMapping(value = "/loginout")
@@ -88,7 +88,7 @@ public class LoginController extends MyController {
      */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String registerView() {
-        return "wechat/display/register";
+        return "sys/display/register";
     }
 
     /**
@@ -118,9 +118,9 @@ public class LoginController extends MyController {
     @RequestMapping(value = "/activate")
     public String activate(String ser) {
         if (sysUser.activate(ser)) {
-            return "/wechat/display/activate-ok";
+            return "sys/display/activate-ok";
         }
-        return "/wechat/display/activate-error";
+        return "sys/display/activate-error";
     }
 
 }

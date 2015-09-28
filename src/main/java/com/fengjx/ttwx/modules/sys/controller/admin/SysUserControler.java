@@ -1,14 +1,12 @@
 
-package com.fengjx.ttwx.modules.wechat.controller.admin;
+package com.fengjx.ttwx.modules.sys.controller.admin;
 
 import com.fengjx.ttwx.modules.common.controller.MyController;
-import com.fengjx.ttwx.modules.wechat.model.SysUser;
-
+import com.fengjx.ttwx.modules.sys.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author fengjx.

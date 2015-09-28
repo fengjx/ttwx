@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.wechat.controller.admin.interceptor;
+package com.fengjx.ttwx.modules.sys.controller.admin.interceptor;
 
 import com.fengjx.ttwx.common.utils.CookieUtils;
 import com.fengjx.ttwx.common.utils.WebUtil;

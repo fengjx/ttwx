@@ -52,3 +52,5 @@ ADD UNIQUE INDEX `key_word` (`key_word`, `user_id`, `fuzzy`) USING BTREE ;
 
 ALTER TABLE `wechat_resp_msg_action`
 ADD COLUMN `order_no`  tinyint(2) NULL DEFAULT 1 AFTER `user_id`;
+
+alter table `wechat_sys_user` rename `sys_user`;
