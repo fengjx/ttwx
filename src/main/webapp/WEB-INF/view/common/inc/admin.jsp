@@ -26,7 +26,7 @@
 <script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-<script src="${resourceUrl}/script/common/app.js?v=2015091501" type="text/javascript"></script>
+<script src="${resourceUrl}/script/common/app.js?v=2015092801" type="text/javascript"></script>
 <!--[if lte IE 8]>
 <script src="${resourceUrl}/js/excanvas.min.js" type="text/javascript"></script>
 <![endif]-->

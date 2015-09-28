@@ -13,7 +13,7 @@
 <script src="${resourceUrl}/scojs/js/sco.valid.js" type="text/javascript"></script>
 <script src="${resourceUrl}/artDialog/dist/dialog-min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/nprogress/nprogress.js" type="text/javascript"></script>
-<script src="${resourceUrl}/script/common/app.js" type="text/javascript"></script>
+<script src="${resourceUrl}/script/common/app.js?v=2015092801" type="text/javascript"></script>
 <!--[if lte IE 8]>
 	<script src="${resourceUrl}/js/excanvas.min.js" type="text/javascript"></script>
 <![endif]-->
