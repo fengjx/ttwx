@@ -13,6 +13,7 @@
         <jdk.version>1.7</jdk.version>
         <encoding>UTF-8</encoding>
         <environment>dev</environment>
+        <shiro.version>1.2.4</shiro.version>
     </properties>
 
     <dependencies>
@@ -106,12 +107,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.6.1</version>
+            <version>1.7.7</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.6.1</version>
+            <version>1.7.7</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -234,6 +235,42 @@
             <artifactId>sitemesh</artifactId>
             <version>2.4.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-quartz</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-cas</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.7.3</version>
+        </dependency>
+
     </dependencies>
 
     <profiles>
