@@ -354,10 +354,12 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
     };
 
     app.ok = function (msg) {
+        app.closeDialog();
         $.scojs_message(msg, $.scojs_message.TYPE_OK);
     };
 
     app.error = function (msg, callback) {
+        app.closeDialog();
         $.scojs_message(msg, $.scojs_message.TYPE_ERROR);
     };
 
@@ -472,16 +474,12 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             app.alertModal(XMLHttpRequest.responseText.split('<script')[0]);
-            NProgress.done();
         },
         beforeSend: function (XMLHttpRequest) {
-            //app.loadingModal();
-            NProgress.set(0.4);
-            NProgress.start();
+            app.loadingModal();
         },
         complete: function () {
-//		app.closeDialog();
-            NProgress.done();
+		    //app.closeDialog();
         }
     });
 })(jQuery);

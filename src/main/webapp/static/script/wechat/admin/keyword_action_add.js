@@ -17,7 +17,6 @@ $(function () {
                 app.loadingModal("数据提交中....");
             },
             success: function (res) {
-                app.closeDialog();
                 if (res && '1' == res.code) {
                     app.alertModal("保存成功！", {
                         ok: function () {

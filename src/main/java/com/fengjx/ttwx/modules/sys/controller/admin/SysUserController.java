@@ -12,7 +12,7 @@ import java.util.Map;
  * @author fengjx.
  * @date：2015/5/6 0006
  */
-public class SysUserControler extends MyController {
+public class SysUserController extends MyController {
 
     @Autowired
     private SysUser sysUser;

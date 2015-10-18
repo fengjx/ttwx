@@ -30,7 +30,7 @@ import java.util.Map;
  * @author fengjx.
  * @date：2015/6/7 0007
  */
-@Mapper(table = "wechat_menu")
+@Mapper(table = "wechat_menu", pid = "parent_id")
 @Component
 public class WechatMenu extends Model {
 
@@ -113,23 +113,6 @@ public class WechatMenu extends Model {
             }
         }
         return res;
-    }
-
-    /**
-     * 判断菜单是否是叶子节点
-     * 
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    private boolean isLeef(String id) {
-        StringBuilder sql = new StringBuilder("select * from ");
-        sql.append(getTableName()).append(" where parent_id = ?");
-        Long count = getCount(sql.toString(), id);
-        if (count > 0) {
-            return false;
-        }
-        return true;
     }
 
     /**

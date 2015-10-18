@@ -38,7 +38,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         SysUserEntity user = (SysUserEntity) session.getAttribute(AppConfig.LOGIN_FLAG);
         // 登陆超时
-        if (null == user) {
+        if (null == user && !WebUtil.validAjax(request)) {
             CookieUtils.setCookie(response, LAST_URI,
                     request.getRequestURI().replace(request.getContextPath(), ""), 60 * 60);
             // 如果是ajax请求

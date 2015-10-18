@@ -39,11 +39,28 @@
             <b class="arrow"></b>
         </li>
         <li>
-            <a href="${adminPath}/wechat/action/keyword">
+            <a href="javascript:void(0);">
                 <i class="glyphicon glyphicon-send menu-icon"></i>
                 <span class="menu-text"> 自动回复 </span>
+                <b class="arrow icon-angle-down"></b>
             </a>
             <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="">
+                    <a href="${adminPath}/wechat/action/keyword">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        查看
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="${adminPath}/wechat/action/keywordAdd">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        添加
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
         </li>
         <li>
             <a href="${adminPath}/wechat/action/subscribe">

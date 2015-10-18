@@ -2,6 +2,9 @@
 package com.fengjx.ttwx.modules.common.constants;
 
 import com.fengjx.ttwx.common.utils.GetPropertiesVal;
+import org.apache.commons.lang3.StringUtils;
+
+import java.nio.charset.Charset;
 
 /**
  * 全局配置常量
@@ -13,6 +16,8 @@ public final class AppConfig {
     // 该对象不支持实例化
     private AppConfig() {
     }
+
+    public static final String APP_ENCODED = GetPropertiesVal.getLabel("app.encoding");
 
     public static final String TEST_FALG = GetPropertiesVal.getLabel("test_flag");
 
@@ -41,6 +46,8 @@ public final class AppConfig {
 
     public static final String SUPPORT_EMAIL = GetPropertiesVal.getLabel("mail.username");
 
+    public static final String STATIC_FILE = GetPropertiesVal.getLabel("web.staticFile");
+
     public static final String ADMIN_PATH = GetPropertiesVal.getLabel("adminPath");
 
     public static final String API_PATH = GetPropertiesVal.getLabel("apiPath");
@@ -57,6 +64,12 @@ public final class AppConfig {
     public static final String YES = "1";
 
     public static final String NO = "0";
+
+    /**
+     * 对/错
+     */
+    public static final String TRUE = "true";
+    public static final String FALSE = "false";
 
     /**
      * @return true:测试环境
@@ -97,6 +110,17 @@ public final class AppConfig {
         }
         return null;
     }
+
+
+    /**
+     * 获得静态文件后缀名数组
+     *
+     * @return
+     */
+    public static String[] getStaticFiles(){
+        return StringUtils.split(STATIC_FILE,",");
+    }
+
 
     /**
      * ehcache名称

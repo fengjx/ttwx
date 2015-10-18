@@ -5,18 +5,35 @@
 $(function () {
     sidebar($.cookie("isOpen"));
     var curUrl = window.location.href;
-    var ul = document.getElementById('side-menu');
-    var lis = ul.getElementsByTagName("li");
-    for (var i = 0; i < lis.length; i++) {
-        var href = lis.item(i).getElementsByTagName("a")[0].getAttribute("href");
-        if (-1 !== curUrl.indexOf(href)) {
-            lis.item(i).setAttribute("class", "active");
-            break;
+    var $ul = $("#side-menu");
+    var $lis = $ul.find("li");
+    $lis.each(function (i, li) {
+        var href = $(li).find("a").attr("href");
+        if (curUrl == href) {
+            $(li).addClass("active");
+            if($(li).parent().hasClass("submenu")){
+                $(li).parent().parent().addClass("open");
+                $(li).parent().css("display","block");
+            }
+            return;
         }
-    }
+    });
+
     $("#sidebar-collapse").click(function () {
         var isOpen = $("#side-menu").hasClass("menu-min");
         sidebar(isOpen ? 1 : 0);
+    });
+
+    $("li > a").has("b").click(function () {
+        var $this = $(this);
+        var isOpen = $this.parent().hasClass("open");
+        if(isOpen){
+            $this.parent().removeClass("open");
+            $this.nextAll("ul").css("display","none");
+        }else{
+            $this.parent().addClass("open");
+            $this.nextAll("ul").css("display","block");
+        }
     });
 
 });
