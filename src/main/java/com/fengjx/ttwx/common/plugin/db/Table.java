@@ -14,8 +14,11 @@ public class Table {
 
     // 表名
     private String name;
-    // 组件名称
+    // 主键名称
     private String primaryKey;
+
+    private String parentId;
+
     // 字段及类型
     private Map<String, Class<?>> columnTypeMap = new HashMap<>();
     // 查询字段
@@ -37,6 +40,7 @@ public class Table {
         }
         this.name = tableName.trim();
         this.primaryKey = primaryKey.trim();
+        this.parentId = TableUtil.getParentId(modelClass);
         this.modelClass = modelClass;
     }
 
@@ -76,6 +80,10 @@ public class Table {
      */
     public String getPrimaryKey() {
         return primaryKey;
+    }
+
+    public String getParentId() {
+        return parentId;
     }
 
     public Class<? extends Model> getModelClass() {

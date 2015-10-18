@@ -44,6 +44,12 @@ public abstract class Model {
         insertOrUpdate(getClass(), attrs);
     }
 
+    /**
+     * 新增或修改 - 如果是新增，那么生成的ID是UUID
+     *
+     * @param cls
+     * @param attrs
+     */
     public void insertOrUpdate(Class<? extends Model> cls, Map<String, Object> attrs) {
         Table table = TableUtil.getTable(cls);
         String pk = table.getPrimaryKey();
@@ -205,7 +211,8 @@ public abstract class Model {
      * @param orderby 排序 "order by in_time"
      * @return
      */
-    public List<Map<String, Object>> findList(Class<? extends Model> cls, Map<String, Object> attrs,
+    public List<Map<String, Object>> findList(Class<? extends Model> cls,
+            Map<String, Object> attrs,
             String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
@@ -259,7 +266,8 @@ public abstract class Model {
      * @param orderby
      * @return
      */
-    public Page<Map<String, Object>> paginate(Class<? extends Model> cls, Map<String, Object> attrs,
+    public Page<Map<String, Object>> paginate(Class<? extends Model> cls,
+            Map<String, Object> attrs,
             String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
@@ -321,6 +329,23 @@ public abstract class Model {
         StringBuilder countSql = new StringBuilder();
         Config.dialect.forCount(countSql, sql);
         return jdbcTemplate.queryForObject(countSql.toString(), paras, Long.class);
+    }
+
+    /**
+     * 判断菜单是否是叶子节点 getParentId
+     * 
+     * @param pid
+     * @return
+     * @throws Exception
+     */
+    public boolean isLeef(String pid) {
+        StringBuilder sql = new StringBuilder("select * from ");
+        sql.append(getTableName()).append(" where ").append(getParentId()).append(" = ?");
+        Long count = getCount(sql.toString(), pid);
+        if (count > 0) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -451,6 +476,26 @@ public abstract class Model {
      */
     public String getPrimaryKey() {
         return getPrimaryKey(this.getClass());
+    }
+
+    /**
+     * 获得指定Model的主键名称
+     *
+     * @param cls
+     * @return
+     */
+    public String getParentId(Class<? extends Model> cls) {
+        Table t = TableUtil.getTable(cls);
+        return t.getParentId();
+    }
+
+    /**
+     * 获得主键名称
+     *
+     * @return
+     */
+    public String getParentId() {
+        return getParentId(this.getClass());
     }
 
     /**

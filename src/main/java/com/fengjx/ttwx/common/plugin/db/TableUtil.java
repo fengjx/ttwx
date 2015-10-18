@@ -39,6 +39,21 @@ public class TableUtil {
     }
 
     /**
+     * 获得树形结构表的父级ID
+     *
+     * @param cls
+     * @return
+     */
+    public static String getParentId(Class<? extends Model> cls) {
+        Mapper mapper = cls.getAnnotation(Mapper.class);
+        if (null == mapper) {
+            throw new MyDbException(cls.getName() + "没有添加@Table注解");
+        }
+        return mapper.pid();
+    }
+
+
+    /**
      * 通过class获得映射table
      *
      * @param cls
