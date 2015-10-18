@@ -3,6 +3,8 @@ package com.fengjx.ttwx.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.helpers.FormattingTuple;
+import org.slf4j.helpers.MessageFormatter;
 
 /**
  * 日志工具类
@@ -12,16 +14,17 @@ import org.slf4j.Logger;
  */
 public final class LogUtil {
 
-
     /**
      * info日志
      *
      * @param logger
      * @param message
      */
-    public static void debug(Logger logger, String message) {
+    public static void debug(Logger logger, String message, Object... arguments) {
         if (logger.isInfoEnabled()) {
-            logger.debug(logPrefix(message));
+            FormattingTuple ft = MessageFormatter.arrayFormat(StrUtil.replaceBlank(message),
+                    arguments);
+            logger.debug(logPrefix(ft.getMessage()), ft.getThrowable());
         }
     }
 
@@ -31,9 +34,11 @@ public final class LogUtil {
      * @param logger
      * @param message
      */
-    public static void info(Logger logger, String message) {
+    public static void info(Logger logger, String message, Object... arguments) {
         if (logger.isInfoEnabled()) {
-            logger.info(logPrefix(message));
+            FormattingTuple ft = MessageFormatter.arrayFormat(StrUtil.replaceBlank(message),
+                    arguments);
+            logger.info(logPrefix(ft.getMessage()), ft.getThrowable());
         }
     }
 
@@ -43,19 +48,12 @@ public final class LogUtil {
      * @param logger
      * @param message
      */
-    public static void warn(Logger logger, String message) {
-        logger.warn(logPrefix(message));
-    }
-
-    /**
-     * warn日志
-     * 
-     * @param logger
-     * @param message
-     * @param t
-     */
-    public static void warn(Logger logger, String message, Throwable t) {
-        logger.warn(logPrefix(message), t);
+    public static void warn(Logger logger, String message, Object... arguments) {
+        if (logger.isWarnEnabled()) {
+            FormattingTuple ft = MessageFormatter.arrayFormat(StrUtil.replaceBlank(message),
+                    arguments);
+            logger.warn(logPrefix(ft.getMessage()), ft.getThrowable());
+        }
     }
 
     /**
@@ -64,19 +62,12 @@ public final class LogUtil {
      * @param logger
      * @param message
      */
-    public static void error(Logger logger, String message) {
-        logger.error(logPrefix(message));
-    }
-
-    /**
-     * error日志
-     * 
-     * @param logger
-     * @param message
-     * @param t
-     */
-    public static void error(Logger logger, String message, Throwable t) {
-        logger.error(logPrefix(message), t);
+    public static void error(Logger logger, String message, Object... arguments) {
+        if (logger.isErrorEnabled()) {
+            FormattingTuple ft = MessageFormatter.arrayFormat(StrUtil.replaceBlank(message),
+                    arguments);
+            logger.error(logPrefix(ft.getMessage()), ft.getThrowable());
+        }
     }
 
     /**
@@ -106,7 +97,12 @@ public final class LogUtil {
      * @return 返回添加前缀后的结果
      */
     private static String logPrefix(String msg) {
-        return getCaller() + "\n logger message \n " + msg;
+        StringBuilder logMsg = new StringBuilder(getCaller());
+        logMsg.append("\n#######logger message ###################\n ");
+        // 删除日志里的换行符
+        logMsg.append(StrUtil.replaceLineFeed(msg));
+        logMsg.append("\n#######logger message end ###############");
+        return logMsg.toString();
     }
 
     /**

@@ -3,6 +3,7 @@ package com.fengjx.ttwx.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +15,8 @@ import java.util.regex.Pattern;
  */
 public class StrUtil extends StringUtils {
 
+    private static final String CHARSET_NAME = "UTF-8";
+
     /**
      * 删除字符串里的空格、回车、制表符
      *
@@ -23,12 +26,29 @@ public class StrUtil extends StringUtils {
     public static String replaceBlank(String str) {
         String dest = "";
         if (str != null) {
-            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Pattern p = Pattern.compile("\\s*|\t|\r|\n|\n");
             Matcher m = p.matcher(str);
             dest = m.replaceAll("");
         }
         return dest;
     }
+
+    /**
+     * 删除字符串里的换行符
+     *
+     * @param str
+     * @return
+     */
+    public static String replaceLineFeed(String str) {
+        String dest = "";
+        if (str != null) {
+            Pattern p = Pattern.compile("\\s*|\r|\n|\r\n");
+            Matcher m = p.matcher(str);
+            dest = m.replaceAll("");
+        }
+        return dest;
+    }
+
 
     /**
      * 统计字符串个数
@@ -62,6 +82,24 @@ public class StrUtil extends StringUtils {
         }
         return count;
     }
+
+    /**
+     * 转换为字节数组
+     * @param str
+     * @return
+     */
+    public static byte[] getBytes(String str){
+        if (str != null){
+            try {
+                return str.getBytes(CHARSET_NAME);
+            } catch (UnsupportedEncodingException e) {
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
+
 
     public static void main(String[] args) {
         String ss = "aaagdfgdasda";
