@@ -1,8 +1,6 @@
 
 package com.fengjx.ttwx.common.plugin;
 
-import com.fengjx.ttwx.common.utils.LogUtil;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,16 +19,16 @@ public class Plugins {
 
     public void init() {
         if (CollectionUtils.isEmpty(pluginList)) {
-            LogUtil.info(LOG, "pluginList is null，no plugin will be start");
+            LOG.info("pluginList is null，no plugin will be start");
         } else {
         	for (IPlugin p : pluginList) {
         		  p.start();
-                  LogUtil.info(LOG, p.getClass().getSimpleName() + " started...");
+                LOG.info(p.getClass().getSimpleName() + " started...");
 			}
         	//java 8 style
 //            pluginList.forEach(p -> {
 //                p.start();
-//                LogUtil.info(LOG, p.getClass().getSimpleName() + " started...");
+//                LOG.info(LOG, p.getClass().getSimpleName() + " started...");
 //            });
         }
     }
