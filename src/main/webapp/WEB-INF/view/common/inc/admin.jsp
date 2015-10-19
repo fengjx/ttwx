@@ -8,8 +8,8 @@
 <link href="${resourceUrl}/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/artDialog/css/ui-dialog.css" rel="stylesheet" type="text/css"/>
-<link href="${resourceUrl}/theme/ace/css/ace.min.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/zTree/css/metroStyle/metroStyle.css" rel="stylesheet" type="text/css"/>
+<link href="${resourceUrl}/theme/ace/css/ace.min.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/css/common.css" rel="stylesheet" type="text/css"/>
 <script src="${resourceUrl}/js/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/js/jquery.cookie.js" type="text/javascript"></script>

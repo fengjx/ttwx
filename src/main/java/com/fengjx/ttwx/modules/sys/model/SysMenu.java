@@ -54,10 +54,12 @@ public class SysMenu extends Model {
                 : selectSql);
         sql.append(" where 1 = 1 ");
         if (StringUtils.isBlank(pid)) {
-            sql.append(" and (a.parent_id is null or a.parent_id = '') order by a.order_no");
+            sql.append(" and (a.parent_id is null or a.parent_id = '')");
+            sql.append(" order by a.order_no , update_time desc");
             res = findList(sql.toString());
         } else {
-            sql.append(" and a.parent_id = ? order by a.order_no");
+            sql.append(" and a.parent_id = ? ");
+            sql.append(" order by a.order_no , update_time desc");
             res = findList(sql.toString(), pid);
         }
         if (null != res && res.size() > 0) {

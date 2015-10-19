@@ -21,7 +21,7 @@
 				<div class="control-group" >
 					<label class="control-label" for="parent_id">父级菜单:</label>
 					<div class="controls">
-						<sys:treeselect id="parent_id" name="parent_id" value="" url="${adminPath}/sys/menu/treeNode" />
+						<sys:treeselect id="parent_id" name="parent_id" value="" url="${adminPath}/sys/menu/treeNode" allowClear="true" />
 					</div>
 				</div>
 				<div class="control-group" >
@@ -55,10 +55,21 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="is_show">是否启用:</label>
+					<label class="control-label">是否启用:</label>
 					<div class="controls">
-						<input id="is_show" name="is_show" value="1" type="checkbox" checked="checked">
-					</div>
+						<div class="radio">
+							<label>
+								<input name="is_show" value="1" checked="checked" type="radio" class="ace" />
+								<span class="lbl">显示</span>
+							</label>
+							<label>
+								<input name="is_show" value="0" type="radio" class="ace" />
+								<span class="lbl">隐藏</span>
+							</label>
+						</div>
+
+
+				</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="remarks">备注:</label>
