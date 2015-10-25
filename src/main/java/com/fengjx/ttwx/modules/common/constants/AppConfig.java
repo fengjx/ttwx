@@ -128,6 +128,8 @@ public final class AppConfig {
     public static class EhcacheName {
         public static final String DEFAULT_CACHE = "defaultCache";
 
+        public static final String SYS_CACHE = "sysCache";
+
         public static final String DICT_CACHE = "dictCache";
 
         public static final String WECHAT_ACTION_CACHE = "wechatActionCache";

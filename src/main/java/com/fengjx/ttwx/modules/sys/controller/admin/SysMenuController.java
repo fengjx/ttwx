@@ -1,5 +1,6 @@
 package com.fengjx.ttwx.modules.sys.controller.admin;
 
+import com.fengjx.ttwx.common.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.sys.model.SysMenu;
@@ -62,7 +63,7 @@ public class SysMenuController extends MyController {
     @RequestMapping("tree")
     @ResponseBody
     public List<Map<String, Object>> treeTable(){
-        return sysMenu.treeMenu();
+        return sysMenu.treeTable();
     }
 
 
@@ -76,8 +77,7 @@ public class SysMenuController extends MyController {
     @ResponseBody
     public Map<String, String> addOrUpdate(HttpServletRequest request) {
         Map<String, Object> attrs = getNotBlankRequestMap(request);
-        attrs.put("update_time", new Date());
-        sysMenu.insertOrUpdate(attrs);
+        sysMenu.saveOrUpdate(attrs);
         return retSuccess();
     }
 

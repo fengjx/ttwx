@@ -37,4 +37,7 @@
     <!-- wechat keyword action cache -->
     <cache name="wechatKeywordActionCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
 
+    <!-- 系统缓存 -->
+    <cache name="sysCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+
 </ehcache>

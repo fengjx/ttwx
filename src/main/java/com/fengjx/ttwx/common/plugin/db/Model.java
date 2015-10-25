@@ -338,7 +338,7 @@ public abstract class Model {
      * @return
      * @throws Exception
      */
-    public boolean isLeef(String pid) {
+    public boolean isLeef(Object pid) {
         StringBuilder sql = new StringBuilder("select * from ");
         sql.append(getTableName()).append(" where ").append(getParentId()).append(" = ?");
         Long count = getCount(sql.toString(), pid);
