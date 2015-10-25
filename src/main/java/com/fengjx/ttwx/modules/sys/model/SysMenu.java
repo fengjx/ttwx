@@ -1,6 +1,7 @@
 
 package com.fengjx.ttwx.modules.sys.model;
 
+import com.fengjx.ttwx.common.bean.JqGridTree;
 import com.fengjx.ttwx.common.plugin.cache.IDataLoader;
 import com.fengjx.ttwx.common.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
@@ -53,14 +54,15 @@ public class SysMenu extends Model {
      *
      * @return
      */
-    public List<Map<String, Object>> treeTable() {
-        return EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, TREE_TABLE_CACHE,
+    public JqGridTree treeTable() {
+        List<Map<String, Object>> rows = EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, TREE_TABLE_CACHE,
                 new IDataLoader<List<Map<String, Object>>>() {
                     @Override
                     public List<Map<String, Object>> load() {
                         return loadMenuDetailById(null);
                     }
                 });
+        return new JqGridTree(rows);
     }
 
     /**

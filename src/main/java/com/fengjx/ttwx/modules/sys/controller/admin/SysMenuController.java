@@ -1,6 +1,5 @@
 package com.fengjx.ttwx.modules.sys.controller.admin;
 
-import com.fengjx.ttwx.common.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.modules.common.controller.MyController;
 import com.fengjx.ttwx.modules.sys.model.SysMenu;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -62,8 +60,8 @@ public class SysMenuController extends MyController {
 
     @RequestMapping("tree")
     @ResponseBody
-    public List<Map<String, Object>> treeTable(){
-        return sysMenu.treeTable();
+    public String treeTable(){
+        return sysMenu.treeTable().toJson();
     }
 
 

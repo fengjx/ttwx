@@ -12,13 +12,13 @@ $(function () {
 
     $table = $('#data-table').jqGrid({
         url: adminPath + '/sys/menu/tree',
-        datatype: 'json',
+        "datatype":"json",
         "width":"780",
         "hoverrows":false,
         "viewrecords":false,
         "gridview":true,
         "height":"auto",
-        "sortname":"update_time",
+        "sortname":"name",
         "scrollrows":true,
         "treeGrid":true,
         "ExpandColumn":"name",
