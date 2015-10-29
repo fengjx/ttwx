@@ -7,6 +7,7 @@ import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
 
 import com.fengjx.ttwx.common.plugin.db.ParamHelper;
+import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.plugin.freemarker.FreemarkerUtil;
 import com.fengjx.ttwx.common.utils.JsonUtil;
@@ -43,7 +44,11 @@ public class Dict extends Model {
         Map<String, Object> attrs = new HashMap<>();
         attrs.put("dict_value", value);
         attrs.put("group_code", group);
-        return findOne(attrs).getStr("dict_name");
+        Record record = findOne(attrs);
+        if(record.isEmpty()){
+            return "";
+        }
+        return StringUtils.defaultIfEmpty(record.getStr("dict_name"), "");
     }
 
     /**

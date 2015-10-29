@@ -133,7 +133,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
         app.art.show();
     };
 
-    app.alert = function (msg, opt) {
+    app.alert = function (msg, okCallBack, opt) {
         app.closeDialog();
         var _opt = $.extend({
             zIndex: app.artZindex,
@@ -144,13 +144,16 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             zIndex: 10240,
             cancel: false,
             ok: function () {
+                if(okCallBack && typeof okCallBack == 'function'){
+                    okCallBack();
+                }
             }
         }, opt || {});
         app.art = dialog(_opt);
         app.art.show();
     };
 
-    app.alertModal = function (msg, opt) {
+    app.alertModal = function (msg, okCallBack, opt) {
         app.closeDialog();
         var _opt = $.extend({
             zIndex: app.artZindex,
@@ -160,6 +163,9 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             fixed: true,
             cancel: false,
             ok: function () {
+                if(okCallBack && typeof okCallBack == 'function'){
+                    okCallBack();
+                }
             }
         }, opt || {});
         app.art = dialog(_opt);
@@ -177,7 +183,9 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             okValue: '确定',
             cancelValue: '取消',
             ok: function () {
-                okCallBack();
+                if(okCallBack && typeof okCallBack == 'function'){
+                    okCallBack();
+                }
             },
             cancel: function () {
                 app.closeDialog;
@@ -198,7 +206,9 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             okValue: '确定',
             cancelValue: '取消',
             ok: function () {
-                okCallBack();
+                if(okCallBack && typeof okCallBack == 'function'){
+                    okCallBack();
+                }
             },
             cancel: function () {
                 app.closeDialog;
@@ -472,6 +482,15 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             }
             return data; // 返回处理后的数据
         },
+        success: function (res) {
+            if (res && res.code == '1') {
+                app.alertModal(res.msg ? res.msg : "提交成功", function () {
+                    window.location.reload();
+                });
+            } else {
+                app.alertModal(res.msg ? res.msg : "提交失败");
+            }
+        },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             app.alertModal(XMLHttpRequest.responseText.split('<script')[0]);
         },
@@ -479,7 +498,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             app.loadingModal();
         },
         complete: function () {
-		    //app.closeDialog();
+            //app.closeDialog();
         }
     });
 })(jQuery);

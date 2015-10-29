@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.wechat.listener;
+package com.fengjx.ttwx.modules.sys.listener;
 
 import com.fengjx.ttwx.common.plugin.freemarker.FreemarkerUtil;
 import com.fengjx.ttwx.common.plugin.mail.EmailUtil;

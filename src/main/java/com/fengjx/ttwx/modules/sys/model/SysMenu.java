@@ -1,11 +1,11 @@
 
 package com.fengjx.ttwx.modules.sys.model;
 
-import com.fengjx.ttwx.common.bean.JqGridTree;
 import com.fengjx.ttwx.common.plugin.cache.IDataLoader;
 import com.fengjx.ttwx.common.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
+import com.fengjx.ttwx.common.plugin.db.Record;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +35,25 @@ public class SysMenu extends Model {
     private static final String ORDER_BY = "order by order_no , update_time desc";
 
     /**
+     * 根据ID查询菜单
+     *
+     * @param id
+     * @return
+     */
+    public Record get(String id) {
+        if (StringUtils.isBlank(id)) {
+            return new Record();
+        }
+        Record record = findById(id);
+        if (!record.isEmpty() && StringUtils.isNoneBlank(record.getStr("parent_id"))) {
+            Record parent = findById(record.getStr("parent_id"));
+            record.set("parent_name", parent.get("name"));
+            record.set("parent_level", parent.get("level"));
+        }
+        return record;
+    }
+
+    /**
      * 查询树形菜单 treeNode
      *
      * @return
@@ -54,7 +73,7 @@ public class SysMenu extends Model {
      *
      * @return
      */
-    public JqGridTree treeTable() {
+    public List<Map<String, Object>> treeTable() {
         List<Map<String, Object>> rows = EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, TREE_TABLE_CACHE,
                 new IDataLoader<List<Map<String, Object>>>() {
                     @Override
@@ -62,7 +81,7 @@ public class SysMenu extends Model {
                         return loadMenuDetailById(null);
                     }
                 });
-        return new JqGridTree(rows);
+        return rows;
     }
 
     /**
@@ -154,4 +173,11 @@ public class SysMenu extends Model {
         insertOrUpdate(attrs);
         deleteMenuCache();
     }
+
+
+    public void deleteMenuById(String id) {
+        deleteById(id);
+        deleteMenuCache();
+    }
+
 }

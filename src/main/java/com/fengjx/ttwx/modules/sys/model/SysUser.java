@@ -8,7 +8,7 @@ import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.AesUtil;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
-import com.fengjx.ttwx.modules.wechat.listener.RegisterEvent;
+import com.fengjx.ttwx.modules.sys.listener.RegisterEvent;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

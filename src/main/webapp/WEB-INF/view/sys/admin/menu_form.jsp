@@ -15,43 +15,47 @@
 		</ol>
 	</div>
 	<div class="page-content">
+		<ul class="nav nav-tabs">
+			<li><a href="${adminPath}/sys/menu/">菜单列表</a></li>
+			<li class="active"><a href="${adminPath}/sys/menu/form">菜单添加</a></li>
+		</ul>
 		<form class="form-horizontal" id="data-form" method="POST" role="form">
 			<div class="modal-body">
-				<input type="hidden" id="id" name="id" value="" />
+				<input type="hidden" id="id" name="id" value="${id}" />
 				<div class="control-group" >
 					<label class="control-label" for="parent_id">父级菜单:</label>
 					<div class="controls">
-						<sys:treeselect id="parent_id" name="parent_id" value="" url="${adminPath}/sys/menu/treeNode" allowClear="true" />
+						<sys:treeselect id="parent_id" name="parent_id" value="${parent_id}" labelValue="${parent_name}" treeLevel="${parent_level}" url="${adminPath}/sys/menu/treeNode" allowClear="true" />
 					</div>
 				</div>
 				<div class="control-group" >
 					<label class="control-label" for="name">菜单名称:</label>
 					<div class="controls">
-						<input id="name" name="name" value="" type="text" required class="span4 form-control">
+						<input id="name" name="name" value="${name}" type="text" required class="span4 form-control">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="url">链接:</label>
 					<div class="controls">
-						<input id="url" name="url" value="" type="text" required class="span4 form-control">
+						<input id="url" name="url" value="${url}" type="text" class="span4 form-control">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="permission">权限标示:</label>
 					<div class="controls">
-						<input id="permission" name="permission" value="" type="text" class="span4 form-control">
+						<input id="permission" name="permission" value="${permission}" type="text" class="span4 form-control">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="icon">图标:</label>
 					<div class="controls">
-						<input id="icon" name="icon" value="" type="text" class="span4 form-control">
+						<input id="icon" name="icon" value="${icon}" type="text" class="span4 form-control">
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="order_no">排序:</label>
 					<div class="controls">
-						<input id="order_no" name="order_no" value="" required type="number" class="span4 form-control">
+						<input id="order_no" name="order_no" value="${order_no}" required type="number" class="span4 form-control">
 					</div>
 				</div>
 				<div class="control-group">
@@ -74,12 +78,11 @@
 				<div class="control-group">
 					<label class="control-label" for="remarks">备注:</label>
 					<div class="controls">
-						<textarea id="remarks" name="remarks" class="span4 form-control" rows="3"></textarea>
+						<textarea id="remarks" name="remarks" class="span4 form-control" rows="3">${remarks}</textarea>
 					</div>
 				</div>
 				<div class="control-group">
 					<div class="controls">
-						<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
 						<button type="submit" class="btn btn-primary btn-sm" data-loading-text="正在提交...">保存</button>
 					</div>
 				</div>

@@ -9,6 +9,7 @@
 <link href="${resourceUrl}/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/artDialog/css/ui-dialog.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/zTree/css/metroStyle/metroStyle.css" rel="stylesheet" type="text/css"/>
+<link href="${resourceUrl}/jquery-treegrid/0.3.0/css/jquery.treegrid.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/theme/ace/css/ace.min.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/css/common.css" rel="stylesheet" type="text/css"/>
 <script src="${resourceUrl}/js/jquery-2.1.1.min.js" type="text/javascript"></script>
@@ -30,6 +31,8 @@
 <script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/zTree/js/jquery.ztree.all-3.5.min.js" type="text/javascript"></script>
+<script src="${resourceUrl}/jquery-treegrid/0.3.0/js/jquery.treegrid.min.js" type="text/javascript"></script>
+<script src="${resourceUrl}/jquery-treegrid/0.3.0/js/jquery.treegrid.bootstrap3.js" type="text/javascript"></script>
 <script src="${resourceUrl}/script/common/app.js?v=2015092801" type="text/javascript"></script>
 <!--[if lte IE 8]>
 <script src="${resourceUrl}/js/excanvas.min.js" type="text/javascript"></script>

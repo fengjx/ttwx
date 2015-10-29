@@ -1,5 +1,5 @@
 
-package com.fengjx.ttwx.modules.wechat.listener;
+package com.fengjx.ttwx.modules.sys.listener;
 
 import org.springframework.context.ApplicationEvent;
 

@@ -15,37 +15,56 @@
 		</ol>
 	</div>
 	<div class="page-content">
-		<div id="search">
-			<div class="form-inline" role="form">
-				<fieldset>
-					<div class="form-group">
-						<div class="control-group">
-							<label class="control-label">字典组：</label>
-							<input name="qry_group_code" class="form-control" type="text" placeholder="group_code">
-							<label class="control-label">字典描述：</label>
-							<input name="qry_dict_desc" class="form-control" type="text" placeholder="字典描述">
-							<label class="control-label">启用：</label>
-							<select data-type="dict" data-group="yesNo" name="qry_is_valid" id="qry_is_valid" class="app-element">
-								<option value="">全部</option>
-							</select>
-
-							<span class="columns-right pull-right">
-								<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-primary">
-									<i class="icon-search"></i>
-									查询
-								</button>
-								<button onclick="clearDatagrid();" type="button" class="btn btn-white">
-									<i class="icon-circle-blank"></i>
-									重置
-								</button>
-							</span>
-						</div>
-					</div>
-				</fieldset>
-			</div>
-		</div>
-		<table id="data-table"></table>
-		<div id="tablePager"></div>
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="${adminPath}/sys/menu/">菜单列表</a></li>
+			<li><a href="${adminPath}/sys/menu/form">菜单添加</a></li>
+		</ul>
+		</br>
+		<table id="tree-table" class="table table-bordered table-striped table-condensed">
+			<colgroup>
+				<col width="15%"/>
+				<col width="30%"/>
+				<col width="10%"/>
+				<col width="5%"/>
+				<col width="5%"/>
+				<col width="15%"/>
+				<col width="10%"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th>菜单名称</th>
+					<th>链接</th>
+					<th>权限标识</th>
+					<th>显示</th>
+					<th>排序</th>
+					<th>更新时间</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${treeTable}" var="item">
+				<tr class="treegrid-${item.id} <c:if test="${item.parent_id ne null}">treegrid-parent-${item.parent_id}</c:if> ">
+					<td>${item.name}</td>
+					<td>${item.url}</td>
+					<td>${item.permission}</td>
+					<td>${fns:getDictLabel(item.is_show, "yesNo")}</td>
+					<td>${item.order_no}</td>
+					<td>${item.update_time}</td>
+					<td>
+						<a class="btn btn-info btn-minier" href="${adminPath}/sys/menu/form?id=${item.id}">
+							<i class="glyphicon glyphicon-edit"></i>
+						</a>
+						<a name="btn-remove" class="btn btn-danger btn-minier" href="javascript:void(-1);" data-id="${item.id}" data-name="${item.name}">
+							<i class="glyphicon glyphicon-remove"></i>
+						</a>
+						<a class="btn btn-success btn-minier" href="${adminPath}/sys/menu/form?parentId=${item.id}">
+							<i class="glyphicon glyphicon-plus"></i>
+						</a>
+					</td>
+				</tr>
+			</c:forEach>
+			</tbody>
+		</table>
 
 		<div id="editModal" class="modal">
 			<div class="modal-dialog">

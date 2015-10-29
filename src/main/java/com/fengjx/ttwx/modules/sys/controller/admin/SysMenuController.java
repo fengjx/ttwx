@@ -1,3 +1,4 @@
+
 package com.fengjx.ttwx.modules.sys.controller.admin;
 
 import com.fengjx.ttwx.common.plugin.db.Record;
@@ -33,37 +34,31 @@ public class SysMenuController extends MyController {
 
     @RequiresPermissions("sys:menu:view")
     @RequestMapping("")
-    public String view() {
+    public String view(Model model) {
+        model.addAttribute("treeTable", sysMenu.treeTable());
         return "sys/admin/menu";
     }
 
     @RequiresPermissions("sys:menu:view")
     @RequestMapping("form")
-    public String form(String id, Model m) {
-        Record record = new Record();
-        if(StringUtils.isNoneBlank(id)){
-            record = sysMenu.findById(id);
-        }
-        if(!record.isEmpty()){
-            m.addAttribute(record.getColumns());
+    public String form(String id, String parentId, Model model) {
+        // 从父级菜单添加
+        if(StringUtils.isNoneBlank(parentId)){
+            Record parent = sysMenu.findById(parentId);
+            model.addAttribute("parent_id", parent.getStr("id"));
+            model.addAttribute("parent_name", parent.getStr("name"));
+            model.addAttribute("parent_level", parent.getInt("level"));
+        }else if(StringUtils.isNotBlank(id)){  // 修改菜单
+            model.addAllAttributes(sysMenu.get(id).getColumns());
         }
         return "sys/admin/menu_form";
     }
 
-
     @RequestMapping("treeNode")
     @ResponseBody
-    public List<Map<String, Object>> treeNode(){
+    public List<Map<String, Object>> treeNode() {
         return sysMenu.treeNode();
     }
-
-
-    @RequestMapping("tree")
-    @ResponseBody
-    public String treeTable(){
-        return sysMenu.treeTable().toJson();
-    }
-
 
     /**
      * 更新 / 保存菜单
@@ -71,7 +66,7 @@ public class SysMenuController extends MyController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> addOrUpdate(HttpServletRequest request) {
         Map<String, Object> attrs = getNotBlankRequestMap(request);
@@ -87,11 +82,9 @@ public class SysMenuController extends MyController {
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map<String, String> delete(@RequestParam(required=true) String id) {
-        sysMenu.deleteById(id);
-        return retSuccess();
+    public Map<String, String> delete(@RequestParam(required = true) String id) {
+        sysMenu.deleteMenuById(id);
+        return retSuccess("菜单成功删除");
     }
-
-
 
 }

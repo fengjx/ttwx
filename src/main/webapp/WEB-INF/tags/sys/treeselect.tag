@@ -2,7 +2,9 @@
 <%@ include file="/WEB-INF/view/common/inc/path.jsp" %>
 <%@ attribute name="id" type="java.lang.String" required="true" description="编号" %>
 <%@ attribute name="name" type="java.lang.String" required="true" description="隐藏域名称（ID）" %>
-<%@ attribute name="value" type="java.lang.String" required="true" description="隐藏域值（ID）" %>
+<%@ attribute name="value" type="java.lang.String" required="false" description="隐藏域值（ID）" %>
+<%@ attribute name="labelValue" type="java.lang.String" required="false" description="value对应显示的值" %>
+<%@ attribute name="treeLevel" type="java.lang.String" required="false" description="菜单级别" %>
 <%@ attribute name="url" type="java.lang.String" required="true" description="树结构数据地址" %>
 <%@ attribute name="checked" type="java.lang.Boolean" required="false" description="是否显示复选框（多选情况显示）" %>
 <%@ attribute name="extId" type="java.lang.String" required="false" description="排除掉的编号（不能选择的编号）" %>
@@ -11,8 +13,8 @@
 <%@ attribute name="cssClass" type="java.lang.String" required="false" description="css样式" %>
 <%@ attribute name="cssStyle" type="java.lang.String" required="false" description="css样式" %>
 <c:set var="current" value="${fns:currentTimeMillis()}"/>
-<input id="${id}" name="${name}" type="hidden" value="${value}" data-level=""/>
-<input id="label${id}" name="label${name}" ${allowInput?'':'readonly="readonly"'} type="text" value=""
+<input id="${id}" name="${name}" type="hidden" value="${value}" data-level="${treeLevel}"/>
+<input id="label${id}" name="label${name}" ${allowInput?'':'readonly="readonly"'} type="text" value="${labelValue}"
        class="${cssClass}" style="${cssStyle}"/>
 <a id="btn-search-app${current}" name="btn-search-app" href="javascript:" class="btn btn-xs btn-default">
     &nbsp;<i class="icon-search"></i>&nbsp;
@@ -55,6 +57,9 @@
                     idKey: "id",
                     pIdKey: "parent_id",
                     rootPId: null
+                },
+                key: {
+                    url: "xUrl"
                 }
             },
             check: {
