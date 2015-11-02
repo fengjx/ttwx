@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -93,10 +94,13 @@ public class CommonController extends BaseController {
     }
 
     @RequestMapping("/errorview")
-    public String errorView(HttpServletRequest request, Map map) {
+    public String errorView(HttpServletRequest request, Model model) {
         LogUtil.error(LOG, "request error to errorview");
-        map = getErrorMap(request);
-        return "common/error/error-exception";
+        Map<String, String> errorMap = getErrorMap(request);
+        errorMap.putAll(WebUtil.getRequestParams(request));
+        model.addAllAttributes(errorMap);
+        model.addAttribute("errorMsg", errorMap.get("msg"));
+        return WebUtil.getUriWidthParam(request).replace(request.getContextPath(), "");
     }
 
     @RequestMapping("/errorajax")
@@ -114,19 +118,17 @@ public class CommonController extends BaseController {
      */
     private Map<String, String> getErrorMap(HttpServletRequest request) {
         Exception e = (Exception) request.getAttribute("ex");
-        LogUtil.error(LOG, "request error", e);
-        Map<String, String> map = new HashMap<>();
         String errorMsg = "请求失败";
         // 自定义异常
         if (e instanceof MyRuntimeException || e instanceof MyException) {
             if (StringUtils.isNotBlank(e.getMessage())) {
                 errorMsg = e.getMessage();
             }
+            LogUtil.warn(LOG, e.getMessage());
+        } else {
+            LogUtil.error(LOG, "request error", e);
         }
-        map.put("code", "0");
-        map.put("statue", "500");
-        map.put("msg", errorMsg);
-        return map;
+        return retFail(errorMsg);
     }
 
 }
