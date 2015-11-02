@@ -146,3 +146,16 @@ input.span4 {
 .panel-yellow a:hover {
     color: #df8a13;
 }
+
+form.cmxform label.error, label.error {
+    color: red;
+    font-style: italic
+}
+
+div.error {
+    display: none;
+}
+
+input.error {
+    border: 1px dotted red;
+}
