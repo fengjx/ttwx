@@ -15,9 +15,17 @@ $(function () {
         app.confirmModal("确定要删除该菜单吗<p>[" + name + "]", function () {
             $.ajax({
                 url: adminPath + '/sys/menu/delete',
-                data: {id:id},
+                data: {id: id},
                 cache: false,
                 dataType: "json"
+            }).done(function (res) {
+                if (res && res.code == '1') {
+                    app.alertModal(res.msg ? res.msg : "提交成功", function () {
+                        window.location.reload();
+                    });
+                } else {
+                    app.alertModal(res.msg ? res.msg : "提交失败");
+                }
             }).fail(function () {
                 app.alertModal("系统错误，操作失败！");
             });

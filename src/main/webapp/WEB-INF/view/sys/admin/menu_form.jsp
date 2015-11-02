@@ -11,13 +11,13 @@
 		<ol class="breadcrumb">
 			<li><a href="${adminPath}">后台管理</a></li>
 			<li><a href="${adminPath}/sys">系统管理</a></li>
-			<li class="active">编辑菜单</li>
+			<li class="active">${not empty id?'修改':'添加'}菜单</li>
 		</ol>
 	</div>
 	<div class="page-content">
 		<ul class="nav nav-tabs">
 			<li><a href="${adminPath}/sys/menu/">菜单列表</a></li>
-			<li class="active"><a href="${adminPath}/sys/menu/form">菜单添加</a></li>
+			<li class="active"><a href="${adminPath}/sys/menu/form">${not empty id?'修改':'添加'}菜单</a></li>
 		</ul>
 		<form class="form-horizontal" id="data-form" method="POST" role="form">
 			<div class="modal-body">
@@ -61,19 +61,8 @@
 				<div class="control-group">
 					<label class="control-label">是否启用:</label>
 					<div class="controls">
-						<div class="radio">
-							<label>
-								<input name="is_show" value="1" checked="checked" type="radio" class="ace" />
-								<span class="lbl">显示</span>
-							</label>
-							<label>
-								<input name="is_show" value="0" type="radio" class="ace" />
-								<span class="lbl">隐藏</span>
-							</label>
-						</div>
-
-
-				</div>
+						<myform:radios name="is_show" values="${fns:getDictList('yesNo')}" checked="${is_show}"/>
+					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="remarks">备注:</label>
