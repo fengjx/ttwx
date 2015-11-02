@@ -482,15 +482,6 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             }
             return data; // 返回处理后的数据
         },
-        success: function (res) {
-            if (res && res.code == '1') {
-                app.alertModal(res.msg ? res.msg : "提交成功", function () {
-                    window.location.reload();
-                });
-            } else {
-                app.alertModal(res.msg ? res.msg : "提交失败");
-            }
-        },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             app.alertModal(XMLHttpRequest.responseText.split('<script')[0]);
         },
