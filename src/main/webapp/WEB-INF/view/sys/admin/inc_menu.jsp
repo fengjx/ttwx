@@ -42,14 +42,7 @@
             </ul>
         </li>
         <li>
-            <a href="${adminPath}/sys/dict">
-                <i class="icon-credit-card menu-icon"></i>
-                <span class="menu-text"> 权限定义 </span>
-            </a>
-            <b class="arrow"></b>
-        </li>
-        <li>
-            <a href="${adminPath}/sys/dict">
+            <a href="${adminPath}/sys/role">
                 <i class="icon-credit-card menu-icon"></i>
                 <span class="menu-text"> 角色管理 </span>
             </a>

@@ -32,23 +32,23 @@ public class SysMenuController extends MyController {
     @Autowired
     private SysMenu sysMenu;
 
-    @RequiresPermissions("sys:menu:view")
+    @RequiresPermissions("sys_menu_view")
     @RequestMapping("")
     public String view(Model model) {
         model.addAttribute("treeTable", sysMenu.treeTable());
         return "sys/admin/menu";
     }
 
-    @RequiresPermissions("sys:menu:view")
+    @RequiresPermissions("sys_menu_edit")
     @RequestMapping("form")
     public String form(String id, String parentId, Model model) {
         // 从父级菜单添加
-        if(StringUtils.isNoneBlank(parentId)){
+        if (StringUtils.isNoneBlank(parentId)) {
             Record parent = sysMenu.findById(parentId);
             model.addAttribute("parent_id", parent.getStr("id"));
             model.addAttribute("parent_name", parent.getStr("name"));
             model.addAttribute("parent_level", parent.getInt("level"));
-        }else if(StringUtils.isNotBlank(id)){  // 修改菜单
+        } else if (StringUtils.isNotBlank(id)) { // 修改菜单
             model.addAllAttributes(sysMenu.get(id).getColumns());
         }
         return "sys/admin/menu_form";

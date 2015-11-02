@@ -5,7 +5,6 @@ import com.fengjx.ttwx.common.utils.CookieUtils;
 import com.fengjx.ttwx.common.utils.WebUtil;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
-
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,7 +21,8 @@ public class AdminInterceptor implements HandlerInterceptor {
 
     }
 
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+    public void postHandle(HttpServletRequest request, HttpServletResponse response,
+            Object handler,
             ModelAndView arg3) throws Exception {
 
     }
@@ -40,7 +40,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         // 登陆超时
         if (null == user && !WebUtil.validAjax(request)) {
             CookieUtils.setCookie(response, LAST_URI,
-                    request.getRequestURI().replace(request.getContextPath(), ""), 60 * 60);
+                    WebUtil.getUriWidthParam(request).replace(request.getContextPath(), ""), 60 * 60);
             // 如果是ajax请求
             if (WebUtil.validAjax(request)) {
                 request.getRequestDispatcher("/common/loginTimeoutAjax").forward(request, response);
