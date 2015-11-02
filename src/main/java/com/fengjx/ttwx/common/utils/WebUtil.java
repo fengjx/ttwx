@@ -2,6 +2,7 @@
 package com.fengjx.ttwx.common.utils;
 
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
+import com.google.common.base.Joiner;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -108,6 +109,24 @@ public final class WebUtil {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * 获得带参数的URL
+     *
+     * @param request
+     * @return
+     */
+    public static String getUriWidthParam(HttpServletRequest request) {
+        String url = request.getRequestURI();
+        String method = request.getMethod();
+        if ("GET".equalsIgnoreCase(method)) {
+            Map<String, String> params = getRequestParams(request);
+            String join = Joiner.on("&").withKeyValueSeparator("=").join(params);
+            return URLTool.builderURL(url, join);
+        }
+        return url;
     }
 
     /**
