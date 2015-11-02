@@ -22,8 +22,7 @@ public final class LogUtil {
      */
     public static void debug(Logger logger, String message, Object... arguments) {
         if (logger.isInfoEnabled()) {
-            FormattingTuple ft = MessageFormatter.arrayFormat(StrUtil.replaceBlank(message),
-                    arguments);
+            FormattingTuple ft = MessageFormatter.arrayFormat(message, arguments);
             logger.debug(logPrefix(ft.getMessage()), ft.getThrowable());
         }
     }
@@ -36,8 +35,7 @@ public final class LogUtil {
      */
     public static void info(Logger logger, String message, Object... arguments) {
         if (logger.isInfoEnabled()) {
-            FormattingTuple ft = MessageFormatter.arrayFormat(StrUtil.replaceBlank(message),
-                    arguments);
+            FormattingTuple ft = MessageFormatter.arrayFormat(message, arguments);
             logger.info(logPrefix(ft.getMessage()), ft.getThrowable());
         }
     }
@@ -50,8 +48,7 @@ public final class LogUtil {
      */
     public static void warn(Logger logger, String message, Object... arguments) {
         if (logger.isWarnEnabled()) {
-            FormattingTuple ft = MessageFormatter.arrayFormat(StrUtil.replaceBlank(message),
-                    arguments);
+            FormattingTuple ft = MessageFormatter.arrayFormat(message, arguments);
             logger.warn(logPrefix(ft.getMessage()), ft.getThrowable());
         }
     }
@@ -64,8 +61,7 @@ public final class LogUtil {
      */
     public static void error(Logger logger, String message, Object... arguments) {
         if (logger.isErrorEnabled()) {
-            FormattingTuple ft = MessageFormatter.arrayFormat(StrUtil.replaceBlank(message),
-                    arguments);
+            FormattingTuple ft = MessageFormatter.arrayFormat(message, arguments);
             logger.error(logPrefix(ft.getMessage()), ft.getThrowable());
         }
     }
@@ -98,10 +94,10 @@ public final class LogUtil {
      */
     private static String logPrefix(String msg) {
         StringBuilder logMsg = new StringBuilder(getCaller());
-        logMsg.append("\n#######logger message ###################\n ");
+        logMsg.append("\n+++++++++++++++++++++++++++++++++++++++++++++++\n");
         // 删除日志里的换行符
         logMsg.append(StrUtil.replaceLineFeed(msg));
-        logMsg.append("\n#######logger message end ###############");
+        logMsg.append("\n+++++++++++++++++++++++++++++++++++++++++++++++");
         return logMsg.toString();
     }
 

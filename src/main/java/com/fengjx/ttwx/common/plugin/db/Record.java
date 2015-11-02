@@ -3,6 +3,7 @@ package com.fengjx.ttwx.common.plugin.db;
 
 import com.fengjx.ttwx.common.utils.JsonUtil;
 
+import com.google.common.collect.Maps;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.MapUtils;
 
@@ -22,10 +23,15 @@ public class Record implements Serializable {
     private Map<String, Object> columns;
 
     public Record() {
+        this.columns = Maps.newHashMap();
     }
 
     public Record(Map<String, Object> columns) {
-        this.columns = columns;
+        if(null == columns ){
+            this.columns = Maps.newHashMap();
+        }else{
+            this.columns = columns;
+        }
     }
 
     public boolean isEmpty(){

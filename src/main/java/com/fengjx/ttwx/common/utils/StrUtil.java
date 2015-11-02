@@ -42,7 +42,7 @@ public class StrUtil extends StringUtils {
     public static String replaceLineFeed(String str) {
         String dest = "";
         if (str != null) {
-            Pattern p = Pattern.compile("\\s*|\r|\n|\r\n");
+            Pattern p = Pattern.compile("\\r|\n|\r\n");
             Matcher m = p.matcher(str);
             dest = m.replaceAll("");
         }
@@ -102,7 +102,7 @@ public class StrUtil extends StringUtils {
 
 
     public static void main(String[] args) {
-        String ss = "aaagdfgdasda";
-        System.out.println(countStr(ss, "a"));
+        String ss = "asas asas assasas\n asasas";
+        System.out.println(replaceLineFeed(ss));
     }
 }
