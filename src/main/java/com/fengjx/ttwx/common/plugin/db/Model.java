@@ -31,9 +31,9 @@ public abstract class Model {
             attrs.put(pk, CommonUtils.getPrimaryKey());
         }
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList<>();
-        Config.dialect.forModelSave(table, attrs, sql, paras);
-        return jdbcTemplate.update(sql.toString(), paras.toArray()) >= 1;
+        List<Object> params = new ArrayList<>();
+        Config.dialect.forModelSave(table, attrs, sql, params);
+        return jdbcTemplate.update(sql.toString(), params.toArray()) >= 1;
     }
 
     public boolean insert(Map<String, Object> attrs) {
