@@ -3,22 +3,24 @@ package com.fengjx.ttwx.modules.sys.model;
 
 import com.fengjx.ttwx.common.plugin.db.Mapper;
 import com.fengjx.ttwx.common.plugin.db.Model;
+import com.fengjx.ttwx.common.plugin.db.ParamHelper;
 import com.fengjx.ttwx.common.plugin.db.Record;
+import com.fengjx.ttwx.common.plugin.db.page.AdapterPage;
 import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.AesUtil;
 import com.fengjx.ttwx.common.utils.CommonUtils;
+import com.fengjx.ttwx.common.utils.DateUtils;
 import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
 import com.fengjx.ttwx.modules.sys.listener.RegisterEvent;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 系统用户管理
@@ -83,7 +85,7 @@ public class SysUser extends Model {
      * @return
      */
     public boolean validUsername(String username) {
-        String sql = "select count(*) as count from wechat_sys_user u where u.username = ?";
+        String sql = "select count(1) as count from wechat_sys_user u where u.username = ?";
         Long total = findOne(sql, username).getLong("count");
         return total > 0;
     }
@@ -95,7 +97,7 @@ public class SysUser extends Model {
      * @return
      */
     public boolean validEmail(String email) {
-        String sql = "select count(*) as count from wechat_sys_user u where u.email = ?";
+        String sql = "select count(1) as count from wechat_sys_user u where u.email = ?";
         Long total = findOne(sql, email).getLong("count");
         return total > 0;
     }
@@ -118,6 +120,33 @@ public class SysUser extends Model {
         record.set("is_valid", SysUserEntity.IS_ALIVE);
         update(record.getColumns());
         return true;
+    }
+
+    public AdapterPage pageList(ParamHelper params) {
+        List<Object> qryParams = new ArrayList<>();
+        StringBuilder sql = new StringBuilder(getSelectSql("a"));
+        if (null != params.get("is_valid")) {
+            sql.append(" and a.is_valid = ?");
+            qryParams.add(params.get("is_valid"));
+        }
+        if (StringUtils.isNoneBlank(params.getStr("username"))) {
+            sql.append(" and a.name like CONCAT('%',?,'%')");
+            qryParams.add(params.get("username"));
+        }
+        if (StringUtils.isNoneBlank(params.getStr("email"))) {
+            sql.append(" and a.name like CONCAT('%',?,'%')");
+            qryParams.add(params.get("email"));
+        }
+        if (StringUtils.isNoneBlank(params.getStr("start_time"))) {
+            sql.append(" and a.in_time >= ?");
+            qryParams.add(DateUtils.parseDate(params.get("start_time")));
+        }
+        if (StringUtils.isNoneBlank(params.getStr("end_time"))) {
+            sql.append(" and a.in_time <= ?");
+            qryParams.add(DateUtils.parseDate(params.get("end_time")));
+        }
+        sql.append(" order by in_time desc");
+        return paginate(sql.toString(), qryParams.toArray()).convert();
     }
 
 }

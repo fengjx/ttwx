@@ -2,10 +2,7 @@
 package com.fengjx.ttwx.common.plugin.cache.ehcache;
 
 import com.fengjx.ttwx.common.plugin.IPlugin;
-import com.fengjx.ttwx.common.utils.LogUtil;
-
 import net.sf.ehcache.CacheManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

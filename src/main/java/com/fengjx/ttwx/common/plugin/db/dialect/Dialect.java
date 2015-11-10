@@ -41,12 +41,12 @@ public abstract class Dialect {
         sql = replaceFormatSqlOrderBy(sql.toLowerCase(Locale.ENGLISH));
         // 如果sql语句里出现多个from关键字，约定只能包含一个大写的from，并且只能有一个
         if (StrUtil.countStr(sql, "from") > 1) {
-            countSql.append("select count(*) from ( ");
+            countSql.append("select count(1) from ( ");
             countSql.append(sql).append(" ) as totalSql");
         } else {
             int index;
             index = sql.indexOf(" from ");
-            countSql.append("select count(*) ");
+            countSql.append("select count(1) ");
             countSql.append(sql.substring(index));
         }
     }

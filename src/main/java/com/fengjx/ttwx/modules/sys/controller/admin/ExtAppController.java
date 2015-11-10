@@ -21,7 +21,7 @@ import java.util.Map;
  * @author fengjx. @date：2015/5/30 0030
  */
 @Controller
-@RequestMapping("/admin/sys/ext")
+@RequestMapping("${adminPath}/sys/ext")
 public class ExtAppController extends MyController {
 
     @Autowired

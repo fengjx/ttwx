@@ -4,14 +4,14 @@
 <html lang="zh-CN">
 <head>
 	<meta name="decorator" content="sys"/>
-	<title>接口配置</title>
+	<title>用户管理</title>
 </head>
 <body>
 	<div class="breadcrumbs">
 		<ol class="breadcrumb">
 			<li><a href="${adminPath}">后台管理</a></li>
 			<li><a href="${adminPath}/sys">系统管理</a></li>
-			<li class="active">接口配置</li>
+			<li class="active">用户管理</li>
 		</ol>
 	</div>
 
@@ -21,18 +21,15 @@
 				<fieldset>
 					<div class="form-group">
 						<div class="control-group">
-							<label class="control-label">应用名称：</label>
-							<input name="qry_name" class="form-control" type="text" placeholder="模糊匹配">
-							<label class="control-label">应用类型：</label>
-							<select name="qry_app_type" id="qry_app_type">
-								<option value="">全部</option>
-								<myform:options items="${fns:getDictList('app_type')}" itemValue="value" itemLabel="label" value="web"/>
-							</select>
+							<label class="control-label">用户名：</label>
+							<input name="qry_username" class="form-control" type="text" placeholder="模糊匹配">
+							<label class="control-label">邮箱：</label>
+							<input name="qry_email" class="form-control" type="text" placeholder="模糊匹配">
 							<label class="control-label">启用：</label>
 							<select data-type="dict" data-group="yesNo" name="qry_is_valid" id="qry_is_valid" class="app-element">
 								<option value="">全部</option>
 							</select>
-							<label class="control-label">入库时间：</label>
+							<label class="control-label">更新时间：</label>
 							<div class="input-group">
 								<input class="form-control" onClick="WdatePicker()" data-options="dateFmt:'yyyy-M-d H:m:s',readOnly:true,skin:'twoer'" name="start_time" type="text" style="width: 120px;" />
 								<div class="input-group-addon">
@@ -145,6 +142,6 @@
 		</div><!-- /.modal -->
 	</div>
 
-<script src="${resourceUrl}/script/sys/extapp.js?v=2015090501" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/sys/sys.user.js?v=201511901" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

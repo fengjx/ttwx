@@ -1,11 +1,7 @@
 /**
- * 字典管理
+ * 菜单管理
  */
 $(function () {
-
-    editModal = $('#editModal').modal({
-        show: false
-    });
 
     $('#tree-table').treegrid();
 

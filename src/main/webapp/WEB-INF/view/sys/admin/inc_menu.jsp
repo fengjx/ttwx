@@ -49,7 +49,7 @@
             <b class="arrow"></b>
         </li>
         <li>
-            <a href="${adminPath}/sys/dict">
+            <a href="${adminPath}/sys/user">
                 <i class="icon-credit-card menu-icon"></i>
                 <span class="menu-text"> 用户管理 </span>
             </a>
