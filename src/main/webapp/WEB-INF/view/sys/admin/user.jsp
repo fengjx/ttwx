@@ -62,79 +62,49 @@
 		<div id="tablePager"></div>
 
 		<div id="editModal" class="modal" tabindex="-1" role="dialog" >
-			<div class="modal-dialog" style="width: 800px">
+			<div class="modal-dialog" style="width: 600px">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">应用编辑</h4>
+						<h4 class="modal-title">用户编辑</h4>
 					</div>
-					<form action="${adminPath}/sys/dict/save" class="form-horizontal" id="form-data" method="POST" role="form">
+					<form action="${adminPath}/sys/user/save" class="form-horizontal" id="form-data" method="POST" role="form">
 						<div class="modal-body">
 							<input type="hidden" id="id" name="id" value="" />
-							<div class="control-group" >
-								<label class="control-label">应用类型：</label>
-								<div class="controls">
-									<select data-type="dict" data-group="app_type" id="app_type" data-default="web" name="app_type" class="app-element"></select>
-								</div>
-							</div>
 							<div class="control-group">
-								<label class="control-label" for="name">应用名称：</label>
+								<label class="control-label" for="name">用户名：</label>
 								<div class="controls">
 									<input type="text" id="name" name="name" class="span4 form-control"/>
 								</div>
 							</div>
 							<div name="web" class="control-group">
-								<label class="control-label" for="app_url">链接：</label>
+								<label class="control-label" for="email">邮箱：</label>
 								<div class="controls">
-									<input id="app_url" name="app_url" type="text" class="span4 form-control"/>
+									<input id="email" name="mail" type="text" class="span4 form-control"/>
 								</div>
 							</div>
-							<div name="restful" class="control-group hide">
-								<label class="control-label">resful url：</label>
+							<div name="api" class="control-group">
+								<label class="control-label" for="phone">电话：</label>
 								<div class="controls">
-									<input id="restful_url" name="restful_url" type="text" class="span4 form-control"/>
+									<input name="phone" id="phone" type="text" class="span4 form-control"/>
 								</div>
 							</div>
-							<div name="api" class="control-group hide">
-								<label class="control-label">spring id：</label>
-								<div class="controls">
-									<input name="bean_name" id="bean_name" type="text" class="span4 form-control"/>
-								</div>
-							</div>
-							<div name="api" class="control-group hide">
-								<label class="control-label">消息类型：</label>
-								<div id="msgType" class="controls">
-									<input type="checkbox" data-type="dict" data-group="req_type" class="app-element"/>
-								</div>
-							</div>
-							<div name="api" class="control-group hide">
-								<label class="control-label">事件类型：</label>
-								<div id="eventType" class="controls">
-									<input type="checkbox" data-type="dict" data-group="event_type" class="app-element"/>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label">应用说明：</label>
-								<div class="controls">
-									<textarea id="description" name="description"></textarea>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label" for="order_no">排序:</label>
-								<div class="controls">
-									<input id="order_no" name="order_no" value="" type="number" class="span4 form-control">
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label" for="is_valid">是否启用:</label>
-								<div class="controls">
-									<input id="is_valid" name="is_valid" value="1" type="checkbox">
-								</div>
-							</div>
+                            <div name="api" class="control-group">
+                                <label class="control-label" for="score">积分：</label>
+                                <div class="controls">
+                                    <input name="score" id="score" type="text" class="span4 form-control"/>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">是否启用:</label>
+                                <div class="controls">
+                                    <myform:radios name="is_valid" values="${fns:getDictList('yesNo')}" checked="${is_valid}"/>
+                                </div>
+                            </div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
-							<button type="button" class="btn btn-primary btn-sm" data-loading-text="正在提交..." onclick="submitData();">保存</button>
+							<button type="submit" class="btn btn-primary btn-sm" data-loading-text="正在提交...">保存</button>
 						</div>
 					</form>
 				</div><!-- /.modal-content -->

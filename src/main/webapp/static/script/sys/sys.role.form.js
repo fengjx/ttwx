@@ -66,8 +66,6 @@ $(function () {
         append();
     });
 
-    var oldName = $("#name").val();
-    var oldRoleCode = $("#role_code").val();
     $("#data-form").validate({
         submitHandler: function (form) {
             var ids = [], nodes = roleEdit.$menuTree.getCheckedNodes(true);

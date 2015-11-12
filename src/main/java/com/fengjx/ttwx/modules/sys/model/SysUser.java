@@ -59,7 +59,7 @@ public class SysUser extends Model {
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void register(Map<String, Object> attrs) throws Exception {
+    public void register(Map<String, Object> attrs) {
         if (validUsername((String) attrs.get("username"))) {
             throw new MyRuntimeException("用户名已存在");
         }
@@ -72,7 +72,9 @@ public class SysUser extends Model {
         attrs.put("valid_uid", CommonUtils.getPrimaryKey());
         attrs.put("in_time", new Date());
         // 默认积分
-        attrs.put("score", 0);
+        if (StringUtils.isBlank((String) attrs.get("score"))) {
+            attrs.put("score", 0);
+        }
         insert(attrs);
         // 推送注册消息，监听了RegisterEvent的listener将会收到此消息
         applicationContext.publishEvent(new RegisterEvent(attrs));

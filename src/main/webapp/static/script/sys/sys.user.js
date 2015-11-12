@@ -2,18 +2,25 @@
  * 字典管理
  */
 
-var editModal;
-var formValid;
-var dataForm;
-var $table;
+var sysUser;
 
-$(function () {
+function init() {
 
-    editModal = $('#editModal').modal({
+    sysUser = {
+        dataForm : $("#dataForm")
+    };
+
+    sysUser.editModal = $('#editModal').modal({
         show: false
     });
 
-    $table = $('#data-table').jqGrid({
+}
+
+
+
+$(function () {
+
+    sysUser.$table = $('#data-table').jqGrid({
         url: adminPath + '/sys/user/pageList',
         colModel: [{
             name: 'id',
@@ -76,7 +83,7 @@ $(function () {
         }
     });
 
-    $table.jqGrid('navGrid', '#tablePager', {
+    sysUser.$table.jqGrid('navGrid', '#tablePager', {
         edit: false,
         add: false,
         del: false,
@@ -117,56 +124,42 @@ $(function () {
         }
     );
 
-    formValid = $.scojs_valid('#form-data', {
-        rules: {
-            dict_value: ['not_empty', {'max_length': 20}],
-            dict_name: ['not_empty'],
-            group_code: ['not_empty']
-        },
-        messages: {
-            dict_value: {
-                not_empty: "请输入字典值",
-                max_length: "字典值不能超过20个字符"
-            },
-            dict_name: {
-                not_empty: "请输入字典名称"
-            },
-            group_code: {
-                not_empty: "请输入字典组标识"
+
+    $("#data-form").validate({
+        submitHandler: function (form) {
+            var ids = [], nodes = roleEdit.$menuTree.getCheckedNodes(true);
+            for (var i = 0; i < nodes.length; i++) {
+                ids.push(nodes[i].id);
             }
-        },
-        wrapper: '.control-group'
+            $("#menuIds").val(ids);
+            $(form).ajaxSubmit({
+                url: adminPath + "/sys/user/save",
+                dataType: 'json',
+                data: {},
+                success: function (res) {
+                    if (res && '1' == res.code) {
+                        app.alertModal(res.msg ? res.msg : "保存成功！", function () {
+                            window.location.href = adminPath + "/sys/role";
+                        });
+                    } else {
+                        app.alertModal(res.msg ? res.msg : "保存失败！");
+                    }
+                }
+            });
+        }
     });
 
-    dataForm = $("#form-data").submit(function () {
-        $(this).ajaxSubmit({
-            url: adminPath + "/sys/dict/save",
-            dataType: 'json',
-            beforeSubmit: function () {
-                return formValid.validate();
-            },
-            success: function (res) {
-                if (res && "1" == res.code) {
-                    editModal.modal('hide');
-                    app.ok(res.msg);
-                    $table.trigger("reloadGrid");
-                } else {
-                    app.error(res.msg);
-                }
-            }
-        });
-        return false;
-    });
+
 });
 
 function searchDatagrid() {
-    $table.setGridParam({page: 1}).trigger("reloadGrid");
+    sysUser.$table.setGridParam({page: 1}).trigger("reloadGrid");
 }
 
 function clearDatagrid() {
     $('#toolbar input').val('');
     $('#qry_is_valid').val('');
-    $table.trigger("reloadGrid");
+    sysUser.$table.trigger("reloadGrid");
 }
 
 /**
@@ -175,12 +168,12 @@ function clearDatagrid() {
  */
 function append(id) {
     if (!id) {
-        id = $table.jqGrid('getGridParam', "selrow");
+        id = sysUser.$table.jqGrid('getGridParam', "selrow");
     }
     if (!id) {
         edit();
     } else {
-        var row = $table.jqGrid('getRowData', id);
+        var row = sysUser.$table.jqGrid('getRowData', id);
         edit({
             group_code: row.group_code,
             group_name: row.group_name
@@ -193,15 +186,15 @@ function append(id) {
  * @param data
  */
 function edit(data) {
-    dataForm.find("#id").val('');
-    dataForm.clearForm();
+    sysUser.dataForm.find("#id").val('');
+    sysUser.dataForm.clearForm();
     if (data) {
         $("#form-data").autofill(data);
         if (data.is_valid == '1') {
             $("input[name='is_valid']").prop("checked", true);
         }
     }
-    editModal.modal('show');
+    sysUser.editModal.modal('show');
 }
 
 /**
@@ -211,13 +204,13 @@ function edit(data) {
  */
 function updateData(id) {
     if (!id) {
-        id = $table.jqGrid('getGridParam', "selrow");
+        id = sysUser.$table.jqGrid('getGridParam', "selrow");
         if (!id) {
             app.alertModal("请选中要编辑的数据");
             return false;
         }
     }
-    var row = $table.jqGrid('getRowData', id);
+    var row = sysUser.$table.jqGrid('getRowData', id);
     edit(row);
 }
 
@@ -229,13 +222,13 @@ function updateData(id) {
  */
 function deleteData(id) {
     if (!id) {
-        id = $table.jqGrid('getGridParam', "selrow");
+        id = sysUser.$table.jqGrid('getGridParam', "selrow");
         if (!id) {
             app.alertModal("请选中要删除的数据");
             return false;
         }
     }
-    var row = $table.jqGrid('getRowData', id);
+    var row = sysUser.$table.jqGrid('getRowData', id);
     app.confirmModal("你要删除字典【" + row.dict_name + "】吗？", function () {
         $.ajax({
             url: adminPath + '/sys/dict/delete',
@@ -245,7 +238,7 @@ function deleteData(id) {
             success: function (res) {
                 if (res && '1' === res.code) {
                     app.ok('刪除成功');
-                    $table.trigger("reloadGrid");
+                    sysUser.$table.trigger("reloadGrid");
                 } else {
                     app.error(res.msg ? res.msg : '刪除失败');
                 }
