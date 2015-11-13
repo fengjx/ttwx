@@ -33,6 +33,12 @@ function init() {
                     app.alert("系统错误，删除失败！");
                 });
             });
+        },
+        assignModal: $('#assignModal').modal({
+            show: false
+        }),
+        assignUser: function (roleId) {
+            roleAdmin.assignModal.modal('show');
         }
     }
 }
@@ -93,9 +99,9 @@ $(function () {
             sortable: false,
             align: 'center',
             formatter: function (value, opt, row) {
-                var html = '<a class="btn btn-minier btn-success" onclick="append(\'' + row.id + '\');" href="javascript:void(0);"><i class="ace-icon fa glyphicon glyphicon-plus"></i></a>';
-                html += '<a class="btn btn-minier btn-info" href="' + adminPath + '/sys/role/form?id=' + row.id + '"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
-                html += '<a name="btn-delete" data-id="' + row.id + '" class="btn btn-minier btn-danger" href="javascript:void(-1);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
+                var html = '<a title="分配角色" name="btn-role-user" data-id="'+row.id+'"  class="btn btn-minier btn-success"><i class="ace-icon fa glyphicon glyphicon-user"></i></a>';
+                html += '<a title="编辑" class="btn btn-minier btn-info" href="' + adminPath + '/sys/role/form?id=' + row.id + '"><i class="ace-icon fa glyphicon glyphicon-edit"></i></a>';
+                html += '<a title="删除" name="btn-delete" data-id="' + row.id + '" class="btn btn-minier btn-danger" href="javascript:void(-1);"><i class="ace-icon fa glyphicon glyphicon-remove"></i></a>';
                 return html;
             }
         }]
@@ -117,4 +123,8 @@ $(function () {
         roleAdmin.deleteData(id);
     });
 
+    $("#data-table").on("click", "a[name='btn-role-user']", function () {
+        var roleId = $(this).attr("data-id");
+        roleAdmin.assignUser(roleId);
+    });
 });
