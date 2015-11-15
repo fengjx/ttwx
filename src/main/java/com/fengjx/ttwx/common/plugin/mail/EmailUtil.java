@@ -1,6 +1,9 @@
 
 package com.fengjx.ttwx.common.plugin.mail;
 
+import com.fengjx.ttwx.common.utils.LogUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -19,6 +22,8 @@ import java.io.UnsupportedEncodingException;
  */
 public class EmailUtil {
 
+    private static final Logger LOG = LoggerFactory.getLogger(EmailUtil.class);
+
     private static JavaMailSenderImpl sender;
 
     public static void init(JavaMailSenderImpl sender) {
@@ -34,8 +39,10 @@ public class EmailUtil {
         } else if (SendMailBean.TYPE_ATTR.equals(mail.getType())) {
             sendAttrMail(mail);
         } else {
+            LogUtil.warn(LOG, "邮件类型未确定", mail.toString());
             throw new RuntimeException("邮件类型未确定");
         }
+        LogUtil.info(LOG, mail.toString());
     }
 
     /**

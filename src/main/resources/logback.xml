@@ -28,6 +28,23 @@
         </encoder>
     </appender>
 
+    <appender name="EMAIL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/email.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天按日期生成一个文件 -->
+            <fileNamePattern>${LOG_HOME}/email.%d{yyyy-MM-dd-HH}-%i.log</fileNamePattern>
+            <!-- 30天自动删除旧日志文件 -->
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>20MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- 格式及编码 -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread][%logger{0}]#%method %m%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
 
     <!-- 本地调试 使用 -->
     <logger name="java.sql.PreparedStatement">
@@ -53,6 +70,11 @@
     </logger>
     <logger name="com.fengjx.ttwx.modules">
         <level value="INFO"/>
+    </logger>
+
+    <logger name="com.fengjx.ttwx.common.plugin.mail.EmailUtil">
+        <level value="INFO"/>
+        <appender-ref ref="EMAIL"/>
     </logger>
 
     <root level="INFO">
