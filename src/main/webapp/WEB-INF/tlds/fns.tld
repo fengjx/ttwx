@@ -87,6 +87,13 @@
         <function-signature>boolean endsWith(java.lang.CharSequence, java.lang.CharSequence)</function-signature>
         <example>${fns:endsWith(str,suffix)}</example>
     </function>
+    <function>
+        <description>判断集合里是否包含对象</description>
+        <name>contains</name>
+        <function-class>com.google.common.collect.Iterables</function-class>
+        <function-signature>boolean contains(java.lang.Iterable, java.lang.Object)</function-signature>
+        <example>${fns:contains(iterable, value)}</example>
+    </function>
 
     <!-- JsonUtil -->
     <function>
