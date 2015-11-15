@@ -137,7 +137,7 @@ public abstract class BaseController {
      * @return
      */
     protected Map<String, String> retSuccess() {
-        return retSuccess("请求成功");
+        return retSuccess("");
     }
 
     protected Map<String, String> retSuccess(String msg) {

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -53,6 +52,13 @@ public class SysUserController extends MyController {
     @ResponseBody
     public AdapterPage pageList(HttpServletRequest request) {
         return sysUser.pageList(getParamHelper(SysUser.class, request));
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public Map<String, String> delete(String id) {
+        sysUser.deleteById(id);
+        return retSuccess("菜单成功删除");
     }
 
 }

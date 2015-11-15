@@ -85,6 +85,20 @@ public class SysRoleController extends MyController {
         return retSuccess();
     }
 
+    @RequestMapping("roleUsers")
+    @ResponseBody
+    public List<Map<String, Object>> roleUsers(String roleId) {
+        return sysRole.roleUsers(roleId);
+    }
+
+    @RequestMapping("saveRoleUsers")
+    @ResponseBody
+    public Map<String, String> saveRoleUsers(String roleId, String userIds) {
+        validateRequired("roleId", "请求错误，角色ID为空");
+        sysRole.saveRoleUsers(roleId, userIds);
+        return retSuccess();
+    }
+
     /**
      * 数据校验
      */
@@ -103,5 +117,4 @@ public class SysRoleController extends MyController {
             addError("角色标识已存在");
         }
     }
-
 }

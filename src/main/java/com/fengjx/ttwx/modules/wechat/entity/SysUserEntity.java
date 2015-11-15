@@ -12,8 +12,9 @@ public class SysUserEntity extends ToStringBase {
 
     private static final long serialVersionUID = 7100428337345813905L;
 
-    public static final String IS_ALIVE = "1";
-    public static final String NOT_ALIVE = "0";
+    public static final String IS_ALIVE = "1";      //激活
+    public static final String NOT_ALIVE = "0";     //未激活
+    public static final String FREEZE_ALIVE = "-1"; //锁定
 
     private String id;
     private String valid_uid;

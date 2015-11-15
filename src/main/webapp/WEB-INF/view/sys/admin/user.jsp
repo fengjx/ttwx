@@ -68,25 +68,25 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title">用户编辑</h4>
 					</div>
-					<form action="${adminPath}/sys/user/save" class="form-horizontal" id="form-data" method="POST" role="form">
+					<form class="form-horizontal" id="form-data" method="POST" role="form">
 						<div class="modal-body">
 							<input type="hidden" id="id" name="id" value="" />
 							<div class="control-group">
-								<label class="control-label" for="name">用户名：</label>
+								<label class="control-label" for="username">用户名：</label>
 								<div class="controls">
-									<input type="text" id="name" name="name" class="span4 form-control"/>
+									<input type="text" id="username" name="username" class="span4 form-control"/>
 								</div>
 							</div>
 							<div name="web" class="control-group">
 								<label class="control-label" for="email">邮箱：</label>
 								<div class="controls">
-									<input id="email" name="mail" type="text" class="span4 form-control"/>
+									<input id="email" name="email" type="text" class="span4 form-control"/>
 								</div>
 							</div>
 							<div name="api" class="control-group">
-								<label class="control-label" for="phone">电话：</label>
+								<label class="control-label" for="phone_no">电话：</label>
 								<div class="controls">
-									<input name="phone" id="phone" type="text" class="span4 form-control"/>
+									<input name="phone_no" id="phone_no" type="text" class="span4 form-control"/>
 								</div>
 							</div>
                             <div name="api" class="control-group">
@@ -101,6 +101,12 @@
                                     <myform:radios name="is_valid" values="${fns:getDictList('yesNo')}" checked="${is_valid}"/>
                                 </div>
                             </div>
+							<div class="control-group">
+								<label class="control-label" for="remarks">备注:</label>
+								<div class="controls">
+									<textarea id="remarks" name="remarks" class="span4" rows="3">${remarks}</textarea>
+								</div>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>

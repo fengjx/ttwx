@@ -5,8 +5,8 @@ import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.common.web.MyExecuteCallback;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.controller.MyController;
-import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
 import com.fengjx.ttwx.modules.sys.model.SysUser;
+import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +36,8 @@ public class LoginController extends MyController {
     @ResponseBody
     public Map<String, String> signin(HttpServletRequest request, SysUserEntity user,
             String valid_code) {
+        validateRequired("username", "用户名不能为空");
+        validateRequired("pwd", "密码不能为空");
         // 测试环境忽略掉验证码校验
         if (!AppConfig.isTest()) {
             Map<String, String> res = compareValidCode(request, valid_code);
@@ -46,7 +48,13 @@ public class LoginController extends MyController {
         SysUserEntity loginUser = sysUser.signin(user.getUsername(), user.getPwd());
         LogUtil.debug(LOG, "查询到登陆用户：" + loginUser);
         if (null == loginUser) {
-            return retFail("用户名或密码错误");
+            return retFail("用户名或密码错误！");
+        }
+        if( SysUserEntity.NOT_ALIVE.equals(loginUser.getIs_valid())){
+            return retFail("账号未激活，请查激活邮件！");
+        }
+        if( SysUserEntity.FREEZE_ALIVE.equals(loginUser.getIs_valid())){
+            return retFail("账号已经锁定，不允许登录！");
         }
         request.getSession().setAttribute(AppConfig.LOGIN_FLAG, loginUser);
         return retSuccess();

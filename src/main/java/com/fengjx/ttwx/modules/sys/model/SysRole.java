@@ -151,4 +151,50 @@ public class SysRole extends Model {
         });
     }
 
+    /**
+     * 通过角色ID查询所有用户（包括授权和未授权）
+     *
+     * @param roleId
+     * @return
+     */
+    public List<Map<String, Object>> roleUsers(String roleId) {
+        StringBuilder sql = new StringBuilder(
+                "select u.id as \"userId\", u.username, r.role_id \"roleId\" from ");
+        sql.append(getTableName(SysUser.class)).append(" u ");
+        sql.append("left join ").append(getTableName(SysUserRole.class)).append(" r ");
+        sql.append(" on u.id = r.user_id and r.role_id = ?");
+        return getJdbcTemplate().queryForList(sql.toString(), roleId);
+    }
+
+    /**
+     * 保存角色授权
+     *
+     * @param roleId 角色ID
+     * @param userIds 用户ID（多个用“,”分隔）
+     */
+    public void saveRoleUsers(final String roleId, String userIds) {
+        StringBuilder delRoleSql = new StringBuilder("delete from ");
+        delRoleSql.append(getTableName(SysUserRole.class));
+        delRoleSql.append(" where role_id = ?");
+        execute(delRoleSql.toString(), roleId);
+        if (StringUtils.isNotBlank(userIds)) {
+            StringBuilder sql = new StringBuilder("insert into ");
+            sql.append(getTableName(SysUserRole.class));
+            sql.append(" (role_id, user_id) values (?, ?)");
+            final String[] users = StringUtils.split(userIds, ",");
+            batchExecute(sql.toString(), new BatchPreparedStatementSetter() {
+                @Override
+                public void setValues(PreparedStatement preparedStatement, int i)
+                        throws SQLException {
+                    preparedStatement.setObject(1, roleId);
+                    preparedStatement.setObject(2, users[i]);
+                }
+                @Override
+                public int getBatchSize() {
+                    return users.length;
+                }
+            });
+        }
+    }
+
 }

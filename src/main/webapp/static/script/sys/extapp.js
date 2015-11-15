@@ -193,11 +193,11 @@ function edit(data) {
         if ('api' == appType) {
             var msgTypes = data.msg_types.split(",");
             for (var i = 0; i < msgTypes.length; i++) {
-                $("input[group='check-req_type'][value='" + msgTypes[i] + "']").prop("checked", true);
+                $("input[name='check-req-type'][value='" + msgTypes[i] + "']").prop("checked", true);
                 if ('event' == msgTypes[i]) {
                     var eventTypes = data.event_types.split(",");
                     for (var j = 0; j < eventTypes.length; j++) {
-                        $("input[group='check-event_type'][value='" + eventTypes[j] + "']").prop("checked", true);
+                        $("input[name='check-event-type'][value='" + eventTypes[j] + "']").prop("checked", true);
                     }
                 }
             }
@@ -302,7 +302,7 @@ function submitData() {
             app.alert("请输入spring id！");
             return false;
         }
-        var $reqTypes = $("input[group='check-req_type']:checked");
+        var $reqTypes = $("input[name='check-req-type']:checked");
         if ($reqTypes.length == 0) {
             app.alert("请选择消息类型！");
             return false;
@@ -316,7 +316,7 @@ function submitData() {
             }
         });
         if (reqTypes.search("event") !== -1) {
-            var $eventTypes = $("input[group='check-event_type']:checked");
+            var $eventTypes = $("input[name='check-event-type']:checked");
             if ($eventTypes.length == 0) {
                 app.alert("请选择事件类型！");
                 return false;

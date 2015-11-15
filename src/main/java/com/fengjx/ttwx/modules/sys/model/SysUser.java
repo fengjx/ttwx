@@ -10,8 +10,8 @@ import com.fengjx.ttwx.common.system.exception.MyRuntimeException;
 import com.fengjx.ttwx.common.utils.AesUtil;
 import com.fengjx.ttwx.common.utils.CommonUtils;
 import com.fengjx.ttwx.common.utils.DateUtils;
-import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
 import com.fengjx.ttwx.modules.sys.listener.RegisterEvent;
+import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +72,7 @@ public class SysUser extends Model {
         attrs.put("valid_uid", CommonUtils.getPrimaryKey());
         attrs.put("in_time", new Date());
         // 默认积分
-        if (StringUtils.isBlank((String) attrs.get("score"))) {
+        if (StringUtils.isBlank(attrs.get("score").toString())) {
             attrs.put("score", 0);
         }
         insert(attrs);
@@ -87,8 +87,10 @@ public class SysUser extends Model {
      * @return
      */
     public boolean validUsername(String username) {
-        String sql = "select count(1) as count from wechat_sys_user u where u.username = ?";
-        Long total = findOne(sql, username).getLong("count");
+        StringBuilder sql = new StringBuilder("select count(1) as count from ");
+        sql.append(getTableName());
+        sql.append(" u where u.username = ?");
+        Long total = findOne(sql.toString(), username).getLong("count");
         return total > 0;
     }
 
@@ -99,8 +101,10 @@ public class SysUser extends Model {
      * @return
      */
     public boolean validEmail(String email) {
-        String sql = "select count(1) as count from wechat_sys_user u where u.email = ?";
-        Long total = findOne(sql, email).getLong("count");
+        StringBuilder sql = new StringBuilder("select count(1) as count from ");
+        sql.append(getTableName());
+        sql.append(" u where u.email = ?");
+        Long total = findOne(sql.toString(), email).getLong("count");
         return total > 0;
     }
 
@@ -116,7 +120,10 @@ public class SysUser extends Model {
         Map<String, Object> attrs = new HashMap<>();
         attrs.put("valid_uid", uid);
         Record record = findOne(attrs);
-        if (null == record || SysUserEntity.IS_ALIVE.equals(record.getStr("is_valid"))) {
+        if (SysUserEntity.FREEZE_ALIVE.equals(record.getStr("is_valid"))) {
+            throw new MyRuntimeException("账号已被锁定");
+        }
+        if (SysUserEntity.IS_ALIVE.equals(record.getStr("is_valid"))) {
             return false;
         }
         record.set("is_valid", SysUserEntity.IS_ALIVE);

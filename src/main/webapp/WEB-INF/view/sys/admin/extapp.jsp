@@ -26,11 +26,12 @@
 							<label class="control-label">应用类型：</label>
 							<select name="qry_app_type" id="qry_app_type">
 								<option value="">全部</option>
-								<myform:options items="${fns:getDictList('app_type')}" itemValue="value" itemLabel="label" value="web"/>
+								<myform:options items="${fns:getDictList('app_type')}" itemValue="value" itemLabel="label"/>
 							</select>
 							<label class="control-label">启用：</label>
-							<select data-type="dict" data-group="yesNo" name="qry_is_valid" id="qry_is_valid" class="app-element">
+							<select name="qry_is_valid" id="qry_is_valid">
 								<option value="">全部</option>
+								<myform:options items="${fns:getDictList('yesNo')}" itemValue="value" itemLabel="label"/>
 							</select>
 							<label class="control-label">入库时间：</label>
 							<div class="input-group">
@@ -107,13 +108,13 @@
 							<div name="api" class="control-group hide">
 								<label class="control-label">消息类型：</label>
 								<div id="msgType" class="controls">
-									<input type="checkbox" data-type="dict" data-group="req_type" class="app-element"/>
+									<myform:checkbox name="check-req-type" items="${fns:getDictList('req_type')}" itemValue="value" itemLabel="label"/>
 								</div>
 							</div>
 							<div name="api" class="control-group hide">
 								<label class="control-label">事件类型：</label>
 								<div id="eventType" class="controls">
-									<input type="checkbox" data-type="dict" data-group="event_type" class="app-element"/>
+									<myform:checkbox name="check-event-type" items="${fns:getDictList('event_type')}" itemValue="value" itemLabel="label"/>
 								</div>
 							</div>
 							<div class="control-group">

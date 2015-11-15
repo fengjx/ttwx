@@ -7,7 +7,8 @@ var sysUser;
 function init() {
 
     sysUser = {
-        dataForm : $("#dataForm")
+        dataForm: $("#dataForm")
+
     };
 
     sysUser.editModal = $('#editModal').modal({
@@ -17,8 +18,8 @@ function init() {
 }
 
 
-
 $(function () {
+    init();
 
     sysUser.$table = $('#data-table').jqGrid({
         url: adminPath + '/sys/user/pageList',
@@ -125,22 +126,16 @@ $(function () {
     );
 
 
-    $("#data-form").validate({
+    $("#form-data").validate({
         submitHandler: function (form) {
-            var ids = [], nodes = roleEdit.$menuTree.getCheckedNodes(true);
-            for (var i = 0; i < nodes.length; i++) {
-                ids.push(nodes[i].id);
-            }
-            $("#menuIds").val(ids);
             $(form).ajaxSubmit({
                 url: adminPath + "/sys/user/save",
                 dataType: 'json',
-                data: {},
                 success: function (res) {
                     if (res && '1' == res.code) {
-                        app.alertModal(res.msg ? res.msg : "保存成功！", function () {
-                            window.location.href = adminPath + "/sys/role";
-                        });
+                        sysUser.$table.trigger("reloadGrid");
+                        sysUser.editModal.modal('hide');
+                        app.ok(res.msg ? res.msg : "保存成功！");
                     } else {
                         app.alertModal(res.msg ? res.msg : "保存失败！");
                     }
@@ -231,14 +226,14 @@ function deleteData(id) {
     var row = sysUser.$table.jqGrid('getRowData', id);
     app.confirmModal("你要删除字典【" + row.dict_name + "】吗？", function () {
         $.ajax({
-            url: adminPath + '/sys/dict/delete',
+            url: adminPath + '/sys/user/delete',
             data: 'id=' + id,
             cache: false,
             dataType: "json",
             success: function (res) {
                 if (res && '1' === res.code) {
-                    app.ok('刪除成功');
                     sysUser.$table.trigger("reloadGrid");
+                    app.ok(res.msg ? res.msg : "保存成功！");
                 } else {
                     app.error(res.msg ? res.msg : '刪除失败');
                 }

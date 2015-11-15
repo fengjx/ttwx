@@ -25,62 +25,30 @@
 
 
 		<div id="assignModal" class="modal" tabindex="-1" role="dialog" >
-			<div class="modal-dialog" style="width: 600px">
+			<div class="modal-dialog" style="width: 600px;">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title">角色分配</h4>
+						<h4 class="modal-title">角色分配 - <span id="editRole"></span></h4>
 					</div>
-					<form action="${adminPath}/sys/user/save" class="form-horizontal" id="form-data" method="POST" role="form">
+					<form class="form-horizontal" id="form-data" method="POST" role="form">
 						<div class="modal-body">
-							<input type="hidden" id="id" name="id" value="" />
-							<div class="control-group">
-								<label class="control-label" for="name">用户名：</label>
-								<div class="controls">
-									<input type="text" id="name" name="name" class="span4 form-control"/>
-								</div>
-							</div>
-							<div name="web" class="control-group">
-								<label class="control-label" for="email">邮箱：</label>
-								<div class="controls">
-									<input id="email" name="mail" type="text" class="span4 form-control"/>
-								</div>
-							</div>
-							<div name="api" class="control-group">
-								<label class="control-label" for="phone">电话：</label>
-								<div class="controls">
-									<input name="phone" id="phone" type="text" class="span4 form-control"/>
-								</div>
-							</div>
-							<div name="api" class="control-group">
-								<label class="control-label" for="score">积分：</label>
-								<div class="controls">
-									<input name="score" id="score" type="text" class="span4 form-control"/>
-								</div>
-							</div>
-							<div class="control-group">
-								<label class="control-label">是否启用:</label>
-								<div class="controls">
-									<myform:radios name="is_valid" values="${fns:getDictList('yesNo')}" checked="${is_valid}"/>
+							<input type="hidden" name="roleId" value=""/>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<select multiple="multiple" size="10" name="user-list" id="user-list">
+									</select>
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
-							<button type="submit" class="btn btn-primary btn-sm" data-loading-text="正在提交...">保存</button>
+							<button id="btn-submit" type="button" class="btn btn-primary btn-sm" data-loading-text="正在提交...">保存</button>
 						</div>
 					</form>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
 		</div><!-- /.modal -->
-
-
-
-
-
-
-
-
 
 	</div>
 

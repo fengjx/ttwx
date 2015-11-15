@@ -19,7 +19,7 @@
         </li>
         <li>
             <a href="javascript:void (0);">
-                <i class="icon-credit-card menu-icon"></i>
+                <i class=" icon-list menu-icon"></i>
                 <span class="menu-text"> 菜单管理 </span>
                 <b class="arrow icon-angle-down"></b>
             </a>
@@ -43,14 +43,14 @@
         </li>
         <li>
             <a href="${adminPath}/sys/role">
-                <i class="icon-credit-card menu-icon"></i>
+                <i class=" icon-unlock menu-icon"></i>
                 <span class="menu-text"> 角色管理 </span>
             </a>
             <b class="arrow"></b>
         </li>
         <li>
             <a href="${adminPath}/sys/user">
-                <i class="icon-credit-card menu-icon"></i>
+                <i class="icon-user menu-icon"></i>
                 <span class="menu-text"> 用户管理 </span>
             </a>
             <b class="arrow"></b>

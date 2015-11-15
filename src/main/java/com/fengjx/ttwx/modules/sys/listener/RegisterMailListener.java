@@ -8,6 +8,7 @@ import com.fengjx.ttwx.common.utils.AesUtil;
 import com.fengjx.ttwx.common.utils.LogUtil;
 import com.fengjx.ttwx.modules.common.constants.AppConfig;
 import com.fengjx.ttwx.modules.common.constants.FtlFilenameConstants;
+import com.fengjx.ttwx.modules.wechat.entity.SysUserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -38,6 +39,10 @@ public class RegisterMailListener implements ApplicationListener<RegisterEvent> 
     @SuppressWarnings("unchecked")
     public void onApplicationEvent(RegisterEvent event) {
         Map<String, Object> attrs = (Map<String, Object>) event.getSource();
+        // 如果是管理员添加的用户，并且状态已经激活了就不在发送激活邮件
+        if (SysUserEntity.IS_ALIVE.equals(attrs.get("is_valid").toString())) {
+            return;
+        }
         SendMailBean mail = new SendMailBean();
         mail.setType(SendMailBean.TYPE_HTML);
         mail.setToUser((String) attrs.get("email"));
