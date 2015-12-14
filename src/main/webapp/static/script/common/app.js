@@ -484,12 +484,16 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             app.alertModal(XMLHttpRequest.responseText.split('<script')[0]);
+            NProgress.done();
         },
         beforeSend: function (XMLHttpRequest) {
-            app.loadingModal();
+            //app.loadingModal();
+            NProgress.set(0.4);
+            NProgress.start();
         },
         complete: function () {
-            //app.closeDialog();
+            // app.closeDialog();
+            NProgress.done();
         }
     });
 })(jQuery);

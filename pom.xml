@@ -382,7 +382,7 @@
                         </goals>
                         <configuration>
                             <target>
-                                <copy todir="${build.outputDirectory}" overwrite="true">
+                                <copy todir="${project.build.outputDirectory}" overwrite="true">
                                     <fileset dir="src/main/resources/env/${environment}">
                                         <exclude name="app.properties" />
                                     </fileset>
