@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-		 import="com.fengjx.ttwx.common.ext.baidu.ueditor.ActionEnter" pageEncoding="UTF-8" %>
-<%@ page import="com.fengjx.ttwx.modules.common.constants.AppConfig" %>
+		 import="com.fengjx.commons.ext.baidu.ueditor.ActionEnter" pageEncoding="UTF-8" %>
+<%@ page import="com.fengjx.modules.common.constants.AppConfig" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%
 	request.setCharacterEncoding("utf-8");

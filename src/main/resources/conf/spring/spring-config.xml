@@ -9,7 +9,7 @@
     <!--   <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties" /> -->
 
     <!-- VM 参数 -DENV_MODE=dev/release/test 转换各环境配置文件  -->
-    <bean class="com.fengjx.ttwx.common.config.ConfigPropertyPlaceholderConfigurer">
+    <bean class="com.fengjx.commons.config.ConfigPropertyPlaceholderConfigurer">
         <property name="location">
             <value>classpath:env/${ENV_MODE}/app.properties</value>
         </property>
@@ -17,7 +17,7 @@
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
     </bean>
 
-    <bean class="com.fengjx.ttwx.common.config.ConfigPropertyPlaceholderConfigurer">
+    <bean class="com.fengjx.commons.config.ConfigPropertyPlaceholderConfigurer">
         <property name="location">
             <value>classpath:app.properties</value>
         </property>

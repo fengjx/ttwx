@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
        ">
 
-    <bean init-method="init" id="plugins" class="com.fengjx.ttwx.common.plugin.Plugins">
+    <bean init-method="init" id="plugins" class="com.fengjx.commons.plugin.Plugins">
         <property name="pluginList">
             <list>
                 <ref bean="tableMappingPlugin"/>
@@ -29,14 +29,14 @@
         <property name="configLocation" value="classpath:conf/ehcache/ehcache.xml"/>
     </bean>
 
-    <bean id="ehCachePlugin" class="com.fengjx.ttwx.common.plugin.cache.ehcache.EhCachePlugin">
+    <bean id="ehCachePlugin" class="com.fengjx.commons.plugin.cache.ehcache.EhCachePlugin">
         <property name="cacheManager" ref="ehcache"/>
     </bean>
 
     <!-- 数据字典-->
-    <bean id="dictService" class="com.fengjx.ttwx.modules.sys.service.DictServiceImpl">
+    <bean id="dictService" class="com.fengjx.modules.sys.service.DictServiceImpl">
     </bean>
-    <bean id="dictPlugin" class="com.fengjx.ttwx.common.plugin.dict.DictPlugin">
+    <bean id="dictPlugin" class="com.fengjx.commons.plugin.dict.DictPlugin">
         <property name="service" ref="dictService"/>
     </bean>
 
@@ -77,10 +77,10 @@
             </props>
         </property>
     </bean>
-    <bean id="freemarkerPlugin" class="com.fengjx.ttwx.common.plugin.freemarker.FreemarkerPlugin">
+    <bean id="freemarkerPlugin" class="com.fengjx.commons.plugin.freemarker.FreemarkerPlugin">
         <property name="configurer" ref="freemarkerConfigurer"/>
     </bean>
 
-    <bean id="simpleCache" class="com.fengjx.ttwx.common.plugin.cache.ehcache.SimpleEhCache"/>
+    <bean id="simpleCache" class="com.fengjx.commons.plugin.cache.ehcache.SimpleEhCache"/>
 
 </beans>

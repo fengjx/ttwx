@@ -72,7 +72,7 @@
         <level value="INFO"/>
     </logger>
 
-    <logger name="com.fengjx.ttwx.common.plugin.mail.EmailUtil">
+    <logger name="com.fengjx.commons.plugin.mail.EmailUtil">
         <level value="INFO"/>
         <appender-ref ref="EMAIL"/>
     </logger>

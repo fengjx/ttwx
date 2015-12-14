@@ -20,7 +20,7 @@
             </props>
         </property>
     </bean>
-    <bean id="emailPlugin" class="com.fengjx.ttwx.common.plugin.mail.EmailPlugin">
+    <bean id="emailPlugin" class="com.fengjx.commons.plugin.mail.EmailPlugin">
         <property name="sender" ref="mailSender"/>
     </bean>
 

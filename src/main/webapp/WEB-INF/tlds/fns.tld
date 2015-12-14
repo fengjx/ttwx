@@ -14,14 +14,14 @@
     <function>
         <description>获取配置</description>
         <name>getConfig</name>
-        <function-class>com.fengjx.ttwx.modules.common.constants.AppConfig</function-class>
+        <function-class>com.fengjx.modules.common.constants.AppConfig</function-class>
         <function-signature>java.lang.String getConfig(java.lang.String)</function-signature>
         <example>${fns:getConfig(key)}</example>
     </function>
     <function>
         <description>获取常量</description>
         <name>getConst</name>
-        <function-class>com.fengjx.ttwx.modules.common.constants.AppConfig</function-class>
+        <function-class>com.fengjx.modules.common.constants.AppConfig</function-class>
         <function-signature>java.lang.Object getConst(java.lang.String)</function-signature>
         <example>${fns:getConst(key)}</example>
     </function>
@@ -30,21 +30,21 @@
     <function>
         <description>获取字典标签</description>
         <name>getDictLabel</name>
-        <function-class>com.fengjx.ttwx.common.plugin.dict.DictUtil</function-class>
+        <function-class>com.fengjx.commons.plugin.dict.DictUtil</function-class>
         <function-signature>java.lang.String getDictLabel(java.lang.String, java.lang.String)</function-signature>
         <example>${fns:getDictLabel(value, type)}</example>
     </function>
     <function>
         <description>获取字典值</description>
         <name>getDictValue</name>
-        <function-class>com.fengjx.ttwx.common.plugin.dict.DictUtil</function-class>
+        <function-class>com.fengjx.commons.plugin.dict.DictUtil</function-class>
         <function-signature>java.lang.String getDictValue(java.lang.String, java.lang.String)</function-signature>
         <example>${fns:getDictValue(label, type)}</example>
     </function>
     <function>
         <description>获取字典对象列表</description>
         <name>getDictList</name>
-        <function-class>com.fengjx.ttwx.common.plugin.dict.DictUtil</function-class>
+        <function-class>com.fengjx.commons.plugin.dict.DictUtil</function-class>
         <function-signature>java.util.List findDictList(java.lang.String)</function-signature>
         <example>${fns:findDictList(type)}</example>
     </function>
@@ -53,14 +53,14 @@
     <function>
         <description>URL编码</description>
         <name>urlEncode</name>
-        <function-class>com.fengjx.ttwx.common.utils.Encodes</function-class>
+        <function-class>com.fengjx.commons.utils.Encodes</function-class>
         <function-signature>java.lang.String urlEncode(java.lang.String)</function-signature>
         <example>${fns:urlEncode(part)}</example>
     </function>
     <function>
         <description>URL解码</description>
         <name>urlDecode</name>
-        <function-class>com.fengjx.ttwx.common.utils.Encodes</function-class>
+        <function-class>com.fengjx.commons.utils.Encodes</function-class>
         <function-signature>java.lang.String urlDecode(java.lang.String)</function-signature>
         <example>${fns:urlDecode(part)}</example>
     </function>
@@ -99,7 +99,7 @@
     <function>
         <description>对象转换JSON字符串</description>
         <name>toJson</name>
-        <function-class>com.fengjx.ttwx.common.utils.JsonUtil</function-class>
+        <function-class>com.fengjx.commons.utils.JsonUtil</function-class>
         <function-signature>java.lang.String toJson(T)(java.lang.Object)</function-signature>
         <example>${fns:toJson(object)}</example>
     </function>
@@ -107,7 +107,7 @@
     <function>
         <description>获取当前时间戳</description>
         <name>currentTimeMillis</name>
-        <function-class>com.fengjx.ttwx.common.utils.DateUtils</function-class>
+        <function-class>com.fengjx.commons.utils.DateUtils</function-class>
         <function-signature>long currentTimeMillis()</function-signature>
         <example>${fns:currentTimeMillis()}</example>
     </function>

@@ -43,15 +43,15 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="tableMappingPlugin" class="com.fengjx.ttwx.common.plugin.db.TableMappingPlugin">
+    <bean id="tableMappingPlugin" class="com.fengjx.commons.plugin.db.TableMappingPlugin">
         <property name="dataSource" ref="dataSource"/>
         <property name="adapterPageName" value="${adapterPageName}"/>
         <property name="packages">
             <value>
-                com.fengjx.ttwx.modules.wechat.model,
-                com.fengjx.ttwx.modules.common.model,
-                com.fengjx.ttwx.modules.sys.model,
-                com.fengjx.ttwx.modules.portal.model
+                com.fengjx.modules.wechat.model,
+                com.fengjx.modules.common.model,
+                com.fengjx.modules.sys.model,
+                com.fengjx.modules.portal.model
             </value>
         </property>
     </bean>
@@ -81,8 +81,8 @@
     <aop:config>
         <aop:pointcut id="servicePointcut"
                       expression="
-                        execution(* com.fengjx.ttwx.modules.wechat.model..*.*(..)) ||
-                        execution(* com.fengjx.ttwx.modules.sys.model..*.*(..))
+                        execution(* com.fengjx.modules.wechat.model..*.*(..)) ||
+                        execution(* com.fengjx.modules.sys.model..*.*(..))
                        "/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" order="1"/>
     </aop:config>

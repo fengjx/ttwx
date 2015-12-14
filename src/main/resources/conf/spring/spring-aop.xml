@@ -8,11 +8,11 @@
 	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
     <!-- 微信请求日志记录 -->
-    <bean id="wechatLogAop" class="com.fengjx.ttwx.modules.wechat.process.aop.WechatLogAop"></bean>
+    <bean id="wechatLogAop" class="com.fengjx.modules.wechat.process.aop.WechatLogAop"></bean>
     <aop:config>
         <!-- 定义全局切面 -->
         <aop:pointcut id="logPointcut"
-                      expression="execution(* com.fengjx.ttwx.modules.wechat.process.ServiceEngine*.processRequest(..))"/>
+                      expression="execution(* com.fengjx.modules.wechat.process.ServiceEngine.processRequest(..))"/>
         <aop:aspect id="logAspect" ref="wechatLogAop">
             <aop:around method="addLog" pointcut-ref="logPointcut"/>
         </aop:aspect>
