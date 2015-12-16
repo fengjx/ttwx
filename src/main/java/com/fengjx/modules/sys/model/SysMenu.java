@@ -87,7 +87,7 @@ public class SysMenu extends Model {
     /**
      * 递归查询
      *
-     * @param pid
+     * @param pid 父级ID
      * @return
      */
     private List<Map<String, Object>> loadMenuDetailById(String pid) {

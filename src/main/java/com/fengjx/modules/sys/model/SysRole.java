@@ -197,4 +197,27 @@ public class SysRole extends Model {
         }
     }
 
+    /**
+     * 查询用户角色
+     *
+     * @param userId
+     * @return
+     */
+    public List<Map<String, Object>> getRolesByUserid(String userId){
+        StringBuilder sql = new StringBuilder("select ");
+        sql.append(getColumnsStr("a")).append(", b.user_id");
+        sql.append(" from ").append(getTableName()).append("a");
+        sql.append(" join ").append(getTableName(SysUserRole.class));
+        sql.append(" on b.user_id = a.id").append(" where b.user_id = ? ");
+        return findList(sql.toString(), userId);
+    }
+
+//    public String[] getRoleIdsByUserid(String userId){
+//        List<Map<String, Object>> roles = getRolesByUserid(userId);
+//        for(){
+//
+//        }
+//    }
+
+
 }
