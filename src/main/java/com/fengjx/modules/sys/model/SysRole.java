@@ -189,6 +189,7 @@ public class SysRole extends Model {
                     preparedStatement.setObject(1, roleId);
                     preparedStatement.setObject(2, users[i]);
                 }
+
                 @Override
                 public int getBatchSize() {
                     return users.length;
@@ -203,7 +204,7 @@ public class SysRole extends Model {
      * @param userId
      * @return
      */
-    public List<Map<String, Object>> getRolesByUserid(String userId){
+    public List<Map<String, Object>> getRolesByUserid(String userId) {
         StringBuilder sql = new StringBuilder("select ");
         sql.append(getColumnsStr("a")).append(", b.user_id");
         sql.append(" from ").append(getTableName()).append("a");
@@ -212,12 +213,19 @@ public class SysRole extends Model {
         return findList(sql.toString(), userId);
     }
 
-//    public String[] getRoleIdsByUserid(String userId){
-//        List<Map<String, Object>> roles = getRolesByUserid(userId);
-//        for(){
-//
-//        }
-//    }
-
+    /**
+     * 获得用户所以角色ID
+     *
+     * @param userId
+     * @return
+     */
+    public String[] getRoleIdsByUserid(String userId) {
+        List<Map<String, Object>> roles = getRolesByUserid(userId);
+        String[] arr = new String[roles.size()];
+        for (int i = 0; i < roles.size(); i++) {
+            arr[i] = (String) (roles.get(i).get("id"));
+        }
+        return arr;
+    }
 
 }
