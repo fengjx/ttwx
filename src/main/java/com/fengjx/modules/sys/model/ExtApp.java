@@ -3,7 +3,7 @@ package com.fengjx.modules.sys.model;
 
 import com.fengjx.commons.plugin.db.Mapper;
 import com.fengjx.commons.plugin.db.Model;
-import com.fengjx.commons.plugin.db.ParamHelper;
+import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.plugin.db.page.AdapterPage;
 import com.fengjx.commons.utils.CommonUtils;
 import com.fengjx.commons.utils.DateUtils;
@@ -40,39 +40,39 @@ public class ExtApp extends Model {
     /**
      * 分页查询
      *
-     * @param params
+     * @param record
      * @return
      */
-    public AdapterPage pageList(ParamHelper params) {
+    public AdapterPage pageList(Record record) {
         List<Object> qryParams = new ArrayList<>();
         StringBuilder sql = createListSql();
-        if (null != params.get("is_valid")) {
+        if (null != record.get("is_valid")) {
             sql.append(" and a.is_valid = ?");
-            qryParams.add(params.get("is_valid"));
+            qryParams.add(record.get("is_valid"));
         }
-        if (StringUtils.isNotBlank(params.getStr("app_type"))) {
+        if (StringUtils.isNotBlank(record.getStr("app_type"))) {
             sql.append(" and a.app_type = ?");
-            qryParams.add(params.get("app_type"));
+            qryParams.add(record.get("app_type"));
         }
-        if (StringUtils.isNoneBlank(params.getStr("name"))) {
+        if (StringUtils.isNoneBlank(record.getStr("name"))) {
             sql.append(" and a.name like CONCAT('%',?,'%')");
-            qryParams.add(params.get("name"));
+            qryParams.add(record.get("name"));
         }
-        if (StringUtils.isNoneBlank(params.getStr("start_time"))) {
+        if (StringUtils.isNoneBlank(record.getStr("start_time"))) {
             sql.append(" and a.in_time >= ?");
-            qryParams.add(DateUtils.parseDate(params.get("start_time")));
+            qryParams.add(DateUtils.parseDate(record.get("start_time")));
         }
-        if (StringUtils.isNoneBlank(params.getStr("end_time"))) {
+        if (StringUtils.isNoneBlank(record.getStr("end_time"))) {
             sql.append(" and a.in_time <= ?");
-            qryParams.add(DateUtils.parseDate(params.get("end_time")));
+            qryParams.add(DateUtils.parseDate(record.get("end_time")));
         }
-        if (StringUtils.isNotBlank(params.getStr("msg_type"))) {
+        if (StringUtils.isNotBlank(record.getStr("msg_type"))) {
             sql.append(" and e.msg_type = ?");
-            qryParams.add(params.get("msg_type"));
+            qryParams.add(record.get("msg_type"));
         }
-        if (StringUtils.isNotBlank(params.getStr("event_type"))) {
+        if (StringUtils.isNotBlank(record.getStr("event_type"))) {
             sql.append(" and e.event_type = ?");
-            qryParams.add(params.get("event_type"));
+            qryParams.add(record.get("event_type"));
         }
         sql.append(" order by in_time desc, order_no desc");
         return paginate(sql.toString(), qryParams.toArray()).convert();
@@ -95,16 +95,16 @@ public class ExtApp extends Model {
     /**
      * 保存扩展接口（不包含URL应用）
      */
-    public void saveExtApi(ParamHelper params, String[] msgTypes, String[] eventTypes) {
-        String apiId = params.getStr("id");
+    public void saveExtApi(Record record, String[] msgTypes, String[] eventTypes) {
+        String apiId = record.getStr("id");
         if (StringUtils.isBlank(apiId)) {
             apiId = CommonUtils.getPrimaryKey();
-            params.set("id", apiId);
-            insert(params.getParams());
+            record.set("id", apiId);
+            insert(record);
         } else {
-            update(params.getParams());
+            update(record);
         }
-        if (AppType.TYPE_API.equals(params.getStr("app_type"))) {
+        if (AppType.TYPE_API.equals(record.getStr("app_type"))) {
             reSaveSupportType(apiId, msgTypes, eventTypes);
         }
     }

@@ -1,7 +1,7 @@
 
 package com.fengjx.modules.sys.controller.admin;
 
-import com.fengjx.commons.plugin.db.ParamHelper;
+import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.plugin.db.page.AdapterPage;
 import com.fengjx.modules.common.controller.MyController;
 import com.fengjx.modules.sys.model.SysUser;
@@ -37,13 +37,12 @@ public class SysUserController extends MyController {
     public Map<String, String> save(HttpServletRequest request) {
         validateRequired("username", "用户名不能为空");
         validateRequired("email", "邮箱不能为空");
-        ParamHelper param = getParamHelper(SysUser.class, request);
-        if (StringUtils.isBlank(param.getStr("id"))) {
-            Map<String, Object> attr = param.getParams();
-            attr.put("pwd", "admin");
-            sysUser.register(param.getParams());
+        Record record = getRecord(SysUser.class, request);
+        if (StringUtils.isBlank(record.getStr("id"))) {
+            record.set("pwd", "admin");
+            sysUser.register(record);
         } else {
-            sysUser.update(param.getParams());
+            sysUser.update(record);
         }
         return retSuccess();
     }
@@ -51,7 +50,7 @@ public class SysUserController extends MyController {
     @RequestMapping("pageList")
     @ResponseBody
     public AdapterPage pageList(HttpServletRequest request) {
-        return sysUser.pageList(getParamHelper(SysUser.class, request));
+        return sysUser.pageList(getRecord(SysUser.class, request));
     }
 
     @RequestMapping("delete")

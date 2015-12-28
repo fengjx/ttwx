@@ -3,7 +3,6 @@ package com.fengjx.modules.sys.model;
 
 import com.fengjx.commons.plugin.db.Mapper;
 import com.fengjx.commons.plugin.db.Model;
-import com.fengjx.commons.plugin.db.ParamHelper;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.CommonUtils;
 import com.google.common.base.Joiner;
@@ -58,24 +57,21 @@ public class SysRole extends Model {
     /**
      * 添加或更新
      *
-     * @param params
+     * @param record
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void saveOrUpdate(ParamHelper params) {
-        String roleId = params.getStr("id");
+    public void saveOrUpdate(Record record) {
+        String roleId = record.getStr("id");
+        record.set("update_time", new Date());
         if (StringUtils.isNotBlank(roleId)) {
-            Map<String, Object> attr = params.getParams();
-            attr.put("update_time", new Date());
-            update(params.getParams());
+            update(record);
             deleteMenuRole(roleId);
         } else {
             roleId = CommonUtils.getPrimaryKey();
-            Map<String, Object> attr = params.getParams();
-            attr.put("id", roleId);
-            attr.put("update_time", new Date());
-            insert(attr);
+            record.set("id", roleId);
+            insert(record);
         }
-        String menuIds = params.getStr("menuIds");
+        String menuIds = record.getStr("menuIds");
         String[] ids = StringUtils.split(menuIds, ",");
         saveMenuRole(roleId, ids);
     }

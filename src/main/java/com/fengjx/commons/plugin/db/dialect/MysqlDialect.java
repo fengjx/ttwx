@@ -26,14 +26,15 @@ public class MysqlDialect extends Dialect {
         StringBuilder temp = new StringBuilder(") values(");
         for (Entry<String, ?> e : attrs.entrySet()) {
             String colName = e.getKey();
-            if (table.hasColumnLabel(colName)) {
+            Object value = e.getValue();
+            if (table.hasColumnLabel(colName) && null != value) {
                 if (paras.size() > 0) {
                     sql.append(", ");
                     temp.append(", ");
                 }
                 sql.append("`").append(colName).append("`");
                 temp.append("?");
-                paras.add(e.getValue());
+                paras.add(value);
             }
         }
         sql.append(temp.toString()).append(")");

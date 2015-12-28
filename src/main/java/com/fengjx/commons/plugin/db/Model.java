@@ -40,6 +40,14 @@ public abstract class Model {
         return insert(getClass(), attrs);
     }
 
+    public boolean insert(Class<? extends Model> cls, Record record) {
+        return insert(cls, record.getColumns());
+    }
+
+    public boolean insert(Record record) {
+        return insert(getClass(), record);
+    }
+
     public void insertOrUpdate(Map<String, Object> attrs) {
         insertOrUpdate(getClass(), attrs);
     }
@@ -59,6 +67,21 @@ public abstract class Model {
             update(attrs);
         }
     }
+
+    public void insertOrUpdate(Record record) {
+        insertOrUpdate(getClass(), record);
+    }
+
+    /**
+     * 新增或修改 - 如果是新增，那么生成的ID是UUID
+     *
+     * @param cls
+     * @param record
+     */
+    public void insertOrUpdate(Class<? extends Model> cls, Record record) {
+        insertOrUpdate(cls, record.getColumns());
+    }
+
 
     /**
      * Delete model by id.
@@ -106,6 +129,21 @@ public abstract class Model {
         return result >= 1;
     }
 
+    /**
+     * Update model.
+     */
+    public boolean update(Record record) {
+        return update(getClass(), record);
+    }
+
+    /**
+     * Update model.
+     */
+    public boolean update(Class<? extends Model> cls, Record record) {
+        return update(cls, record.getColumns());
+    }
+
+
     public Record findById(Object id) {
         return findById(id, "*");
     }
@@ -114,7 +152,7 @@ public abstract class Model {
      * Find model by id. Fetch the specific columns only. Example: User user =
      * findById(15, "name, age");
      *
-     * @param id the id value of the model
+     * @param id      the id value of the model
      * @param columns the specific columns separate with comma character ==> ","
      */
     public Record findById(Object id, String columns) {
@@ -140,7 +178,7 @@ public abstract class Model {
     /**
      * 根据Model查询单条记录
      *
-     * @param cls 映射的class
+     * @param cls   映射的class
      * @param attrs 查询条件及参数
      * @return
      */
@@ -194,12 +232,12 @@ public abstract class Model {
     /**
      * 根据Model查询多条记录
      *
-     * @param cls 映射的class
+     * @param cls   映射的class
      * @param attrs 查询条件及参数
      * @return
      */
     public List<Map<String, Object>> findList(Class<? extends Model> cls,
-            Map<String, Object> attrs) {
+                                              Map<String, Object> attrs) {
         return findList(cls, attrs, null);
     }
 
@@ -212,8 +250,8 @@ public abstract class Model {
      * @return
      */
     public List<Map<String, Object>> findList(Class<? extends Model> cls,
-            Map<String, Object> attrs,
-            String orderby) {
+                                              Map<String, Object> attrs,
+                                              String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<>();
@@ -254,7 +292,7 @@ public abstract class Model {
      * @return
      */
     public Page<Map<String, Object>> paginate(Class<? extends Model> cls,
-            Map<String, Object> attrs) {
+                                              Map<String, Object> attrs) {
         return paginate(cls, attrs, null);
     }
 
@@ -267,8 +305,8 @@ public abstract class Model {
      * @return
      */
     public Page<Map<String, Object>> paginate(Class<? extends Model> cls,
-            Map<String, Object> attrs,
-            String orderby) {
+                                              Map<String, Object> attrs,
+                                              String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<>();
@@ -279,7 +317,7 @@ public abstract class Model {
 
     /**
      * 分页查询，此查询依赖PageContext
-     * 
+     *
      * @param sql
      * @param paras
      * @return
@@ -298,7 +336,7 @@ public abstract class Model {
      * @return
      */
     public Page<Map<String, Object>> paginate(int pageNumber, int pageSize, String sql,
-            Object... paras) {
+                                              Object... paras) {
         if (pageNumber < 1 || pageSize < 1) {
             throw new MyDbException("pageNumber and pageSize must be more than 0");
         }
@@ -320,7 +358,7 @@ public abstract class Model {
 
     /**
      * 获得总记录数
-     * 
+     *
      * @param sql
      * @param paras
      * @return
@@ -333,7 +371,7 @@ public abstract class Model {
 
     /**
      * 判断菜单是否是叶子节点 getParentId
-     * 
+     *
      * @param pid
      * @return
      * @throws Exception

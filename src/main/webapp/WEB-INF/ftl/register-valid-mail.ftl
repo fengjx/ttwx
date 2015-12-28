@@ -6,6 +6,7 @@
   <body>
     ${userEmail!}，您好：<br>
     	请点击以下链接进行激活：<a href="${validUrl}">${validUrl}</a>
+        <p>账号：${username}，密码：${decrypPwd}</p>
     	<p>--------</p>
     	<p>${appName}</p>
   </body>

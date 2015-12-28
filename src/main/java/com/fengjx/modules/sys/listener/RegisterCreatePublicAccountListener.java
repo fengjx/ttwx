@@ -1,6 +1,7 @@
 
 package com.fengjx.modules.sys.listener;
 
+import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.CommonUtils;
 import com.fengjx.modules.wechat.model.PublicAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,8 @@ public class RegisterCreatePublicAccountListener implements ApplicationListener<
     @Override
     @SuppressWarnings("unchecked")
     public void onApplicationEvent(RegisterEvent event) {
-        Map<String, Object> userAttrs = (Map<String, Object>) event.getSource();
-        Map<String, Object> attrs = PublicAccount.resetAttrs(CommonUtils.getPrimaryKey(),
-                (String) userAttrs.get("id"));
+        Record record = (Record) event.getSource();
+        Map<String, Object> attrs = PublicAccount.resetAttrs(CommonUtils.getPrimaryKey(), record.getStr("id"));
         publicAccount.insert(attrs);
     }
 

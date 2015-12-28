@@ -1,6 +1,7 @@
 
 package com.fengjx.modules.sys.listener;
 
+import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.plugin.freemarker.FreemarkerUtil;
 import com.fengjx.commons.plugin.mail.EmailUtil;
 import com.fengjx.commons.plugin.mail.SendMailBean;
@@ -38,25 +39,27 @@ public class RegisterMailListener implements ApplicationListener<RegisterEvent> 
     @Override
     @SuppressWarnings("unchecked")
     public void onApplicationEvent(RegisterEvent event) {
-        Map<String, Object> attrs = (Map<String, Object>) event.getSource();
+        Record record = (Record) event.getSource();
         // 如果是管理员添加的用户，并且状态已经激活了就不在发送激活邮件
-        if (SysUserEntity.IS_ALIVE.equals(attrs.get("is_valid").toString())) {
+        if (SysUserEntity.IS_ALIVE.equals(record.getStr("is_valid"))) {
             return;
         }
         SendMailBean mail = new SendMailBean();
         mail.setType(SendMailBean.TYPE_HTML);
-        mail.setToUser((String) attrs.get("email"));
+        mail.setToUser(record.getStr("email"));
         mail.setSubject("邮箱验证");
         Map<String, String> root = new HashMap();
         root.put("appName", AppConfig.APP_NAME);
-        root.put("userEmail", (String) attrs.get("email"));
+        root.put("userEmail", record.getStr("email"));
+        root.put("username", record.getStr("username"));
+        root.put("decrypPwd", record.getStr("decrypPwd"));
         root.put("validUrl", AppConfig.DOMAIN_PAGE + "/activate?ser="
-                + AesUtil.encrypt((String) attrs.get("valid_uid")));
+                + AesUtil.encrypt(record.getStr("valid_uid")));
         mail.setContent(FreemarkerUtil.process(root, FtlFilenameConstants.REGISTER_VALID_MAIN));
         try {
             EmailUtil.send(mail);
         } catch (Exception e) {
-            LogUtil.error(LOG, "用户注册成功，但激活邮件发送失败。userinfo:{}" + mail.toString(), e);
+            LogUtil.error(LOG, "用户注册成功，但激活邮件发送失败。userinfo:{}" + mail, e);
         }
     }
 }

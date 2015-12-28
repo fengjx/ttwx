@@ -2,11 +2,11 @@
 package com.fengjx.modules.sys.controller.admin;
 
 import com.fengjx.commons.plugin.cache.ehcache.EhCacheUtil;
-import com.fengjx.commons.plugin.db.ParamHelper;
+import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.plugin.db.page.AdapterPage;
-import com.fengjx.modules.sys.model.Dict;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.common.controller.MyController;
+import com.fengjx.modules.sys.model.Dict;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,18 +40,18 @@ public class DictAdminController extends MyController {
     @RequestMapping("pageList")
     @ResponseBody
     public AdapterPage pageList(HttpServletRequest request) {
-        return dict.page(getParamHelper(Dict.class, request));
+        return dict.page(getRecord(Dict.class, request));
     }
 
     @RequestMapping("save")
     @ResponseBody
     public Map<String, String> save(HttpServletRequest request) {
-        ParamHelper paramHelper = getParamHelper(request);
-        paramHelper.set("in_time", new Date());
-        if (StringUtils.isBlank(paramHelper.getStr("is_valid"))) {
-            paramHelper.set("is_valid", 0);
+        Record record = getRecord(request);
+        record.set("in_time", new Date());
+        if (StringUtils.isBlank(record.getStr("is_valid"))) {
+            record.set("is_valid", 0);
         }
-        dict.insertOrUpdate(paramHelper.getParams());
+        dict.insertOrUpdate(record);
         EhCacheUtil.removeAll(AppConfig.EhcacheName.DICT_CACHE);
         return retSuccess();
     }

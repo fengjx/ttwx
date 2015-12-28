@@ -8,6 +8,7 @@ import com.fengjx.commons.utils.WebUtil;
 import com.fengjx.commons.web.BaseController;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import com.google.common.collect.Maps;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -24,7 +25,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -43,7 +43,7 @@ public class CommonController extends BaseController {
     @RequestMapping("/loginTimeoutAjax")
     @ResponseBody
     public Map<String, String> loginTimeoutAjax() {
-        Map<String, String> res = new HashMap<String, String>();
+        Map<String, String> res = Maps.newHashMap();
         res.put("code", "-1");
         res.put("msg", "登陆超时");
         return res;

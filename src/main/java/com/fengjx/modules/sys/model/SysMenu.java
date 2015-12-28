@@ -7,6 +7,7 @@ import com.fengjx.commons.plugin.db.Mapper;
 import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.modules.common.constants.AppConfig;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,28 +93,30 @@ public class SysMenu extends Model {
      * @return
      */
     private List<Map<String, Object>> recursive(String pid){
-        List<Map<String, Object>> resList;
+        List<Map<String, Object>> resList = Lists.newArrayList();
+        List<Map<String, Object>> list;
         StringBuilder sql = new StringBuilder(getSelectSql("a"));
         sql.append(" where 1 = 1 ");
         if (StringUtils.isBlank(pid)) {
             sql.append(" and (a.parent_id is null or a.parent_id = '') ").append(ORDER_BY);
-            resList = findList(sql.toString());
+            list = findList(sql.toString());
         } else {
             sql.append(" and a.parent_id = ? ").append(ORDER_BY);
-            resList = findList(sql.toString(), pid);
+            list = findList(sql.toString(), pid);
         }
-        if (CollectionUtils.isNotEmpty(resList)) {
-            for (int i = 0, l = resList.size(); i < l; i++) {
-                String _id = resList.get(i).get("id") + "";
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (int i = 0, l = list.size(); i < l; i++) {
+                String _id = list.get(i).get("id") + "";
                 // 如果存在子节点（不是叶子节点），则继续递归查询
+                resList.add(list.get(i));
                 if (!isLeef(_id)) {
                     List<Map<String, Object>> tmpList = recursive(_id);
+                    list.get(i).put("isLeef", false);
+                    list.get(i).put("isParent", true);
                     resList.addAll(tmpList);
-                    resList.get(i).put("isLeef", false);
-                    resList.get(i).put("isParent", true);
                 } else {
-                    resList.get(i).put("isLeef", true);
-                    resList.get(i).put("isParent", false);
+                    list.get(i).put("isLeef", true);
+                    list.get(i).put("isParent", false);
                 }
             }
         }

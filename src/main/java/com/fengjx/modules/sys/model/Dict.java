@@ -5,8 +5,6 @@ import com.fengjx.commons.plugin.cache.IDataLoader;
 import com.fengjx.commons.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.commons.plugin.db.Mapper;
 import com.fengjx.commons.plugin.db.Model;
-
-import com.fengjx.commons.plugin.db.ParamHelper;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.plugin.db.page.AdapterPage;
 import com.fengjx.commons.plugin.freemarker.FreemarkerUtil;
@@ -19,7 +17,10 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Created by FengJianxin on 2015/8/22.
@@ -80,24 +81,24 @@ public class Dict extends Model {
     /**
      * 分页查询
      *
-     * @param params 查询参数
+     * @param record 查询参数
      * @return
      */
-    public AdapterPage page(ParamHelper params) {
+    public AdapterPage page(Record record) {
         StringBuilder sql = new StringBuilder(getSelectSql("a"));
         sql.append(" where 1 = 1");
         List<Object> qryParams = new ArrayList<>();
-        if (StringUtils.isNoneBlank(params.getStr("group_code"))) {
+        if (StringUtils.isNoneBlank(record.getStr("group_code"))) {
             sql.append(" and group_code like CONCAT('%',?,'%')");
-            qryParams.add(params.get("group_code"));
+            qryParams.add(record.get("group_code"));
         }
-        if (StringUtils.isNoneBlank(params.getStr("dict_desc"))) {
+        if (StringUtils.isNoneBlank(record.getStr("dict_desc"))) {
             sql.append(" and dict_desc like CONCAT('%',?,'%')");
-            qryParams.add(params.get("dict_desc"));
+            qryParams.add(record.get("dict_desc"));
         }
-        if (null != params.get("is_valid")) {
+        if (null != record.get("is_valid")) {
             sql.append(" and is_valid = ?");
-            qryParams.add(params.get("is_valid"));
+            qryParams.add(record.get("is_valid"));
         }
         sql.append(ORDER_BY);
         return paginate(sql.toString(), qryParams.toArray()).convert();

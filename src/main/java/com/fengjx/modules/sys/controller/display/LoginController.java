@@ -35,7 +35,7 @@ public class LoginController extends MyController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> signin(HttpServletRequest request, SysUserEntity user,
-            String valid_code) {
+                                      String valid_code) {
         validateRequired("username", "用户名不能为空");
         validateRequired("pwd", "密码不能为空");
         // 测试环境忽略掉验证码校验
@@ -50,10 +50,10 @@ public class LoginController extends MyController {
         if (null == loginUser) {
             return retFail("用户名或密码错误！");
         }
-        if( SysUserEntity.NOT_ALIVE.equals(loginUser.getIs_valid())){
+        if (SysUserEntity.NOT_ALIVE.equals(loginUser.getIs_valid())) {
             return retFail("账号未激活，请查激活邮件！");
         }
-        if( SysUserEntity.FREEZE_ALIVE.equals(loginUser.getIs_valid())){
+        if (SysUserEntity.FREEZE_ALIVE.equals(loginUser.getIs_valid())) {
             return retFail("账号已经锁定，不允许登录！");
         }
         request.getSession().setAttribute(AppConfig.LOGIN_FLAG, loginUser);
@@ -111,7 +111,7 @@ public class LoginController extends MyController {
         MyExecuteCallback callback = new MyExecuteCallback() {
             @Override
             public void execute() throws Exception {
-                sysUser.register(getRequestMap(request));
+                sysUser.register(getRecord(SysUser.class, request));
             }
         };
         return doResult(callback, "注册用户失败！");
@@ -119,7 +119,7 @@ public class LoginController extends MyController {
 
     /**
      * 注册用户激活
-     * 
+     *
      * @param ser
      * @return
      */

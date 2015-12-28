@@ -2,7 +2,7 @@
 package com.fengjx.commons.web;
 
 import com.fengjx.commons.plugin.db.Model;
-import com.fengjx.commons.plugin.db.ParamHelper;
+import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.system.exception.ValidateException;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.commons.utils.WebUtil;
@@ -60,14 +60,13 @@ public abstract class BaseController {
         return request.getSession();
     }
 
-    protected ParamHelper getParamHelper(HttpServletRequest request) {
-        return new ParamHelper().fromMap(WebUtil.getRequestParams(request));
+    protected Record getRecord(HttpServletRequest request) {
+        return new Record(getRequestMap(request));
     }
 
-    protected <T extends Model> ParamHelper getParamHelper(Class<T> modelCls,
-            HttpServletRequest request) {
+    protected <T extends Model> Record getRecord(Class<T> modelCls, HttpServletRequest request) {
         try {
-            return new ParamHelper().fromMap(modelCls, WebUtil.getRequestParams(request));
+            return new Record(modelCls, WebUtil.getRequestParams(request));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

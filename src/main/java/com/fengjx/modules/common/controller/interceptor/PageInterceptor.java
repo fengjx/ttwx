@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * URL拦截
+ *
  * 分页拦截器
  */
 public class PageInterceptor implements HandlerInterceptor {

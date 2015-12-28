@@ -1,7 +1,7 @@
 
 package com.fengjx.modules.sys.controller.admin;
 
-import com.fengjx.commons.plugin.db.ParamHelper;
+import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.plugin.db.page.AdapterPage;
 import com.fengjx.modules.common.controller.MyController;
 import com.fengjx.modules.sys.model.ExtApp;
@@ -35,17 +35,17 @@ public class ExtAppController extends MyController {
     @RequestMapping("pageList")
     @ResponseBody
     public AdapterPage pageList(HttpServletRequest request) {
-        return extApp.pageList(getParamHelper(ExtApp.class, request));
+        return extApp.pageList(getRecord(ExtApp.class, request));
     }
 
     @RequestMapping("save")
     @ResponseBody
     public Map<String, String> save(HttpServletRequest request) {
-        ParamHelper paramHelper = getParamHelper(ExtApp.class, request);
-        paramHelper.set("in_time", new Date());
-        String[] msgTypes = StringUtils.split(paramHelper.getStr("reqTypes"), ",");
-        String[] eventTypes = StringUtils.split(paramHelper.getStr("eventTypes"), ",");
-        extApp.saveExtApi(paramHelper, msgTypes, eventTypes);
+        Record record = getRecord(ExtApp.class, request);
+        record.set("in_time", new Date());
+        String[] msgTypes = StringUtils.split(record.getStr("reqTypes"), ",");
+        String[] eventTypes = StringUtils.split(record.getStr("eventTypes"), ",");
+        extApp.saveExtApi(record, msgTypes, eventTypes);
         return retSuccess();
     }
 

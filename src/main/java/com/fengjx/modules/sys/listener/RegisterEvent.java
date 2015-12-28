@@ -1,9 +1,8 @@
 
 package com.fengjx.modules.sys.listener;
 
+import com.fengjx.commons.plugin.db.Record;
 import org.springframework.context.ApplicationEvent;
-
-import java.util.Map;
 
 /**
  * 用户注册事件
@@ -14,8 +13,8 @@ import java.util.Map;
  */
 public class RegisterEvent extends ApplicationEvent {
 
-    public RegisterEvent(Map<String, Object> attrs) {
-        super(attrs);
+    public RegisterEvent(Record record) {
+        super(record);
     }
 
 }

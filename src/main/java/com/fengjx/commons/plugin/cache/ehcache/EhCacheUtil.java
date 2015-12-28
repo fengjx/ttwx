@@ -22,7 +22,7 @@ public class EhCacheUtil {
 
     private static volatile CacheManager cacheManager;
 
-    private static final Logger log = LoggerFactory.getLogger(EhCacheUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EhCacheUtil.class);
 
     static void init(CacheManager cacheManager) {
         EhCacheUtil.cacheManager = cacheManager;
@@ -38,10 +38,10 @@ public class EhCacheUtil {
             synchronized (cacheManager) {
                 cache = cacheManager.getCache(cacheName);
                 if (cache == null) {
-                    log.warn("Could not find cache config [" + cacheName + "], using default.");
+                    LOG.warn("Could not find cache config [" + cacheName + "], using default.");
                     cacheManager.addCacheIfAbsent(cacheName);
                     cache = cacheManager.getCache(cacheName);
-                    log.debug("Cache [" + cacheName + "] started.");
+                    LOG.debug("Cache [" + cacheName + "] started.");
                 }
             }
         }

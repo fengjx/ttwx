@@ -3,7 +3,6 @@ package com.fengjx.modules.sys.model;
 
 import com.fengjx.commons.plugin.db.Mapper;
 import com.fengjx.commons.plugin.db.Model;
-import com.fengjx.commons.plugin.db.ParamHelper;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.plugin.db.page.AdapterPage;
 import com.fengjx.commons.system.exception.MyRuntimeException;
@@ -12,6 +11,7 @@ import com.fengjx.commons.utils.CommonUtils;
 import com.fengjx.commons.utils.DateUtils;
 import com.fengjx.modules.sys.listener.RegisterEvent;
 import com.fengjx.modules.wechat.entity.SysUserEntity;
+import com.google.common.collect.Maps;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,29 +55,26 @@ public class SysUser extends Model {
     /**
      * 用户注册
      *
-     * @param attrs
+     * @param record
      * @throws Exception
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public void register(Map<String, Object> attrs) {
-        if (validUsername((String) attrs.get("username"))) {
+    public void register(Record record) {
+        if (validUsername(record.getStr("username"))) {
             throw new MyRuntimeException("用户名已存在");
         }
-        if (validEmail((String) attrs.get("email"))) {
+        if (validEmail(record.getStr("email"))) {
             throw new MyRuntimeException("邮箱已被占用");
         }
-        attrs.put("id", CommonUtils.getPrimaryKey());
-        attrs.put("pwd", DigestUtils.md5Hex(((String) attrs.get("pwd") + attrs.get("email"))));
-        attrs.put("is_valid", "0");
-        attrs.put("valid_uid", CommonUtils.getPrimaryKey());
-        attrs.put("in_time", new Date());
-        // 默认积分
-        if (StringUtils.isBlank(attrs.get("score").toString())) {
-            attrs.put("score", 0);
-        }
-        insert(attrs);
+        record.set("id", CommonUtils.getPrimaryKey());
+        record.set("decrypPwd", record.getStr("pwd"));
+        record.set("pwd", DigestUtils.md5Hex((record.getStr("pwd") + record.getStr("email"))));
+        record.set("is_valid", "0");
+        record.set("valid_uid", CommonUtils.getPrimaryKey());
+        record.set("in_time", new Date());
+        insert(record);
         // 推送注册消息，监听了RegisterEvent的listener将会收到此消息
-        applicationContext.publishEvent(new RegisterEvent(attrs));
+        applicationContext.publishEvent(new RegisterEvent(record));
     }
 
     /**
@@ -117,9 +114,12 @@ public class SysUser extends Model {
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean activate(String ser) {
         String uid = AesUtil.decrypt(ser);
-        Map<String, Object> attrs = new HashMap<>();
+        Map<String, Object> attrs = Maps.newHashMap();
         attrs.put("valid_uid", uid);
         Record record = findOne(attrs);
+        if(record.isEmpty()){
+            throw new MyRuntimeException("无效链接");
+        }
         if (SysUserEntity.FREEZE_ALIVE.equals(record.getStr("is_valid"))) {
             throw new MyRuntimeException("账号已被锁定");
         }
@@ -127,32 +127,32 @@ public class SysUser extends Model {
             return false;
         }
         record.set("is_valid", SysUserEntity.IS_ALIVE);
-        update(record.getColumns());
+        update(record);
         return true;
     }
 
-    public AdapterPage pageList(ParamHelper params) {
+    public AdapterPage pageList(Record record) {
         List<Object> qryParams = new ArrayList<>();
         StringBuilder sql = new StringBuilder(getSelectSql("a"));
-        if (null != params.get("is_valid")) {
+        if (null != record.get("is_valid")) {
             sql.append(" and a.is_valid = ?");
-            qryParams.add(params.get("is_valid"));
+            qryParams.add(record.get("is_valid"));
         }
-        if (StringUtils.isNoneBlank(params.getStr("username"))) {
+        if (StringUtils.isNoneBlank(record.getStr("username"))) {
             sql.append(" and a.name like CONCAT('%',?,'%')");
-            qryParams.add(params.get("username"));
+            qryParams.add(record.get("username"));
         }
-        if (StringUtils.isNoneBlank(params.getStr("email"))) {
+        if (StringUtils.isNoneBlank(record.getStr("email"))) {
             sql.append(" and a.name like CONCAT('%',?,'%')");
-            qryParams.add(params.get("email"));
+            qryParams.add(record.get("email"));
         }
-        if (StringUtils.isNoneBlank(params.getStr("start_time"))) {
+        if (StringUtils.isNoneBlank(record.getStr("start_time"))) {
             sql.append(" and a.in_time >= ?");
-            qryParams.add(DateUtils.parseDate(params.get("start_time")));
+            qryParams.add(DateUtils.parseDate(record.get("start_time")));
         }
-        if (StringUtils.isNoneBlank(params.getStr("end_time"))) {
+        if (StringUtils.isNoneBlank(record.getStr("end_time"))) {
             sql.append(" and a.in_time <= ?");
-            qryParams.add(DateUtils.parseDate(params.get("end_time")));
+            qryParams.add(DateUtils.parseDate(record.get("end_time")));
         }
         sql.append(" order by in_time desc");
         return paginate(sql.toString(), qryParams.toArray()).convert();

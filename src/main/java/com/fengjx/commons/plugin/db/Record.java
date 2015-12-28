@@ -3,12 +3,14 @@ package com.fengjx.commons.plugin.db;
 
 import com.fengjx.commons.utils.JsonUtil;
 
+import com.fengjx.commons.utils.TypeConverter;
 import com.google.common.collect.Maps;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.MapUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -34,6 +36,32 @@ public class Record implements Serializable {
         }
     }
 
+    /**
+     * 初始化参数
+     *
+     * @param modelClass
+     * @param columns
+     * @param <T>
+     * @throws ParseException
+     */
+    public <T extends Model> Record(Class<T> modelClass, Map<String, String> columns) throws ParseException {
+        if (null == modelClass) {
+            getColumns().putAll(columns);
+        } else {
+            Table table = TableUtil.getTable(modelClass);
+            for (Map.Entry<String, String> e : columns.entrySet()) {
+                String colName = e.getKey();
+                if (table.hasColumnLabel(colName)) {
+                    Object value = TypeConverter
+                            .convert(table.getColumnType(colName), e.getValue());
+                    set(colName, value);
+                } else {
+                    set(e.getKey(), e.getValue());
+                }
+            }
+        }
+    }
+
     public boolean isEmpty(){
         return MapUtils.isEmpty(getColumns());
     }
@@ -42,6 +70,9 @@ public class Record implements Serializable {
      * Return columns map.
      */
     public Map<String, Object> getColumns() {
+        if(MapUtils.isEmpty(columns)){
+            columns = Maps.newHashMap();
+        }
         return columns;
     }
 
@@ -264,15 +295,11 @@ public class Record implements Serializable {
      * @return
      */
     public <T> T toBean(Class<T> bean) {
-        T t = null;
+        T t;
         try {
             t = bean.newInstance();
             BeanUtils.populate(t, getColumns());
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
         return t;

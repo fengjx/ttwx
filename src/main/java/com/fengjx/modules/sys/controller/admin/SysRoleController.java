@@ -1,7 +1,7 @@
 
 package com.fengjx.modules.sys.controller.admin;
 
-import com.fengjx.commons.plugin.db.ParamHelper;
+import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.modules.common.controller.MyController;
 import com.fengjx.modules.sys.model.SysRole;
 import org.apache.commons.lang3.StringUtils;
@@ -80,8 +80,8 @@ public class SysRoleController extends MyController {
     @ResponseBody
     public Map<String, String> addOrUpdate(HttpServletRequest request) {
         validate();
-        ParamHelper params = getParamHelper(SysRole.class, request);
-        sysRole.saveOrUpdate(params);
+        Record record = getRecord(SysRole.class, request);
+        sysRole.saveOrUpdate(record);
         return retSuccess();
     }
 

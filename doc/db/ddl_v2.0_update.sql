@@ -54,3 +54,6 @@ ALTER TABLE `wechat_resp_msg_action`
 ADD COLUMN `order_no`  tinyint(2) NULL DEFAULT 1 AFTER `user_id`;
 
 alter table `wechat_sys_user` rename `sys_user`;
+
+ALTER TABLE `sys_user`
+MODIFY COLUMN `score`  int(11) NOT NULL DEFAULT 0 AFTER `pwd`;
