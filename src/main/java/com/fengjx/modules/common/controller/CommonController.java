@@ -6,6 +6,7 @@ import com.fengjx.commons.system.exception.MyRuntimeException;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.commons.utils.WebUtil;
 import com.fengjx.commons.web.BaseController;
+import com.fengjx.modules.common.constants.AppConfig;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.google.common.collect.Maps;
@@ -51,7 +52,7 @@ public class CommonController extends BaseController {
 
     @RequestMapping("/loginTimeout")
     public String loginTimeout() {
-        return "redirect:/login";
+        return "forward:/toLogin";
     }
 
     @RequestMapping("/verification_code.jpg")
@@ -117,7 +118,7 @@ public class CommonController extends BaseController {
      * @return
      */
     private Map<String, String> getErrorMap(HttpServletRequest request) {
-        Exception e = (Exception) request.getAttribute("ex");
+        Exception e = (Exception) request.getAttribute(AppConfig.REQUEST_ERROE_MSG_KEY);
         String errorMsg = "请求失败";
         // 自定义异常
         if (e instanceof MyRuntimeException || e instanceof MyException) {
@@ -128,7 +129,10 @@ public class CommonController extends BaseController {
         } else {
             LogUtil.error(LOG, "request error", e);
         }
-        return retFail(errorMsg);
+        Map<String, String> res = Maps.newHashMap();
+        res.put("code", "0");
+        res.put("msg", errorMsg);
+        return res;
     }
 
 }

@@ -9,6 +9,7 @@ import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,7 +35,7 @@ public class SysMenu extends Model {
     private static final String ORDER_BY = "order by order_no , update_time desc";
 
     @Autowired
-    private SysRole sysRole;
+    private SysRoleMenu sysRoleMenu;
 
     /**
      * 根据ID查询菜单
@@ -60,7 +61,7 @@ public class SysMenu extends Model {
      *
      * @return
      */
-    public List<Map<String, Object>> treeNode() {
+    public List<Map<String, Object>> treeMenu() {
         return EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, TREE_MENU_CACHE,
                 new IDataLoader<List<Map<String, Object>>>() {
                     @Override
@@ -71,31 +72,19 @@ public class SysMenu extends Model {
     }
 
     /**
-     * 查询树形菜单 treeTable
-     *
-     * @return
-     */
-    public List<Map<String, Object>> treeTable() {
-        List<Map<String, Object>> rows = EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, TREE_MENU_CACHE,
-                new IDataLoader<List<Map<String, Object>>>() {
-                    @Override
-                    public List<Map<String, Object>> load() {
-                        return recursive(null);
-                    }
-                });
-        return rows;
-    }
-
-    /**
      * 递归查询
      *
      * @param pid 父级ID
      * @return
      */
-    private List<Map<String, Object>> recursive(String pid){
+    private List<Map<String, Object>> recursive(String pid) {
         List<Map<String, Object>> resList = Lists.newArrayList();
         List<Map<String, Object>> list;
-        StringBuilder sql = new StringBuilder(getSelectSql("a"));
+        StringBuilder sql = new StringBuilder("select ");
+        sql.append(getColumnsStr("a")).append(",b.role_id ");
+        sql.append(getTableName());
+        sql.append(" a left join ").append(getTableName(SysRoleMenu.class));
+        sql.append(" b on b.menu_id = a.id");
         sql.append(" where 1 = 1 ");
         if (StringUtils.isBlank(pid)) {
             sql.append(" and (a.parent_id is null or a.parent_id = '') ").append(ORDER_BY);
@@ -143,12 +132,25 @@ public class SysMenu extends Model {
     /**
      * 查找用户一级菜单
      *
-     * @param username 用户名
+     * @param userId 用户ID
      * @return
      */
-    public List<Map<String, Object>> findUserHeadMenus(String username){
-
-        return null;
+    public List<Map<String, Object>> findUserMenus(String userId) {
+        if (StringUtils.isBlank(userId)) {
+            return null;
+        }
+        String[] menuIds = sysRoleMenu.getMenuIds(userId);
+        if (ArrayUtils.isEmpty(menuIds)) {
+            return null;
+        }
+        List<Map<String, Object>> menus = treeMenu();
+        List<Map<String, Object>> res = Lists.newArrayList();
+        for (Map<String, Object> m : menus) {
+            if (ArrayUtils.contains(menuIds, m.get("id"))) {
+                res.add(m);
+            }
+        }
+        return res;
     }
 
 }

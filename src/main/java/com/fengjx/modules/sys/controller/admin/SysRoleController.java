@@ -55,7 +55,7 @@ public class SysRoleController extends MyController {
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map<String, String> delete(@RequestParam(required = true) String id) {
+    public String delete(@RequestParam(required = true) String id) {
         sysRole.deleteRole(id);
         return retSuccess("角色成功删除");
     }
@@ -78,7 +78,7 @@ public class SysRoleController extends MyController {
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> addOrUpdate(HttpServletRequest request) {
+    public String addOrUpdate(HttpServletRequest request) {
         validate();
         Record record = getRecord(SysRole.class, request);
         sysRole.saveOrUpdate(record);
@@ -93,7 +93,7 @@ public class SysRoleController extends MyController {
 
     @RequestMapping("saveRoleUsers")
     @ResponseBody
-    public Map<String, String> saveRoleUsers(String roleId, String userIds) {
+    public String saveRoleUsers(String roleId, String userIds) {
         validateRequired("roleId", "请求错误，角色ID为空");
         sysRole.saveRoleUsers(roleId, userIds);
         return retSuccess();

@@ -165,7 +165,7 @@ public class SysRole extends Model {
     /**
      * 保存角色授权
      *
-     * @param roleId 角色ID
+     * @param roleId  角色ID
      * @param userIds 用户ID（多个用“,”分隔）
      */
     public void saveRoleUsers(final String roleId, String userIds) {
@@ -192,36 +192,6 @@ public class SysRole extends Model {
                 }
             });
         }
-    }
-
-    /**
-     * 查询用户角色
-     *
-     * @param userId
-     * @return
-     */
-    public List<Map<String, Object>> getRolesByUserid(String userId) {
-        StringBuilder sql = new StringBuilder("select ");
-        sql.append(getColumnsStr("a")).append(", b.user_id");
-        sql.append(" from ").append(getTableName()).append("a");
-        sql.append(" join ").append(getTableName(SysUserRole.class));
-        sql.append(" on b.user_id = a.id").append(" where b.user_id = ? ");
-        return findList(sql.toString(), userId);
-    }
-
-    /**
-     * 获得用户所以角色ID
-     *
-     * @param userId
-     * @return
-     */
-    public String[] getRoleIdsByUserid(String userId) {
-        List<Map<String, Object>> roles = getRolesByUserid(userId);
-        String[] arr = new String[roles.size()];
-        for (int i = 0; i < roles.size(); i++) {
-            arr[i] = (String) (roles.get(i).get("id"));
-        }
-        return arr;
     }
 
 }

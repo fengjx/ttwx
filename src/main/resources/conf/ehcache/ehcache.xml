@@ -40,4 +40,7 @@
     <!-- 系统缓存 -->
     <cache name="sysCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
 
+    <!-- shrio 缓存 -->
+    <cache name="activeSessionsCache" maxEntriesLocalHeap="100" eternal="true" overflowToDisk="true"/>
+
 </ehcache>

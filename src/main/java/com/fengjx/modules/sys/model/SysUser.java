@@ -9,10 +9,11 @@ import com.fengjx.commons.system.exception.MyRuntimeException;
 import com.fengjx.commons.utils.AesUtil;
 import com.fengjx.commons.utils.CommonUtils;
 import com.fengjx.commons.utils.DateUtils;
+import com.fengjx.commons.utils.StrUtil;
+import com.fengjx.modules.sys.entity.SysUserEntity;
 import com.fengjx.modules.sys.listener.RegisterEvent;
-import com.fengjx.modules.wechat.entity.SysUserEntity;
+import com.fengjx.modules.sys.utils.UserUtil;
 import com.google.common.collect.Maps;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -20,7 +21,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 系统用户管理
@@ -34,6 +38,22 @@ public class SysUser extends Model {
     @Autowired
     private ApplicationContext applicationContext;
 
+    public SysUserEntity get(String id) {
+        return findById(id).toBean(SysUserEntity.class);
+    }
+
+    /**
+     * 根据用户名查询用户
+     *
+     * @param username
+     * @return
+     */
+    public Record getUserByUsername(String username) {
+        Map<String, Object> attrs = Maps.newHashMap();
+        attrs.put("username", username);
+        return findOne(attrs);
+    }
+
     /**
      * 登录
      *
@@ -42,11 +62,9 @@ public class SysUser extends Model {
      * @return
      */
     public SysUserEntity signin(String username, String pwd) {
-        Map<String, Object> attrs = new HashMap<>();
-        attrs.put("username", username);
-        Record record = findOne(attrs);
-        String md5Hex = DigestUtils.md5Hex(pwd + record.getStr("email"));
-        if (null != record && record.getStr("pwd").equalsIgnoreCase(md5Hex)) {
+        Record record = getUserByUsername(username);
+        String md5Hex = UserUtil.encryptPwd(pwd, record.getStr("salt"));
+        if (!record.isEmpty() && record.getStr("pwd").equalsIgnoreCase(md5Hex)) {
             return record.toBean(SysUserEntity.class);
         }
         return null;
@@ -66,9 +84,11 @@ public class SysUser extends Model {
         if (validEmail(record.getStr("email"))) {
             throw new MyRuntimeException("邮箱已被占用");
         }
+        String salt = StrUtil.randomStr(12);
         record.set("id", CommonUtils.getPrimaryKey());
         record.set("decrypPwd", record.getStr("pwd"));
-        record.set("pwd", DigestUtils.md5Hex((record.getStr("pwd") + record.getStr("email"))));
+        record.set("salt", salt);
+        record.set("pwd", UserUtil.encryptPwd(record.getStr("pwd"), salt));
         record.set("is_valid", "0");
         record.set("valid_uid", CommonUtils.getPrimaryKey());
         record.set("in_time", new Date());
@@ -117,7 +137,7 @@ public class SysUser extends Model {
         Map<String, Object> attrs = Maps.newHashMap();
         attrs.put("valid_uid", uid);
         Record record = findOne(attrs);
-        if(record.isEmpty()){
+        if (record.isEmpty()) {
             throw new MyRuntimeException("无效链接");
         }
         if (SysUserEntity.FREEZE_ALIVE.equals(record.getStr("is_valid"))) {

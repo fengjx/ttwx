@@ -11,18 +11,17 @@ public class UsernamePasswordToken extends org.apache.shiro.authc.UsernamePasswo
 
     private static final long serialVersionUID = 1L;
 
+    // 验证码
     private String captcha;
-    private boolean mobileLogin;
 
     public UsernamePasswordToken() {
         super();
     }
 
-    public UsernamePasswordToken(String username, char[] password, boolean rememberMe, String host,
-            String captcha, boolean mobileLogin) {
+    public UsernamePasswordToken(String username, String password, boolean rememberMe, String host,
+            String captcha) {
         super(username, password, rememberMe, host);
         this.captcha = captcha;
-        this.mobileLogin = mobileLogin;
     }
 
     public String getCaptcha() {
@@ -31,10 +30,6 @@ public class UsernamePasswordToken extends org.apache.shiro.authc.UsernamePasswo
 
     public void setCaptcha(String captcha) {
         this.captcha = captcha;
-    }
-
-    public boolean isMobileLogin() {
-        return mobileLogin;
     }
 
 }

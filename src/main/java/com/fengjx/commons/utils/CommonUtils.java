@@ -4,7 +4,6 @@ package com.fengjx.commons.utils;
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 
@@ -14,16 +13,6 @@ import java.util.UUID;
  * @author peng
  */
 public final class CommonUtils {
-
-    /**
-     * 生成1-9位随机数
-     *
-     * @param count 位数
-     * @return 返回count位随机数
-     */
-    public static String getRandomNum(int count) {
-        return RandomStringUtils.randomNumeric(count);
-    }
 
     /**
      * 主键生成器，基于时间戳+机器地址的

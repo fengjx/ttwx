@@ -63,8 +63,7 @@
     </bean>
 
     <!-- 全注解方式   需加上@Transactional -->
-    <tx:annotation-driven transaction-manager="transactionManager" order="0"/>
-
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" order="0"/>
     <!--默认事务声明-->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
@@ -81,6 +80,7 @@
     <aop:config>
         <aop:pointcut id="servicePointcut"
                       expression="
+                        execution(* com.fengjx.commons.plugin.db..*.*(..))
                         execution(* com.fengjx.modules.wechat.model..*.*(..)) ||
                         execution(* com.fengjx.modules.sys.model..*.*(..))
                        "/>

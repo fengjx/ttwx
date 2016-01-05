@@ -29,9 +29,9 @@ public class Record implements Serializable {
     }
 
     public Record(Map<String, Object> columns) {
-        if(null == columns ){
+        if (null == columns) {
             this.columns = Maps.newHashMap();
-        }else{
+        } else {
             this.columns = columns;
         }
     }
@@ -44,7 +44,8 @@ public class Record implements Serializable {
      * @param <T>
      * @throws ParseException
      */
-    public <T extends Model> Record(Class<T> modelClass, Map<String, String> columns) throws ParseException {
+    public <T extends Model> Record(Class<T> modelClass, Map<String, String> columns)
+            throws ParseException {
         if (null == modelClass) {
             getColumns().putAll(columns);
         } else {
@@ -62,7 +63,7 @@ public class Record implements Serializable {
         }
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return MapUtils.isEmpty(getColumns());
     }
 
@@ -70,7 +71,7 @@ public class Record implements Serializable {
      * Return columns map.
      */
     public Map<String, Object> getColumns() {
-        if(MapUtils.isEmpty(columns)){
+        if (MapUtils.isEmpty(columns)) {
             columns = Maps.newHashMap();
         }
         return columns;
@@ -281,7 +282,7 @@ public class Record implements Serializable {
      * Return json string of this record.
      */
     public String toJson() {
-        if(MapUtils.isEmpty(getColumns())){
+        if (MapUtils.isEmpty(getColumns())) {
             return "{}";
         }
         return JsonUtil.toJson(getColumns());
@@ -295,6 +296,9 @@ public class Record implements Serializable {
      * @return
      */
     public <T> T toBean(Class<T> bean) {
+        if (this.isEmpty()) {
+            return null;
+        }
         T t;
         try {
             t = bean.newInstance();

@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * 字典管理
@@ -45,7 +44,7 @@ public class DictAdminController extends MyController {
 
     @RequestMapping("save")
     @ResponseBody
-    public Map<String, String> save(HttpServletRequest request) {
+    public String save(HttpServletRequest request) {
         Record record = getRecord(request);
         record.set("in_time", new Date());
         if (StringUtils.isBlank(record.getStr("is_valid"))) {
@@ -58,7 +57,7 @@ public class DictAdminController extends MyController {
 
     @RequestMapping("delete")
     @ResponseBody
-    public Map<String, String> delete(String id) {
+    public String delete(String id) {
         dict.deleteById(id);
         EhCacheUtil.removeAll(AppConfig.EhcacheName.DICT_CACHE);
         return retSuccess();

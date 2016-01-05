@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * 业务扩展
@@ -40,7 +39,7 @@ public class ExtAppController extends MyController {
 
     @RequestMapping("save")
     @ResponseBody
-    public Map<String, String> save(HttpServletRequest request) {
+    public String save(HttpServletRequest request) {
         Record record = getRecord(ExtApp.class, request);
         record.set("in_time", new Date());
         String[] msgTypes = StringUtils.split(record.getStr("reqTypes"), ",");
@@ -51,7 +50,7 @@ public class ExtAppController extends MyController {
 
     @RequestMapping("delete")
     @ResponseBody
-    public Map<String, String> delete(String id, String app_type) {
+    public String delete(String id, String app_type) {
         extApp.deleteApp(id, app_type);
         return retSuccess();
     }

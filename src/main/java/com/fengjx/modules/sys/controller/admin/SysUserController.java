@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * 用户管理
@@ -34,7 +33,7 @@ public class SysUserController extends MyController {
 
     @RequestMapping("save")
     @ResponseBody
-    public Map<String, String> save(HttpServletRequest request) {
+    public String save(HttpServletRequest request) {
         validateRequired("username", "用户名不能为空");
         validateRequired("email", "邮箱不能为空");
         Record record = getRecord(SysUser.class, request);
@@ -55,7 +54,7 @@ public class SysUserController extends MyController {
 
     @RequestMapping("delete")
     @ResponseBody
-    public Map<String, String> delete(String id) {
+    public String delete(String id) {
         sysUser.deleteById(id);
         return retSuccess("菜单成功删除");
     }

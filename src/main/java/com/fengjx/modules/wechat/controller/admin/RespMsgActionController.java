@@ -134,7 +134,7 @@ public class RespMsgActionController extends MyController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> save(HttpServletRequest request) {
+    public String save(HttpServletRequest request) {
         Map<String, Object> reqMap = getNotBlankRequestMap(request);
         Map<String, Object> materialMap = getMaterial(reqMap);
 
@@ -151,7 +151,7 @@ public class RespMsgActionController extends MyController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> delete(String id, HttpServletRequest request) {
+    public String delete(String id, HttpServletRequest request) {
         respMsgAction.deleteMsgActionById(id, getLoginSysUserId(request));
         return retSuccess();
     }

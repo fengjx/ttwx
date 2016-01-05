@@ -8,12 +8,6 @@
 	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
     <mvc:interceptors>
-        <!-- 后台管理拦截器 -->
-        <mvc:interceptor>
-            <mvc:mapping path="${adminPath}"/>
-            <mvc:mapping path="${adminPath}/**"/>
-            <bean class="com.fengjx.modules.sys.controller.admin.interceptor.AdminInterceptor"></bean>
-        </mvc:interceptor>
         <!-- 分页请求拦截器 -->
         <mvc:interceptor>
             <mvc:mapping path="/**/pageList"/>

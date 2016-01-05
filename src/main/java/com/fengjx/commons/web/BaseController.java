@@ -1,6 +1,7 @@
 
 package com.fengjx.commons.web;
 
+import com.fengjx.commons.config.AjaxTemplate;
 import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.system.exception.ValidateException;
@@ -99,7 +100,7 @@ public abstract class BaseController {
      * @param exceptionInfo
      * @return
      */
-    protected Map<String, String> doResult(MyExecuteCallback callack,
+    protected String doResult(MyExecuteCallback callack,
             String exceptionInfo) {
         try {
             callack.execute();
@@ -119,15 +120,12 @@ public abstract class BaseController {
      *
      * @return
      */
-    protected Map<String, String> retFail() {
-        return retFail("请求失败");
+    protected String retFail() {
+        return AjaxTemplate.fail();
     }
 
-    protected Map<String, String> retFail(String msg) {
-        Map<String, String> res = new HashMap<>();
-        res.put("code", "0");
-        res.put("msg", msg);
-        return res;
+    protected String retFail(String msg) {
+        return AjaxTemplate.fail(msg);
     }
 
     /**
@@ -135,15 +133,12 @@ public abstract class BaseController {
      *
      * @return
      */
-    protected Map<String, String> retSuccess() {
-        return retSuccess("");
+    protected String retSuccess() {
+        return AjaxTemplate.success();
     }
 
-    protected Map<String, String> retSuccess(String msg) {
-        Map<String, String> res = new HashMap<>();
-        res.put("code", "1");
-        res.put("msg", msg);
-        return res;
+    protected String retSuccess(String msg) {
+        return AjaxTemplate.success(msg);
     }
 
     /**

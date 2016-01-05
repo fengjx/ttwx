@@ -56,7 +56,7 @@ public class WechatUserController extends MyController {
      */
     @RequestMapping(value = "/saveGroup")
     @ResponseBody
-    public Map<String, String> saveGroup(HttpServletRequest request) {
+    public String saveGroup(HttpServletRequest request) {
         Map<String, Object> attrs = getRequestMap(request);
         attrs.put("in_time", new Date());
         attrs.put("user_id", getLoginSysUserId(request));
@@ -72,7 +72,7 @@ public class WechatUserController extends MyController {
      */
     @RequestMapping(value = "/deleteGroup")
     @ResponseBody
-    public Map<String, String> deleteGroup(String id) {
+    public String deleteGroup(String id) {
         wechatUserGroup.deleteById(id);
         return retSuccess();
     }
@@ -85,7 +85,7 @@ public class WechatUserController extends MyController {
      */
     @RequestMapping(value = "/updateUser")
     @ResponseBody
-    public Map<String, String> saveUser(HttpServletRequest request) {
+    public String saveUser(HttpServletRequest request) {
         wechatUser.update(getRequestMap(request));
         return retSuccess();
     }

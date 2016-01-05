@@ -35,7 +35,7 @@ public class SysMenuController extends MyController {
     @RequiresPermissions("sys_menu_view")
     @RequestMapping("")
     public String view(Model model) {
-        model.addAttribute("treeTable", sysMenu.treeTable());
+        model.addAttribute("treeTable", sysMenu.treeMenu());
         return "sys/admin/menu";
     }
 
@@ -57,7 +57,7 @@ public class SysMenuController extends MyController {
     @RequestMapping("treeNode")
     @ResponseBody
     public List<Map<String, Object>> treeNode() {
-        return sysMenu.treeNode();
+        return sysMenu.treeMenu();
     }
 
     /**
@@ -68,7 +68,7 @@ public class SysMenuController extends MyController {
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> addOrUpdate(HttpServletRequest request) {
+    public String addOrUpdate(HttpServletRequest request) {
         Map<String, Object> attrs = getNotBlankRequestMap(request);
         sysMenu.saveOrUpdate(attrs);
         return retSuccess();
@@ -82,7 +82,7 @@ public class SysMenuController extends MyController {
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map<String, String> delete(@RequestParam(required = true) String id) {
+    public String delete(@RequestParam(required = true) String id) {
         sysMenu.deleteMenuById(id);
         return retSuccess("菜单成功删除");
     }

@@ -8,6 +8,7 @@ import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.AesUtil;
 import com.fengjx.commons.utils.CommonUtils;
+import com.fengjx.commons.utils.StrUtil;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.wechat.process.utils.WxMpUtil;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
@@ -100,7 +101,7 @@ public class PublicAccount extends Model {
         attrs.put("ticket", ticket);
         attrs.put("url",
                 AppConfig.DOMAIN_PAGE + AppConfig.API_PATH + "?ticket=" + AesUtil.encrypt(ticket));
-        attrs.put("valid_code", CommonUtils.getRandomNum(5));
+        attrs.put("valid_code", StrUtil.getRandomNum(5));
         attrs.put("valid_state", PublicAccount.VALID_STATE_NONACTIVATED);
         return attrs;
     }

@@ -80,7 +80,7 @@
             <!-- 表示当抛出异常但没有在exceptionMappings里面找到对应的异常时 返回名叫error的视图-->
         </property>
         <!-- 定义异常处理页面用来获取异常信息的变量名，默认名为exception -->
-        <property name="exceptionAttribute" value="ex"></property>
+        <property name="exceptionAttribute" value="${http.error.key}"></property>
         <property name="exceptionMappings">
             <props>
                 <!-- 表示当抛出Exception的时候就返回名叫/common/error的视图-->

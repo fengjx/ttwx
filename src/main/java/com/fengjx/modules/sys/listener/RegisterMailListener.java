@@ -9,7 +9,7 @@ import com.fengjx.commons.utils.AesUtil;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.common.constants.FtlFilenameConstants;
-import com.fengjx.modules.wechat.entity.SysUserEntity;
+import com.fengjx.modules.sys.entity.SysUserEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;

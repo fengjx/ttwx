@@ -57,3 +57,9 @@ alter table `wechat_sys_user` rename `sys_user`;
 
 ALTER TABLE `sys_user`
 MODIFY COLUMN `score`  int(11) NOT NULL DEFAULT 0 AFTER `pwd`;
+
+ALTER TABLE `sys_user`
+ADD COLUMN `salt`  varchar(12) NULL COMMENT '盐' AFTER `pwd`;
+
+ALTER TABLE `sys_user`
+ADD COLUMN `is_admin`  char(1) NULL COMMENT '超级管理员' AFTER `valid_uid`;

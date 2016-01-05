@@ -59,7 +59,7 @@ public class WechatMenuController extends MyController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> addOrUpdate(HttpServletRequest request) {
+    public String addOrUpdate(HttpServletRequest request) {
         Map<String, Object> attrs = getNotBlankRequestMap(request);
         attrs.put("user_id", getLoginSysUserId(request));
         wechatMenu.saveOrUpdate(attrs);
@@ -74,7 +74,7 @@ public class WechatMenuController extends MyController {
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map<String, String> delete(String id) {
+    public String delete(String id) {
         wechatMenu.deleteMenu(id);
         return retSuccess();
     }
@@ -88,14 +88,14 @@ public class WechatMenuController extends MyController {
      */
     @RequestMapping(value = "/release")
     @ResponseBody
-    public Map<String, String> release(HttpServletRequest request) {
+    public String release(HttpServletRequest request) {
         wechatMenu.release(getLoginSysUserId(request));
         return retSuccess();
     }
 
     @RequestMapping(value = "/sort")
     @ResponseBody
-    public Map<String, String> sort(HttpServletRequest request, String sortStr) {
+    public String sort(HttpServletRequest request, String sortStr) {
         List<Map<String, Object>> sortJson = StringUtils.isNotBlank(sortStr) ? JsonUtil
                 .parseJSON2List(sortStr) : null;
         wechatMenu.sort(sortJson, getLoginSysUserId(request));

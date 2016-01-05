@@ -22,7 +22,7 @@ public final class AppConfig {
     // 用户登录信息在session中的key
     public static final String LOGIN_FLAG = "sys_user_login_key";
 
-    public static final String REQUEST_ERROE_MSG_KEY = "errorMsg";
+    public static final String REQUEST_ERROE_MSG_KEY = GetPropertiesVal.getLabel("http.error.key");
 
     public static final String REQUEST_FLAG_AJAX = "ajax";
 
@@ -109,16 +109,14 @@ public final class AppConfig {
         return null;
     }
 
-
     /**
      * 获得静态文件后缀名数组
      *
      * @return
      */
-    public static String[] getStaticFiles(){
-        return StringUtils.split(STATIC_FILE,",");
+    public static String[] getStaticFiles() {
+        return StringUtils.split(STATIC_FILE, ",");
     }
-
 
     /**
      * ehcache名称

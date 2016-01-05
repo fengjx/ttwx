@@ -28,5 +28,6 @@
     <import resource="conf/spring/spring-aop.xml"/>
     <import resource="conf/spring/spring-email.xml"/>
     <import resource="conf/spring/spring-scheduled.xml"/>
+    <import resource="conf/spring/mvc/spring-mvc-shiro.xml"/>
 
 </beans>

@@ -3,7 +3,7 @@ package com.fengjx.modules.wechat.controller.admin;
 
 import com.fengjx.commons.utils.JsonUtil;
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.wechat.entity.SysUserEntity;
+import com.fengjx.modules.sys.entity.SysUserEntity;
 import com.fengjx.modules.wechat.model.Material;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
@@ -66,7 +66,7 @@ public class MaterialController extends MyController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> addOrUpdate(HttpServletRequest request, String contentsJson) {
+    public String addOrUpdate(HttpServletRequest request, String contentsJson) {
         SysUserEntity sysUser = getLoginSysUser(request);
         List<Map<String, Object>> contents = StringUtils.isNotBlank(contentsJson) ? JsonUtil
                 .parseJSON2List(contentsJson) : null;
@@ -125,7 +125,7 @@ public class MaterialController extends MyController {
 
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Map<String, String> delete(String id) {
+    public String delete(String id) {
         material.deleteById(id);
         return retSuccess();
     }

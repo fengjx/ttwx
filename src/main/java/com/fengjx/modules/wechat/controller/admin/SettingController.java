@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * 授权设置
@@ -41,14 +40,14 @@ public class SettingController extends MyController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> update(final HttpServletRequest request) {
+    public String update(final HttpServletRequest request) {
         publicAccount.updateAccount(getRequestMap(request), getLoginSysUserId(request));
         return retSuccess();
     }
 
     @RequestMapping(value = "/reset", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> reset(HttpServletRequest request, String id) {
+    public String reset(HttpServletRequest request, String id) {
         publicAccount.reset(id, getLoginSysUserId(request));
         return retSuccess();
     }
