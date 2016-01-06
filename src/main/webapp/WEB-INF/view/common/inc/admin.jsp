@@ -35,7 +35,7 @@
 <script src="${resourceUrl}/jquery-treegrid/0.3.0/js/jquery.treegrid.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/jquery-treegrid/0.3.0/js/jquery.treegrid.bootstrap3.js" type="text/javascript"></script>
 <script src="${resourceUrl}/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
-<script src="${resourceUrl}/script/common/app.js?v=2015092801" type="text/javascript"></script>
+<script src="${resourceUrl}/script/common/app.js?v=2016010602" type="text/javascript"></script>
 <!--[if lte IE 8]>
 <script src="${resourceUrl}/js/excanvas.min.js" type="text/javascript"></script>
 <![endif]-->

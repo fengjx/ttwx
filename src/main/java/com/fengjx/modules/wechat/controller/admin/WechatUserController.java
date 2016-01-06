@@ -39,13 +39,13 @@ public class WechatUserController extends MyController {
     @RequestMapping(value = "/groupList")
     @ResponseBody
     public List<Map<String, Object>> groupList(HttpServletRequest request) {
-        return wechatUserGroup.list(getLoginSysUserId(request));
+        return wechatUserGroup.list(getLoginSysUserId());
     }
 
     @RequestMapping(value = "/userPageList")
     @ResponseBody
     public AdapterPage userList(HttpServletRequest request) {
-        return wechatUser.pageList(WebUtil.getRequestParams(request), getLoginSysUserId(request));
+        return wechatUser.pageList(WebUtil.getRequestParams(request), getLoginSysUserId());
     }
 
     /**
@@ -59,7 +59,7 @@ public class WechatUserController extends MyController {
     public String saveGroup(HttpServletRequest request) {
         Map<String, Object> attrs = getRequestMap(request);
         attrs.put("in_time", new Date());
-        attrs.put("user_id", getLoginSysUserId(request));
+        attrs.put("user_id", getLoginSysUserId());
         wechatUserGroup.insertOrUpdate(attrs);
         return retSuccess();
     }

@@ -102,14 +102,14 @@ public class RespMsgActionController extends MyController {
     public String load(HttpServletRequest request) {
         String id = request.getParameter("id");
         if (StringUtils.isNotBlank(id)) {
-            return respMsgAction.loadDetailById(id, getLoginSysUserId(request)).toJson();
+            return respMsgAction.loadDetailById(id, getLoginSysUserId()).toJson();
         }
         String ext_type = request.getParameter("ext_type");
         String req_type = request.getParameter("req_type");
         String event_type = request.getParameter("event_type");
         String key_word = request.getParameter("key_word");
         return respMsgAction
-                .loadMsgAction(ext_type, req_type, event_type, key_word, getLoginSysUserId(request))
+                .loadMsgAction(ext_type, req_type, event_type, key_word, getLoginSysUserId())
                 .toJson();
     }
 
@@ -123,7 +123,7 @@ public class RespMsgActionController extends MyController {
     @ResponseBody
     public AdapterPage pageList(HttpServletRequest request) {
         return respMsgAction.pageMsgAction(WebUtil.getNotBlankRequestParams(request),
-                getLoginSysUserId(request));
+                getLoginSysUserId());
     }
 
     /**
@@ -138,7 +138,7 @@ public class RespMsgActionController extends MyController {
         Map<String, Object> reqMap = getNotBlankRequestMap(request);
         Map<String, Object> materialMap = getMaterial(reqMap);
 
-        String userId = getLoginSysUserId(request);
+        String userId = getLoginSysUserId();
         materialMap.put("user_id", userId);
         reqMap.put("user_id", userId);
         if (StringUtils.isNotBlank((String) reqMap.get("id"))) {
@@ -152,7 +152,7 @@ public class RespMsgActionController extends MyController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public String delete(String id, HttpServletRequest request) {
-        respMsgAction.deleteMsgActionById(id, getLoginSysUserId(request));
+        respMsgAction.deleteMsgActionById(id, getLoginSysUserId());
         return retSuccess();
     }
 

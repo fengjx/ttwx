@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author fengjx
  * @version 2015-10-17
  */
-public class FormAuthenticationFilter extends
-        org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
+public class FormAuthenticationFilter
+        extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(FormAuthenticationFilter.class);
 
@@ -48,6 +48,7 @@ public class FormAuthenticationFilter extends
         return WebUtils.getCleanParam(request, getCaptchaParam());
     }
 
+    private static final String LAST_URI = "last_uri";
     /**
      * 返回true，交给直接controller（/login）处理
      *
@@ -59,7 +60,8 @@ public class FormAuthenticationFilter extends
      * @throws Exception
      */
     @Override
-    protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
+    protected boolean onLoginSuccess(AuthenticationToken token, Subject subject,
+            ServletRequest request, ServletResponse response) throws Exception {
         return true;
     }
 
@@ -67,8 +69,8 @@ public class FormAuthenticationFilter extends
      * 登录失败调用事件
      */
     @Override
-    protected boolean onLoginFailure(AuthenticationToken token,
-            AuthenticationException e, ServletRequest request, ServletResponse response) {
+    protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e,
+            ServletRequest request, ServletResponse response) {
         String className = e.getClass().getName(), message = "";
         if (IncorrectCredentialsException.class.getName().equals(className)
                 || UnknownAccountException.class.getName().equals(className)) {

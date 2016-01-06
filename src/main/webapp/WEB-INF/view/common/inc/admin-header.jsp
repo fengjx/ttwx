@@ -51,7 +51,7 @@
             </li>
             <li class="divider"></li>
             <li>
-              <a href="${domain}/loginout"><i class="glyphicon glyphicon-off"></i> 退出</a>
+              <a href="${domain}/logout"><i class="glyphicon glyphicon-off"></i> 退出</a>
             </li>
           </ul>
           <!-- /.dropdown-user -->

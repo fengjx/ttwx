@@ -129,7 +129,7 @@ public class UserUtil {
      * 获取当前登录者对象
      */
     public static SystemAuthorizingRealm.Principal getPrincipal() {
-        Subject subject = SecurityUtils.getSubject();
+        Subject subject = getSubject();
         return (SystemAuthorizingRealm.Principal) subject.getPrincipal();
     }
 

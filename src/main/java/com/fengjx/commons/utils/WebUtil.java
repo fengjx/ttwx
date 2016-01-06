@@ -3,12 +3,16 @@ package com.fengjx.commons.utils;
 
 import com.fengjx.modules.common.constants.AppConfig;
 import com.google.common.base.Joiner;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -99,7 +103,7 @@ public final class WebUtil {
      * @param request
      * @return
      */
-    public static boolean validAjax(HttpServletRequest request) {
+    public static boolean isAjax(HttpServletRequest request) {
         String flag = request.getHeader("Request-Flag");
         if (AppConfig.REQUEST_FLAG_AJAX.equals(flag)) {
             return true;
@@ -110,7 +114,6 @@ public final class WebUtil {
         }
         return false;
     }
-
 
     /**
      * 获得带参数的URL
@@ -150,7 +153,8 @@ public final class WebUtil {
      */
     public static boolean isStaticFile(String uri) {
         if (StringUtils.endsWithAny(uri, AppConfig.getStaticFiles())
-                && !StringUtils.endsWithAny(uri, ".jsp") && !StringUtils.endsWithAny(uri, ".java")) {
+                && !StringUtils.endsWithAny(uri, ".jsp")
+                && !StringUtils.endsWithAny(uri, ".java")) {
             return true;
         }
         return false;
@@ -170,4 +174,26 @@ public final class WebUtil {
         }
         return remoteAddr != null ? remoteAddr : request.getRemoteAddr();
     }
+
+    /**
+     * 写出数据
+     *
+     * @param res 输出的字符串
+     * @throws Exception
+     */
+    public static void write(String res, HttpServletResponse response) {
+        Writer writer = null;
+        try {
+            res = (null == res ? "" : res);
+            response.setCharacterEncoding("UTF-8");
+            response.setHeader("Content-type", "text/html;charset=UTF-8");
+            writer = response.getWriter();
+            writer.write(res);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            IOUtils.closeQuietly(writer);
+        }
+    }
+
 }

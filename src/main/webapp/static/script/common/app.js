@@ -144,7 +144,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             zIndex: 10240,
             cancel: false,
             ok: function () {
-                if(okCallBack && typeof okCallBack == 'function'){
+                if(okCallBack && $.isFunction(okCallBack)){
                     okCallBack();
                 }
             }
@@ -163,7 +163,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             fixed: true,
             cancel: false,
             ok: function () {
-                if(okCallBack && typeof okCallBack == 'function'){
+                if(okCallBack && $.isFunction(okCallBack)){
                     okCallBack();
                 }
             }
@@ -183,7 +183,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             okValue: '确定',
             cancelValue: '取消',
             ok: function () {
-                if(okCallBack && typeof okCallBack == 'function'){
+                if(okCallBack && $.isFunction(okCallBack)){
                     okCallBack();
                 }
             },
@@ -206,7 +206,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             okValue: '确定',
             cancelValue: '取消',
             ok: function () {
-                if(okCallBack && typeof okCallBack == 'function'){
+                if(okCallBack && $.isFunction(okCallBack)){
                     okCallBack();
                 }
             },
@@ -368,7 +368,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
         $.scojs_message(msg, $.scojs_message.TYPE_OK);
     };
 
-    app.error = function (msg, callback) {
+    app.error = function (msg) {
         app.closeDialog();
         $.scojs_message(msg, $.scojs_message.TYPE_ERROR);
     };
@@ -472,10 +472,8 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             if (type === "json") {
                 var _data = $.parseJSON(data);
                 if (_data && "-1" == _data.code) { // -1表示登陆超时
-                    app.alertModal("登陆超时，请重新登陆！", {
-                        ok: function () {
-                            window.location.href = domain + "/login";
-                        }
+                    app.alertModal("登陆超时，请重新登陆！", function () {
+                        window.location.href = domain + "/login";
                     });
                     return false;
                 }

@@ -28,7 +28,7 @@ public class SettingController extends MyController {
     public ModelAndView view(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("wechat/admin/setting");
         mv.addObject("wechatAccount",
-                publicAccount.getAccountByUserId(getLoginSysUserId(request)).getColumns());
+                publicAccount.getAccountByUserId(getLoginSysUserId()).getColumns());
         return mv;
     }
 
@@ -41,14 +41,14 @@ public class SettingController extends MyController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public String update(final HttpServletRequest request) {
-        publicAccount.updateAccount(getRequestMap(request), getLoginSysUserId(request));
+        publicAccount.updateAccount(getRequestMap(request), getLoginSysUserId());
         return retSuccess();
     }
 
     @RequestMapping(value = "/reset", method = RequestMethod.POST)
     @ResponseBody
     public String reset(HttpServletRequest request, String id) {
-        publicAccount.reset(id, getLoginSysUserId(request));
+        publicAccount.reset(id, getLoginSysUserId());
         return retSuccess();
     }
 

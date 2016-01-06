@@ -41,20 +41,6 @@ public class CommonController extends BaseController {
     @Autowired
     private Producer kaptchaProducer;
 
-    @RequestMapping("/loginTimeoutAjax")
-    @ResponseBody
-    public Map<String, String> loginTimeoutAjax() {
-        Map<String, String> res = Maps.newHashMap();
-        res.put("code", "-1");
-        res.put("msg", "登陆超时");
-        return res;
-    }
-
-    @RequestMapping("/loginTimeout")
-    public String loginTimeout() {
-        return "forward:/toLogin";
-    }
-
     @RequestMapping("/verification_code.jpg")
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -88,7 +74,7 @@ public class CommonController extends BaseController {
     @RequestMapping("/error")
     public String error(HttpServletRequest request) {
         String forward = "errorview";
-        if (WebUtil.validAjax(request)) {
+        if (WebUtil.isAjax(request)) {
             forward = "errorajax";
         }
         return "forward:/common/" + forward;

@@ -2,13 +2,12 @@
 package com.fengjx.modules.common.controller;
 
 import com.fengjx.commons.web.BaseController;
-import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.sys.entity.SysUserEntity;
+import com.fengjx.modules.sys.utils.UserUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author fengjx.
@@ -26,23 +25,27 @@ public abstract class MyController extends BaseController {
     protected String adminPath;
 
     /**
-     * 获得当前登录用户
+     * 用户是否已经登录
      *
-     * @param request
      * @return
      */
-    protected SysUserEntity getLoginSysUser(HttpServletRequest request) {
-        return (SysUserEntity) getSession(request).getAttribute(AppConfig.LOGIN_FLAG);
+    protected boolean isLogin(){
+        SysUserEntity user = UserUtil.getUser();
+        return StringUtils.isNotBlank(user.getId());
+    }
+
+    /**
+     * 获得当前登录用户
+     */
+    protected SysUserEntity getLoginSysUser() {
+        return UserUtil.getUser();
     }
 
     /**
      * 获得当前登录用户ID
-     *
-     * @param request
-     * @return
      */
-    protected String getLoginSysUserId(HttpServletRequest request) {
-        return getLoginSysUser(request).getId();
+    protected String getLoginSysUserId() {
+        return UserUtil.getUser().getId();
     }
 
 }

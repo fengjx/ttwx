@@ -7,6 +7,7 @@ import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.system.exception.ValidateException;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.commons.utils.WebUtil;
+import com.google.common.collect.Maps;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -24,7 +25,6 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -74,7 +74,7 @@ public abstract class BaseController {
     }
 
     protected Map<String, Object> getRequestMap(HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = Maps.newHashMap();
         map.putAll(WebUtil.getRequestParams(request));
         return map;
     }
@@ -84,7 +84,7 @@ public abstract class BaseController {
     }
 
     protected Map<String, Object> getNotBlankRequestMap(HttpServletRequest request) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = Maps.newHashMap();
         map.putAll(WebUtil.getNotBlankRequestParams(request));
         return map;
     }
@@ -100,8 +100,7 @@ public abstract class BaseController {
      * @param exceptionInfo
      * @return
      */
-    protected String doResult(MyExecuteCallback callack,
-            String exceptionInfo) {
+    protected String doResult(MyExecuteCallback callack, String exceptionInfo) {
         try {
             callack.execute();
             return retSuccess();
@@ -116,7 +115,16 @@ public abstract class BaseController {
     }
 
     /**
-     * 操作成功数据
+     * 构造ajax返回数据
+     *
+     * @return
+     */
+    protected String retMsg(String code, String msg) {
+        return AjaxTemplate.getMsg(code, msg);
+    }
+
+    /**
+     * 操作失败数据
      *
      * @return
      */
@@ -341,8 +349,8 @@ public abstract class BaseController {
             addError(errorMsg);
             return;
         }
-        Pattern pattern = isCaseSensitive ? Pattern.compile(regExpression) : Pattern.compile(
-                regExpression, Pattern.CASE_INSENSITIVE);
+        Pattern pattern = isCaseSensitive ? Pattern.compile(regExpression)
+                : Pattern.compile(regExpression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(value);
         if (!matcher.matches()) {
             addError(errorMsg);
@@ -361,8 +369,7 @@ public abstract class BaseController {
         String value = getRequest().getParameter(field);
         if (value == null || value.length() < minLen || value.length() > maxLen) {
             addError(errorMsg);
-        }
-        else if (notBlank && "".equals(value.trim())) {
+        } else if (notBlank && "".equals(value.trim())) {
             addError(errorMsg);
         }
     }

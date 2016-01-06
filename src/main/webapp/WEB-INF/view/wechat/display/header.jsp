@@ -44,7 +44,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<c:choose>
-			<c:when test="${!empty sessionScope.sys_user_login_key }">
+			<c:when test="${!empty fns:getUser().id }">
 				<li><a target="_blank" href="${domain}/admin">后台管理</a></li>
 			</c:when>
 			<c:otherwise>

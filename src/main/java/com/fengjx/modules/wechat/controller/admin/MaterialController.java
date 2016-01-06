@@ -23,8 +23,7 @@ import java.util.Map;
 /**
  * 素材管理
  *
- * @author fengjx.
- * @date：2015/5/28 0028
+ * @author fengjx. @date：2015/5/28 0028
  */
 @Controller
 @RequestMapping("${adminPath}/wechat/material")
@@ -59,17 +58,18 @@ public class MaterialController extends MyController {
 
     @RequestMapping("/page")
     @ResponseBody
-    public String pageList(HttpServletRequest request, String msg_type, int pageNumber, int pageSize) {
-        return material.getListPageByType(pageNumber, pageSize, msg_type,
-                getLoginSysUserId(request)).toJson();
+    public String pageList(HttpServletRequest request, String msg_type, int pageNumber,
+            int pageSize) {
+        return material.getListPageByType(pageNumber, pageSize, msg_type, getLoginSysUserId())
+                .toJson();
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public String addOrUpdate(HttpServletRequest request, String contentsJson) {
-        SysUserEntity sysUser = getLoginSysUser(request);
-        List<Map<String, Object>> contents = StringUtils.isNotBlank(contentsJson) ? JsonUtil
-                .parseJSON2List(contentsJson) : null;
+        SysUserEntity sysUser = getLoginSysUser();
+        List<Map<String, Object>> contents = StringUtils.isNotBlank(contentsJson)
+                ? JsonUtil.parseJSON2List(contentsJson) : null;
         Map<String, Object> params = getRequestMap(request);
         String msgFlag = (String) params.get("msgFlag");
 
@@ -92,9 +92,8 @@ public class MaterialController extends MyController {
         return retSuccess();
     }
 
-    private void toSendMessage(SysUserEntity sysUser,
-            List<Map<String, Object>> contents, Map<String, Object> params, boolean isPreview)
-            throws WxErrorException {
+    private void toSendMessage(SysUserEntity sysUser, List<Map<String, Object>> contents,
+            Map<String, Object> params, boolean isPreview) throws WxErrorException {
 
         String msgType = (String) params.get("msg_type");
         String wxUserId = (String) params.get("wxUserId");

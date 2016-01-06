@@ -35,7 +35,7 @@ public class ReqMsglogController extends MyController {
     @RequestMapping(value = "/pageList")
     @ResponseBody
     public AdapterPage pageList(HttpServletRequest request) {
-        return reqMsgLog.pageList(WebUtil.getRequestParams(request), getLoginSysUserId(request));
+        return reqMsgLog.pageList(WebUtil.getRequestParams(request), getLoginSysUserId());
     }
 
 }

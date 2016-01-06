@@ -1,6 +1,7 @@
 
 package com.fengjx.modules.sys.controller.display;
 
+import com.fengjx.commons.config.AjaxTemplate;
 import com.fengjx.commons.system.security.shiro.session.SessionDAO;
 import com.fengjx.commons.utils.CookieUtils;
 import com.fengjx.commons.utils.LogUtil;
@@ -14,6 +15,8 @@ import com.fengjx.modules.sys.security.FormAuthenticationFilter;
 import com.fengjx.modules.sys.security.SystemAuthorizingRealm;
 import com.fengjx.modules.sys.utils.UserUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +33,7 @@ import java.io.IOException;
 /**
  * 用户登录注册
  *
- * @author fengjx.
- * @date：2015/5/16 0016
+ * @author fengjx. @date：2015/5/16 0016
  */
 @Controller
 public class LoginController extends MyController {
@@ -44,7 +46,6 @@ public class LoginController extends MyController {
     @Autowired
     private SysUser sysUser;
 
-
     /**
      * 登录的逻辑已经交给shiro，登录错误后会跳到这里
      *
@@ -53,10 +54,12 @@ public class LoginController extends MyController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String signin(HttpServletRequest request) {
+    public String signin(HttpServletRequest request, HttpServletResponse response) {
         SystemAuthorizingRealm.Principal principal = UserUtil.getPrincipal();
         // 如果已经登录，则跳转到管理首页
         if (principal != null) {
+            // 登录成功，把上次登录路径的cookie删掉
+            CookieUtils.getCookie(request, response, LAST_URI, true);
             return retSuccess();
         } else {
             String exception = (String) request
@@ -72,27 +75,6 @@ public class LoginController extends MyController {
             }
             return retFail(message);
         }
-        // // 测试环境忽略掉验证码校验
-        // if (!AppConfig.isTest()) {
-        // Map<String, String> res = compareValidCode(request, valid_code);
-        // if ("0".equals(res.get("code"))) {
-        // return res;
-        // }
-        // }
-        // SysUserEntity loginUser = sysUser.signin(user.getUsername(),
-        // user.getPwd());
-        // LogUtil.debug(LOG, "查询到登陆用户：" + loginUser);
-        // if (null == loginUser) {
-        // return retFail("用户名或密码错误！");
-        // }
-        // if (SysUserEntity.NOT_ALIVE.equals(loginUser.getIs_valid())) {
-        // return retFail("账号未激活，请查激活邮件！");
-        // }
-        // if (SysUserEntity.FREEZE_ALIVE.equals(loginUser.getIs_valid())) {
-        // return retFail("账号已经锁定，不允许登录！");
-        // }
-        // request.getSession().setAttribute(AppConfig.LOGIN_FLAG, loginUser);
-        // return retSuccess();
     }
 
     @RequestMapping(value = "/toLogin", method = RequestMethod.GET)
@@ -102,23 +84,49 @@ public class LoginController extends MyController {
 
     private static final String LAST_URI = "last_uri";
 
+    /**
+     * 登录页面（会话超时也会跳转过来）
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public void login(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CookieUtils.setCookie(response, LAST_URI,
-                WebUtil.getUriWidthParam(request).replace(request.getContextPath(), ""), 60 * 60);
-        // 如果是ajax请求
-        if (WebUtil.validAjax(request)) {
-            request.getRequestDispatcher("/common/loginTimeoutAjax").forward(request, response);
-        } else {
-            request.getRequestDispatcher("/common/loginTimeout").forward(request, response);
+        String lastUrl = getLastUrl(request);
+        if (StringUtils.isNotBlank(lastUrl) && !StringUtils.contains(lastUrl, "/login")) {
+            // 如果是ajax请求，则把上一级的路径放到Cookie
+            if (WebUtil.isAjax(request)) {
+                lastUrl = StringUtils.substring(lastUrl, 0, lastUrl.lastIndexOf("/"));
+            }
+            CookieUtils.setCookie(response, LAST_URI, lastUrl, 60 * 60);
         }
+        // 如果是ajax请求
+        if (WebUtil.isAjax(request)) {
+            WebUtil.write(AjaxTemplate.getMsg("-1", "登录超时"), response);
+        } else {
+            request.getRequestDispatcher("/toLogin").forward(request, response);
+        }
+    }
+
+    private String getLastUrl(HttpServletRequest request) {
+        String url = CookieUtils.getCookie(request, LAST_URI);
+        if (StringUtils.isNotBlank(url)) {
+            return url;
+        }
+        SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+        if (null == savedRequest) {
+            return null;
+        }
+        return savedRequest.getRequestUrl().replace(request.getContextPath(), "");
     }
 
     @RequestMapping(value = "/loginout")
     public String loginOut(final HttpServletRequest request) {
-        SysUserEntity sysUser = (SysUserEntity) request.getSession().getAttribute(
-                AppConfig.LOGIN_FLAG);
+        SysUserEntity sysUser = (SysUserEntity) request.getSession()
+                .getAttribute(AppConfig.LOGIN_FLAG);
         if (null != sysUser) {
             request.getSession().removeAttribute(AppConfig.LOGIN_FLAG);
         }
