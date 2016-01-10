@@ -20,8 +20,8 @@
 			<li class="active"><a href="${adminPath}/sys/menu/form">${not empty id?'修改':'添加'}菜单</a></li>
 		</ul>
 		<form class="form-horizontal" id="data-form" method="POST" role="form">
+			<input type="hidden" id="id" name="id" value="${id}" />
 			<div class="modal-body">
-				<input type="hidden" id="id" name="id" value="${id}" />
 				<div class="control-group" >
 					<label class="control-label" for="parent_id">父级菜单:</label>
 					<div class="controls">
@@ -59,9 +59,15 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">是否启用:</label>
+					<label class="control-label">是否显示:</label>
 					<div class="controls">
 						<myform:radios name="is_show" values="${fns:getDictList('yesNo')}" checked="${is_show}"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">是否启用:</label>
+					<div class="controls">
+						<myform:radios name="is_valid" values="${fns:getDictList('yesNo')}" checked="${is_valid}"/>
 					</div>
 				</div>
 				<div class="control-group">

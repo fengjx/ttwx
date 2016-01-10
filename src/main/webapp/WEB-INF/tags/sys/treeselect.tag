@@ -5,6 +5,7 @@
 <%@ attribute name="value" type="java.lang.String" required="false" description="隐藏域值（ID）" %>
 <%@ attribute name="labelValue" type="java.lang.String" required="false" description="value对应显示的值" %>
 <%@ attribute name="treeLevel" type="java.lang.String" required="false" description="菜单级别" %>
+<%@ attribute name="parentIds" type="java.lang.String" required="false" description="所以父级ID" %>
 <%@ attribute name="url" type="java.lang.String" required="true" description="树结构数据地址" %>
 <%@ attribute name="checked" type="java.lang.Boolean" required="false" description="是否显示复选框（多选情况显示）" %>
 <%@ attribute name="extId" type="java.lang.String" required="false" description="排除掉的编号（不能选择的编号）" %>
@@ -13,7 +14,8 @@
 <%@ attribute name="cssClass" type="java.lang.String" required="false" description="css样式" %>
 <%@ attribute name="cssStyle" type="java.lang.String" required="false" description="css样式" %>
 <c:set var="current" value="${fns:currentTimeMillis()}"/>
-<input id="${id}" name="${name}" type="hidden" value="${value}" data-level="${treeLevel}"/>
+<input id="${id}" name="${name}" type="hidden" value="${value}" data-level="${treeLevel}"
+       data-parent-ids="${parentIds}"/>
 <input id="label${id}" name="label${name}" ${allowInput?'':'readonly="readonly"'} type="text" value="${labelValue}"
        class="${cssClass}" style="${cssStyle}"/>
 <a id="btn-search-app${current}" name="btn-search-app" href="javascript:" class="btn btn-xs btn-default">
@@ -36,7 +38,9 @@
             </div>
             <div class="modal-footer">
                 <c:if test="${allowClear == true}">
-                <button id="btn-clean${current}" type="button" class="btn btn-default btn-sm" data-dismiss="modal">清除</button>
+                    <button id="btn-clean${current}" type="button" class="btn btn-default btn-sm" data-dismiss="modal">
+                        清除
+                    </button>
                 </c:if>
                 <button id="btn-ok${current}" type="button" class="btn btn-primary btn-sm">确定</button>
             </div>
@@ -73,31 +77,43 @@
             }
         },
         tree: {},
-        modal:$('#modal${current}').modal({
+        modal: $('#modal${current}').modal({
             show: false
         }),
-        btnSearch:$("#btn-search-app${current}"),
-        btnClean:$("#btn-clean${current}"),
-        btnOk:$("#btn-ok${current}"),
+        btnSearch: $("#btn-search-app${current}"),
+        btnClean: $("#btn-clean${current}"),
+        btnOk: $("#btn-ok${current}"),
         input: $("#${id}"),
         label: $("#label${id}"),
         setVal: function (nodes) {  // 赋值
+
             var ids = [], names = [];
             // 多选
-            if(app${current}.setting.check.enable && nodes instanceof Array){
-                for(var i = 0; i < nodes.length; i++){
+            if (app${current}.setting.check.enable && nodes instanceof Array) {
+                for (var i = 0; i < nodes.length; i++) {
                     ids.push(nodes[i].id);
                     names.push(nodes[i].name);
                 }
-            }else{
-                var n = (nodes instanceof Array)?nodes[0]:nodes;
+            } else {
+                var n = (nodes instanceof Array) ? nodes[0] : nodes;
                 ids.push(n.id);
                 names.push(n.name);
-                app${current}.input.attr("data-level", parseInt(n.level)+1);
+                app${current}.input.attr("data-level", parseInt(n.level) + 1);
+                app${current}.input.attr("data-parent-ids", n.id);
+                if (n.parent_id && '' !== n.parent_id) {
+                    app${current}.setParent(n.getParentNode());
+                }
             }
             app${current}.input.val(ids.join(","));
             app${current}.label.val(names.join(","));
             app${current}.modal.modal('hide');
+        },
+        setParent: function (pNode) {
+            var parentIds = app${current}.input.attr("data-parent-ids");
+            app${current}.input.attr("data-parent-ids", pNode.id + "," + parentIds);
+            if (pNode.parent_id && '' !== pNode.parent_id) {
+                app${current}.setParent(pNode.getParentNode());
+            }
         }
     };
 
@@ -122,7 +138,7 @@
                 app${current}.tree = $.fn.zTree.init($("#tree${current}"), app${current}.setting, zNodes);
                 // 默认展开一级节点
                 var nodes = app${current}.tree.getNodesByParam("level", 0);
-                for(var i=0; i<nodes.length; i++) {
+                for (var i = 0; i < nodes.length; i++) {
                     app${current}.tree.expandNode(nodes[i], true, false, false);
                 }
                 selectCheckNode();
@@ -134,7 +150,7 @@
         });
 
         // 默认选择节点
-        function selectCheckNode(){
+        function selectCheckNode() {
             var ids = "${value}".split(",");
             for (var i = 0; i < ids.length; i++) {
                 var node = app${current}.tree.getNodeByParam("id", ids[i]);

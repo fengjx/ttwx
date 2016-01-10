@@ -8,8 +8,9 @@ import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -80,11 +81,7 @@ public class SysMenu extends Model {
     private List<Map<String, Object>> recursive(String pid) {
         List<Map<String, Object>> resList = Lists.newArrayList();
         List<Map<String, Object>> list;
-        StringBuilder sql = new StringBuilder("select ");
-        sql.append(getColumnsStr("a")).append(",b.role_id ");
-        sql.append(getTableName());
-        sql.append(" a left join ").append(getTableName(SysRoleMenu.class));
-        sql.append(" b on b.menu_id = a.id");
+        StringBuilder sql = new StringBuilder(getSelectSql("a"));
         sql.append(" where 1 = 1 ");
         if (StringUtils.isBlank(pid)) {
             sql.append(" and (a.parent_id is null or a.parent_id = '') ").append(ORDER_BY);
@@ -94,18 +91,18 @@ public class SysMenu extends Model {
             list = findList(sql.toString(), pid);
         }
         if (CollectionUtils.isNotEmpty(list)) {
-            for (int i = 0, l = list.size(); i < l; i++) {
-                String _id = list.get(i).get("id") + "";
+            for (Map<String, Object> m : list) {
+                String _id = m.get("id") + "";
                 // 如果存在子节点（不是叶子节点），则继续递归查询
-                resList.add(list.get(i));
+                resList.add(m);
                 if (!isLeef(_id)) {
                     List<Map<String, Object>> tmpList = recursive(_id);
-                    list.get(i).put("isLeef", false);
-                    list.get(i).put("isParent", true);
+                    m.put("isLeef", false);
+                    m.put("isParent", true);
                     resList.addAll(tmpList);
                 } else {
-                    list.get(i).put("isLeef", true);
-                    list.get(i).put("isParent", false);
+                    m.put("isLeef", true);
+                    m.put("isParent", false);
                 }
             }
         }
@@ -123,11 +120,12 @@ public class SysMenu extends Model {
         deleteMenuCache();
     }
 
-
     public void deleteMenuById(String id) {
         deleteById(id);
         deleteMenuCache();
     }
+
+    private static final String USER_MENU = "user_menu_";
 
     /**
      * 查找用户一级菜单
@@ -135,22 +133,68 @@ public class SysMenu extends Model {
      * @param userId 用户ID
      * @return
      */
-    public List<Map<String, Object>> findUserMenus(String userId) {
+    public List<Map<String, Object>> findUserMenus(final String userId) {
         if (StringUtils.isBlank(userId)) {
             return null;
         }
-        String[] menuIds = sysRoleMenu.getMenuIds(userId);
-        if (ArrayUtils.isEmpty(menuIds)) {
-            return null;
-        }
-        List<Map<String, Object>> menus = treeMenu();
-        List<Map<String, Object>> res = Lists.newArrayList();
-        for (Map<String, Object> m : menus) {
-            if (ArrayUtils.contains(menuIds, m.get("id"))) {
-                res.add(m);
+        return EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, USER_MENU + userId,
+                new IDataLoader<List<Map<String, Object>>>() {
+                    @Override
+                    public List<Map<String, Object>> load() {
+                        List<Map<String, Object>> menus = sysRoleMenu.findAllRoleMenus();
+                        List<Map<String, Object>> res = Lists.newArrayList();
+                        for (Map<String, Object> m : menus) {
+                            if (userId.equals(m.get("user_id"))) {
+                                res.add(m);
+                            }
+                        }
+                        return res;
+                    }
+                });
+    }
+
+    private static final String SYS_MENU_LIST = "sys_menu_list";
+
+    /**
+     * @return
+     */
+    private Map<String, Map<String, Object>> urlMenus() {
+        return EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, SYS_MENU_LIST,
+                new IDataLoader<Map<String, Map<String, Object>>>() {
+                    @Override
+                    public Map<String, Map<String, Object>> load() {
+                        List<Map<String, Object>> list = findList(null);
+                        if (CollectionUtils.isNotEmpty(list)) {
+                            Map<String, Map<String, Object>> res = Maps.newHashMap();
+                            for (Map<String, Object> m : list) {
+                                res.put((String) m.get("url"), m);
+                            }
+                        }
+                        return null;
+                    }
+                });
+    }
+
+    /**
+     * 通过url查询顶级菜单ID
+     *
+     * @param url
+     * @return
+     */
+    private String getPidByUrl(String url) {
+        Map<String, Map<String, Object>> menus = urlMenus();
+        if (MapUtils.isNotEmpty(menus)) {
+            Map<String, Object> map = menus.get(url);
+            if (null == map) {
+                return null;
             }
+            String parentIds = (String) map.get("parent_ids");
+            if (StringUtils.isBlank(parentIds)) {
+                return null;
+            }
+            return StringUtils.split(parentIds, ",")[0];
         }
-        return res;
+        return null;
     }
 
 }

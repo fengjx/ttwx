@@ -48,7 +48,6 @@ public class FormAuthenticationFilter
         return WebUtils.getCleanParam(request, getCaptchaParam());
     }
 
-    private static final String LAST_URI = "last_uri";
     /**
      * 返回true，交给直接controller（/login）处理
      *

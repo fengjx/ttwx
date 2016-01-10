@@ -71,6 +71,6 @@
 		</div>
 	</div>	<!-- /container -->
 	
-	<script src="${resourceUrl}/script/wechat/display/register.js" type="text/javascript"></script>
+	<script src="${resourceUrl}/script/sys/register.js" type="text/javascript"></script>
 </body>
 </html>

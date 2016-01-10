@@ -87,4 +87,16 @@ public class SysMenuController extends MyController {
         return retSuccess("菜单成功删除");
     }
 
+
+    /**
+     * 通过url加载左侧菜单
+     * @param url
+     * @return
+     */
+    public Object loadLeftMenu(String url){
+
+        return null;
+    }
+
+
 }

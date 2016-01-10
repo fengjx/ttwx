@@ -57,8 +57,8 @@ public class SysUserRole extends Model {
         if (CollectionUtils.isNotEmpty(list)) {
             Set<Map<String, Object>> res = Sets.newHashSet();
             Map<String, Object> m;
-            for (int i = 0; i < list.size(); i++) {
-                m = list.get(i);
+            for (Map<String, Object> aList : list) {
+                m = aList;
                 if (userId.equals(m.get("user_id"))) {
                     res.add(m);
                 }
@@ -66,26 +66,6 @@ public class SysUserRole extends Model {
             if (res.size() > 0) {
                 return res;
             }
-        }
-        return null;
-    }
-
-    /**
-     * 获得用户拥有的角色ID
-     *
-     * @param userId
-     * @return
-     */
-    public String[] findUserRoleIds(String userId) {
-        Set<Map<String, Object>> userRoles = findUserRoles(userId);
-        String[] res = new String[userRoles.size()];
-        if (CollectionUtils.isNotEmpty(userRoles)) {
-            int i = 0;
-            for (Map<String, Object> m : userRoles) {
-                res[i] = (String) m.get("role_id");
-                i++;
-            }
-            return res;
         }
         return null;
     }

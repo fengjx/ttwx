@@ -58,8 +58,6 @@ public class LoginController extends MyController {
         SystemAuthorizingRealm.Principal principal = UserUtil.getPrincipal();
         // 如果已经登录，则跳转到管理首页
         if (principal != null) {
-            // 登录成功，把上次登录路径的cookie删掉
-            CookieUtils.getCookie(request, response, LAST_URI, true);
             return retSuccess();
         } else {
             String exception = (String) request

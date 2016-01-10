@@ -116,7 +116,7 @@
         <description>getMenus</description>
         <name>getMenus</name>
         <function-class>com.fengjx.modules.sys.utils.UserUtil</function-class>
-        <function-signature>java.util.List getMenus(java.lang.String)</function-signature>
+        <function-signature>java.util.List getMenus()</function-signature>
         <example>${fns:getMenus()}</example>
     </function>
 
