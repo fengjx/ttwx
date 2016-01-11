@@ -179,9 +179,15 @@ public class TableMappingPlugin implements IPlugin {
             }
             table.setColumnsStr(columnsStr.delete(0, 2).toString());
         } finally {
-            rs.close();
-            stm.close();
-            conn.close();
+            if(null != rs){
+                rs.close();
+            }
+            if(null != stm){
+                stm.close();
+            }
+            if(null != conn){
+                conn.close();
+            }
         }
     }
 

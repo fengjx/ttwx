@@ -42,7 +42,7 @@
             <ul id="head-menu" class="nav navbar-nav pull-left">
                 <c:forEach var="m" items="${fns:getMenus()}">
                     <c:if test="${m.level eq '1' && m.is_show eq '1'}">
-                    <li><a href="${domain}${m.url}">${m.menu_name}</a></li>
+                    <li><a href="${adminPath}/f/${m.menu_id}">${m.menu_name}</a></li>
                     </c:if>
                 </c:forEach>
             </ul>

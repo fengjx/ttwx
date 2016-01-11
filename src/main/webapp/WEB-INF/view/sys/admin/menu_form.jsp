@@ -25,7 +25,7 @@
 				<div class="control-group" >
 					<label class="control-label" for="parent_id">父级菜单:</label>
 					<div class="controls">
-						<sys:treeselect id="parent_id" name="parent_id" value="${parent_id}" labelValue="${parent_name}" treeLevel="${parent_level}" url="${adminPath}/sys/menu/treeNode" allowClear="true" />
+						<sys:treeselect id="parent_id" name="parent_id" value="${parent_id}" parentIds="${parent_ids}" labelValue="${parent_name}" treeLevel="${parent_level}" url="${adminPath}/sys/menu/treeNode" allowClear="true" />
 					</div>
 				</div>
 				<div class="control-group" >

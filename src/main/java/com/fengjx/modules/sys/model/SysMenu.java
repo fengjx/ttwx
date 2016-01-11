@@ -8,9 +8,7 @@ import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,8 +28,8 @@ import java.util.Map;
 @Component
 public class SysMenu extends Model {
 
-    // tree menu key
     private static final String TREE_MENU_CACHE = "treeMenu";
+    private static final String MENU__ID_CACHE = "menu_id_";
 
     private static final String ORDER_BY = "order by order_no , update_time desc";
 
@@ -44,17 +42,22 @@ public class SysMenu extends Model {
      * @param id
      * @return
      */
-    public Record get(String id) {
-        if (StringUtils.isBlank(id)) {
-            return new Record();
-        }
-        Record record = findById(id);
-        if (!record.isEmpty() && StringUtils.isNoneBlank(record.getStr("parent_id"))) {
-            Record parent = findById(record.getStr("parent_id"));
-            record.set("parent_name", parent.get("name"));
-            record.set("parent_level", parent.get("level"));
-        }
-        return record;
+    public Record get(final String id) {
+        return EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, MENU__ID_CACHE + id, new IDataLoader<Record>() {
+            @Override
+            public Record load() {
+                if (StringUtils.isBlank(id)) {
+                    return new Record();
+                }
+                Record record = findById(id);
+                if (!record.isEmpty() && StringUtils.isNotBlank(record.getStr("parent_id"))) {
+                    Record parent = findById(record.getStr("parent_id"));
+                    record.set("parent_name", parent.get("name"));
+                    record.set("parent_level", parent.get("level"));
+                }
+                return record;
+            }
+        });
     }
 
     /**
@@ -153,48 +156,5 @@ public class SysMenu extends Model {
                 });
     }
 
-    private static final String SYS_MENU_LIST = "sys_menu_list";
-
-    /**
-     * @return
-     */
-    private Map<String, Map<String, Object>> urlMenus() {
-        return EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, SYS_MENU_LIST,
-                new IDataLoader<Map<String, Map<String, Object>>>() {
-                    @Override
-                    public Map<String, Map<String, Object>> load() {
-                        List<Map<String, Object>> list = findList(null);
-                        if (CollectionUtils.isNotEmpty(list)) {
-                            Map<String, Map<String, Object>> res = Maps.newHashMap();
-                            for (Map<String, Object> m : list) {
-                                res.put((String) m.get("url"), m);
-                            }
-                        }
-                        return null;
-                    }
-                });
-    }
-
-    /**
-     * 通过url查询顶级菜单ID
-     *
-     * @param url
-     * @return
-     */
-    private String getPidByUrl(String url) {
-        Map<String, Map<String, Object>> menus = urlMenus();
-        if (MapUtils.isNotEmpty(menus)) {
-            Map<String, Object> map = menus.get(url);
-            if (null == map) {
-                return null;
-            }
-            String parentIds = (String) map.get("parent_ids");
-            if (StringUtils.isBlank(parentIds)) {
-                return null;
-            }
-            return StringUtils.split(parentIds, ",")[0];
-        }
-        return null;
-    }
 
 }

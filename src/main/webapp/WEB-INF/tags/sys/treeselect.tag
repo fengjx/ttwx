@@ -154,7 +154,7 @@
             var ids = "${value}".split(",");
             for (var i = 0; i < ids.length; i++) {
                 var node = app${current}.tree.getNodeByParam("id", ids[i]);
-                if ("${checked}" == "true") {
+                if (app${current}.setting.check.enable) {
                     try {
                         app${current}.tree.checkNode(node, true, true);
                     } catch (e) {

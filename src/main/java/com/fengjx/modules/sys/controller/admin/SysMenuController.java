@@ -46,6 +46,8 @@ public class SysMenuController extends MyController {
         if (StringUtils.isNoneBlank(parentId)) {
             Record parent = sysMenu.findById(parentId);
             model.addAttribute("parent_id", parent.getStr("id"));
+            model.addAttribute("parent_ids", (StringUtils.isBlank(parent.getStr("parent_id")) ? ""
+                    : parent.getStr("parent_id") + ",") + parent.getStr("id"));
             model.addAttribute("parent_name", parent.getStr("name"));
             model.addAttribute("parent_level", parent.getInt("level"));
         } else if (StringUtils.isNotBlank(id)) { // 修改菜单
@@ -87,16 +89,15 @@ public class SysMenuController extends MyController {
         return retSuccess("菜单成功删除");
     }
 
-
     /**
      * 通过url加载左侧菜单
+     * 
      * @param url
      * @return
      */
-    public Object loadLeftMenu(String url){
+    public Object loadLeftMenu(String url) {
 
         return null;
     }
-
 
 }
