@@ -28,7 +28,7 @@ import java.util.Map;
 @Component
 public class SysMenu extends Model {
 
-    private static final String TREE_MENU_CACHE = "treeMenu";
+    private static final String TREE_MENU_CACHE = "listTreeMenu";
     private static final String MENU__ID_CACHE = "menu_id_";
 
     private static final String ORDER_BY = "order by order_no , update_time desc";
@@ -65,7 +65,7 @@ public class SysMenu extends Model {
      *
      * @return
      */
-    public List<Map<String, Object>> treeMenu() {
+    public List<Map<String, Object>> listTreeMenu() {
         return EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, TREE_MENU_CACHE,
                 new IDataLoader<List<Map<String, Object>>>() {
                     @Override
@@ -110,6 +110,55 @@ public class SysMenu extends Model {
             }
         }
         return resList;
+    }
+
+    /**
+     * 递归查询用户菜单
+     *
+     * @param pid
+     * @param userId
+     * @return
+     */
+    private List<Map<String, Object>> recursiveTree(String pid, String userId) {
+        List<Map<String, Object>> resList = Lists.newArrayList();
+        List<Map<String, Object>> list;
+        StringBuilder sql = new StringBuilder(getSelectSql("a"));
+        sql.append(" where user_id = ? ");
+        if (StringUtils.isBlank(pid)) {
+            sql.append(" and (a.parent_id is null or a.parent_id = '') ").append(ORDER_BY);
+            list = findList(sql.toString(),userId);
+        } else {
+            sql.append(" and a.parent_id = ? ").append(ORDER_BY);
+            list = findList(sql.toString(), userId, pid);
+        }
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (Map<String, Object> m : list) {
+                String _id = m.get("id") + "";
+                // 如果存在子节点（不是叶子节点），则继续递归查询
+                resList.add(m);
+                if (!isLeef(_id)) {
+                    List<Map<String, Object>> tmpList = recursive(_id);
+                    m.put("isLeef", false);
+                    m.put("isParent", true);
+                    m.put("children", tmpList);
+                } else {
+                    m.put("isLeef", true);
+                    m.put("isParent", false);
+                }
+            }
+        }
+        return resList;
+    }
+
+    /**
+     * 根据pid递归查询菜单
+     *
+     * @return
+     */
+    public List<Map<String, Object>> findMenuByPid(){
+
+
+
     }
 
     // 删除菜单缓存数据

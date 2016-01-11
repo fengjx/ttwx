@@ -78,11 +78,11 @@ public class UserUtil {
      * @return
      */
     public static List<Map<String, Object>> getMenus() {
-        List<Map<String, Object>> menuList = (List<Map<String, Object>>) getCache(CACHE_MENU_LIST);
+        List<Map<String, Object>> menuList = getCache(CACHE_MENU_LIST);
         if (menuList == null) {
             SysUserEntity user = getUser();
             if (user.isAdmin()) {
-                menuList = sysMenu.treeMenu();
+                menuList = sysMenu.listTreeMenu();
             } else {
                 menuList = sysMenu.findUserMenus(user.getId());
             }
@@ -133,13 +133,15 @@ public class UserUtil {
         return (SystemAuthorizingRealm.Principal) subject.getPrincipal();
     }
 
-    public static Object getCache(String key) {
-        return getCache(key, null);
+    @SuppressWarnings("unchecked")
+    public static <T> T getCache(String key) {
+        return (T) getCache(key, null);
     }
 
-    public static Object getCache(String key, Object defaultValue) {
+    @SuppressWarnings("unchecked")
+    public static <T> T getCache(String key, T defaultValue) {
         Object obj = getSession().getAttribute(key);
-        return obj == null ? defaultValue : obj;
+        return obj == null ? defaultValue : (T) obj;
     }
 
     public static void putCache(String key, Object value) {

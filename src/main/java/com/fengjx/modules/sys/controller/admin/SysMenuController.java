@@ -35,7 +35,7 @@ public class SysMenuController extends MyController {
     @RequiresPermissions("sys_menu_view")
     @RequestMapping("")
     public String view(Model model) {
-        model.addAttribute("treeTable", sysMenu.treeMenu());
+        model.addAttribute("treeTable", sysMenu.listTreeMenu());
         return "sys/admin/menu";
     }
 
@@ -59,7 +59,7 @@ public class SysMenuController extends MyController {
     @RequestMapping("treeNode")
     @ResponseBody
     public List<Map<String, Object>> treeNode() {
-        return sysMenu.treeMenu();
+        return sysMenu.listTreeMenu();
     }
 
     /**
@@ -90,12 +90,12 @@ public class SysMenuController extends MyController {
     }
 
     /**
-     * 通过url加载左侧菜单
+     * 通过顶级ID加载菜单
      * 
-     * @param url
+     * @param pid
      * @return
      */
-    public Object loadLeftMenu(String url) {
+    public Object loadMenu(String pid) {
 
         return null;
     }

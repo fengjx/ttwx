@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-	<meta name="decorator" content="sys"/>
+	<meta name="decorator" content="admin"/>
 	<title>接口配置</title>
 </head>
 <body>

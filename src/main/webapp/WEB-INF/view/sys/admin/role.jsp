@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-	<meta name="decorator" content="sys"/>
+	<meta name="decorator" content="admin"/>
 	<title>角色管理</title>
 </head>
 <body>
