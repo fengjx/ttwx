@@ -26,6 +26,7 @@
     </script>
 </head>
 <body class="no-skin">
+<c:set var="menus" value="${fns:getMenus()}"></c:set>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-container">
         <div class="navbar-header">
@@ -40,7 +41,7 @@
         天天微信平台
       </span>
             <ul id="head-menu" class="nav navbar-nav pull-left">
-                <c:forEach var="m" items="${fns:getMenus()}">
+                <c:forEach var="m" items="${menus}">
                     <c:if test="${m.level eq '1' && m.is_show eq '1'}">
                     <li><a href="${adminPath}/f/${m.menu_id}">${m.menu_name}</a></li>
                     </c:if>
