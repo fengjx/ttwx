@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-	<meta name="decorator" content="wechat"/>
+	<meta name="decorator" content="admin"/>
 	<title>授权设置</title>
 	<script type="text/javascript">
 		var valid_state = '${wechatAccount.valid_state}';

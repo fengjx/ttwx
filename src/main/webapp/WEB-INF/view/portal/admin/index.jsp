@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta name="decorator" content="portal"/>
+    <meta name="decorator" content="admin"/>
     <title>门户</title>
 </head>
 <body>

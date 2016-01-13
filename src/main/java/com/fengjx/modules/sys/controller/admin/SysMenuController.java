@@ -82,22 +82,11 @@ public class SysMenuController extends MyController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/delete")
+    @RequestMapping(value = "delete")
     @ResponseBody
     public String delete(@RequestParam(required = true) String id) {
         sysMenu.deleteMenuById(id);
         return retSuccess("菜单成功删除");
-    }
-
-    /**
-     * 通过顶级ID加载菜单
-     * 
-     * @param pid
-     * @return
-     */
-    public Object loadMenu(String pid) {
-
-        return null;
     }
 
 }

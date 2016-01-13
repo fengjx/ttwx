@@ -5,7 +5,6 @@ import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.plugin.db.page.AdapterPage;
 import com.fengjx.modules.common.controller.MyController;
 import com.fengjx.modules.sys.model.SysUser;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,12 +36,7 @@ public class SysUserController extends MyController {
         validateRequired("username", "用户名不能为空");
         validateRequired("email", "邮箱不能为空");
         Record record = getRecord(SysUser.class, request);
-        if (StringUtils.isBlank(record.getStr("id"))) {
-            record.set("pwd", "admin");
-            sysUser.register(record);
-        } else {
-            sysUser.update(record);
-        }
+        sysUser.saveOrUpdate(record);
         return retSuccess();
     }
 

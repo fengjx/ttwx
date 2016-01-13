@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta name="decorator" content="wechat"/>
+    <meta name="decorator" content="admin"/>
     <title>平台管理</title>
 </head>
 <body>

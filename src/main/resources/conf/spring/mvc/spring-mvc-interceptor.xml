@@ -13,6 +13,12 @@
             <mvc:mapping path="/**"/>
             <bean class="com.fengjx.modules.common.controller.interceptor.GlobalInterceptor"></bean>
         </mvc:interceptor>
+        <!-- 后台管理拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="${adminPath}"/>
+            <mvc:mapping path="${adminPath}/**"/>
+            <bean class="com.fengjx.modules.sys.controller.admin.interceptor.AdminInterceptor"></bean>
+        </mvc:interceptor>
         <!-- 分页请求拦截器 -->
         <mvc:interceptor>
             <mvc:mapping path="/**/pageList"/>

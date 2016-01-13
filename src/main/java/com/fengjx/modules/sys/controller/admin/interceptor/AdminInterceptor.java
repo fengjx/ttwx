@@ -1,20 +1,28 @@
 
 package com.fengjx.modules.sys.controller.admin.interceptor;
 
-import com.fengjx.commons.utils.CookieUtils;
+import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.WebUtil;
-import com.fengjx.modules.common.constants.AppConfig;
-import com.fengjx.modules.sys.entity.SysUserEntity;
+import com.fengjx.modules.sys.model.SysMenu;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class AdminInterceptor implements HandlerInterceptor {
 
-    private static final String LAST_URI = "last_uri";
+    /**
+     * 管理基础路径
+     */
+    @Value("${adminPath}")
+    protected String adminPath;
+
+    @Autowired
+    private SysMenu sysMenu;
 
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
             Object handler, Exception e) throws Exception {
@@ -35,21 +43,19 @@ public class AdminInterceptor implements HandlerInterceptor {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object handler) throws Exception {
-        HttpSession session = request.getSession();
-        SysUserEntity user = (SysUserEntity) session.getAttribute(AppConfig.LOGIN_FLAG);
-        // 登陆超时
-        if (null == user && !WebUtil.isAjax(request)) {
-            CookieUtils.setCookie(response, LAST_URI,
-                    WebUtil.getUriWidthParam(request).replace(request.getContextPath(), ""), 60 * 60);
-            // 如果是ajax请求
-            if (WebUtil.isAjax(request)) {
-                request.getRequestDispatcher("/common/loginTimeoutAjax").forward(request, response);
-            } else {
-                request.getRequestDispatcher("/common/loginTimeout").forward(request, response);
+        if (!WebUtil.isAjax(request)) {
+            String url = StringUtils.replace(request.getRequestURI(), request.getContextPath(), "");
+            Record menu = sysMenu.findByUrl(url);
+            if (!menu.isEmpty()) {
+                String pid = menu.getStr("id");
+                if (StringUtils.isNotBlank(menu.getStr("parents_ids"))) {
+                    pid = StringUtils.split(menu.getStr("parents_ids"), ",")[0];
+                } else if (StringUtils.isNotBlank(menu.getStr("parent_id"))) {
+                    pid = menu.getStr("parent_id");
+                }
+                request.setAttribute("admin_menu_pid", pid);
             }
-            return false;
         }
         return true;
     }
-
 }

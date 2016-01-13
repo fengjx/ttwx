@@ -12,6 +12,7 @@ import com.fengjx.commons.utils.DateUtils;
 import com.fengjx.commons.utils.StrUtil;
 import com.fengjx.modules.sys.entity.SysUserEntity;
 import com.fengjx.modules.sys.listener.RegisterEvent;
+import com.fengjx.modules.sys.utils.SysUtil;
 import com.fengjx.modules.sys.utils.UserUtil;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +41,16 @@ public class SysUser extends Model {
 
     public SysUserEntity get(String id) {
         return findById(id).toBean(SysUserEntity.class);
+    }
+
+    public void saveOrUpdate(Record record) {
+        if (StringUtils.isBlank(record.getStr("id"))) {
+            record.set("pwd", "admin");
+            register(record);
+        } else {
+            update(record);
+        }
+        SysUtil.deleteSysCache();
     }
 
     /**

@@ -5,6 +5,7 @@ import com.fengjx.commons.plugin.db.Mapper;
 import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.CommonUtils;
+import com.fengjx.modules.sys.utils.SysUtil;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -74,6 +75,7 @@ public class SysRole extends Model {
         String menuIds = record.getStr("menuIds");
         String[] ids = StringUtils.split(menuIds, ",");
         saveMenuRole(roleId, ids);
+        SysUtil.deleteSysCache();
     }
 
     /**
@@ -84,6 +86,7 @@ public class SysRole extends Model {
     public void deleteRole(String id) {
         deleteMenuRole(id);
         deleteById(id);
+        SysUtil.deleteSysCache();
     }
 
     /**
@@ -120,6 +123,7 @@ public class SysRole extends Model {
         sql.append(getTableName(SysRoleMenu.class));
         sql.append(" where role_id = ?");
         execute(sql.toString(), roleId);
+        SysUtil.deleteSysCache();
     }
 
     /**
@@ -145,6 +149,7 @@ public class SysRole extends Model {
                 return menuIds.length;
             }
         });
+        SysUtil.deleteSysCache();
     }
 
     /**
@@ -192,6 +197,7 @@ public class SysRole extends Model {
                 }
             });
         }
+        SysUtil.deleteSysCache();
     }
 
 }

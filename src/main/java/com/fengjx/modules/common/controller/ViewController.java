@@ -2,12 +2,12 @@
 package com.fengjx.modules.common.controller;
 
 import com.fengjx.commons.plugin.db.Record;
-import com.fengjx.commons.system.exception.MyRuntimeException;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.sys.model.SysMenu;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author fengjx. @date：2015/5/17 0017
  */
 @Controller
-public class ViewController {
+public class ViewController extends MyController {
 
     @Autowired
     private SysMenu sysMenu;
@@ -48,11 +48,18 @@ public class ViewController {
      * @return
      */
     @RequestMapping(value = "${adminPath}/f/{menuId}")
-    public String forward(@PathVariable("menuId") String menuId) {
+    public String forward(@PathVariable("menuId") String menuId, Model model) {
         Record menu = sysMenu.get(menuId);
         if (StringUtils.isBlank(menu.getStr("url"))) {
-            throw new MyRuntimeException("无效访问路径");
+            return "forward:" + adminPath;
         }
+        String pid = menu.getStr("id");
+        if (StringUtils.isNotBlank(menu.getStr("parents_ids"))) {
+            pid = StringUtils.split(menu.getStr("parents_ids"), ",")[0];
+        } else if (StringUtils.isNotBlank(menu.getStr("parent_id"))) {
+            pid = menu.getStr("parent_id");
+        }
+        model.addAttribute("admin_menu_pid", pid);
         return "forward:" + menu.getStr("url");
     }
 

@@ -32,9 +32,6 @@ public class UserUtil {
 
     public static final String CACHE_ROLE_LIST = "roleList";
     public static final String CACHE_MENU_LIST = "menuList";
-    public static final String CACHE_AREA_LIST = "areaList";
-    public static final String CACHE_OFFICE_LIST = "officeList";
-    public static final String CACHE_OFFICE_ALL_LIST = "officeAllList";
 
     private static final SysMenu sysMenu = SpringBeanFactoryUtil.getBean(SysMenu.class);
     private static final SysUser sysUser = SpringBeanFactoryUtil.getBean(SysUser.class);

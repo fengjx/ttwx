@@ -7,7 +7,9 @@ import com.fengjx.commons.plugin.db.Mapper;
 import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.modules.common.constants.AppConfig;
+import com.fengjx.modules.sys.utils.SysUtil;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,8 @@ import java.util.Map;
 public class SysMenu extends Model {
 
     private static final String TREE_MENU_CACHE = "listTreeMenu";
-    private static final String MENU__ID_CACHE = "menu_id_";
+    private static final String MENU_ID_CACHE = "menu_id_";
+    private static final String MENU_URL_CACHE = "menu_url_";
 
     private static final String ORDER_BY = "order by order_no , update_time desc";
 
@@ -43,21 +46,37 @@ public class SysMenu extends Model {
      * @return
      */
     public Record get(final String id) {
-        return EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, MENU__ID_CACHE + id, new IDataLoader<Record>() {
-            @Override
-            public Record load() {
-                if (StringUtils.isBlank(id)) {
-                    return new Record();
-                }
-                Record record = findById(id);
-                if (!record.isEmpty() && StringUtils.isNotBlank(record.getStr("parent_id"))) {
-                    Record parent = findById(record.getStr("parent_id"));
-                    record.set("parent_name", parent.get("name"));
-                    record.set("parent_level", parent.get("level"));
-                }
-                return record;
-            }
-        });
+        return EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, MENU_ID_CACHE + id,
+                new IDataLoader<Record>() {
+                    @Override
+                    public Record load() {
+                        if (StringUtils.isBlank(id)) {
+                            return new Record();
+                        }
+                        Record record = findById(id);
+                        if (!record.isEmpty() && StringUtils.isNotBlank(record.getStr("parent_id"))) {
+                            Record parent = findById(record.getStr("parent_id"));
+                            record.set("parent_name", parent.get("name"));
+                            record.set("parent_level", parent.get("level"));
+                        }
+                        return record;
+                    }
+                });
+    }
+
+    public Record findByUrl(final String url) {
+        if (StringUtils.isBlank(url)) {
+            return new Record();
+        }
+        return EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, MENU_URL_CACHE + url,
+                new IDataLoader<Record>() {
+                    @Override
+                    public Record load() {
+                        Map<String, Object> param = Maps.newHashMap();
+                        param.put("url", url);
+                        return findOne(param);
+                    }
+                });
     }
 
     /**
@@ -78,14 +97,40 @@ public class SysMenu extends Model {
     /**
      * 递归查询
      *
-     * @param pid 父级ID
+     * @param pid
      * @return
      */
     private List<Map<String, Object>> recursive(String pid) {
+        return recursive(pid, null);
+    }
+
+    /**
+     * 递归查询用户菜单
+     *
+     * @param pid
+     * @param userId
+     * @return
+     */
+    private List<Map<String, Object>> recursive(String pid, String userId) {
         List<Map<String, Object>> resList = Lists.newArrayList();
         List<Map<String, Object>> list;
-        StringBuilder sql = new StringBuilder(getSelectSql("a"));
+        StringBuilder sql = new StringBuilder(100);
+        sql.append("select ").append(getColumnsStr("a"));
+        sql.append(" from ").append(getTableName()).append(" a ");
+        if (StringUtils.isNotBlank(userId)) {
+            sql.append(" join ").append(getTableName(SysRoleMenu.class))
+                    .append(" c ON a.id = c.menu_id ");
+            sql.append(" join ").append(getTableName(SysRole.class))
+                    .append(" b ON c.role_id = b.id ");
+            sql.append(" join ").append(getTableName(SysUserRole.class))
+                    .append(" d ON b.id = d.role_id ");
+            sql.append(" join ").append(getTableName(SysUser.class))
+                    .append(" e ON d.user_id = e.id ");
+        }
         sql.append(" where 1 = 1 ");
+        if (StringUtils.isNotBlank(userId)) {
+            sql.append("and e.id = ? and b.is_valid = '1' and c.is_valid = '1' and e.is_valid = '1' ");
+        }
         if (StringUtils.isBlank(pid)) {
             sql.append(" and (a.parent_id is null or a.parent_id = '') ").append(ORDER_BY);
             list = findList(sql.toString());
@@ -99,7 +144,7 @@ public class SysMenu extends Model {
                 // 如果存在子节点（不是叶子节点），则继续递归查询
                 resList.add(m);
                 if (!isLeef(_id)) {
-                    List<Map<String, Object>> tmpList = recursive(_id);
+                    List<Map<String, Object>> tmpList = recursive(_id, userId);
                     m.put("isLeef", false);
                     m.put("isParent", true);
                     resList.addAll(tmpList);
@@ -112,20 +157,15 @@ public class SysMenu extends Model {
         return resList;
     }
 
-    // 删除菜单缓存数据
-    private void deleteMenuCache() {
-        EhCacheUtil.remove(AppConfig.EhcacheName.SYS_CACHE, TREE_MENU_CACHE);
-    }
-
     public void saveOrUpdate(Map<String, Object> attrs) {
         attrs.put("update_time", new Date());
         insertOrUpdate(attrs);
-        deleteMenuCache();
+        SysUtil.deleteSysCache();
     }
 
     public void deleteMenuById(String id) {
         deleteById(id);
-        deleteMenuCache();
+        SysUtil.deleteSysCache();
     }
 
     private static final String USER_MENU = "user_menu_";
@@ -144,17 +184,9 @@ public class SysMenu extends Model {
                 new IDataLoader<List<Map<String, Object>>>() {
                     @Override
                     public List<Map<String, Object>> load() {
-                        List<Map<String, Object>> menus = sysRoleMenu.findAllRoleMenus();
-                        List<Map<String, Object>> res = Lists.newArrayList();
-                        for (Map<String, Object> m : menus) {
-                            if (userId.equals(m.get("user_id"))) {
-                                res.add(m);
-                            }
-                        }
-                        return res;
+                        return recursive(null, userId);
                     }
                 });
     }
-
 
 }

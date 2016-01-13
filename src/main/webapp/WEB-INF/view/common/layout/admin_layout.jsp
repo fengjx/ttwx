@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/view/common/inc/path.jsp" %>
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
+<c:set var="menu_pid" value="${admin_menu_pid}"></c:set>
+<c:set var="menus" value="${fns:getMenus()}"></c:set>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -26,7 +28,6 @@
     </script>
 </head>
 <body class="no-skin">
-<c:set var="menus" value="${fns:getMenus()}"></c:set>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-container">
         <div class="navbar-header">
@@ -43,7 +44,7 @@
             <ul id="head-menu" class="nav navbar-nav pull-left">
                 <c:forEach var="m" items="${menus}">
                     <c:if test="${m.level eq '1' && m.is_show eq '1'}">
-                    <li><a href="${adminPath}/f/${m.menu_id}">${m.menu_name}</a></li>
+                    <li><a href="${domain}${m.url}">${m.name}</a></li>
                     </c:if>
                 </c:forEach>
             </ul>
@@ -74,13 +75,51 @@
 </nav>
 
 <div class="main-container">
-    <jsp:include page="/WEB-INF/view/sys/admin/inc_menu.jsp"></jsp:include>
+    <div id="side-menu" class="sidebar responsive">
+        <ul class="nav nav-sidebar nav-list">
+            <c:forEach var="m1" items="${menus}">
+                <c:if test="${menu_pid eq m1.parent_id}">
+                <c:set var="isLeef" value="${m1.isLeef}"></c:set>
+                <li>
+                    <a href="<c:choose><c:when test="${not empty m1.url}">${domain}${m1.url}</c:when><c:otherwise>javascript:void (0);</c:otherwise></c:choose>">
+                        <i class=" icon-list menu-icon"></i>
+                        <span class="menu-text"> ${m1.name} </span>
+                        <c:if test="${!isLeef}">
+                        <b class="arrow icon-angle-down"></b>
+                        </c:if>
+                    </a>
+                    <b class="arrow"></b>
+                    <c:if test="${!isLeef}">
+                    <ul class="submenu">
+                        <c:forEach var="m2" items="${menus}">
+                            <c:if test="${m2.parent_id eq m1.id}">
+                                <li>
+                                    <a href="${domain}${m2.url}">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        ${m2.name}
+                                    </a>
+                                    <b class="arrow"></b>
+                                </li>
+                            </c:if>
+                        </c:forEach>
+                    </ul>
+                    </c:if>
+                </li>
+                </c:if>
+            </c:forEach>
+        </ul>
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i class="ace-icon icon-arrow-left"></i>
+        </div>
+    </div>
+
     <div class="main-content">
         <div id="context" class="main-content-inner">
             <sitemesh:body/>
         </div>
     </div>
 </div>
+<script src="${resourceUrl}/script/common/leftMenu.js?v=2015082001" type="text/javascript"></script>
 </body>
 </html>
 

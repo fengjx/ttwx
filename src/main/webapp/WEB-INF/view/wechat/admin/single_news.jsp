@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta name="decorator" content="wechat"/>
+    <meta name="decorator" content="admin"/>
     <title>单图文本</title>
     <link href="${resourceUrl}/css/material.css?v=2014030901"	rel="stylesheet" type="text/css" />
     <link href="${resourceUrl}/css/appmsg_edit.css?v=2014030901"	rel="stylesheet" type="text/css" />
