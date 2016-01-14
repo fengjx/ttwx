@@ -5,6 +5,7 @@
 <%@ taglib prefix="sys" tagdir="/WEB-INF/tags/sys" %>
 <%@ taglib prefix="myform" tagdir="/WEB-INF/tags/form" %>
 <%@ taglib prefix="fns" uri="/WEB-INF/tlds/fns.tld" %>
+<%@ taglib prefix="shiro" uri="/WEB-INF/tlds/shiros.tld" %>
 <c:set var="appName" value="${fns:getConst('APP_NAME')}"/>
 <c:set var="keywords" value="${fns:getConst('KEYWORDS')}"/>
 <c:set var="description" value="${fns:getConst('DESCRIPTION')}"/>

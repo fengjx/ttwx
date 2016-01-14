@@ -20,6 +20,7 @@ public final class SysUtil {
      */
     public static void deleteSysCache() {
         EhCacheUtil.removeAll(AppConfig.EhcacheName.SYS_CACHE);
+        UserUtil.removeCache(UserUtil.CACHE_MENU_LIST);
     }
 
 }

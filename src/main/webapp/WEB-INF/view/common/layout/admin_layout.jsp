@@ -78,11 +78,11 @@
     <div id="side-menu" class="sidebar responsive">
         <ul class="nav nav-sidebar nav-list">
             <c:forEach var="m1" items="${menus}">
-                <c:if test="${menu_pid eq m1.parent_id}">
+                <c:if test="${menu_pid eq m1.parent_id && '1' eq m1.is_show}">
                 <c:set var="isLeef" value="${m1.isLeef}"></c:set>
                 <li>
                     <a href="<c:choose><c:when test="${not empty m1.url}">${domain}${m1.url}</c:when><c:otherwise>javascript:void (0);</c:otherwise></c:choose>">
-                        <i class=" icon-list menu-icon"></i>
+                        <i class="${m1.icon}"></i>
                         <span class="menu-text"> ${m1.name} </span>
                         <c:if test="${!isLeef}">
                         <b class="arrow icon-angle-down"></b>
@@ -92,7 +92,7 @@
                     <c:if test="${!isLeef}">
                     <ul class="submenu">
                         <c:forEach var="m2" items="${menus}">
-                            <c:if test="${m2.parent_id eq m1.id}">
+                            <c:if test="${m2.parent_id eq m1.id && '1' eq m2.is_show}">
                                 <li>
                                     <a href="${domain}${m2.url}">
                                         <i class="menu-icon fa fa-caret-right"></i>

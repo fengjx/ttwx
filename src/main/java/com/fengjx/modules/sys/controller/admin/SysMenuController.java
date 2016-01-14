@@ -71,7 +71,7 @@ public class SysMenuController extends MyController {
     @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
     public String addOrUpdate(HttpServletRequest request) {
-        Map<String, Object> attrs = getNotBlankRequestMap(request);
+        Map<String, Object> attrs = getRequestMap(request);
         sysMenu.saveOrUpdate(attrs);
         return retSuccess();
     }

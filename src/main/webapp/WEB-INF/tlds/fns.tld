@@ -80,6 +80,7 @@
         <function-signature>boolean startsWith(java.lang.CharSequence, java.lang.CharSequence)</function-signature>
         <example>${fns:startsWith(str,prefix)}</example>
     </function>
+
     <function>
         <description>判断字符串是否以某某结尾</description>
         <name>endsWith</name>
@@ -87,6 +88,23 @@
         <function-signature>boolean endsWith(java.lang.CharSequence, java.lang.CharSequence)</function-signature>
         <example>${fns:endsWith(str,suffix)}</example>
     </function>
+
+    <function>
+        <description>缩写字符串，超过最大宽度用“...”表示</description>
+        <name>abbr</name>
+        <function-class>com.fengjx.commons.utils.StrUtil</function-class>
+        <function-signature>java.lang.String abbr(java.lang.String, int)</function-signature>
+        <example>${fns:abbr(str,length)}</example>
+    </function>
+
+    <function>
+        <description>替换掉HTML标签</description>
+        <name>replaceHtml</name>
+        <function-class>com.fengjx.commons.utils.StrUtil</function-class>
+        <function-signature>java.lang.String replaceHtml(java.lang.String)</function-signature>
+        <example>${fns:replaceHtml(html)}</example>
+    </function>
+
     <function>
         <description>判断集合里是否包含对象</description>
         <name>contains</name>

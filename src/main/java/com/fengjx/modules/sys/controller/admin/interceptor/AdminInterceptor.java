@@ -48,8 +48,8 @@ public class AdminInterceptor implements HandlerInterceptor {
             Record menu = sysMenu.findByUrl(url);
             if (!menu.isEmpty()) {
                 String pid = menu.getStr("id");
-                if (StringUtils.isNotBlank(menu.getStr("parents_ids"))) {
-                    pid = StringUtils.split(menu.getStr("parents_ids"), ",")[0];
+                if (StringUtils.isNotBlank(menu.getStr("parent_ids"))) {
+                    pid = StringUtils.split(menu.getStr("parent_ids"), ",")[0];
                 } else if (StringUtils.isNotBlank(menu.getStr("parent_id"))) {
                     pid = menu.getStr("parent_id");
                 }

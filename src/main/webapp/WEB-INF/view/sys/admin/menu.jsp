@@ -23,21 +23,25 @@
 		<table id="tree-table" class="table table-bordered table-striped table-condensed">
 			<colgroup>
 				<col width="15%"/>
+				<col width="4%"/>
 				<col width="30%"/>
 				<col width="10%"/>
 				<col width="5%"/>
 				<col width="5%"/>
 				<col width="15%"/>
+				<col width="6%"/>
 				<col width="10%"/>
 			</colgroup>
 			<thead>
 				<tr>
 					<th>菜单名称</th>
+					<th>图标</th>
 					<th>链接</th>
 					<th>权限标识</th>
 					<th>显示</th>
 					<th>排序</th>
 					<th>更新时间</th>
+					<th>是否启用</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -45,11 +49,13 @@
 			<c:forEach items="${treeTable}" var="item">
 				<tr class="treegrid-${item.id} <c:if test="${item.parent_id ne null}">treegrid-parent-${item.parent_id}</c:if> ">
 					<td>${item.name}</td>
+					<td><i class="${item.icon}"></i></td>
 					<td>${item.url}</td>
-					<td>${item.permission}</td>
+					<td>${fns:abbr(item.permission, 30)}</td>
 					<td>${fns:getDictLabel(item.is_show, "yesNo")}</td>
 					<td>${item.order_no}</td>
 					<td>${item.update_time}</td>
+					<td>${fns:getDictLabel(item.is_valid, "yesNo")}</td>
 					<td>
 						<a class="btn btn-info btn-minier" href="${adminPath}/sys/menu/form?id=${item.id}">
 							<i class="glyphicon glyphicon-edit"></i>
