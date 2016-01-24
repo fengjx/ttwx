@@ -9,10 +9,11 @@ import com.fengjx.commons.utils.WebUtil;
 import com.fengjx.commons.web.MyExecuteCallback;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.common.controller.MyController;
+import com.fengjx.modules.sys.bean.SysUser;
 import com.fengjx.modules.sys.entity.SysUserEntity;
-import com.fengjx.modules.sys.model.SysUser;
 import com.fengjx.modules.sys.security.FormAuthenticationFilter;
 import com.fengjx.modules.sys.security.SystemAuthorizingRealm;
+import com.fengjx.modules.sys.service.SysUserService;
 import com.fengjx.modules.sys.utils.UserUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.util.SavedRequest;
@@ -44,7 +45,7 @@ public class LoginController extends MyController {
     private SessionDAO sessionDAO;
 
     @Autowired
-    private SysUser sysUser;
+    private SysUserService sysUserService;
 
     /**
      * 登录的逻辑已经交给shiro，登录错误后会跳到这里
@@ -134,14 +135,14 @@ public class LoginController extends MyController {
     @RequestMapping(value = "/validEmail")
     @ResponseBody
     public String validEmail(String email) {
-        boolean flag = sysUser.validEmail(email);
+        boolean flag = sysUserService.validEmail(email);
         return flag + "";
     }
 
     @RequestMapping(value = "/validUser")
     @ResponseBody
     public String validUser(String username) {
-        boolean flag = sysUser.validUsername(username);
+        boolean flag = sysUserService.validUsername(username);
         return flag + "";
     }
 
@@ -167,7 +168,7 @@ public class LoginController extends MyController {
         MyExecuteCallback callback = new MyExecuteCallback() {
             @Override
             public void execute() throws Exception {
-                sysUser.register(getRecord(SysUser.class, request));
+                sysUserService.register(getModel(SysUser.class, request));
             }
         };
         return doResult(callback, "注册用户失败！");
@@ -181,7 +182,7 @@ public class LoginController extends MyController {
      */
     @RequestMapping(value = "/activate")
     public String activate(String ser) {
-        if (sysUser.activate(ser)) {
+        if (sysUserService.activate(ser)) {
             return "sys/display/activate-ok";
         }
         return "sys/display/activate-error";

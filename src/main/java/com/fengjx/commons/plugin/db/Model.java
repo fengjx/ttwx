@@ -1,16 +1,19 @@
 
 package com.fengjx.commons.plugin.db;
 
-import com.fengjx.commons.utils.CommonUtils;
-import com.fengjx.commons.plugin.db.page.Page;
-import com.fengjx.commons.plugin.db.page.PageContext;
-
+import com.fengjx.commons.web.page.PageContext;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,17 +21,32 @@ import java.util.Map;
 /**
  * @author fengjx. @date：2015/5/8 0008
  */
-public abstract class Model {
+public abstract class Model<B extends BaseBean> {
 
     // 注入jdbcTemplate
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public boolean insert(Class<? extends Model> cls, Map<String, Object> attrs) {
+    private Class<B> beanClazz;
+
+    public boolean save(B bean) {
+        return insert(bean.getColumns());
+    }
+
+    public boolean insert(Map<String, Object> attrs) {
+        return insert(getUsefulClass(), attrs);
+    }
+
+    @Deprecated
+    public boolean insert(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
         Table table = TableUtil.getTable(cls);
-        String pk = table.getPrimaryKey();
-        if (StringUtils.isBlank((String) attrs.get(pk))) {
-            attrs.put(pk, CommonUtils.getPrimaryKey());
+        if (Config.autoId) {
+            String[] pk = table.getPrimaryKey();
+            for (String id : pk) {
+                if (StringUtils.isBlank((String) attrs.get(id))) {
+                    attrs.put(id, Config.idGenerator.createId());
+                }
+            }
         }
         StringBuilder sql = new StringBuilder();
         List<Object> params = new ArrayList<>();
@@ -36,52 +54,15 @@ public abstract class Model {
         return jdbcTemplate.update(sql.toString(), params.toArray()) >= 1;
     }
 
-    public boolean insert(Map<String, Object> attrs) {
-        return insert(getClass(), attrs);
-    }
-
-    public boolean insert(Class<? extends Model> cls, Record record) {
+    @Deprecated
+    public boolean insert(Class<? extends BaseBean> cls, Record record) {
         return insert(cls, record.getColumns());
     }
 
+    @Deprecated
     public boolean insert(Record record) {
-        return insert(getClass(), record);
+        return insert(getUsefulClass(), record);
     }
-
-    public void insertOrUpdate(Map<String, Object> attrs) {
-        insertOrUpdate(getClass(), attrs);
-    }
-
-    /**
-     * 新增或修改 - 如果是新增，那么生成的ID是UUID
-     *
-     * @param cls
-     * @param attrs
-     */
-    public void insertOrUpdate(Class<? extends Model> cls, Map<String, Object> attrs) {
-        Table table = TableUtil.getTable(cls);
-        String pk = table.getPrimaryKey();
-        if (StringUtils.isBlank((String) attrs.get(pk))) {
-            insert(attrs);
-        } else {
-            update(attrs);
-        }
-    }
-
-    public void insertOrUpdate(Record record) {
-        insertOrUpdate(getClass(), record);
-    }
-
-    /**
-     * 新增或修改 - 如果是新增，那么生成的ID是UUID
-     *
-     * @param cls
-     * @param record
-     */
-    public void insertOrUpdate(Class<? extends Model> cls, Record record) {
-        insertOrUpdate(cls, record.getColumns());
-    }
-
 
     /**
      * Delete model by id.
@@ -93,10 +74,31 @@ public abstract class Model {
         if (id == null) {
             throw new IllegalArgumentException("id can not be null");
         }
-        return deleteById(this.getClass(), id);
+        return deleteById(getUsefulClass(), id);
     }
 
-    public boolean deleteById(Class<? extends Model> cls, Object id) {
+    /**
+     * 用于复合主键
+     *
+     * @param id
+     * @return
+     */
+    public boolean deleteById(Object... id) {
+        if (id == null || id.length < 1) {
+            throw new IllegalArgumentException("id can not be null");
+        }
+        return deleteById(getUsefulClass(), id);
+    }
+
+    @Deprecated
+    public boolean deleteById(Class<? extends BaseBean> cls, Object id) {
+        Table table = TableUtil.getTable(cls);
+        String sql = Config.dialect.forModelDeleteById(table);
+        return jdbcTemplate.update(sql, id) >= 1;
+    }
+
+    @Deprecated
+    public boolean deleteById(Class<? extends BaseBean> cls, Object... id) {
         Table table = TableUtil.getTable(cls);
         String sql = Config.dialect.forModelDeleteById(table);
         return jdbcTemplate.update(sql, id) >= 1;
@@ -106,22 +108,25 @@ public abstract class Model {
      * Update model.
      */
     public boolean update(Map<String, Object> attrs) {
-        return update(getClass(), attrs);
+        return update(getUsefulClass(), attrs);
     }
 
     /**
      * Update model.
      */
-    public boolean update(Class<? extends Model> cls, Map<String, Object> attrs) {
+    @Deprecated
+    public boolean update(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
         Table table = TableUtil.getTable(cls);
-        String pKey = table.getPrimaryKey();
-        Object id = attrs.get(pKey);
-        if (id == null) {
-            throw new MyDbException("You can't update model without Primary Key.");
+        String[] pKeys = table.getPrimaryKey();
+        for (String pKey : pKeys) {
+            Object id = attrs.get(pKey);
+            if (id == null)
+                throw new MyDbException("You can't update model without Primary Key, " + pKey
+                        + " can not be null.");
         }
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<>();
-        Config.dialect.forModelUpdate(table, attrs, pKey, id, sql, paras);
+        Config.dialect.forModelUpdate(table, attrs, sql, paras);
         if (paras.size() <= 1) { // Needn't update
             return false;
         }
@@ -132,37 +137,103 @@ public abstract class Model {
     /**
      * Update model.
      */
-    public boolean update(Record record) {
-        return update(getClass(), record);
+    public boolean update(B bean) {
+        if (bean.getModifyFlag().isEmpty()) {
+            return false;
+        }
+        Table table = TableUtil.getTable(getUsefulClass());
+        String[] pKeys = table.getPrimaryKey();
+        Map<String, Object> attrs = bean.getColumns();
+        for (String pKey : pKeys) {
+            Object id = attrs.get(pKey);
+            if (id == null) {
+                throw new MyDbException("You can't update model without Primary Key, " + pKey
+                        + " can not be null.");
+            }
+        }
+        StringBuilder sql = new StringBuilder();
+        List<Object> paras = Lists.newArrayList();
+        Config.dialect.forModelUpdate(table, attrs, bean.getModifyFlag(), sql, paras);
+        // Needn't update
+        if (paras.size() <= 1) {
+            return false;
+        }
+        int result = jdbcTemplate.update(sql.toString(), paras.toArray());
+        if (result >= 1) {
+            bean.getModifyFlag().clear();
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Update model.
-     */
-    public boolean update(Class<? extends Model> cls, Record record) {
-        return update(cls, record.getColumns());
-    }
-
-
-    public Record findById(Object id) {
-        return findById(id, "*");
-    }
-
-    /**
-     * Find model by id. Fetch the specific columns only. Example: User user =
-     * findById(15, "name, age");
+     * Find model by id.
+     * <p/>
+     * 
+     * <pre>
+     * Example:
+     * User user = User.dao.findById(123);
+     * </pre>
      *
-     * @param id      the id value of the model
-     * @param columns the specific columns separate with comma character ==> ","
+     * @param idValue the id value of the model
      */
-    public Record findById(Object id, String columns) {
-        return findById(this.getClass(), id, columns);
+    public B findById(Object idValue) {
+        return findByIdLoadColumns(idValue, "*");
     }
 
-    public Record findById(Class<? extends Model> cls, Object id, String columns) {
-        Table table = TableUtil.getTable(cls);
+    /**
+     * Find model by composite id values.
+     * <p/>
+     * 
+     * <pre>
+     * Example:
+     * User user = User.dao.findById(123, 456);
+     * </pre>
+     *
+     * @param idValues the composite id values of the model
+     */
+    public B findById(Object... idValues) {
+        return findByIdLoadColumns(idValues, "*");
+    }
+
+    /**
+     * Find model by id and load specific columns only.
+     * <p/>
+     * 
+     * <pre>
+     * Example:
+     * User user = User.dao.findByIdLoadColumns(123, "name, age");
+     * </pre>
+     *
+     * @param idValue the id value of the model
+     * @param columns the specific columns to load
+     */
+    public B findByIdLoadColumns(Object idValue, String columns) {
+        return findByIdLoadColumns(new Object[] {
+                idValue
+        }, columns);
+    }
+
+    /**
+     * Find model by composite id values and load specific columns only.
+     * <p/>
+     * 
+     * <pre>
+     * Example:
+     * User user = User.dao.findByIdLoadColumns(new Object[]{123, 456}, "name, age");
+     * </pre>
+     *
+     * @param idValues the composite id values of the model
+     * @param columns the specific columns to load
+     */
+    public B findByIdLoadColumns(Object[] idValues, String columns) {
+        Table table = TableUtil.getTable(getUsefulClass());
+        if (table.getPrimaryKey().length != idValues.length) {
+            throw new IllegalArgumentException(
+                    "id values error, need " + table.getPrimaryKey().length + " id value");
+        }
         String sql = Config.dialect.forModelFindById(table, columns);
-        return findOne(sql, id);
+        return findFirst(sql, idValues);
     }
 
     /**
@@ -171,23 +242,50 @@ public abstract class Model {
      * @param attrs 查询条件及参数
      * @return
      */
+    @Deprecated
     public Record findOne(Map<String, Object> attrs) {
-        return findOne(this.getClass(), attrs);
+        return findOne(getUsefulClass(), attrs);
+    }
+
+    /**
+     * 查询单条记录
+     *
+     * @param attrs
+     * @return
+     */
+    public B findFirst(Map<String, Object> attrs) {
+        return findFirst(getUsefulClass(), attrs);
     }
 
     /**
      * 根据Model查询单条记录
      *
-     * @param cls   映射的class
+     * @param cls 映射的class
      * @param attrs 查询条件及参数
      * @return
      */
-    public Record findOne(Class<? extends Model> cls, Map<String, Object> attrs) {
+    @Deprecated
+    public Record findOne(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<>();
         Config.dialect.forModelFind(table, sql, "*", null, attrs, paras);
         return findOne(sql.toString(), paras.toArray());
+    }
+
+    /**
+     * 查询单条记录
+     *
+     * @param cls
+     * @param attrs
+     * @return
+     */
+    public B findFirst(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
+        Table table = TableUtil.getTable(cls);
+        StringBuilder sql = new StringBuilder();
+        List<Object> paras = Lists.newArrayList();
+        Config.dialect.forModelFind(table, sql, "*", null, attrs, paras);
+        return findFirst(sql.toString(), paras.toArray());
     }
 
     /**
@@ -198,14 +296,30 @@ public abstract class Model {
      * @return
      */
     public Record findOne(String sql, Object... params) {
-        List<Map<String, Object>> list = findList(sql, params);
+        List<Record> list = find(Record.class, sql, params);
         if (CollectionUtils.isEmpty(list)) {
             return new Record();
         } else if (list.size() > 1) {
             throw new MyDbException("Incorrect result size: expected 1, actual " + list.size());
         }
-        Map<String, Object> map = list.get(0);
-        return new Record(map);
+        return list.get(0);
+    }
+
+    /**
+     * 根据sql查询单条记录
+     *
+     * @param sql
+     * @param params
+     * @return
+     */
+    public B findFirst(String sql, Object... params) {
+        List<B> list = find(sql, params);
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        } else if (list.size() > 1) {
+            throw new MyDbException("Incorrect result size: expected 1, actual " + list.size());
+        }
+        return list.get(0);
     }
 
     /**
@@ -214,8 +328,19 @@ public abstract class Model {
      * @param attrs 查询条件及参数
      * @return
      */
+    @Deprecated
     public List<Map<String, Object>> findList(Map<String, Object> attrs) {
         return findList(attrs, null);
+    }
+
+    /**
+     * 查询多条记录
+     *
+     * @param attrs 查询条件及参数
+     * @return
+     */
+    public List<B> find(Map<String, Object> attrs) {
+        return find(attrs, null);
     }
 
     /**
@@ -225,19 +350,25 @@ public abstract class Model {
      * @param orderby 排序艾段
      * @return
      */
+    @Deprecated
     public List<Map<String, Object>> findList(Map<String, Object> attrs, String orderby) {
-        return findList(this.getClass(), attrs, orderby);
+        return findList(getUsefulClass(), attrs, orderby);
+    }
+
+    public List<B> find(Map<String, Object> attrs, String orderby) {
+        return find(getUsefulClass(), attrs, orderby);
     }
 
     /**
      * 根据Model查询多条记录
      *
-     * @param cls   映射的class
+     * @param cls 映射的class
      * @param attrs 查询条件及参数
      * @return
      */
-    public List<Map<String, Object>> findList(Class<? extends Model> cls,
-                                              Map<String, Object> attrs) {
+    @Deprecated
+    public List<Map<String, Object>> findList(Class<? extends BaseBean> cls,
+            Map<String, Object> attrs) {
         return findList(cls, attrs, null);
     }
 
@@ -249,14 +380,23 @@ public abstract class Model {
      * @param orderby 排序 "order by in_time"
      * @return
      */
-    public List<Map<String, Object>> findList(Class<? extends Model> cls,
-                                              Map<String, Object> attrs,
-                                              String orderby) {
+    @Deprecated
+    public List<Map<String, Object>> findList(Class<? extends BaseBean> cls,
+            Map<String, Object> attrs, String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<>();
         Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
         return findList(sql.toString(), paras.toArray());
+    }
+
+    public <T extends BaseBean> List<T> find(Class<T> cls, Map<String, Object> attrs,
+            String orderby) {
+        Table table = TableUtil.getTable(cls);
+        StringBuilder sql = new StringBuilder();
+        List<Object> paras = Lists.newArrayList();
+        Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
+        return find(cls, sql.toString(), paras.toArray());
     }
 
     /**
@@ -271,17 +411,60 @@ public abstract class Model {
     }
 
     /**
+     * 根据sql查询多条记录
+     *
+     * @param sql
+     * @param params
+     * @return
+     */
+    public <T extends Record> List<T> find(final Class<T> cls, String sql, Object... params) {
+        return jdbcTemplate.query(sql, new RowMapper<T>() {
+            @Override
+            public T mapRow(ResultSet rs, int rowNum) throws SQLException {
+                T bean;
+                try {
+                    bean = RecordBuilder.build(rs, cls);
+                } catch (InstantiationException | IllegalAccessException e) {
+                    throw new MyDbException(e);
+                }
+                return bean;
+            }
+        }, params);
+    }
+
+    /**
+     * 根据sql查询多条记录
+     *
+     * @param sql
+     * @param params
+     * @return
+     */
+    public List<B> find(String sql, Object... params) {
+        return find(getUsefulClass(), sql, params);
+    }
+
+    /**
      * 单表查询，查询当前Model关联的表，此查询依赖PageContext
      *
      * @param attrs
      * @return
      */
+    @Deprecated
     public Page<Map<String, Object>> paginate(Map<String, Object> attrs) {
         return paginate(attrs, null);
     }
 
+    public Page<B> page(Map<String, Object> attrs) {
+        return page(attrs, null);
+    }
+
+    @Deprecated
     public Page<Map<String, Object>> paginate(Map<String, Object> attrs, String orderby) {
-        return paginate(this.getClass(), attrs, orderby);
+        return paginate(getUsefulClass(), attrs, orderby);
+    }
+
+    public Page<B> page(Map<String, Object> attrs, String orderby) {
+        return page(getUsefulClass(), attrs, orderby);
     }
 
     /**
@@ -291,9 +474,14 @@ public abstract class Model {
      * @param attrs
      * @return
      */
-    public Page<Map<String, Object>> paginate(Class<? extends Model> cls,
-                                              Map<String, Object> attrs) {
+    @Deprecated
+    public Page<Map<String, Object>> paginate(Class<? extends BaseBean> cls,
+            Map<String, Object> attrs) {
         return paginate(cls, attrs, null);
+    }
+
+    public Page<B> page(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
+        return page(cls, attrs, null);
     }
 
     /**
@@ -304,15 +492,23 @@ public abstract class Model {
      * @param orderby
      * @return
      */
-    public Page<Map<String, Object>> paginate(Class<? extends Model> cls,
-                                              Map<String, Object> attrs,
-                                              String orderby) {
+    @Deprecated
+    public Page<Map<String, Object>> paginate(Class<? extends BaseBean> cls,
+            Map<String, Object> attrs, String orderby) {
         Table table = TableUtil.getTable(cls);
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<>();
         Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
         return paginate(PageContext.getPageNumber(), PageContext.getPageSize(), sql.toString(),
                 paras.toArray());
+    }
+
+    public Page<B> page(Class<? extends BaseBean> cls, Map<String, Object> attrs, String orderby) {
+        Table table = TableUtil.getTable(cls);
+        StringBuilder sql = new StringBuilder();
+        List<Object> paras = new ArrayList<>();
+        Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
+        return page(sql.toString(), paras.toArray());
     }
 
     /**
@@ -327,6 +523,17 @@ public abstract class Model {
     }
 
     /**
+     * 分页查询，此查询依赖PageContext
+     *
+     * @param sql
+     * @param paras
+     * @return
+     */
+    public Page<B> page(String sql, Object... paras) {
+        return page(PageContext.getPageNumber(), PageContext.getPageSize(), sql, paras);
+    }
+
+    /**
      * 分页查询
      *
      * @param pageNumber
@@ -336,23 +543,42 @@ public abstract class Model {
      * @return
      */
     public Page<Map<String, Object>> paginate(int pageNumber, int pageSize, String sql,
-                                              Object... paras) {
+            Object... paras) {
         if (pageNumber < 1 || pageSize < 1) {
             throw new MyDbException("pageNumber and pageSize must be more than 0");
         }
-        Long totalRow = 0L;
-        int totalPage = 0;
+        int totalRow;
+        int totalPage;
         totalRow = getCount(sql, paras);
         if (totalRow < 1) {
-            return new Page<>(new ArrayList<Map<String, Object>>(0), pageNumber, pageSize, 0, 0L);
+            return new Page<>(Lists.<Map<String, Object>> newArrayList(), pageNumber, pageSize, 0,
+                    0);
         }
-        totalPage = totalRow.intValue() / pageSize;
+        totalPage = totalRow / pageSize;
         if (totalRow % pageSize != 0) {
             totalPage++;
         }
-        StringBuilder pageSql = new StringBuilder();
-        Config.dialect.forPaginate(pageSql, pageNumber, pageSize, sql);
-        List<Map<String, Object>> list = findList(pageSql.toString(), paras);
+        String pageSql = Config.dialect.forPaginate(pageNumber, pageSize, sql);
+        List<Map<String, Object>> list = findList(pageSql, paras);
+        return new Page<>(list, pageNumber, pageSize, totalPage, totalRow);
+    }
+
+    public Page<B> page(int pageNumber, int pageSize, String sql, Object... paras) {
+        if (pageNumber < 1 || pageSize < 1) {
+            throw new MyDbException("pageNumber and pageSize must be more than 0");
+        }
+        int totalRow;
+        int totalPage;
+        totalRow = getCount(sql, paras);
+        if (totalRow < 1) {
+            return new Page<>(Lists.<B> newArrayList(), pageNumber, pageSize, 0, 0);
+        }
+        totalPage = totalRow / pageSize;
+        if (totalRow % pageSize != 0) {
+            totalPage++;
+        }
+        String pageSql = Config.dialect.forPaginate(pageNumber, pageSize, sql);
+        List<B> list = find(getUsefulClass(), pageSql, paras);
         return new Page<>(list, pageNumber, pageSize, totalPage, totalRow);
     }
 
@@ -363,10 +589,10 @@ public abstract class Model {
      * @param paras
      * @return
      */
-    public Long getCount(String sql, Object... paras) {
+    public int getCount(String sql, Object... paras) {
         StringBuilder countSql = new StringBuilder();
         Config.dialect.forCount(countSql, sql);
-        return jdbcTemplate.queryForObject(countSql.toString(), paras, Long.class);
+        return jdbcTemplate.queryForObject(countSql.toString(), paras, Integer.class);
     }
 
     /**
@@ -377,13 +603,9 @@ public abstract class Model {
      * @throws Exception
      */
     public boolean isLeef(Object pid) {
-        StringBuilder sql = new StringBuilder("select * from ");
-        sql.append(getTableName()).append(" where ").append(getParentId()).append(" = ?");
-        Long count = getCount(sql.toString(), pid);
-        if (count > 0) {
-            return false;
-        }
-        return true;
+        int count = getCount("select * from " + getTableName() + " where " + getParentId() + " = ?",
+                pid);
+        return count <= 0;
     }
 
     /**
@@ -435,7 +657,7 @@ public abstract class Model {
      * @return
      */
     public String getColumnsStr() {
-        return getColumnsStr(this.getClass());
+        return getColumnsStr(getUsefulClass());
     }
 
     /**
@@ -445,7 +667,7 @@ public abstract class Model {
      * @return
      */
     public String getColumnsStr(String alias) {
-        return getColumnsStr(this.getClass(), alias);
+        return getColumnsStr(getUsefulClass(), alias);
     }
 
     /**
@@ -454,7 +676,7 @@ public abstract class Model {
      * @param cls
      * @return
      */
-    public String getColumnsStr(Class<? extends Model> cls) {
+    public String getColumnsStr(Class<? extends BaseBean> cls) {
         Table t = TableUtil.getTable(cls);
         return t.getColumnsStr();
     }
@@ -465,7 +687,7 @@ public abstract class Model {
      * @param cls
      * @return
      */
-    public String getColumnsStr(Class<? extends Model> cls, String alias) {
+    public String getColumnsStr(Class<? extends BaseBean> cls, String alias) {
         Table t = TableUtil.getTable(cls);
         StringBuilder columnsStr = new StringBuilder();
         String[] columns = t.getColumns();
@@ -482,7 +704,7 @@ public abstract class Model {
      * @param cls
      * @return
      */
-    public String getTableName(Class<? extends Model> cls) {
+    public String getTableName(Class<? extends BaseBean> cls) {
         Table t = TableUtil.getTable(cls);
         return t.getName();
     }
@@ -493,7 +715,7 @@ public abstract class Model {
      * @return
      */
     public String getTableName() {
-        return getTableName(this.getClass());
+        return getTableName(getUsefulClass());
     }
 
     /**
@@ -502,7 +724,18 @@ public abstract class Model {
      * @param cls
      * @return
      */
-    public String getPrimaryKey(Class<? extends Model> cls) {
+    public String getPrimaryKey(Class<? extends BaseBean> cls) {
+        Table t = TableUtil.getTable(cls);
+        return t.getPrimaryKey()[0];
+    }
+
+    /**
+     * 获得指定Model的主键名称
+     *
+     * @param cls
+     * @return
+     */
+    public String[] getPrimaryKeys(Class<? extends BaseBean> cls) {
         Table t = TableUtil.getTable(cls);
         return t.getPrimaryKey();
     }
@@ -513,7 +746,7 @@ public abstract class Model {
      * @return
      */
     public String getPrimaryKey() {
-        return getPrimaryKey(this.getClass());
+        return getPrimaryKey(getUsefulClass());
     }
 
     /**
@@ -522,7 +755,7 @@ public abstract class Model {
      * @param cls
      * @return
      */
-    public String getParentId(Class<? extends Model> cls) {
+    public String getParentId(Class<? extends BaseBean> cls) {
         Table t = TableUtil.getTable(cls);
         return t.getParentId();
     }
@@ -533,7 +766,7 @@ public abstract class Model {
      * @return
      */
     public String getParentId() {
-        return getParentId(this.getClass());
+        return getParentId(getUsefulClass());
     }
 
     /**
@@ -542,7 +775,7 @@ public abstract class Model {
      * @param cls
      * @return
      */
-    public String getSelectSql(Class<? extends Model> cls) {
+    public String getSelectSql(Class<? extends BaseBean> cls) {
         StringBuilder sql = new StringBuilder();
         sql.append("select ").append(getColumnsStr(cls));
         sql.append(" from ").append(getTableName(cls));
@@ -556,7 +789,7 @@ public abstract class Model {
      * @param alias 表的别名
      * @return
      */
-    public String getSelectSql(Class<? extends Model> cls, String alias) {
+    public String getSelectSql(Class<? extends BaseBean> cls, String alias) {
         StringBuilder sql = new StringBuilder();
         sql.append("select ").append(getColumnsStr(cls, alias));
         sql.append(" from ").append(getTableName(cls)).append(" ").append(alias);
@@ -569,7 +802,7 @@ public abstract class Model {
      * @return
      */
     public String getSelectSql() {
-        return getSelectSql(this.getClass());
+        return getSelectSql(getUsefulClass());
     }
 
     /**
@@ -578,7 +811,16 @@ public abstract class Model {
      * @return
      */
     public String getSelectSql(String alias) {
-        return getSelectSql(this.getClass(), alias);
+        return getSelectSql(getUsefulClass(), alias);
+    }
+
+    private Class<B> getUsefulClass() {
+        if (this.beanClazz == null) {
+            Type genType = this.getClass().getGenericSuperclass();
+            Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
+            this.beanClazz = (Class<B>) params[0];
+        }
+        return this.beanClazz;
     }
 
     public JdbcTemplate getJdbcTemplate() {

@@ -15,6 +15,7 @@
 <link href="${resourceUrl}/css/common.css" rel="stylesheet" type="text/css"/>
 <script src="${resourceUrl}/js/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="${resourceUrl}/js/vue.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/scojs/js/sco.message.js" type="text/javascript"></script>
 <script src="${resourceUrl}/scojs/js/sco.valid.js" type="text/javascript"></script>

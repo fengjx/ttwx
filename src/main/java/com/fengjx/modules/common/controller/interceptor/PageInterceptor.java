@@ -1,12 +1,11 @@
 
 package com.fengjx.modules.common.controller.interceptor;
 
-import com.fengjx.commons.plugin.db.Config;
-import com.fengjx.commons.plugin.db.page.PageContext;
-import com.fengjx.commons.plugin.db.page.adapter.BootstrapPage;
-import com.fengjx.commons.plugin.db.page.adapter.JqGridPage;
 import com.fengjx.commons.utils.LogUtil;
-
+import com.fengjx.commons.web.page.PageContext;
+import com.fengjx.commons.web.page.adapter.BootstrapPage;
+import com.fengjx.commons.web.page.adapter.JqGridPage;
+import com.fengjx.modules.common.constants.AppConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +44,9 @@ public class PageInterceptor implements HandlerInterceptor {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object handler) throws Exception {
-        if (JqGridPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(Config.adapterPageName)) {
+        if (JqGridPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(AppConfig.ADAPTER_PAGE_NAME)) {
             parseJqGridPage(request, response);
-        } else if (BootstrapPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(Config.adapterPageName)) {
+        } else if (BootstrapPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(AppConfig.ADAPTER_PAGE_NAME)) {
             parseDataTablePage(request, response);
         }
         return true;

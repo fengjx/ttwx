@@ -4,8 +4,7 @@ package com.fengjx.commons.plugin.db;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author fengjx.
- * @date：2015/5/9 0009
+ * @author fengjx. @date：2015/5/9 0009
  */
 public class TableUtil {
 
@@ -15,7 +14,7 @@ public class TableUtil {
      * @param cls
      * @return
      */
-    public static String getTableName(Class<? extends Model> cls) {
+    public static String getTableName(Class<? extends BaseBean> cls) {
         Mapper mapper = cls.getAnnotation(Mapper.class);
         if (null == mapper) {
             throw new MyDbException(cls.getName() + "没有添加@Table注解");
@@ -29,13 +28,21 @@ public class TableUtil {
      * @param cls
      * @return
      */
-    public static String getPrimaryKey(Class<? extends Model> cls) {
+    public static String[] getPrimaryKey(Class<? extends BaseBean> cls) {
         Mapper mapper = cls.getAnnotation(Mapper.class);
         if (null == mapper) {
-            throw new MyDbException(cls.getName() + "没有添加@Table注解");
+            throw new RuntimeException(cls.getName() + "没有添加@Table注解");
         }
-        String pk = mapper.id();
-        return StringUtils.isBlank(pk) ? Config.dialect.getDefaultPrimaryKey() : pk;
+        String[] pk;
+        String id = mapper.id();
+        if (StringUtils.isBlank(id)) {
+            pk = new String[] {
+                    Config.dialect.getDefaultPrimaryKey()
+            };
+        } else {
+            pk = StringUtils.split(id, ",");
+        }
+        return pk;
     }
 
     /**
@@ -44,7 +51,7 @@ public class TableUtil {
      * @param cls
      * @return
      */
-    public static String getParentId(Class<? extends Model> cls) {
+    public static String getParentId(Class<? extends BaseBean> cls) {
         Mapper mapper = cls.getAnnotation(Mapper.class);
         if (null == mapper) {
             throw new MyDbException(cls.getName() + "没有添加@Table注解");
@@ -52,16 +59,14 @@ public class TableUtil {
         return mapper.pid();
     }
 
-
     /**
      * 通过class获得映射table
      *
      * @param cls
      * @return
      */
-    public static Table getTable(Class<? extends Model> cls) {
+    public static Table getTable(Class<? extends BaseBean> cls) {
         return TableMapping.me().getTable(cls);
     }
-
 
 }

@@ -3,10 +3,9 @@ package com.fengjx.commons.plugin.db;
 
 import com.fengjx.commons.plugin.IPlugin;
 import com.fengjx.commons.plugin.db.dialect.Dialect;
+import com.fengjx.commons.plugin.db.dialect.MysqlDialect;
 import com.fengjx.commons.utils.ClassUtil;
 import com.fengjx.commons.utils.LogUtil;
-import com.fengjx.commons.plugin.db.dialect.MysqlDialect;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,8 +17,7 @@ import java.util.Set;
 /**
  * 表映射插件
  *
- * @author fengjx.
- * @date：2015/5/9 0009
+ * @author fengjx. @date：2015/5/9 0009
  */
 public class TableMappingPlugin implements IPlugin {
 
@@ -27,14 +25,13 @@ public class TableMappingPlugin implements IPlugin {
 
     private DataSource dataSource;
     private String[] packages;
-    private String adapterPageName;
 
     @Override
     public void start() {
-        setConfig(adapterPageName, null);
+        setConfig(new MysqlDialect());
         try {
-            Set<Class<? extends Model>> classSet = getModelClasses();
-            for (Class<? extends Model> cls : classSet) {
+            Set<Class<? extends BaseBean>> classSet = getModelClasses();
+            for (Class<? extends BaseBean> cls : classSet) {
                 Table table = new Table(cls);
                 bind(table);
                 TableMapping.me().putTable(table);
@@ -48,39 +45,35 @@ public class TableMappingPlugin implements IPlugin {
     /**
      * 设置配置
      *
-     * @param adapterPageName
      * @param dialect
      */
-    private void setConfig(String adapterPageName, Dialect dialect) {
-        if (StringUtils.isBlank(adapterPageName)) {
-            adapterPageName = "JqGridPage";
-        }
+    private void setConfig(Dialect dialect) {
         if (null == dialect) {
             dialect = new MysqlDialect();
         }
-        Config.init(adapterPageName, dialect);
+        Config.init(dialect);
     }
 
     /**
-     * 扫描Model
+     * 扫描表
      *
      * @return
      */
     @SuppressWarnings("unchecked")
-    private Set<Class<? extends Model>> getModelClasses() throws Exception {
-        Set<Class<? extends Model>> classSet = new LinkedHashSet<>();
+    private Set<Class<? extends BaseBean>> getModelClasses() throws Exception {
+        Set<Class<? extends BaseBean>> classSet = new LinkedHashSet<>();
         try {
             for (String pkg : packages) {
                 Set<Class<?>> getCls = ClassUtil.getClasses(pkg, true, Mapper.class);
                 for (Class<?> cls : getCls) {
-                    if (cls.getSuperclass() == Model.class) {
-                        classSet.add((Class<? extends Model>) cls);
+                    if (cls.getSuperclass() == BaseBean.class) {
+                        classSet.add((Class<? extends BaseBean>) cls);
                     }
                 }
             }
             return classSet;
         } catch (Exception e) {
-            LogUtil.error(LOG, "扫描Model出错", e);
+            LogUtil.error(LOG, "扫描表出错", e);
             throw e;
         }
     }
@@ -104,12 +97,10 @@ public class TableMappingPlugin implements IPlugin {
                     // varchar, char, enum, set, text, tinytext, mediumtext,
                     // longtext
                     table.setColumnType(colName, java.lang.String.class);
-                }
-                else if ("java.lang.Integer".equals(colClassName)) {
+                } else if ("java.lang.Integer".equals(colClassName)) {
                     // int, integer, tinyint, smallint, mediumint
                     table.setColumnType(colName, java.lang.Integer.class);
-                }
-                else if ("java.lang.Long".equals(colClassName)) {
+                } else if ("java.lang.Long".equals(colClassName)) {
                     // bigint
                     table.setColumnType(colName, java.lang.Long.class);
                 }
@@ -124,36 +115,29 @@ public class TableMappingPlugin implements IPlugin {
                     table.setColumnType(colName, java.sql.Date.class);
                     // colName = "date_format(" + colName + ",'%Y-%m-%d') as " +
                     // colName;
-                }
-                else if ("java.lang.Double".equals(colClassName)) {
+                } else if ("java.lang.Double".equals(colClassName)) {
                     // real, double
                     table.setColumnType(colName, java.lang.Double.class);
-                }
-                else if ("java.lang.Float".equals(colClassName)) {
+                } else if ("java.lang.Float".equals(colClassName)) {
                     // float
                     table.setColumnType(colName, java.lang.Float.class);
-                }
-                else if ("java.lang.Boolean".equals(colClassName)) {
+                } else if ("java.lang.Boolean".equals(colClassName)) {
                     // bit
                     table.setColumnType(colName, java.lang.Boolean.class);
-                }
-                else if ("java.sql.Time".equals(colClassName)) {
+                } else if ("java.sql.Time".equals(colClassName)) {
                     // time
                     table.setColumnType(colName, java.sql.Time.class);
                     // colName = "date_format(" + colName + ",'%Y-%m-%d') as " +
                     // colName;
-                }
-                else if ("java.sql.Timestamp".equals(colClassName)) {
+                } else if ("java.sql.Timestamp".equals(colClassName)) {
                     // timestamp, datetime
                     table.setColumnType(colName, java.sql.Timestamp.class);
                     // colName = "date_format(" + colName +
                     // ",'%Y-%m-%d %H:%i:%s') as " + colName;
-                }
-                else if ("java.math.BigDecimal".equals(colClassName)) {
+                } else if ("java.math.BigDecimal".equals(colClassName)) {
                     // decimal, numeric
                     table.setColumnType(colName, java.math.BigDecimal.class);
-                }
-                else if ("[B".equals(colClassName)) {
+                } else if ("[B".equals(colClassName)) {
                     // binary, varbinary, tinyblob, blob, mediumblob, longblob
                     // qjd project: print_info.content varbinary(61800);
                     table.setColumnType(colName, byte[].class);
@@ -161,16 +145,15 @@ public class TableMappingPlugin implements IPlugin {
                     int type = rsmd.getColumnType(i);
                     if (type == Types.BLOB) {
                         table.setColumnType(colName, byte[].class);
-                    }
-                    else if (type == Types.CLOB || type == Types.NCLOB) {
+                    } else if (type == Types.CLOB || type == Types.NCLOB) {
                         table.setColumnType(colName, String.class);
-                    }
-                    else {
+                    } else {
                         table.setColumnType(colName, String.class);
                     }
                     // core.TypeConverter
                     // throw new
-                    // RuntimeException("You've got new type to mapping. Please add code in "
+                    // RuntimeException("You've got new type to mapping. Please
+                    // add code in "
                     // + TableBuilder.class.getName() +
                     // ". The ColumnClassName can't be mapped: " +
                     // colClassName);
@@ -179,13 +162,13 @@ public class TableMappingPlugin implements IPlugin {
             }
             table.setColumnsStr(columnsStr.delete(0, 2).toString());
         } finally {
-            if(null != rs){
+            if (null != rs) {
                 rs.close();
             }
-            if(null != stm){
+            if (null != stm) {
                 stm.close();
             }
-            if(null != conn){
+            if (null != conn) {
                 conn.close();
             }
         }
@@ -207,11 +190,4 @@ public class TableMappingPlugin implements IPlugin {
         return dataSource;
     }
 
-    public String getAdapterPageName() {
-        return adapterPageName;
-    }
-
-    public void setAdapterPageName(String adapterPageName) {
-        this.adapterPageName = adapterPageName;
-    }
 }

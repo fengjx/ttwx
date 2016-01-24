@@ -2,12 +2,11 @@
 package com.fengjx.modules.wechat.process.aop;
 
 import com.fengjx.commons.utils.LogUtil;
-import com.fengjx.modules.wechat.model.ReqMsgLog;
+import com.fengjx.modules.wechat.bean.WechatReqMsgLog;
 import com.fengjx.modules.wechat.process.bean.WechatContext;
-
+import com.fengjx.modules.wechat.service.WechatReqMsgLogService;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,7 @@ public class WechatLogAop {
     private static final Logger LOG = LoggerFactory.getLogger(WechatLogAop.class);
 
     @Autowired
-    private ReqMsgLog msgLog;
+    private WechatReqMsgLogService msgLogService;
 
     public Object addLog(ProceedingJoinPoint joinpoint) {
         LogUtil.info(LOG, "wechat request log addReqLog begin...");
@@ -37,20 +36,21 @@ public class WechatLogAop {
             WxMpXmlMessage inMessage = WechatContext.getInMessage();
             // 消息类型
             String msgType = inMessage.getMsgType();
+            WechatReqMsgLog log = new WechatReqMsgLog();
             Map<String, Object> attrs = new HashMap<>();
-            attrs.put("req_type", msgType);
-            attrs.put("event_type", inMessage.getEvent());
-            attrs.put("to_user_name", inMessage.getToUserName());
-            attrs.put("from_user_name", inMessage.getFromUserName());
-            attrs.put("create_time", new Date(inMessage.getCreateTime()));
-            attrs.put("msg_id", inMessage.getMsgId());
-            attrs.put("in_time", new Date());
-            attrs.put("public_account_id", WechatContext.getInMessageRecord().getStr("id"));
+            log.setReqType(msgType);
+            log.setEventType(inMessage.getEvent());
+            log.setToUserName(inMessage.getToUserName());
+            log.setFromUserName(inMessage.getFromUserName());
+            log.setCreateTime(new Date(inMessage.getCreateTime()));
+            log.setMsgId(inMessage.getMsgId());
+            log.setInTime(new Date());
+            log.setPublicAccountId(WechatContext.getInMessageRecord().getStr("id"));
             Object res = joinpoint.proceed();
             WxMpXmlOutMessage outMessage = WechatContext.getOutMessage();
-			attrs.put("resp_xml", outMessage==null?"":outMessage.toXml());
-            attrs.put("resp_time", new Date());
-            msgLog.insert(attrs);
+            log.setRespXml(outMessage == null ? "" : outMessage.toXml());
+            log.setRespTime(new Date());
+            msgLogService.insert(attrs);
             return res;
         } catch (Throwable throwable) {
             LogUtil.error(LOG, "记录微信请求发送数据日志出现异常", throwable);

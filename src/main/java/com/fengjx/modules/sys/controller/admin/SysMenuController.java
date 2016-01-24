@@ -2,8 +2,8 @@
 package com.fengjx.modules.sys.controller.admin;
 
 import com.fengjx.commons.plugin.db.Record;
-import com.fengjx.modules.sys.model.SysMenu;
 import com.fengjx.modules.common.controller.MyController;
+import com.fengjx.modules.sys.service.SysMenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,12 @@ import java.util.Map;
 public class SysMenuController extends MyController {
 
     @Autowired
-    private SysMenu sysMenu;
+    private SysMenuService sysMenuService;
 
     @RequiresPermissions("sys_menu_view")
     @RequestMapping("")
     public String view(Model model) {
-        model.addAttribute("treeTable", sysMenu.listTreeMenu());
+        model.addAttribute("treeTable", sysMenuService.listTreeMenu());
         return "sys/admin/menu";
     }
 
@@ -44,14 +44,14 @@ public class SysMenuController extends MyController {
     public String form(String id, String parentId, Model model) {
         // 从父级菜单添加
         if (StringUtils.isNoneBlank(parentId)) {
-            Record parent = sysMenu.findById(parentId);
+            Record parent = sysMenuService.findById(parentId);
             model.addAttribute("parent_id", parent.getStr("id"));
             model.addAttribute("parent_ids", (StringUtils.isBlank(parent.getStr("parent_id")) ? ""
                     : parent.getStr("parent_id") + ",") + parent.getStr("id"));
             model.addAttribute("parent_name", parent.getStr("name"));
             model.addAttribute("parent_level", parent.getInt("level"));
         } else if (StringUtils.isNotBlank(id)) { // 修改菜单
-            model.addAllAttributes(sysMenu.get(id).getColumns());
+            model.addAllAttributes(sysMenuService.get(id).getColumns());
         }
         return "sys/admin/menu_form";
     }
@@ -59,7 +59,7 @@ public class SysMenuController extends MyController {
     @RequestMapping("treeNode")
     @ResponseBody
     public List<Map<String, Object>> treeNode() {
-        return sysMenu.listTreeMenu();
+        return sysMenuService.listTreeMenu();
     }
 
     /**
@@ -72,7 +72,7 @@ public class SysMenuController extends MyController {
     @ResponseBody
     public String addOrUpdate(HttpServletRequest request) {
         Map<String, Object> attrs = getRequestMap(request);
-        sysMenu.saveOrUpdate(attrs);
+        sysMenuService.saveOrUpdate(attrs);
         return retSuccess();
     }
 
@@ -85,8 +85,19 @@ public class SysMenuController extends MyController {
     @RequestMapping(value = "delete")
     @ResponseBody
     public String delete(@RequestParam(required = true) String id) {
-        sysMenu.deleteMenuById(id);
+        sysMenuService.deleteMenuById(id);
         return retSuccess("菜单成功删除");
     }
 
+    /**
+     * 查询用户菜单
+     *
+     * @param pid
+     * @return
+     */
+    @RequestMapping(value = "userMenu")
+    public String findUserMenus(String pid, Model m) {
+        m.addAttribute("menu", sysMenuService.findUserMenus(pid, getLoginSysUser()));
+        return "common//admin-left-menu";
+    }
 }

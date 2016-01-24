@@ -2,7 +2,7 @@
 package com.fengjx.modules.portal.controller.display;
 
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.portal.model.GuestBook;
+import com.fengjx.modules.portal.model.PortalGuestbookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ import java.util.Map;
 public class GuestbookController extends MyController {
 
     @Autowired
-    private GuestBook guestBook;
+    private PortalGuestbookService guestBook;
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody

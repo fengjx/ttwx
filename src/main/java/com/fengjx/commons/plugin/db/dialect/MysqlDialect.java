@@ -1,14 +1,30 @@
+/**
+ * Copyright (c) 2011-2016, James Zhan 詹波 (jfinal@126.com).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.fengjx.commons.plugin.db.dialect;
 
+import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.plugin.db.Table;
-
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * MysqlDialect.
@@ -19,64 +35,93 @@ public class MysqlDialect extends Dialect {
         return "select * from `" + tableName + "` where 1 = 2";
     }
 
-    @Override
-    public void forModelSave(Table table, Map<String, ?> attrs, StringBuilder sql,
+    public void forModelSave(Table table, Map<String, Object> attrs, StringBuilder sql,
             List<Object> paras) {
         sql.append("insert into `").append(table.getName()).append("`(");
         StringBuilder temp = new StringBuilder(") values(");
-        for (Entry<String, ?> e : attrs.entrySet()) {
+        for (Entry<String, Object> e : attrs.entrySet()) {
             String colName = e.getKey();
-            Object value = e.getValue();
-            if (table.hasColumnLabel(colName) && null != value) {
+            if (table.hasColumnLabel(colName)) {
                 if (paras.size() > 0) {
                     sql.append(", ");
                     temp.append(", ");
                 }
                 sql.append("`").append(colName).append("`");
                 temp.append("?");
-                paras.add(value);
+                paras.add(e.getValue());
             }
         }
         sql.append(temp.toString()).append(")");
     }
 
-    @Override
     public String forModelDeleteById(Table table) {
-        String primaryKey = table.getPrimaryKey();
+        String[] pKeys = table.getPrimaryKey();
         StringBuilder sql = new StringBuilder(45);
         sql.append("delete from `");
         sql.append(table.getName());
-        sql.append("` where `").append(primaryKey).append("` = ?");
+        sql.append("` where ");
+        for (int i = 0; i < pKeys.length; i++) {
+            if (i > 0) {
+                sql.append(" and ");
+            }
+            sql.append("`").append(pKeys[i]).append("` = ?");
+        }
         return sql.toString();
     }
 
-    @Override
-    public void forModelUpdate(Table table, Map<String, Object> attrs, String primaryKey,
-            Object id, StringBuilder sql, List<Object> paras) {
+    public void forModelUpdate(Table table, Map<String, Object> attrs, Set<String> modifyFlag,
+            StringBuilder sql, List<Object> paras) {
         sql.append("update `").append(table.getName()).append("` set ");
+        String[] pKeys = table.getPrimaryKey();
         for (Entry<String, Object> e : attrs.entrySet()) {
             String colName = e.getKey();
-            if (!primaryKey.equalsIgnoreCase(colName) && table.hasColumnLabel(colName)) {
-                if (paras.size() > 0)
+            if (modifyFlag.contains(colName) && !isPrimaryKey(colName, pKeys)
+                    && table.hasColumnLabel(colName)) {
+                if (paras.size() > 0) {
                     sql.append(", ");
+                }
                 sql.append("`").append(colName).append("` = ? ");
                 paras.add(e.getValue());
             }
         }
-        sql.append(" where `").append(primaryKey).append("` = ?"); // .append(" limit 1");
-        paras.add(id);
+        sql.append(" where ");
+        for (int i = 0; i < pKeys.length; i++) {
+            if (i > 0) {
+                sql.append(" and ");
+            }
+            sql.append("`").append(pKeys[i]).append("` = ?");
+            paras.add(attrs.get(pKeys[i]));
+        }
     }
 
-    @Override
-    public String forModelFindById(Table table, String columns) {
-        StringBuilder sql = new StringBuilder(froSelectSql(table, columns));
-        sql.append(" where `").append(table.getPrimaryKey()).append("` = ?");
-        return sql.toString();
+    public void forModelUpdate(Table table, Map<String, Object> attrs, StringBuilder sql,
+            List<Object> paras) {
+        sql.append("update `").append(table.getName()).append("` set ");
+        String[] pKeys = table.getPrimaryKey();
+        for (Entry<String, Object> e : attrs.entrySet()) {
+            String colName = e.getKey();
+            if (!isPrimaryKey(colName, pKeys)
+                    && table.hasColumnLabel(colName)) {
+                if (paras.size() > 0) {
+                    sql.append(", ");
+                }
+                sql.append("`").append(colName).append("` = ? ");
+                paras.add(e.getValue());
+            }
+        }
+        sql.append(" where ");
+        for (int i = 0; i < pKeys.length; i++) {
+            if (i > 0) {
+                sql.append(" and ");
+            }
+            sql.append("`").append(pKeys[i]).append("` = ?");
+            paras.add(attrs.get(pKeys[i]));
+        }
     }
 
-    @Override
-    public void forModelFind(Table table, StringBuilder sql, String columns, String orderby,
-            Map<String, Object> attrs, List<Object> paras) {
+    public void forModelFind(Table table, StringBuilder sql, String columns,
+                                      String orderby,
+                                      Map<String, Object> attrs, List<Object> paras){
         sql.append(froSelectSql(table, columns));
         sql.append(" where 1 = 1 ");
         if (!MapUtils.isEmpty(attrs)) {
@@ -93,26 +138,134 @@ public class MysqlDialect extends Dialect {
         }
     }
 
-    @Override
-    public void forPaginate(StringBuilder pageSql, int pageNumber, int pageSize, String sql) {
-        int offset = pageSize * (pageNumber - 1);
-        pageSql.append(sql).append(" ");
-        pageSql.append(" limit ").append(offset).append(", ").append(pageSize);
-    }
-
-    private String froSelectSql(Table table, String columns) {
+    public String forModelFindById(Table table, String columns) {
         StringBuilder sql = new StringBuilder("select ");
-        if (StringUtils.isBlank(columns) || columns.trim().equals("*")) {
+        columns = columns.trim();
+        if ("*".equals(columns)) {
             sql.append(table.getColumnsStr());
         } else {
-            String[] columnsArray = columns.split(",");
-            for (int i = 0; i < columnsArray.length; i++) {
+            String[] arr = columns.split(",");
+            for (int i = 0; i < arr.length; i++) {
                 if (i > 0) {
-                    sql.append(", ");
+                    sql.append(",");
                 }
-                sql.append(" ").append(columnsArray[i].trim());
+                sql.append("`").append(arr[i].trim()).append("`");
             }
         }
+
+        sql.append(" from `");
+        sql.append(table.getName());
+        sql.append("` where ");
+        String[] pKeys = table.getPrimaryKey();
+        for (int i = 0; i < pKeys.length; i++) {
+            if (i > 0) {
+                sql.append(" and ");
+            }
+            sql.append("`").append(pKeys[i]).append("` = ?");
+        }
+        return sql.toString();
+    }
+
+    public String forDbFindById(String tableName, String[] pKeys) {
+        tableName = tableName.trim();
+        trimPrimaryKeys(pKeys);
+
+        StringBuilder sql = new StringBuilder("select * from `").append(tableName)
+                .append("` where ");
+        for (int i = 0; i < pKeys.length; i++) {
+            if (i > 0) {
+                sql.append(" and ");
+            }
+            sql.append("`").append(pKeys[i]).append("` = ?");
+        }
+        return sql.toString();
+    }
+
+    public String forDbDeleteById(String tableName, String[] pKeys) {
+        tableName = tableName.trim();
+        trimPrimaryKeys(pKeys);
+
+        StringBuilder sql = new StringBuilder("delete from `").append(tableName).append("` where ");
+        for (int i = 0; i < pKeys.length; i++) {
+            if (i > 0) {
+                sql.append(" and ");
+            }
+            sql.append("`").append(pKeys[i]).append("` = ?");
+        }
+        return sql.toString();
+    }
+
+    /**
+     * Do not delete the String[] pKeys parameter, the element of pKeys needs to
+     * trim()
+     */
+    public void forDbSave(String tableName, String[] pKeys, Record record, StringBuilder sql,
+            List<Object> paras) {
+        tableName = tableName.trim();
+        trimPrimaryKeys(pKeys); // important
+
+        sql.append("insert into `");
+        sql.append(tableName).append("`(");
+        StringBuilder temp = new StringBuilder();
+        temp.append(") values(");
+
+        for (Entry<String, Object> e : record.getColumns().entrySet()) {
+            if (paras.size() > 0) {
+                sql.append(", ");
+                temp.append(", ");
+            }
+            sql.append("`").append(e.getKey()).append("`");
+            temp.append("?");
+            paras.add(e.getValue());
+        }
+        sql.append(temp.toString()).append(")");
+    }
+
+    public void forDbUpdate(String tableName, String[] pKeys, Object[] ids, Record record,
+            StringBuilder sql, List<Object> paras) {
+        tableName = tableName.trim();
+        trimPrimaryKeys(pKeys);
+
+        sql.append("update `").append(tableName).append("` set ");
+        for (Entry<String, Object> e : record.getColumns().entrySet()) {
+            String colName = e.getKey();
+            if (!isPrimaryKey(colName, pKeys)) {
+                if (paras.size() > 0) {
+                    sql.append(", ");
+                }
+                sql.append("`").append(colName).append("` = ? ");
+                paras.add(e.getValue());
+            }
+        }
+        sql.append(" where ");
+        for (int i = 0; i < pKeys.length; i++) {
+            if (i > 0) {
+                sql.append(" and ");
+            }
+            sql.append("`").append(pKeys[i]).append("` = ?");
+            paras.add(ids[i]);
+        }
+    }
+
+    public String forPaginate(int pageNumber, int pageSize, String select, String sqlExceptSelect) {
+        return forPaginate(pageNumber, pageSize, select + " " + sqlExceptSelect);
+    }
+
+    @Override
+    public String forPaginate(int pageNumber, int pageSize, String sql) {
+        int offset = pageSize * (pageNumber - 1);
+        StringBuilder ret = new StringBuilder(sql);
+        ret.append(" limit ").append(offset).append(", ").append(pageSize);
+        return ret.toString();
+    }
+
+    @Override
+    public String froSelectSql(Table table, String columns) {
+        StringBuilder sql = new StringBuilder("select ");
+        if (StringUtils.isBlank(columns) || columns.trim().equals("*")) {
+            columns = table.getColumnsStr();
+        }
+        sql.append(columns);
         sql.append(" from ");
         sql.append(table.getName());
         return sql.toString();

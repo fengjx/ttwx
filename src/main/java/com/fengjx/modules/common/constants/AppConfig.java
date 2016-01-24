@@ -1,7 +1,7 @@
 
 package com.fengjx.modules.common.constants;
 
-import com.fengjx.commons.utils.GetPropertiesVal;
+import com.fengjx.commons.config.GetPropertiesVal;
 import org.apache.commons.lang3.StringUtils;
 
 /**

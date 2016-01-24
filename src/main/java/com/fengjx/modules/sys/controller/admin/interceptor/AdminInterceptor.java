@@ -3,7 +3,7 @@ package com.fengjx.modules.sys.controller.admin.interceptor;
 
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.WebUtil;
-import com.fengjx.modules.sys.model.SysMenu;
+import com.fengjx.modules.sys.service.SysMenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ public class AdminInterceptor implements HandlerInterceptor {
     protected String adminPath;
 
     @Autowired
-    private SysMenu sysMenu;
+    private SysMenuService sysMenuService;
 
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
             Object handler, Exception e) throws Exception {
@@ -45,7 +45,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             Object handler) throws Exception {
         if (!WebUtil.isAjax(request)) {
             String url = StringUtils.replace(request.getRequestURI(), request.getContextPath(), "");
-            Record menu = sysMenu.findByUrl(url);
+            Record menu = sysMenuService.findByUrl(url);
             if (!menu.isEmpty()) {
                 String pid = menu.getStr("id");
                 if (StringUtils.isNotBlank(menu.getStr("parent_ids"))) {

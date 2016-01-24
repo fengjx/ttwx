@@ -9,7 +9,7 @@ import java.util.Map;
  */
 class TableMapping {
 
-    private final Map<Class<? extends Model>, Table> modelToTableMap = new HashMap<>();
+    private final Map<Class<? extends BaseBean>, Table> modelToTableMap = new HashMap<>();
 
     private static TableMapping me = new TableMapping();
 
@@ -24,12 +24,12 @@ class TableMapping {
         modelToTableMap.put(table.getModelClass(), table);
     }
 
-    public Table getTable(Class<? extends Model> modelClass) {
-        Table table = modelToTableMap.get(modelClass);
+    public Table getTable(Class<? extends BaseBean> beanClass) {
+        Table table = modelToTableMap.get(beanClass);
         if (table == null)
             throw new RuntimeException(
                     "The Table mapping of model: "
-                            + modelClass.getName()
+                            + beanClass.getName()
                             + " not exists. Please add mapping package to TableMappingPlugin for spring config ");
 
         return table;

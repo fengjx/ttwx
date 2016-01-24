@@ -1,9 +1,9 @@
 
 package com.fengjx.modules.sys.controller.admin;
 
-import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.sys.model.SysRole;
+import com.fengjx.modules.sys.bean.SysRole;
+import com.fengjx.modules.sys.service.SysRoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class SysRoleController extends MyController {
     private static final Logger LOG = LoggerFactory.getLogger(SysRoleController.class);
 
     @Autowired
-    private SysRole sysRole;
+    private SysRoleService sysRoleService;
 
     @RequestMapping("")
     public String view() {
@@ -44,7 +44,7 @@ public class SysRoleController extends MyController {
     @RequestMapping("list")
     @ResponseBody
     public List<Map<String, Object>> list() {
-        return sysRole.findList(null);
+        return sysRoleService.findList(null);
     }
 
     /**
@@ -56,7 +56,7 @@ public class SysRoleController extends MyController {
     @RequestMapping(value = "/delete")
     @ResponseBody
     public String delete(@RequestParam(required = true) String id) {
-        sysRole.deleteRole(id);
+        sysRoleService.deleteRole(id);
         return retSuccess("角色成功删除");
     }
 
@@ -64,8 +64,8 @@ public class SysRoleController extends MyController {
     @RequestMapping("form")
     public String form(String id, Model model) {
         if (StringUtils.isNotBlank(id)) {
-            model.addAllAttributes(sysRole.findById(id).getColumns());
-            model.addAttribute("menuIds", sysRole.getMenuIds(id));
+            model.addAllAttributes(sysRoleService.findById(id).getColumns());
+            model.addAttribute("menuIds", sysRoleService.getMenuIds(id));
         }
         return "sys/admin/role_form";
     }
@@ -80,22 +80,22 @@ public class SysRoleController extends MyController {
     @ResponseBody
     public String addOrUpdate(HttpServletRequest request) {
         validate();
-        Record record = getRecord(SysRole.class, request);
-        sysRole.saveOrUpdate(record);
+        SysRole record = getModel(SysRole.class, request);
+        sysRoleService.saveOrUpdate(record);
         return retSuccess();
     }
 
     @RequestMapping("roleUsers")
     @ResponseBody
     public List<Map<String, Object>> roleUsers(String roleId) {
-        return sysRole.roleUsers(roleId);
+        return sysRoleService.roleUsers(roleId);
     }
 
     @RequestMapping("saveRoleUsers")
     @ResponseBody
     public String saveRoleUsers(String roleId, String userIds) {
         validateRequired("roleId", "请求错误，角色ID为空");
-        sysRole.saveRoleUsers(roleId, userIds);
+        sysRoleService.saveRoleUsers(roleId, userIds);
         return retSuccess();
     }
 
@@ -108,12 +108,12 @@ public class SysRoleController extends MyController {
         HttpServletRequest request = getRequest();
         String oldName = request.getParameter("oldName");
         String name = request.getParameter("name");
-        if (!name.equals(oldName) && !sysRole.getRoleByName(name).isEmpty()) {
+        if (!name.equals(oldName) && !sysRoleService.getRoleByName(name).isEmpty()) {
             addError("角色名称已存在");
         }
         String oldRoleCode = request.getParameter("oldRoleCode");
         String roleCode = request.getParameter("role_code");
-        if (!roleCode.equals(oldRoleCode) && !sysRole.getRoleByCode(roleCode).isEmpty()) {
+        if (!roleCode.equals(oldRoleCode) && !sysRoleService.getRoleByCode(roleCode).isEmpty()) {
             addError("角色标识已存在");
         }
     }

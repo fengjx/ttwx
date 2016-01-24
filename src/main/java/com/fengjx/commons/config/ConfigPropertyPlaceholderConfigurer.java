@@ -15,7 +15,7 @@ import java.util.Properties;
  */
 public class ConfigPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 
-    boolean printConfigOut = true;
+    private boolean printConfigOut = true;
 
     @Override
     protected void loadProperties(Properties props) throws IOException {
@@ -30,7 +30,7 @@ public class ConfigPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
     protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess,
             Properties props) throws BeansException {
         String env = System.getProperty("ENV_MODE");
-        logger.debug("ENV_MODE is " + env);
+        logger.info("ENV_MODE is " + env);
         Properties appConfig = PropertiesHolder.INSTANCE.getAppConfig();
         mergeProperties(props, appConfig);
         super.processProperties(beanFactoryToProcess, appConfig);
@@ -43,10 +43,17 @@ public class ConfigPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
                 String value = propsSrc.getProperty(key);
                 propsDest.setProperty(key, value);
                 if (printConfigOut) {
-                    logger.debug("config property [" + key + ": " + value + "]");
+                    logger.info("config property [" + key + ": " + value + "]");
                 }
             }
         }
     }
 
+    public boolean isPrintConfigOut() {
+        return printConfigOut;
+    }
+
+    public void setPrintConfigOut(boolean printConfigOut) {
+        this.printConfigOut = printConfigOut;
+    }
 }

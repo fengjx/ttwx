@@ -2,9 +2,10 @@
 package com.fengjx.commons.web;
 
 import com.fengjx.commons.config.AjaxTemplate;
-import com.fengjx.commons.plugin.db.Model;
+import com.fengjx.commons.plugin.db.BaseBean;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.system.exception.ValidateException;
+import com.fengjx.commons.utils.Injector;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.commons.utils.WebUtil;
 import com.google.common.collect.Maps;
@@ -65,7 +66,7 @@ public abstract class BaseController {
         return new Record(getRequestMap(request));
     }
 
-    protected <T extends Model> Record getRecord(Class<T> modelCls, HttpServletRequest request) {
+    protected <T extends BaseBean> Record getRecord(Class<T> modelCls, HttpServletRequest request) {
         try {
             return new Record(modelCls, WebUtil.getRequestParams(request));
         } catch (ParseException e) {
@@ -91,6 +92,48 @@ public abstract class BaseController {
 
     protected Map<String, String> getNotBlankParams(HttpServletRequest request) {
         return WebUtil.getNotBlankRequestParams(request);
+    }
+
+    /**
+     * Get model from http request.
+     */
+    public <T extends BaseBean> T getModel(Class<T> modelClass, HttpServletRequest request) {
+        return Injector.injectModel(modelClass, request, false);
+    }
+
+    public <T extends BaseBean> T getModel(Class<T> modelClass, HttpServletRequest request,
+            boolean skipConvertError) {
+        return Injector.injectModel(modelClass, request, skipConvertError);
+    }
+
+    /**
+     * Get model from http request.
+     */
+    public <T extends BaseBean> T getModel(Class<T> modelClass, String modelName,
+            HttpServletRequest request) {
+        return Injector.injectModel(modelClass, modelName, request, false);
+    }
+
+    public <T extends BaseBean> T getModel(Class<T> modelClass, String modelName,
+            HttpServletRequest request, boolean skipConvertError) {
+        return Injector.injectModel(modelClass, modelName, request, skipConvertError);
+    }
+
+    public <T> T getBean(Class<T> beanClass, HttpServletRequest request) {
+        return (T) Injector.injectBean(beanClass, request, false);
+    }
+
+    public <T> T getBean(Class<T> beanClass, HttpServletRequest request, boolean skipConvertError) {
+        return Injector.injectBean(beanClass, request, skipConvertError);
+    }
+
+    public <T> T getBean(Class<T> beanClass, HttpServletRequest request, String beanName) {
+        return Injector.injectBean(beanClass, beanName, request, false);
+    }
+
+    public <T> T getBean(Class<T> beanClass, String beanName, HttpServletRequest request,
+            boolean skipConvertError) {
+        return Injector.injectBean(beanClass, beanName, request, skipConvertError);
     }
 
     /**

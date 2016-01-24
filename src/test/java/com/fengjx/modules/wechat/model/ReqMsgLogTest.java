@@ -1,7 +1,7 @@
 
 package com.fengjx.modules.wechat.model;
 
-import com.fengjx.commons.plugin.db.page.Page;
+import com.fengjx.commons.plugin.db.Page;
 import com.fengjx.commons.plugin.db.page.PageContext;
 
 import org.junit.Test;

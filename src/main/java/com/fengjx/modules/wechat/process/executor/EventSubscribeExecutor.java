@@ -4,15 +4,13 @@ package com.fengjx.modules.wechat.process.executor;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.CommonUtils;
 import com.fengjx.commons.utils.LogUtil;
-import com.fengjx.modules.wechat.model.WechatUser;
 import com.fengjx.modules.wechat.process.utils.ExecutorNameUtil;
-
+import com.fengjx.modules.wechat.service.WechatUserInfoService;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +30,7 @@ public class EventSubscribeExecutor extends BaseServiceExecutor {
     private static final Logger LOG = LoggerFactory.getLogger(EventSubscribeExecutor.class);
 
     @Autowired
-    private WechatUser wechatUser;
+    private WechatUserInfoService userInfoService;
 
     @Override
     public WxMpXmlOutMessage execute(WxMpXmlMessage inMessage, Record accountRecord,
@@ -43,7 +41,7 @@ public class EventSubscribeExecutor extends BaseServiceExecutor {
         attrs.put("openid", inMessage.getFromUserName());
         attrs.put("subscribe_time", new Date());
         attrs.put("public_account_id", accountRecord.getStr("id"));
-        wechatUser.insert(attrs);
+        userInfoService.insert(attrs);
         return doAction(WxConsts.XML_MSG_EVENT, WxConsts.EVT_SUBSCRIBE, null,
                 accountRecord.getStr("sys_user_id"));
     }

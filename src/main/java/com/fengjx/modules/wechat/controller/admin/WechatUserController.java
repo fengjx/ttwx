@@ -1,11 +1,10 @@
 
 package com.fengjx.modules.wechat.controller.admin;
 
-import com.fengjx.commons.plugin.db.page.AdapterPage;
 import com.fengjx.commons.utils.WebUtil;
-import com.fengjx.modules.wechat.model.WechatUser;
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.wechat.model.WechatUserGroup;
+import com.fengjx.modules.wechat.service.WechatUserGroupService;
+import com.fengjx.modules.wechat.service.WechatUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +26,9 @@ import java.util.Map;
 public class WechatUserController extends MyController {
 
     @Autowired
-    private WechatUser wechatUser;
+    private WechatUserInfoService wechatUser;
     @Autowired
-    private WechatUserGroup wechatUserGroup;
+    private WechatUserGroupService userGroupService;
 
     @RequestMapping(value = "")
     public String view() {
@@ -39,12 +38,12 @@ public class WechatUserController extends MyController {
     @RequestMapping(value = "/groupList")
     @ResponseBody
     public List<Map<String, Object>> groupList(HttpServletRequest request) {
-        return wechatUserGroup.list(getLoginSysUserId());
+        return userGroupService.list(getLoginSysUserId());
     }
 
     @RequestMapping(value = "/userPageList")
     @ResponseBody
-    public AdapterPage userList(HttpServletRequest request) {
+    public Object userList(HttpServletRequest request) {
         return wechatUser.pageList(WebUtil.getRequestParams(request), getLoginSysUserId());
     }
 
@@ -60,7 +59,7 @@ public class WechatUserController extends MyController {
         Map<String, Object> attrs = getRequestMap(request);
         attrs.put("in_time", new Date());
         attrs.put("user_id", getLoginSysUserId());
-        wechatUserGroup.insertOrUpdate(attrs);
+        userGroupService.insertOrUpdate(attrs);
         return retSuccess();
     }
 
@@ -73,7 +72,7 @@ public class WechatUserController extends MyController {
     @RequestMapping(value = "/deleteGroup")
     @ResponseBody
     public String deleteGroup(String id) {
-        wechatUserGroup.deleteById(id);
+        userGroupService.deleteById(id);
         return retSuccess();
     }
 

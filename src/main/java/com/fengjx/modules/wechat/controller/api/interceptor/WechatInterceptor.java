@@ -4,9 +4,9 @@ package com.fengjx.modules.wechat.controller.api.interceptor;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.modules.common.constants.AppConfig;
-import com.fengjx.modules.wechat.model.PublicAccount;
 import com.fengjx.modules.wechat.process.bean.WechatContext;
 import com.fengjx.modules.wechat.process.utils.WxMpUtil;
+import com.fengjx.modules.wechat.service.WechatPublicAccountService;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
@@ -25,7 +25,7 @@ import java.io.ByteArrayInputStream;
 public class WechatInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private PublicAccount publicAccount;
+    private WechatPublicAccountService publicAccountService;
 
     private static final Logger LOG = LoggerFactory.getLogger(WechatInterceptor.class);
 
@@ -61,7 +61,7 @@ public class WechatInterceptor implements HandlerInterceptor {
             String nonce = request.getParameter("nonce");
             String timestamp = request.getParameter("timestamp");
             // 将公众号配置信息放到微信请求上下文
-            Record record = publicAccount.findByTicket(ticket);
+            Record record = publicAccountService.findByTicket(ticket);
             if (record.isEmpty()) {
                 LogUtil.info(LOG, "ticket无效，找不到对应公众号信息");
                 return false;

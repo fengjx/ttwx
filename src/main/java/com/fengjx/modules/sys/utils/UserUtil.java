@@ -4,11 +4,11 @@ package com.fengjx.modules.sys.utils;
 import com.fengjx.commons.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.commons.system.init.SpringBeanFactoryUtil;
 import com.fengjx.modules.common.constants.AppConfig;
-import com.fengjx.modules.sys.entity.SysUserEntity;
-import com.fengjx.modules.sys.model.SysMenu;
-import com.fengjx.modules.sys.model.SysUser;
-import com.fengjx.modules.sys.model.SysUserRole;
+import com.fengjx.modules.sys.bean.SysUser;
 import com.fengjx.modules.sys.security.SystemAuthorizingRealm;
+import com.fengjx.modules.sys.service.SysMenuService;
+import com.fengjx.modules.sys.service.SysUserRoleService;
+import com.fengjx.modules.sys.service.SysUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
@@ -33,9 +33,9 @@ public class UserUtil {
     public static final String CACHE_ROLE_LIST = "roleList";
     public static final String CACHE_MENU_LIST = "menuList";
 
-    private static final SysMenu sysMenu = SpringBeanFactoryUtil.getBean(SysMenu.class);
-    private static final SysUser sysUser = SpringBeanFactoryUtil.getBean(SysUser.class);
-    private static final SysUserRole sysUserRole = SpringBeanFactoryUtil.getBean(SysUserRole.class);
+    private static final SysMenuService SYS_MENU_SERVICE = SpringBeanFactoryUtil.getBean(SysMenuService.class);
+    private static final SysUserService SYS_USER_SERVICE = SpringBeanFactoryUtil.getBean(SysUserService.class);
+    private static final SysUserRoleService SYS_USER_ROLE_SERVICE = SpringBeanFactoryUtil.getBean(SysUserRoleService.class);
 
     /**
      * 用户密码加密
@@ -55,12 +55,12 @@ public class UserUtil {
      * @param id
      * @return 取不到返回null
      */
-    public static SysUserEntity get(String id) {
-        SysUserEntity user = EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, USER_CACHE_ID_ + id);
+    public static SysUser get(String id) {
+        SysUser user = EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE, USER_CACHE_ID_ + id);
         if (user == null) {
-            user = sysUser.get(id);
+            user = SYS_USER_SERVICE.get(id);
             if (null != user) {
-                user.setRoles(sysUserRole.findUserRoles(user.getId()));
+                user.setRoles(SYS_USER_ROLE_SERVICE.findUserRoles(user.getId()));
                 EhCacheUtil.put(AppConfig.EhcacheName.SYS_CACHE,
                         USER_CACHE_LOGIN_NAME_ + user.getUsername(), user);
                 EhCacheUtil.put(AppConfig.EhcacheName.SYS_CACHE, USER_CACHE_ID_ + id, user);
@@ -77,11 +77,11 @@ public class UserUtil {
     public static List<Map<String, Object>> getMenus() {
         List<Map<String, Object>> menuList = getCache(CACHE_MENU_LIST);
         if (menuList == null) {
-            SysUserEntity user = getUser();
+            SysUser user = getUser();
             if (user.isAdmin()) {
-                menuList = sysMenu.listTreeMenu();
+                menuList = SYS_MENU_SERVICE.listTreeMenu();
             } else {
-                menuList = sysMenu.findUserMenus(user.getId());
+                menuList = SYS_MENU_SERVICE.findUserMenus(null, user);
             }
             putCache(CACHE_MENU_LIST, menuList);
         }
@@ -100,17 +100,12 @@ public class UserUtil {
      *
      * @return 取不到返回 new User()
      */
-    public static SysUserEntity getUser() {
+    public static SysUser getUser() {
         SystemAuthorizingRealm.Principal principal = getPrincipal();
         if (principal != null) {
-            SysUserEntity user = get(principal.getId());
-            if (user != null) {
-                return user;
-            }
-            return new SysUserEntity();
+            return get(principal.getId());
         }
-        // 如果没有登录，则返回实例化空的User对象。
-        return new SysUserEntity();
+        return new SysUser();
     }
 
     public static Session getSession() {

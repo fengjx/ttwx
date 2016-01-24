@@ -3,6 +3,7 @@ package com.fengjx.modules.sys.security;
 
 import com.fengjx.commons.system.security.shiro.session.SessionDAO;
 import com.fengjx.modules.common.constants.AppConfig;
+import com.fengjx.modules.sys.bean.SysUser;
 import com.fengjx.modules.sys.entity.SysUserEntity;
 import com.fengjx.modules.sys.service.SystemService;
 import com.fengjx.modules.sys.utils.UserUtil;
@@ -63,9 +64,9 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
             }
         }
         // 校验用户名密码
-        SysUserEntity user = systemService.getUserByLoginName(token.getUsername());
+        SysUser user = systemService.getUserByLoginName(token.getUsername());
         if (user != null) {
-            if (SysUserEntity.FREEZE_ALIVE.equals(user.getIs_valid())) {
+            if (SysUserEntity.FREEZE_ALIVE.equals(user.getIsValid())) {
                 throw new AuthenticationException("msg:该已帐号禁止登录.");
             }
             // 如果查询到返回认证信息AuthenticationInfo
@@ -100,7 +101,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
                 }
             }
         }
-        SysUserEntity user = systemService.getUserByLoginName(principal.getLoginName());
+        SysUser user = systemService.getUserByLoginName(principal.getLoginName());
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             List<Map<String, Object>> list = UserUtil.getMenus();
@@ -177,7 +178,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
         private String id; // 编号
         private String loginName; // 登录名
 
-        public Principal(SysUserEntity user) {
+        public Principal(SysUser user) {
             this.id = user.getId();
             this.loginName = user.getUsername();
         }

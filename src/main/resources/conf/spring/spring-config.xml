@@ -13,6 +13,8 @@
         <property name="location">
             <value>classpath:env/${ENV_MODE}/app.properties</value>
         </property>
+        <property name="fileEncoding" value="UTF-8"/>
+        <property name="printConfigOut" value="false"/>
         <property name="order" value="1"/>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
     </bean>
@@ -21,6 +23,8 @@
         <property name="location">
             <value>classpath:app.properties</value>
         </property>
+        <property name="fileEncoding" value="UTF-8"/>
+        <property name="printConfigOut" value="false"/>
         <property name="order" value="2"/>
         <property name="ignoreUnresolvablePlaceholders" value="false"/>
     </bean>

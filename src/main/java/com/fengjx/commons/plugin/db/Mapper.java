@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 public @interface Mapper {
     String table() default "";
     String id() default "id";
-    String pid() default "";
+    String pid() default "parent_id";
 }

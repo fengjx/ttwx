@@ -5,6 +5,7 @@ import com.fengjx.commons.utils.JsonUtil;
 
 import com.fengjx.commons.utils.TypeConverter;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.MapUtils;
 
@@ -21,16 +22,21 @@ import java.util.Set;
 public class Record implements Serializable {
 
     private static final long serialVersionUID = 905784513600884082L;
-
     private Map<String, Object> columns;
+    // 有修改的字段
+    private Set<String> modifyFlag;
+
+    private Map<String, Object> initColumns() {
+        return Maps.newLinkedHashMap();
+    }
 
     public Record() {
-        this.columns = Maps.newHashMap();
+        this.columns = initColumns();
     }
 
     public Record(Map<String, Object> columns) {
         if (null == columns) {
-            this.columns = Maps.newHashMap();
+            this.columns = initColumns();
         } else {
             this.columns = columns;
         }
@@ -39,17 +45,17 @@ public class Record implements Serializable {
     /**
      * 初始化参数
      *
-     * @param modelClass
+     * @param beanClass
      * @param columns
      * @param <T>
      * @throws ParseException
      */
-    public <T extends Model> Record(Class<T> modelClass, Map<String, String> columns)
+    public <T extends BaseBean> Record(Class<T> beanClass, Map<String, String> columns)
             throws ParseException {
-        if (null == modelClass) {
+        if (null == beanClass) {
             getColumns().putAll(columns);
         } else {
-            Table table = TableUtil.getTable(modelClass);
+            Table table = TableUtil.getTable(beanClass);
             for (Map.Entry<String, String> e : columns.entrySet()) {
                 String colName = e.getKey();
                 if (table.hasColumnLabel(colName)) {
@@ -72,7 +78,7 @@ public class Record implements Serializable {
      */
     public Map<String, Object> getColumns() {
         if (MapUtils.isEmpty(columns)) {
-            columns = Maps.newHashMap();
+            columns = initColumns();
         }
         return columns;
     }
@@ -117,6 +123,7 @@ public class Record implements Serializable {
      */
     public Record set(String column, Object value) {
         getColumns().put(column, value);
+        getModifyFlag().add(column);
         return this;
     }
 
@@ -286,6 +293,21 @@ public class Record implements Serializable {
             return "{}";
         }
         return JsonUtil.toJson(getColumns());
+    }
+
+    public Set<String> getModifyFlag() {
+        if (this.modifyFlag == null) {
+            modifyFlag = Sets.newHashSet();
+        }
+        return modifyFlag;
+    }
+
+    public void setModifyFlag(Set<String> modifyFlag) {
+        this.modifyFlag = modifyFlag;
+    }
+
+    public void setModify(String modifyColumn) {
+        getModifyFlag().add(modifyColumn);
     }
 
     /**

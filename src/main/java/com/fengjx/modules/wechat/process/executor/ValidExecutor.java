@@ -4,13 +4,11 @@ package com.fengjx.modules.wechat.process.executor;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.modules.common.constants.MsgTemplateConstants;
-import com.fengjx.modules.wechat.model.PublicAccount;
-
+import com.fengjx.modules.wechat.bean.WechatPublicAccount;
 import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,13 +35,13 @@ public class ValidExecutor extends BaseServiceExecutor {
         if (valid_code.equals(inMessage.getContent())) {
             Map<String, Object> attrs = accountRecord.getColumns();
             // 更新账号状态为激活
-            attrs.put("valid_state", PublicAccount.VALID_STATE_ACTIVATE);
+            attrs.put("valid_state", WechatPublicAccount.VALID_STATE_ACTIVATE);
             attrs.put("account_id", inMessage.getToUserName());
-            publicAccount.update(attrs);
-            return doAction(msgTemplate
+            publicAccountService.update(attrs);
+            return doAction(msgTemplateService
                     .getTemplateContentByKey(MsgTemplateConstants.API_VALID_SUCCESS));
         }
-        return doAction(msgTemplate.getTemplateContentByKey(MsgTemplateConstants.API_VALID_FAIL));
+        return doAction(msgTemplateService.getTemplateContentByKey(MsgTemplateConstants.API_VALID_FAIL));
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.modules.api.tuling.client.TulingApiClient;
 import com.fengjx.modules.api.tuling.vo.req.RequestBean;
-import com.fengjx.modules.wechat.model.RespMsgAction;
+import com.fengjx.modules.wechat.bean.WechatRespMsgAction;
 import com.fengjx.modules.wechat.process.utils.ExecutorNameUtil;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.WxSession;
@@ -34,7 +34,7 @@ public class TextExecutor extends BaseServiceExecutor {
     public WxMpXmlOutMessage execute(WxMpXmlMessage inMessage, Record accountRecord,
             WxMpConfigStorage wxMpConfig, WxSession session) {
         LogUtil.info(LOG, "进入文本消息处理器fromUserName=" + inMessage.getFromUserName());
-        List<Map<String, Object>> keywords = respMsgAction
+        List<Map<String, Object>> keywords = msgActionService
                 .loadKeywordActions(accountRecord.getStr("sys_user_id"));
         Record actionRecord = matching(inMessage.getContent(), keywords);
         // 没有找到匹配规则
@@ -62,19 +62,19 @@ public class TextExecutor extends BaseServiceExecutor {
             String fuzzy = action.get("fuzzy") + "";
             String keyword = action.get("key_word") + "";
             // 完全匹配
-            if (RespMsgAction.FUZZY_EXACT.equals(fuzzy) && content.equals(keyword)) {
+            if (WechatRespMsgAction.FUZZY_EXACT.equals(fuzzy) && content.equals(keyword)) {
                 return new Record(action);
             }
             // 关键字开始
-            if (RespMsgAction.FUZZY_START.equals(fuzzy) && content.startsWith(keyword)) {
+            if (WechatRespMsgAction.FUZZY_START.equals(fuzzy) && content.startsWith(keyword)) {
                 return new Record(action);
             }
             // 关键字结束
-            if (RespMsgAction.FUZZY_END.equals(fuzzy) && content.endsWith(keyword)) {
+            if (WechatRespMsgAction.FUZZY_END.equals(fuzzy) && content.endsWith(keyword)) {
                 return new Record(action);
             }
             // 包含
-            if (RespMsgAction.FUZZY_CONTAIN.equals(fuzzy) && content.contains(keyword)) {
+            if (WechatRespMsgAction.FUZZY_CONTAIN.equals(fuzzy) && content.contains(keyword)) {
                 return new Record(action);
             }
         }

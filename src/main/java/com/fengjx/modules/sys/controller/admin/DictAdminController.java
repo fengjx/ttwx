@@ -2,11 +2,10 @@
 package com.fengjx.modules.sys.controller.admin;
 
 import com.fengjx.commons.plugin.cache.ehcache.EhCacheUtil;
-import com.fengjx.commons.plugin.db.Record;
-import com.fengjx.commons.plugin.db.page.AdapterPage;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.sys.model.Dict;
+import com.fengjx.modules.sys.bean.SysDict;
+import com.fengjx.modules.sys.service.SysDictService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +27,7 @@ import java.util.Date;
 public class DictAdminController extends MyController {
 
     @Autowired
-    private Dict dict;
+    private SysDictService dictService;
 
     @RequestMapping(value = "")
     public ModelAndView view() {
@@ -38,19 +37,23 @@ public class DictAdminController extends MyController {
 
     @RequestMapping("pageList")
     @ResponseBody
-    public AdapterPage pageList(HttpServletRequest request) {
-        return dict.page(getRecord(Dict.class, request));
+    public Object pageList(HttpServletRequest request) {
+        return dictService.page(getRecord(SysDict.class, request));
     }
 
     @RequestMapping("save")
     @ResponseBody
     public String save(HttpServletRequest request) {
-        Record record = getRecord(request);
-        record.set("in_time", new Date());
-        if (StringUtils.isBlank(record.getStr("is_valid"))) {
-            record.set("is_valid", 0);
+        SysDict sysDict = getModel(SysDict.class, request);
+        sysDict.set("in_time", new Date());
+        if (StringUtils.isBlank(sysDict.getStr("is_valid"))) {
+            sysDict.set("is_valid", 0);
         }
-        dict.insertOrUpdate(record);
+        if (StringUtils.isBlank(sysDict.getId())) {
+            dictService.save(sysDict);
+        } else {
+            dictService.update(sysDict);
+        }
         EhCacheUtil.removeAll(AppConfig.EhcacheName.DICT_CACHE);
         return retSuccess();
     }
@@ -58,7 +61,7 @@ public class DictAdminController extends MyController {
     @RequestMapping("delete")
     @ResponseBody
     public String delete(String id) {
-        dict.deleteById(id);
+        dictService.deleteById(id);
         EhCacheUtil.removeAll(AppConfig.EhcacheName.DICT_CACHE);
         return retSuccess();
     }

@@ -1,9 +1,8 @@
 
 package com.fengjx.modules.portal.controller.admin;
 
-import com.fengjx.commons.plugin.db.page.AdapterPage;
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.portal.model.GuestBook;
+import com.fengjx.modules.portal.model.PortalGuestbookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 public class GuestbookAdminController extends MyController {
 
     @Autowired
-    private GuestBook guestBook;
+    private PortalGuestbookService guestBook;
 
     @RequestMapping(value = "")
     public String view() {
@@ -32,8 +31,8 @@ public class GuestbookAdminController extends MyController {
 
     @RequestMapping(value = "pageList", method = RequestMethod.POST)
     @ResponseBody
-    public AdapterPage pageList(HttpServletRequest request) {
-        return guestBook.paginate(getNotBlankRequestMap(request), "order by in_time desc").convert();
+    public Object pageList(HttpServletRequest request) {
+        return guestBook.paginate(getNotBlankRequestMap(request), "order by in_time desc");
     }
 
 }

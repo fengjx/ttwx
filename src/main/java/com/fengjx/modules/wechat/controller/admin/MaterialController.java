@@ -4,7 +4,7 @@ package com.fengjx.modules.wechat.controller.admin;
 import com.fengjx.commons.utils.JsonUtil;
 import com.fengjx.modules.common.controller.MyController;
 import com.fengjx.modules.sys.entity.SysUserEntity;
-import com.fengjx.modules.wechat.model.Material;
+import com.fengjx.modules.wechat.service.WechatMaterialService;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,11 @@ import java.util.Map;
 public class MaterialController extends MyController {
 
     @Autowired
-    private Material material;
+    private WechatMaterialService materialService;
 
     @RequestMapping(value = "")
-    public ModelAndView view() {
-        ModelAndView mv = new ModelAndView("wechat/admin/material");
-        return mv;
+    public String view() {
+        return "wechat/admin/material";
     }
 
     @RequestMapping("/multiple")
@@ -58,10 +57,10 @@ public class MaterialController extends MyController {
 
     @RequestMapping("/page")
     @ResponseBody
-    public String pageList(HttpServletRequest request, String msg_type, int pageNumber,
+    public Object pageList(HttpServletRequest request, String msg_type, int pageNumber,
             int pageSize) {
-        return material.getListPageByType(pageNumber, pageSize, msg_type, getLoginSysUserId())
-                .toJson();
+        return materialService.getListPageByType(pageNumber, pageSize, msg_type,
+                getLoginSysUserId());
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -80,7 +79,7 @@ public class MaterialController extends MyController {
                 return retFail(e.getError().getErrorMsg());
             }
         } else {
-            material.saveOrUpdate(params, contents, sysUser.getId());
+            materialService.saveOrUpdate(params, contents, sysUser.getId());
             if ("2".equals(msgFlag)) {
                 try {
                     toSendMessage(sysUser, contents, params, false);
@@ -101,9 +100,9 @@ public class MaterialController extends MyController {
             if (null != contents && contents.size() > 0) {
                 String xml_data = (String) params.get("xml_data");
                 if (isPreview)
-                    material.previewMsg(contents, xml_data, sysUser.getId(), wxUserId);
+                    materialService.previewMsg(contents, xml_data, sysUser.getId(), wxUserId);
                 else
-                    material.sendGroupMsg(contents, xml_data, sysUser.getId());
+                    materialService.sendGroupMsg(contents, xml_data, sysUser.getId());
 
             }
         }
@@ -112,20 +111,19 @@ public class MaterialController extends MyController {
     @RequestMapping("/load")
     @ResponseBody
     public String load(String id) {
-        return material.findById(id).toJson();
+        return materialService.findById(id).toJson();
     }
 
     @RequestMapping(value = "/getContent", produces = "text/html;charset=UTF-8")
     @ResponseBody
     public String loadMaterialContentByUrl(HttpServletResponse response, String url) {
-        String content = material.loadMaterialContentByUrl(url);
-        return content;
+        return materialService.loadMaterialContentByUrl(url);
     }
 
     @RequestMapping(value = "/delete")
     @ResponseBody
     public String delete(String id) {
-        material.deleteById(id);
+        materialService.deleteById(id);
         return retSuccess();
     }
 

@@ -2,7 +2,7 @@
 package com.fengjx.modules.wechat.controller.admin;
 
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.wechat.model.PublicAccount;
+import com.fengjx.modules.wechat.service.WechatPublicAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +22,13 @@ import javax.servlet.http.HttpServletRequest;
 public class SettingController extends MyController {
 
     @Autowired
-    private PublicAccount publicAccount;
+    private WechatPublicAccountService publicAccountService;
 
     @RequestMapping(value = "")
     public ModelAndView view(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("wechat/admin/setting");
         mv.addObject("wechatAccount",
-                publicAccount.getAccountByUserId(getLoginSysUserId()).getColumns());
+                publicAccountService.getAccountByUserId(getLoginSysUserId()).getColumns());
         return mv;
     }
 
@@ -41,14 +41,14 @@ public class SettingController extends MyController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public String update(final HttpServletRequest request) {
-        publicAccount.updateAccount(getRequestMap(request), getLoginSysUserId());
+        publicAccountService.updateAccount(getRequestMap(request), getLoginSysUserId());
         return retSuccess();
     }
 
     @RequestMapping(value = "/reset", method = RequestMethod.POST)
     @ResponseBody
     public String reset(HttpServletRequest request, String id) {
-        publicAccount.reset(id, getLoginSysUserId());
+        publicAccountService.reset(id, getLoginSysUserId());
         return retSuccess();
     }
 

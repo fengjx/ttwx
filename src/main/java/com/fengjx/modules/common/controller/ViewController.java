@@ -3,7 +3,7 @@ package com.fengjx.modules.common.controller;
 
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.modules.common.constants.AppConfig;
-import com.fengjx.modules.sys.model.SysMenu;
+import com.fengjx.modules.sys.service.SysMenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewController extends MyController {
 
     @Autowired
-    private SysMenu sysMenu;
+    private SysMenuService sysMenuService;
 
     @RequestMapping(value = "${adminPath}")
     public String admin() {
@@ -49,7 +49,7 @@ public class ViewController extends MyController {
      */
     @RequestMapping(value = "${adminPath}/f/{menuId}")
     public String forward(@PathVariable("menuId") String menuId, Model model) {
-        Record menu = sysMenu.get(menuId);
+        Record menu = sysMenuService.get(menuId);
         if (StringUtils.isBlank(menu.getStr("url"))) {
             return "forward:" + adminPath;
         }

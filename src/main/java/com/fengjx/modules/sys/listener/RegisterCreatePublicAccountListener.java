@@ -3,7 +3,7 @@ package com.fengjx.modules.sys.listener;
 
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.CommonUtils;
-import com.fengjx.modules.wechat.model.PublicAccount;
+import com.fengjx.modules.wechat.service.WechatPublicAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.scheduling.annotation.Async;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class RegisterCreatePublicAccountListener implements ApplicationListener<RegisterEvent> {
 
     @Autowired
-    private PublicAccount publicAccount;
+    private WechatPublicAccountService publicAccountService;
 
     /**
      * 异步处理
@@ -33,8 +33,8 @@ public class RegisterCreatePublicAccountListener implements ApplicationListener<
     @SuppressWarnings("unchecked")
     public void onApplicationEvent(RegisterEvent event) {
         Record record = (Record) event.getSource();
-        Map<String, Object> attrs = PublicAccount.resetAttrs(CommonUtils.getPrimaryKey(), record.getStr("id"));
-        publicAccount.insert(attrs);
+        Map<String, Object> attrs = publicAccountService.resetAttrs(CommonUtils.getPrimaryKey(), record.getStr("id"));
+        publicAccountService.insert(attrs);
     }
 
 }

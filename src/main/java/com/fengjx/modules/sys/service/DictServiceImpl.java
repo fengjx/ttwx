@@ -3,7 +3,6 @@ package com.fengjx.modules.sys.service;
 
 import com.fengjx.commons.plugin.dict.DictData;
 import com.fengjx.commons.plugin.dict.DictService;
-import com.fengjx.modules.sys.model.Dict;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +19,22 @@ import java.util.Map;
 public class DictServiceImpl implements DictService {
 
     @Autowired
-    private Dict dict;
+    private SysDictService dictService;
 
     @Override
     public String getDictLabel(String value, String group) {
-        return dict.getDictLabel(value, group);
+        return dictService.getDictLabel(value, group);
     }
 
     @Override
     public String getDictValue(String label, String group) {
-        return dict.getDictValue(label, group);
+        return dictService.getDictValue(label, group);
     }
 
     @Override
     public List<DictData> findDictList(String group) {
         List<DictData> list = Lists.newArrayList();
-        List<Map<String, Object>> dictList = dict.findDictList(group);
+        List<Map<String, Object>> dictList = dictService.findDictList(group);
         DictData dict;
         if (CollectionUtils.isNotEmpty(dictList)) {
             for (Map<String, Object> map : dictList) {

@@ -45,13 +45,12 @@
 
     <bean id="tableMappingPlugin" class="com.fengjx.commons.plugin.db.TableMappingPlugin">
         <property name="dataSource" ref="dataSource"/>
-        <property name="adapterPageName" value="${adapterPageName}"/>
         <property name="packages">
             <value>
-                com.fengjx.modules.wechat.model,
-                com.fengjx.modules.common.model,
-                com.fengjx.modules.sys.model,
-                com.fengjx.modules.portal.model
+                com.fengjx.modules.wechat.bean,
+                com.fengjx.modules.common.bean,
+                com.fengjx.modules.sys.bean,
+                com.fengjx.modules.portal.bean
             </value>
         </property>
     </bean>

@@ -3,9 +3,10 @@ package com.fengjx.modules.wechat.controller.api;
 
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.wechat.model.PublicAccount;
+import com.fengjx.modules.wechat.bean.WechatPublicAccount;
 import com.fengjx.modules.wechat.process.ServiceEngine;
 import com.fengjx.modules.wechat.process.bean.WechatContext;
+import com.fengjx.modules.wechat.service.WechatPublicAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class WechatApiController extends MyController {
     private ServiceEngine serviceEngine;
 
     @Autowired
-    private PublicAccount publicAccount;
+    private WechatPublicAccountService publicAccountService;
 
     /**
      * 接口认证
@@ -42,9 +43,9 @@ public class WechatApiController extends MyController {
     public String valid(HttpServletRequest request) {
         // 拦截器里已经做了消息签名校验，这里直接返回就可以了
         Map<String, Object> attrs = WechatContext.getInMessageRecord().getColumns();
-        attrs.put("valid_state", PublicAccount.VALID_STATE_EXCESS);
+        attrs.put("valid_state", WechatPublicAccount.VALID_STATE_EXCESS);
         // 更新接口为已接入状态
-        publicAccount.update(attrs);
+        publicAccountService.update(attrs);
         return request.getParameter("echostr");
     }
 

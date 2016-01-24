@@ -1,7 +1,7 @@
 
 package com.fengjx.commons.ext.qiniu;
 
-import com.fengjx.commons.utils.GetPropertiesVal;
+import com.fengjx.commons.config.GetPropertiesVal;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;

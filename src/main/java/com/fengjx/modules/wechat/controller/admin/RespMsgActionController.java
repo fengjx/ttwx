@@ -1,12 +1,11 @@
 
 package com.fengjx.modules.wechat.controller.admin;
 
-import com.fengjx.commons.plugin.db.page.AdapterPage;
 import com.fengjx.commons.utils.WebUtil;
-import com.fengjx.modules.wechat.model.WechatMenu;
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.wechat.model.Material;
-import com.fengjx.modules.wechat.model.RespMsgAction;
+import com.fengjx.modules.wechat.service.WechatMaterialService;
+import com.fengjx.modules.wechat.service.WechatMenuService;
+import com.fengjx.modules.wechat.service.WechatRespMsgActionService;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 import org.apache.commons.collections.MapUtils;
@@ -32,13 +31,13 @@ import java.util.Map;
 public class RespMsgActionController extends MyController {
 
     @Autowired
-    private RespMsgAction respMsgAction;
+    private WechatRespMsgActionService msgActionService;
 
     @Autowired
-    private WechatMenu wechatMenu;
+    private WechatMenuService menuService;
 
     @Autowired
-    private Material material;
+    private WechatMaterialService materialService;
 
     /**
      * 关键字回复界面
@@ -102,13 +101,13 @@ public class RespMsgActionController extends MyController {
     public String load(HttpServletRequest request) {
         String id = request.getParameter("id");
         if (StringUtils.isNotBlank(id)) {
-            return respMsgAction.loadDetailById(id, getLoginSysUserId()).toJson();
+            return msgActionService.loadDetailById(id, getLoginSysUserId()).toJson();
         }
         String ext_type = request.getParameter("ext_type");
         String req_type = request.getParameter("req_type");
         String event_type = request.getParameter("event_type");
         String key_word = request.getParameter("key_word");
-        return respMsgAction
+        return msgActionService
                 .loadMsgAction(ext_type, req_type, event_type, key_word, getLoginSysUserId())
                 .toJson();
     }
@@ -121,8 +120,8 @@ public class RespMsgActionController extends MyController {
      */
     @RequestMapping(value = "/pageList")
     @ResponseBody
-    public AdapterPage pageList(HttpServletRequest request) {
-        return respMsgAction.pageMsgAction(WebUtil.getNotBlankRequestParams(request),
+    public Object pageList(HttpServletRequest request) {
+        return msgActionService.pageMsgAction(WebUtil.getNotBlankRequestParams(request),
                 getLoginSysUserId());
     }
 
@@ -142,9 +141,9 @@ public class RespMsgActionController extends MyController {
         materialMap.put("user_id", userId);
         reqMap.put("user_id", userId);
         if (StringUtils.isNotBlank((String) reqMap.get("id"))) {
-            respMsgAction.updateAction(reqMap, getWechatMenu(reqMap), materialMap);
+            msgActionService.updateAction(reqMap, getWechatMenu(reqMap), materialMap);
         } else {
-            respMsgAction.saveAction(reqMap, getWechatMenu(reqMap), materialMap);
+            msgActionService.saveAction(reqMap, getWechatMenu(reqMap), materialMap);
         }
         return retSuccess();
     }
@@ -152,7 +151,7 @@ public class RespMsgActionController extends MyController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public String delete(String id, HttpServletRequest request) {
-        respMsgAction.deleteMsgActionById(id, getLoginSysUserId());
+        msgActionService.deleteMsgActionById(id, getLoginSysUserId());
         return retSuccess();
     }
 
@@ -165,7 +164,7 @@ public class RespMsgActionController extends MyController {
     private Map<String, Object> getWechatMenu(Map<String, Object> reqMap) {
         Map<String, Object> menuMap = new HashMap<>();
         if (MapUtils.isNotEmpty(reqMap) && StringUtils.isNotBlank((String) reqMap.get("menuId"))) {
-            menuMap = wechatMenu.findById(reqMap.get("menuId")).getColumns();
+            menuMap = menuService.findById(reqMap.get("menuId")).getColumns();
             menuMap.put("type", reqMap.get("menuType"));
             menuMap.put("url", reqMap.get("menuUrl"));
         }
@@ -184,7 +183,7 @@ public class RespMsgActionController extends MyController {
             return materialMap;
         }
         if (StringUtils.isNotBlank((String) reqMap.get("material_id"))) {
-            materialMap = material.findById(reqMap.get("material_id")).getColumns();
+            materialMap = materialService.findById(reqMap.get("material_id")).getColumns();
         }
         if (StringUtils.isNotBlank((String) reqMap.get("materiaContent"))) {
             materialMap = new HashMap<>();

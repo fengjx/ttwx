@@ -2,7 +2,7 @@
 package com.fengjx.modules.common.controller;
 
 import com.fengjx.commons.web.BaseController;
-import com.fengjx.modules.sys.entity.SysUserEntity;
+import com.fengjx.modules.sys.bean.SysUser;
 import com.fengjx.modules.sys.utils.UserUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -30,14 +30,14 @@ public abstract class MyController extends BaseController {
      * @return
      */
     protected boolean isLogin(){
-        SysUserEntity user = UserUtil.getUser();
+        SysUser user = UserUtil.getUser();
         return StringUtils.isNotBlank(user.getId());
     }
 
     /**
      * 获得当前登录用户
      */
-    protected SysUserEntity getLoginSysUser() {
+    protected SysUser getLoginSysUser() {
         return UserUtil.getUser();
     }
 

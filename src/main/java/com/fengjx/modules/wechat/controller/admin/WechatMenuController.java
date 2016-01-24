@@ -2,8 +2,8 @@
 package com.fengjx.modules.wechat.controller.admin;
 
 import com.fengjx.commons.utils.JsonUtil;
-import com.fengjx.modules.wechat.model.WechatMenu;
 import com.fengjx.modules.common.controller.MyController;
+import com.fengjx.modules.wechat.service.WechatMenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ import java.util.Map;
 public class WechatMenuController extends MyController {
 
     @Autowired
-    private WechatMenu wechatMenu;
+    private WechatMenuService menuService;
 
     /**
      * 菜单管理界面
@@ -47,7 +47,7 @@ public class WechatMenuController extends MyController {
     @RequestMapping(value = "/load")
     @ResponseBody
     public List<Map<String, Object>> load(HttpServletRequest request) {
-        List<Map<String, Object>> tree = wechatMenu.treeMenu(getLoginSysUserId());
+        List<Map<String, Object>> tree = menuService.treeMenu(getLoginSysUserId());
         return tree;
     }
 
@@ -62,7 +62,7 @@ public class WechatMenuController extends MyController {
     public String addOrUpdate(HttpServletRequest request) {
         Map<String, Object> attrs = getNotBlankRequestMap(request);
         attrs.put("user_id", getLoginSysUserId());
-        wechatMenu.saveOrUpdate(attrs);
+        menuService.saveOrUpdate(attrs);
         return retSuccess();
     }
 
@@ -75,7 +75,7 @@ public class WechatMenuController extends MyController {
     @RequestMapping(value = "/delete")
     @ResponseBody
     public String delete(String id) {
-        wechatMenu.deleteMenu(id);
+        menuService.deleteMenu(id);
         return retSuccess();
     }
 
@@ -89,7 +89,7 @@ public class WechatMenuController extends MyController {
     @RequestMapping(value = "/release")
     @ResponseBody
     public String release(HttpServletRequest request) {
-        wechatMenu.release(getLoginSysUserId());
+        menuService.release(getLoginSysUserId());
         return retSuccess();
     }
 
@@ -98,7 +98,7 @@ public class WechatMenuController extends MyController {
     public String sort(HttpServletRequest request, String sortStr) {
         List<Map<String, Object>> sortJson = StringUtils.isNotBlank(sortStr) ? JsonUtil
                 .parseJSON2List(sortStr) : null;
-        wechatMenu.sort(sortJson, getLoginSysUserId());
+        menuService.sort(sortJson, getLoginSysUserId());
         return retSuccess();
     }
 

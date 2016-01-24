@@ -5,19 +5,18 @@ import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.system.init.SpringBeanFactoryUtil;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.modules.common.constants.MsgTemplateConstants;
+import com.fengjx.modules.wechat.bean.WechatRespMsgAction;
 import com.fengjx.modules.wechat.process.ServiceExecutor;
 import com.fengjx.modules.wechat.process.ServiceExecutorNameWire;
-import com.fengjx.modules.wechat.model.MsgTemplate;
-import com.fengjx.modules.wechat.model.PublicAccount;
-import com.fengjx.modules.wechat.model.RespMsgAction;
 import com.fengjx.modules.wechat.process.bean.WechatContext;
 import com.fengjx.modules.wechat.process.ext.ExtService;
 import com.fengjx.modules.wechat.process.utils.MessageUtil;
 import com.fengjx.modules.wechat.process.utils.WxMpUtil;
-
+import com.fengjx.modules.wechat.service.WechatMsgTemplateService;
+import com.fengjx.modules.wechat.service.WechatPublicAccountService;
+import com.fengjx.modules.wechat.service.WechatRespMsgActionService;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,11 +32,11 @@ public abstract class BaseServiceExecutor implements ServiceExecutor, ServiceExe
     private static final Logger LOG = LoggerFactory.getLogger(BaseServiceExecutor.class);
 
     @Autowired
-    protected RespMsgAction respMsgAction;
+    protected WechatRespMsgActionService msgActionService;
     @Autowired
-    protected PublicAccount publicAccount;
+    protected WechatPublicAccountService publicAccountService;
     @Autowired
-    protected MsgTemplate msgTemplate;
+    protected WechatMsgTemplateService msgTemplateService;
 
     /**
      * 执行消息动作
@@ -49,12 +48,12 @@ public abstract class BaseServiceExecutor implements ServiceExecutor, ServiceExe
      */
     protected WxMpXmlOutMessage doAction(String req_type, String event_type, String key_word,
             String userId) {
-        Record actionRecord = respMsgAction.loadMsgAction(null, req_type,
+        Record actionRecord = msgActionService.loadMsgAction(null, req_type,
                 event_type, key_word, userId);
         // 没有找到匹配规则
         if (actionRecord.isEmpty()) {
             // 返回默认回复消息
-            actionRecord = respMsgAction.loadMsgAction(MsgTemplateConstants.WECHAT_DEFAULT_MSG,
+            actionRecord = msgActionService.loadMsgAction(MsgTemplateConstants.WECHAT_DEFAULT_MSG,
                     null, null, null, userId);
         }
         return doAction(actionRecord);
@@ -75,9 +74,9 @@ public abstract class BaseServiceExecutor implements ServiceExecutor, ServiceExe
         }
         String res = null;
         String actionType = actionRecord.getStr("action_type");
-        if (respMsgAction.ACTION_TYPE_MATERIAL.equals(actionType)) { // 从素材取数据
+        if (WechatRespMsgAction.ACTION_TYPE_MATERIAL.equals(actionType)) { // 从素材取数据
             res = actionRecord.getStr("xml_data");
-        } else if (respMsgAction.ACTION_TYPE_API.equals(actionType)) { // 从接口返回数据
+        } else if (WechatRespMsgAction.ACTION_TYPE_API.equals(actionType)) { // 从接口返回数据
             res = busiappHandle(actionRecord.getStr("bean_name"));
         }
         return doAction(res);
