@@ -1,7 +1,6 @@
 
 package com.fengjx.modules.common.controller;
 
-import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.sys.service.SysMenuService;
 import org.apache.commons.lang3.StringUtils;
@@ -42,25 +41,16 @@ public class ViewController extends MyController {
     }
 
     /**
-     * 后台菜单跳转
+     * 查询用户菜单
      *
-     * @param menuId
+     * @param pid
      * @return
      */
-    @RequestMapping(value = "${adminPath}/f/{menuId}")
-    public String forward(@PathVariable("menuId") String menuId, Model model) {
-        Record menu = sysMenuService.get(menuId);
-        if (StringUtils.isBlank(menu.getStr("url"))) {
-            return "forward:" + adminPath;
-        }
-        String pid = menu.getStr("id");
-        if (StringUtils.isNotBlank(menu.getStr("parents_ids"))) {
-            pid = StringUtils.split(menu.getStr("parents_ids"), ",")[0];
-        } else if (StringUtils.isNotBlank(menu.getStr("parent_id"))) {
-            pid = menu.getStr("parent_id");
-        }
-        model.addAttribute("admin_menu_pid", pid);
-        return "forward:" + menu.getStr("url");
+    @RequestMapping(value = "${adminPath}/leftMenu")
+    public String findUserMenus(String pid, Model m) {
+        m.addAttribute("menu_pid", pid);
+        m.addAttribute("menus", sysMenuService.findUserMenus(pid, getLoginSysUser()));
+        return "common/inc/admin-left-menu";
     }
 
 }

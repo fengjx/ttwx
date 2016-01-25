@@ -27,18 +27,18 @@ public class SystemService {
     /**
      * 根据登录名获取用户
      * 
-     * @param loginName
+     * @param loginName 登录账号
      * @return 取不到返回null
      */
     public SysUser getUserByLoginName(final String loginName) {
         SysUser user = EhCacheUtil.get(AppConfig.EhcacheName.SYS_CACHE,
                 UserUtil.USER_CACHE_LOGIN_NAME_ + loginName);
         if (null == user) {
-            SysUser userRecord = sysUserService.getUserByUsername(loginName);
-            if (userRecord == null || userRecord.isEmpty()) {
+            user = sysUserService.getUserByUsername(loginName);
+            if (user == null || user.isEmpty()) {
                 return null;
             }
-            user.setRoles(sysUserRoleService.findUserRoles(userRecord.getId()));
+            user.setRoles(sysUserRoleService.findUserRoles(user.getId()));
             EhCacheUtil.put(AppConfig.EhcacheName.SYS_CACHE, UserUtil.USER_CACHE_LOGIN_NAME_
                     + loginName, user);
             EhCacheUtil.put(AppConfig.EhcacheName.SYS_CACHE,

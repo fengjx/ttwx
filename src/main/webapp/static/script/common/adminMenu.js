@@ -22,25 +22,15 @@ app.admin = {
         loadSecondMenu: function (pid) {
             //second-menu
             $.ajax({
-                url: adminPath + '/sys/menu/userMenu',
+                url: adminPath + '/leftMenu',
                 data: {
                     pid: pid
                 },
                 cache: false,
-                dataType: "json"
+                dataType: "html"
             }).done(function (res) {
-                if(data){
-                    var html = "";
-                    $.each(res, function (i, d) {
-                        if(d.is_show){
-
-                        }
-                    });
-                }else{
-                    app.alert("菜单加载失败");
-                }
+                $("#left-menu").html(res);
             }).fail(function () {
-
             });
         }
     }
@@ -52,4 +42,16 @@ $(function () {
         $(this).css("color", "#f89406");
         app.admin.menu.loadSecondMenu($(this).attr("data-id"));
     });
+
+    $("#left-menu").on('click','.first-menu', function () {
+        $(".first-menu").css("color", "");
+        $(this).css("color", "#f89406");
+        app.admin.menu.loadSecondMenu($(this).attr("data-id"));
+    });
+
+    $("#left-menu").on('click','#sidebar-collapse', function () {
+        var isOpen = $("#side-menu").hasClass("menu-min");
+        app.admin.sidebar(isOpen ? 1 : 0);
+    });
+
 });

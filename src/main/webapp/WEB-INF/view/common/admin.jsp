@@ -83,50 +83,6 @@
     </div>
   </div>
 </div>
-
-<script id="left-menu-template" type="text/x-handlebars-template">
-  <div id="side-menu" class="sidebar responsive">
-    <ul id="second-menu" class="nav nav-sidebar nav-list">
-      <%--js load--%>
-        <li>
-          <a href="${adminPath}/sys/dict">
-            <i class="icon-credit-card menu-icon"></i>
-            <span class="menu-text"> 字典管理 </span>
-          </a>
-          <b class="arrow"></b>
-        </li>
-        <li>
-          <a href="javascript:void (0);">
-            <i class=" icon-list menu-icon"></i>
-            <span class="menu-text"> 菜单管理 </span>
-            <b class="arrow icon-angle-down"></b>
-          </a>
-          <b class="arrow"></b>
-          <ul class="submenu">
-            <li class="">
-              <a href="${adminPath}/sys/menu">
-                <i class="menu-icon fa fa-caret-right"></i>
-                查看
-              </a>
-              <b class="arrow"></b>
-            </li>
-            <li class="">
-              <a href="${adminPath}/sys/menu/form">
-                <i class="menu-icon fa fa-caret-right"></i>
-                添加
-              </a>
-              <b class="arrow"></b>
-            </li>
-          </ul>
-        </li>
-
-    </ul>
-    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-      <i class="ace-icon icon-arrow-left"></i>
-    </div>
-  </div>
-</script>
-
 <script src="${resourceUrl}/script/common/adminMenu.js?v=2015082001" type="text/javascript"></script>
 </body>
 </html>

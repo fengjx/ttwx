@@ -80,8 +80,9 @@
         <aop:pointcut id="servicePointcut"
                       expression="
                         execution(* com.fengjx.commons.plugin.db..*.*(..))
-                        execution(* com.fengjx.modules.wechat.model..*.*(..)) ||
-                        execution(* com.fengjx.modules.sys.model..*.*(..))
+                        execution(* com.fengjx.modules.wechat.service..*.*(..)) ||
+                        execution(* com.fengjx.modules.sys.service..*.*(..))
+                        execution(* com.fengjx.modules.portal.service..*.*(..))
                        "/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" order="1"/>
     </aop:config>

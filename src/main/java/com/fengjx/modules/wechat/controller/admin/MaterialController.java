@@ -3,7 +3,7 @@ package com.fengjx.modules.wechat.controller.admin;
 
 import com.fengjx.commons.utils.JsonUtil;
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.sys.entity.SysUserEntity;
+import com.fengjx.modules.sys.bean.SysUser;
 import com.fengjx.modules.wechat.service.WechatMaterialService;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
@@ -66,7 +66,7 @@ public class MaterialController extends MyController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     public String addOrUpdate(HttpServletRequest request, String contentsJson) {
-        SysUserEntity sysUser = getLoginSysUser();
+        SysUser sysUser = getLoginSysUser();
         List<Map<String, Object>> contents = StringUtils.isNotBlank(contentsJson)
                 ? JsonUtil.parseJSON2List(contentsJson) : null;
         Map<String, Object> params = getRequestMap(request);
@@ -91,19 +91,18 @@ public class MaterialController extends MyController {
         return retSuccess();
     }
 
-    private void toSendMessage(SysUserEntity sysUser, List<Map<String, Object>> contents,
+    private void toSendMessage(SysUser sysUser, List<Map<String, Object>> contents,
             Map<String, Object> params, boolean isPreview) throws WxErrorException {
-
         String msgType = (String) params.get("msg_type");
         String wxUserId = (String) params.get("wxUserId");
         if (null != msgType && msgType.equals("news")) { // 图文消息
             if (null != contents && contents.size() > 0) {
                 String xml_data = (String) params.get("xml_data");
-                if (isPreview)
+                if (isPreview) {
                     materialService.previewMsg(contents, xml_data, sysUser.getId(), wxUserId);
-                else
+                } else {
                     materialService.sendGroupMsg(contents, xml_data, sysUser.getId());
-
+                }
             }
         }
     }

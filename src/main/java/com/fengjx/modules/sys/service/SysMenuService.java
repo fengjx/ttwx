@@ -27,7 +27,9 @@ import java.util.Map;
 public class SysMenuService extends Model<SysMenu> {
 
     private static final String TREE_MENU_CACHE = "listTreeMenu";
+
     private static final String MENU_ID_CACHE = "menu_id_";
+
     private static final String MENU_URL_CACHE = "menu_url_";
 
     private static final String ORDER_BY = "order by order_no , update_time desc";
@@ -151,13 +153,13 @@ public class SysMenuService extends Model<SysMenu> {
                     m.put("isParent", true);
                     if (CollectionUtils.isNotEmpty(tmpList)) {
                         for (Map<String, Object> tm : tmpList) {
-                            if (AppConfig.YES.equals(tm.get("is_show"))) {
+                            if (AppConfig.YES.equals(tm.get("is_show"))
+                                    && _id.equals(tm.get("parent_id"))) {
                                 isShowNext = true;
                                 break;
                             }
                         }
                     }
-                    m.put("isShowNext", true);
                     resList.addAll(tmpList);
                 } else {
                     m.put("isLeef", true);
@@ -210,7 +212,7 @@ public class SysMenuService extends Model<SysMenu> {
                             }
                             List<Map<String, Object>> res = Lists.newArrayList();
                             for (Map<String, Object> m : list) {
-                                if (!pid.equals(m.get("parent_id"))) {
+                                if (pid.equals(m.get("parent_id"))) {
                                     res.add(m);
                                 }
                             }

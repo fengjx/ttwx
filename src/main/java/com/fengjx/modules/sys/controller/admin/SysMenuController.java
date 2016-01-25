@@ -89,15 +89,4 @@ public class SysMenuController extends MyController {
         return retSuccess("菜单成功删除");
     }
 
-    /**
-     * 查询用户菜单
-     *
-     * @param pid
-     * @return
-     */
-    @RequestMapping(value = "userMenu")
-    public String findUserMenus(String pid, Model m) {
-        m.addAttribute("menu", sysMenuService.findUserMenus(pid, getLoginSysUser()));
-        return "common//admin-left-menu";
-    }
 }

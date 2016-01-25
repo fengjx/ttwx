@@ -1,10 +1,7 @@
 
 package com.fengjx.modules.sys.controller.admin.interceptor;
 
-import com.fengjx.commons.plugin.db.Record;
-import com.fengjx.commons.utils.WebUtil;
 import com.fengjx.modules.sys.service.SysMenuService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -43,19 +40,8 @@ public class AdminInterceptor implements HandlerInterceptor {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object handler) throws Exception {
-        if (!WebUtil.isAjax(request)) {
-            String url = StringUtils.replace(request.getRequestURI(), request.getContextPath(), "");
-            Record menu = sysMenuService.findByUrl(url);
-            if (!menu.isEmpty()) {
-                String pid = menu.getStr("id");
-                if (StringUtils.isNotBlank(menu.getStr("parent_ids"))) {
-                    pid = StringUtils.split(menu.getStr("parent_ids"), ",")[0];
-                } else if (StringUtils.isNotBlank(menu.getStr("parent_id"))) {
-                    pid = menu.getStr("parent_id");
-                }
-                request.setAttribute("admin_menu_pid", pid);
-            }
-        }
+
+
         return true;
     }
 }

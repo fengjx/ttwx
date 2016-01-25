@@ -3,13 +3,13 @@
 <div id="side-menu" class="sidebar responsive">
   <ul class="nav nav-sidebar nav-list">
     <c:forEach var="m1" items="${menus}">
-      <c:if test="${menu_pid eq m1.parent_id && '1' eq m1.is_show}">
+      <c:if test="${'1' eq m1.is_show}">
         <c:set var="isLeef" value="${m1.isLeef}"></c:set>
         <li>
           <a href="<c:choose><c:when test="${not empty m1.url}">${domain}${m1.url}</c:when><c:otherwise>javascript:void (0);</c:otherwise></c:choose>">
             <i class="${m1.icon}"></i>
             <span class="menu-text"> ${m1.name} </span>
-            <c:if test="${!isLeef}">
+            <c:if test="${isShowNext}">
               <b class="arrow icon-angle-down"></b>
             </c:if>
           </a>
