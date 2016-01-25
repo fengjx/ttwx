@@ -63,22 +63,6 @@ public class SysUserService extends Model<SysUser> {
     }
 
     /**
-     * 登录
-     *
-     * @param username
-     * @param pwd
-     * @return
-     */
-    public SysUserEntity signin(String username, String pwd) {
-        Record record = getUserByUsername(username);
-        String md5Hex = UserUtil.encryptPwd(pwd, record.getStr("salt"));
-        if (!record.isEmpty() && record.getStr("pwd").equalsIgnoreCase(md5Hex)) {
-            return record.toBean(SysUserEntity.class);
-        }
-        return null;
-    }
-
-    /**
      * 用户注册
      *
      * @param sysUser

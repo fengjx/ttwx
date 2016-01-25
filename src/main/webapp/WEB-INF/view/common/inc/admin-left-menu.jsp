@@ -6,7 +6,7 @@
       <c:if test="${'1' eq m1.is_show}">
         <c:set var="isLeef" value="${m1.isLeef}"></c:set>
         <li>
-          <a href="<c:choose><c:when test="${not empty m1.url}">${domain}${m1.url}</c:when><c:otherwise>javascript:void (0);</c:otherwise></c:choose>">
+          <a href="javascript:void(-1);" data-href="${domain}${m1.url}">
             <i class="${m1.icon}"></i>
             <span class="menu-text"> ${m1.name} </span>
             <c:if test="${isShowNext}">
@@ -19,7 +19,7 @@
               <c:forEach var="m2" items="${menus}">
                 <c:if test="${m2.parent_id eq m1.id && '1' eq m2.is_show}">
                   <li>
-                    <a href="${domain}${m2.url}">
+                    <a href="javascript:void(-1);" data-href="${domain}${m2.url}">
                       <i class="menu-icon fa fa-caret-right"></i>
                         ${m2.name}
                     </a>

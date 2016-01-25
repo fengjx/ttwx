@@ -74,12 +74,19 @@
 </nav>
 
 <div class="main-container">
-  <div id="left-menu">
 
-  </div>
   <div class="main-content">
     <div id="context" class="main-content-inner">
-      <iframe id="mainFrame" name="mainFrame" src="" style="overflow:visible;" scrolling="yes" frameborder="no" width="100%" height="650"></iframe>
+      <div class="breadcrumbs">
+        <ol class="breadcrumb">
+          <li><a href="${adminPath}">后台管理</a></li>
+          <li><a href="${adminPath}/sys">系统管理</a></li>
+          <li class="active">字典管理</li>
+        </ol>
+      </div>
+      <div class="page-content">
+        <iframe id="mainFrame" name="mainFrame" src="" style="overflow:visible;" scrolling="yes" frameborder="no"></iframe>
+      </div>
     </div>
   </div>
 </div>
