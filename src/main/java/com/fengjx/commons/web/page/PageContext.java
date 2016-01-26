@@ -8,15 +8,28 @@
 package com.fengjx.commons.web.page;
 
 /**
- * @author fengjx.
- * @date：2015/5/10 0010
+ * @author fengjx. @date：2015/5/10 0010
  */
 public class PageContext {
 
     // 每页显示条数
-    private static ThreadLocal<Integer> pageSize = new ThreadLocal<>();;
+    private static ThreadLocal<Integer> pageSize = new ThreadLocal<>();
     // 当前页
-    private static ThreadLocal<Integer> pageNumber = new ThreadLocal<>();;
+    private static ThreadLocal<Integer> pageNumber = new ThreadLocal<>();
+
+    private static ThreadLocal<Boolean> autoConvert = new ThreadLocal<>();
+
+    static {
+        autoConvert.set(true);
+    }
+
+    public static boolean isAutoConvert() {
+        return autoConvert.get();
+    }
+
+    public static void setAutoConvert(boolean autoConvert) {
+        PageContext.autoConvert.set(autoConvert);
+    }
 
     public static int getPageSize() {
         Integer _pagesize = pageSize.get();
@@ -50,5 +63,6 @@ public class PageContext {
     public static void removeAll() {
         pageNumber.remove();
         pageSize.remove();
+        autoConvert.remove();
     }
 }

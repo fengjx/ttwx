@@ -1,10 +1,4 @@
 
-/*
- * Copyright (c) 2013-2016 http://git.oschina.net/fengjx/ttwx
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
-
 package com.fengjx.commons.web.page.adapter;
 
 import com.fengjx.commons.plugin.db.Page;
@@ -19,25 +13,20 @@ import java.util.List;
  * @Created by FengJianxin on 2015/8/22.
  * @Email xd-fjx@qq.com
  */
-public class JqGridPage extends AdapterPage {
+public class JqGridPage<T> extends AdapterPage {
 
     public static final String ADAPTER_PAGE_NAME = "JqGridPage";
-
     private static final long serialVersionUID = 1L;
-
     // 总记录数
     public int records;
-
     // 总页数
     public int total;
-
     // 当前页
     public int page;
-
     // 数据
-    public List<Object> rows;
+    public List<T> rows;
 
-    public JqGridPage(Page<Object> page) {
+    public JqGridPage(Page<T> page) {
         this.total = page.getTotalPage();
         this.rows = page.getList();
         this.records = page.getTotalRow();
@@ -68,11 +57,11 @@ public class JqGridPage extends AdapterPage {
         this.page = page;
     }
 
-    public List<Object> getRows() {
+    public List<T> getRows() {
         return rows;
     }
 
-    public void setRows(List<Object> rows) {
+    public void setRows(List<T> rows) {
         this.rows = rows;
     }
 

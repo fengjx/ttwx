@@ -10,18 +10,10 @@
   <title>后台管理</title>
   <jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
   <script>
-    $(function () {
-      var curUrl = window.location.href;
-      var ul = document.getElementById('head-menu');
-      var lis = ul.getElementsByTagName("li");
-      for (var i = 0; i < lis.length; i++) {
-        var href = lis.item(i).getElementsByTagName("a")[0].getAttribute("href");
-        if (-1 !== curUrl.indexOf(href)) {
-          $(lis.item(i)).find("a").css("color", "#f89406");
-          break;
-        }
-      }
-    });
+    function iFrameHeight() {
+      var ifm= document.getElementById("mainFrame");
+      ifm.style.height = (window.innerHeight - 50) + 'px';
+    }
   </script>
 </head>
 <body class="no-skin">
@@ -74,19 +66,11 @@
 </nav>
 
 <div class="main-container">
-
+  <div id="side-menu" class="sidebar responsive">
+  </div>
   <div class="main-content">
     <div id="context" class="main-content-inner">
-      <div class="breadcrumbs">
-        <ol class="breadcrumb">
-          <li><a href="${adminPath}">后台管理</a></li>
-          <li><a href="${adminPath}/sys">系统管理</a></li>
-          <li class="active">字典管理</li>
-        </ol>
-      </div>
-      <div class="page-content">
-        <iframe id="mainFrame" name="mainFrame" src="" style="overflow:visible;" scrolling="yes" frameborder="no"></iframe>
-      </div>
+        <iframe id="mainFrame" name="mainFrame" src="" style="overflow:visible;" scrolling="yes" frameborder="no" width="100%" onLoad="iFrameHeight()"></iframe>
     </div>
   </div>
 </div>

@@ -9,10 +9,10 @@ package com.fengjx.commons.web.converter;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.fengjx.commons.plugin.db.Page;
 import com.fengjx.commons.web.page.AdapterPage;
+import com.fengjx.commons.web.page.PageContext;
 import com.fengjx.commons.web.page.adapter.BootstrapPage;
 import com.fengjx.commons.web.page.adapter.JqGridPage;
 import com.fengjx.modules.common.constants.AppConfig;
-
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
@@ -31,19 +31,21 @@ public class MyFastJsonHttpMessageConverter extends FastJsonHttpMessageConverter
     @Override
     protected void writeInternal(Object obj, HttpOutputMessage outputMessage)
             throws IOException, HttpMessageNotWritableException {
-        if (obj instanceof Page) {
+        if (PageContext.isAutoConvert() && obj instanceof Page) {
             // 分页适配
-            super.writeInternal(getPage((Page) obj), outputMessage);
+            AdapterPage page = getPage((Page) obj);
+            super.writeInternal(page, outputMessage);
+        } else {
+            super.writeInternal(obj, outputMessage);
         }
-        super.writeInternal(obj, outputMessage);
     }
 
     @SuppressWarnings("unchecked")
     private AdapterPage getPage(Page page) {
         if (JqGridPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(ADAPTER_PAGE_NAME)) {
-            return new JqGridPage(page);
+            return new JqGridPage<>(page);
         } else if (BootstrapPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(ADAPTER_PAGE_NAME)) {
-            return new BootstrapPage(page);
+            return new BootstrapPage<>(page);
         } else {
             throw new RuntimeException("unknown adapterPage type " + ADAPTER_PAGE_NAME);
         }

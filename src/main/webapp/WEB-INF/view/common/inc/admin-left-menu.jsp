@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/WEB-INF/view/common/inc/path.jsp"%>
-<div id="side-menu" class="sidebar responsive">
   <ul class="nav nav-sidebar nav-list">
     <c:forEach var="m1" items="${menus}">
       <c:if test="${'1' eq m1.is_show}">
@@ -36,4 +35,3 @@
   <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
     <i class="ace-icon icon-arrow-left"></i>
   </div>
-</div>

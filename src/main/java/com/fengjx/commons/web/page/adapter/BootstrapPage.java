@@ -1,10 +1,4 @@
 
-/*
- * Copyright (c) 2013-2016 http://git.oschina.net/fengjx/ttwx
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
-
 package com.fengjx.commons.web.page.adapter;
 
 import com.fengjx.commons.plugin.db.Page;
@@ -17,20 +11,19 @@ import java.util.List;
  *
  * @author fengjx. @date：2015/5/19 0019
  */
-public class BootstrapPage extends AdapterPage {
+public class BootstrapPage<T> extends AdapterPage {
 
     public static final String ADAPTER_PAGE_NAME = "BootstrapPage";
-
     private static final long serialVersionUID = 1L;
 
     public int total;
 
-    public List<Object> rows;
+    public List<T> rows;
 
     public BootstrapPage() {
     }
 
-    public BootstrapPage(Page<Object> page) {
+    public BootstrapPage(Page<T> page) {
         this.total = page.getTotalRow();
         this.rows = page.getList();
     }
@@ -43,11 +36,11 @@ public class BootstrapPage extends AdapterPage {
         this.total = total;
     }
 
-    public List<Object> getRows() {
+    public List<T> getRows() {
         return rows;
     }
 
-    public void setRows(List<Object> rows) {
+    public void setRows(List<T> rows) {
         this.rows = rows;
     }
 

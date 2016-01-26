@@ -10,19 +10,30 @@ $(function () {
         loadSecondMenu($(this).attr("data-id"));
     });
 
-    $("#left-menu").on('click','#sidebar-collapse', function () {
+    $("#side-menu").on('click','#sidebar-collapse', function () {
         var isOpen = $("#side-menu").hasClass("menu-min");
         sidebar(isOpen ? 1 : 0);
     });
 
-    $("#left-menu").on('click','a', function () {
+    $("#side-menu").on('click','a', function () {
         var href = $(this).attr("data-href");
         $("#mainFrame").attr("src", href);
+        $("#side-menu").find("li").removeClass("active");
+        var parent = $(this).parent();
+        $(parent).addClass("active");
+        if(parent.parent().hasClass("submenu")){
+            parent.parent().parent().addClass("open");
+            parent.parent().css("display","block");
+        }
     });
 
+    loadSecondMenu($(".first-menu:eq(0)").css("color", "#f89406").attr("data-id"));
 });
 
 function loadSecondMenu (pid) {
+    if(!pid){
+        return false;
+    }
     $.ajax({
         url: adminPath + '/leftMenu',
         data: {
@@ -31,7 +42,7 @@ function loadSecondMenu (pid) {
         cache: false,
         dataType: "html"
     }).done(function (res) {
-        $(".main-content").before().html(res);
+        $("#side-menu").html(res);
     }).fail(function () {
     });
 }
