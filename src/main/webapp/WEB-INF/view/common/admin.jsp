@@ -9,12 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>后台管理</title>
   <jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
-  <script>
-    function iFrameHeight() {
-      var ifm= document.getElementById("mainFrame");
-      ifm.style.height = (window.innerHeight - 50) + 'px';
-    }
-  </script>
 </head>
 <body class="no-skin">
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +64,7 @@
   </div>
   <div class="main-content">
     <div id="context" class="main-content-inner">
-        <iframe id="mainFrame" name="mainFrame" src="" style="overflow:visible;" scrolling="yes" frameborder="no" width="100%" onLoad="iFrameHeight()"></iframe>
+        <iframe id="mainFrame" name="mainFrame" src="" style="overflow:visible;" scrolling="yes" frameborder="no" width="100%"></iframe>
     </div>
   </div>
 </div>

@@ -6,19 +6,24 @@ import com.fengjx.commons.plugin.db.BaseBean;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.system.exception.ValidateException;
 import com.fengjx.commons.plugin.db.Injector;
+import com.fengjx.commons.utils.DateUtils;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.commons.utils.WebUtil;
 import com.google.common.collect.Maps;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.beans.PropertyEditorSupport;
 import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
@@ -39,6 +44,34 @@ import java.util.regex.Pattern;
 public abstract class BaseController {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseController.class);
+
+    /**
+     * 初始化数据绑定 1. 将所有传递进来的String进行HTML编码，防止XSS攻击 2. 将字段中Date类型转换为String类型
+     */
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        // String类型转换，将所有传递进来的String进行HTML编码，防止XSS攻击
+        binder.registerCustomEditor(String.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                setValue(text == null ? null : StringEscapeUtils
+                        .escapeHtml4(text.trim()));
+            }
+
+            @Override
+            public String getAsText() {
+                Object value = getValue();
+                return value != null ? value.toString() : "";
+            }
+        });
+        // Date 类型转换
+        binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                setValue(DateUtils.parseDate(text));
+            }
+        });
+    }
 
     /**
      * 获取当前请求对象
@@ -117,23 +150,6 @@ public abstract class BaseController {
     public <T extends BaseBean> T getModel(Class<T> modelClass, String modelName,
             HttpServletRequest request, boolean skipConvertError) {
         return Injector.injectModel(modelClass, modelName, request, skipConvertError);
-    }
-
-    public <T> T getBean(Class<T> beanClass, HttpServletRequest request) {
-        return (T) Injector.injectBean(beanClass, request, false);
-    }
-
-    public <T> T getBean(Class<T> beanClass, HttpServletRequest request, boolean skipConvertError) {
-        return Injector.injectBean(beanClass, request, skipConvertError);
-    }
-
-    public <T> T getBean(Class<T> beanClass, HttpServletRequest request, String beanName) {
-        return Injector.injectBean(beanClass, beanName, request, false);
-    }
-
-    public <T> T getBean(Class<T> beanClass, String beanName, HttpServletRequest request,
-            boolean skipConvertError) {
-        return Injector.injectBean(beanClass, beanName, request, skipConvertError);
     }
 
     /**

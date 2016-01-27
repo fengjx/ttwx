@@ -212,7 +212,9 @@ public class SysMenuService extends Model<SysMenu> {
                             }
                             List<Map<String, Object>> res = Lists.newArrayList();
                             for (Map<String, Object> m : list) {
-                                if (pid.equals(m.get("parent_id"))) {
+                                String parentIds = (String) m.get("parent_ids");
+                                if (StringUtils.isNotBlank(parentIds)
+                                        && pid.equals(StringUtils.split(parentIds, ",")[0])) {
                                     res.add(m);
                                 }
                             }

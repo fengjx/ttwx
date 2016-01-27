@@ -2,25 +2,24 @@
 <%@include file="/WEB-INF/view/common/inc/path.jsp"%>
   <ul class="nav nav-sidebar nav-list">
     <c:forEach var="m1" items="${menus}">
-      <c:if test="${'1' eq m1.is_show}">
-        <c:set var="isLeef" value="${m1.isLeef}"></c:set>
+      <c:if test="${ m1.level eq '2' && '1' eq m1.is_show}">
         <li>
-          <a href="javascript:void(-1);" data-href="${domain}${m1.url}">
+          <a href="javascript:void(-1);" data-href="${domain}${m1.url}" data-next="${m1.isShowNext}">
             <i class="${m1.icon}"></i>
             <span class="menu-text"> ${m1.name} </span>
-            <c:if test="${isShowNext}">
+            <c:if test="${m1.isShowNext}">
               <b class="arrow icon-angle-down"></b>
             </c:if>
           </a>
           <b class="arrow"></b>
-          <c:if test="${!isLeef}">
+          <c:if test="${!m1.isLeef}">
             <ul class="submenu">
               <c:forEach var="m2" items="${menus}">
                 <c:if test="${m2.parent_id eq m1.id && '1' eq m2.is_show}">
                   <li>
                     <a href="javascript:void(-1);" data-href="${domain}${m2.url}">
                       <i class="menu-icon fa fa-caret-right"></i>
-                        ${m2.name}
+                      <span class="menu-text"> ${m2.name} </span>
                     </a>
                     <b class="arrow"></b>
                   </li>
