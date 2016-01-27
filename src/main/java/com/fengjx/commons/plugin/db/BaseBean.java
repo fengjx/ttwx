@@ -8,7 +8,7 @@ import java.util.Map;
  * @Created by FengJianxin
  * @Email xd-fjx@qq.com
  */
-public abstract class BaseBean extends Record {
+public abstract class BaseBean extends Record implements Ibean{
 
     public BaseBean() {
     }

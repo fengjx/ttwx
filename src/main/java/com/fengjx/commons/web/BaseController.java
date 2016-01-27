@@ -5,7 +5,7 @@ import com.fengjx.commons.config.AjaxTemplate;
 import com.fengjx.commons.plugin.db.BaseBean;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.system.exception.ValidateException;
-import com.fengjx.commons.utils.Injector;
+import com.fengjx.commons.plugin.db.Injector;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.commons.utils.WebUtil;
 import com.google.common.collect.Maps;

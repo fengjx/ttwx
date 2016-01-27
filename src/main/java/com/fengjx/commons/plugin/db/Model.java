@@ -814,6 +814,7 @@ public abstract class Model<B extends BaseBean> {
         return getSelectSql(getUsefulClass(), alias);
     }
 
+    @SuppressWarnings("unchecked")
     private Class<B> getUsefulClass() {
         if (this.beanClazz == null) {
             Type genType = this.getClass().getGenericSuperclass();

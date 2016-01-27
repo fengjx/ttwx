@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.fengjx.commons.utils;
+package com.fengjx.commons.plugin.db;
 
-import com.fengjx.commons.plugin.db.BaseBean;
-import com.fengjx.commons.plugin.db.Table;
-import com.fengjx.commons.plugin.db.TableUtil;
+import com.fengjx.commons.utils.StrUtil;
+import com.fengjx.commons.utils.TypeConverter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -39,10 +38,16 @@ public class Injector {
     }
 
     public static <T extends BaseBean> T injectModel(Class<T> modelClass,
-            HttpServletRequest request,
-            boolean skipConvertError) {
+            HttpServletRequest request, boolean skipConvertError) {
         String modelName = modelClass.getSimpleName();
         return injectModel(modelClass, StrUtil.firstCharToLowerCase(modelName), request,
+                skipConvertError);
+    }
+
+    public static <T extends BaseBean> T injectModel(Class<T> modelClass,
+            Map<String, String[]> parasMap, boolean skipConvertError) {
+        String modelName = modelClass.getSimpleName();
+        return injectModel(modelClass, StrUtil.firstCharToLowerCase(modelName), parasMap,
                 skipConvertError);
     }
 
@@ -54,8 +59,8 @@ public class Injector {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T injectBean(Class<T> beanClass, String beanName,
-            HttpServletRequest request, boolean skipConvertError) {
+    public static <T> T injectBean(Class<T> beanClass, String beanName, HttpServletRequest request,
+            boolean skipConvertError) {
         Object bean = createInstance(beanClass);
         String modelNameAndDot = StrUtil.isNotBlank(beanName) ? beanName + "." : null;
 
@@ -80,7 +85,7 @@ public class Injector {
                             : null;
                     method.invoke(bean, value);
                 } catch (Exception e) {
-                    if (skipConvertError == false) {
+                    if (!skipConvertError) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -92,16 +97,20 @@ public class Injector {
     @SuppressWarnings("unchecked")
     public static <T extends BaseBean> T injectModel(Class<T> modelClass, String modelName,
             HttpServletRequest request, boolean skipConvertError) {
+        return injectModel(modelClass, modelName, request.getParameterMap(), skipConvertError);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends BaseBean> T injectModel(Class<T> modelClass, String modelName,
+            Map<String, String[]> parasMap, boolean skipConvertError) {
         Object temp = createInstance(modelClass);
         BaseBean model = (BaseBean) temp;
         Table table = TableUtil.getTable(model.getClass());
         if (table == null) {
-            throw new RuntimeException("The Table mapping of model: " + modelClass.getName() +
-                    " not exists or the ActiveRecordPlugin not start.");
+            throw new RuntimeException("The Table mapping of model: " + modelClass.getName()
+                    + " not exists or the ActiveRecordPlugin not start.");
         }
-
         String modelNameAndDot = StrUtil.isNotBlank(modelName) ? modelName + "." : null;
-        Map<String, String[]> parasMap = request.getParameterMap();
         // 对 paraMap进行遍历而不是对table.getColumnTypeMapEntrySet()进行遍历，以便支持
         // CaseInsensitiveContainerFactory
         // 以及支持界面的 attrName有误时可以感知并抛出异常避免出错
@@ -135,11 +144,12 @@ public class Injector {
                 Object value = paraValue != null ? TypeConverter.convert(colType, paraValue) : null;
                 model.set(attrName, value);
             } catch (Exception e) {
-                if (skipConvertError == false) {
+                if (!skipConvertError) {
                     throw new RuntimeException("Can not convert parameter: " + paraName, e);
                 }
             }
         }
         return (T) model;
     }
+
 }
