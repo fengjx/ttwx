@@ -2,7 +2,9 @@
 package com.fengjx.modules.sys.controller.admin;
 
 import com.fengjx.commons.plugin.db.Record;
+import com.fengjx.commons.plugin.db.annotation.BindBean;
 import com.fengjx.modules.common.controller.MyController;
+import com.fengjx.modules.sys.bean.SysMenu;
 import com.fengjx.modules.sys.service.SysMenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -65,14 +67,13 @@ public class SysMenuController extends MyController {
     /**
      * 更新 / 保存菜单
      *
-     * @param request
+     * @param menu
      * @return
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
-    public String addOrUpdate(HttpServletRequest request) {
-        Map<String, Object> attrs = getRequestMap(request);
-        sysMenuService.saveOrUpdate(attrs);
+    public String addOrUpdate(@BindBean SysMenu menu) {
+        sysMenuService.saveOrUpdate(menu);
         return retSuccess();
     }
 

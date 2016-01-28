@@ -1,6 +1,7 @@
 
 package com.fengjx.commons.plugin.db;
 
+import com.fengjx.commons.plugin.db.annotation.Mapper;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -17,7 +18,7 @@ public class TableUtil {
     public static String getTableName(Class<? extends BaseBean> cls) {
         Mapper mapper = cls.getAnnotation(Mapper.class);
         if (null == mapper) {
-            throw new MyDbException(cls.getName() + "没有添加@Table注解");
+            throw new MyDbException(cls.getName() + "没有添加@Mapper注解");
         }
         return mapper.table();
     }
@@ -31,14 +32,12 @@ public class TableUtil {
     public static String[] getPrimaryKey(Class<? extends BaseBean> cls) {
         Mapper mapper = cls.getAnnotation(Mapper.class);
         if (null == mapper) {
-            throw new RuntimeException(cls.getName() + "没有添加@Table注解");
+            throw new RuntimeException(cls.getName() + "没有添加@Mapper注解");
         }
         String[] pk;
         String id = mapper.id();
         if (StringUtils.isBlank(id)) {
-            pk = new String[] {
-                    Config.dialect.getDefaultPrimaryKey()
-            };
+            throw new RuntimeException(cls.getName() + "@Mapper注解没有指定ID");
         } else {
             pk = StringUtils.split(id, ",");
         }
@@ -54,13 +53,13 @@ public class TableUtil {
     public static String getParentId(Class<? extends BaseBean> cls) {
         Mapper mapper = cls.getAnnotation(Mapper.class);
         if (null == mapper) {
-            throw new MyDbException(cls.getName() + "没有添加@Table注解");
+            throw new MyDbException(cls.getName() + "没有添加@Mapper注解");
         }
         return mapper.pid();
     }
 
     /**
-     * 通过class获得映射table
+     * 通过class获得映射Table
      *
      * @param cls
      * @return

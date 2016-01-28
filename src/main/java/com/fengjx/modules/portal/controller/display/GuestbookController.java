@@ -1,6 +1,7 @@
 
 package com.fengjx.modules.portal.controller.display;
 
+import com.fengjx.commons.plugin.db.annotation.BindBean;
 import com.fengjx.modules.common.controller.MyController;
 import com.fengjx.modules.portal.bean.PortalGuestbook;
 import com.fengjx.modules.portal.model.PortalGuestbookService;
@@ -26,7 +27,7 @@ public class GuestbookController extends MyController {
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
-    public String save(PortalGuestbook guestbook) {
+    public String save(@BindBean PortalGuestbook guestbook) {
         validateRequired("name", "姓名不能为空");
         validateRequired("email", "邮箱不能为空");
         validateRequired("msg", "发送信息不能为空");

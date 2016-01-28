@@ -44,7 +44,7 @@
     </bean>
 
     <bean id="tableMappingPlugin" class="com.fengjx.commons.plugin.db.TableMappingPlugin">
-        <property name="dataSource" ref="dataSource"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
         <property name="packages">
             <value>
                 com.fengjx.modules.wechat.bean,

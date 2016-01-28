@@ -25,6 +25,8 @@ public class Table {
 
     private Class<? extends BaseBean> beanClass;
 
+    private Config config;
+
     public Table(Class<? extends BaseBean> beanClass) {
         if (beanClass == null){
             throw new IllegalArgumentException("Model class can not be null.");
@@ -103,5 +105,13 @@ public class Table {
 
     public void setColumnsStr(String columnsStr) {
         this.columnsStr = columnsStr;
+    }
+
+    public Config getConfig() {
+        return config;
+    }
+
+    public void setConfig(Config config) {
+        this.config = config;
     }
 }

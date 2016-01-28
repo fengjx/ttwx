@@ -171,10 +171,8 @@ public class SysMenuService extends Model<SysMenu> {
         return resList;
     }
 
-    public void saveOrUpdate(Map<String, Object> attrs) {
-        attrs.put("update_time", new Date());
-        SysMenu menu = new SysMenu();
-        menu.setColumns(attrs);
+    public void saveOrUpdate(SysMenu menu) {
+        menu.setUpdateTime(new Date());
         if (StrUtil.isBlank(menu.getId())) {
             save(menu);
         } else {

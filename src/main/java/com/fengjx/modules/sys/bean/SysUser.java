@@ -2,7 +2,7 @@
 package com.fengjx.modules.sys.bean;
 
 import com.fengjx.commons.plugin.db.BaseBean;
-import com.fengjx.commons.plugin.db.Mapper;
+import com.fengjx.commons.plugin.db.annotation.Mapper;
 import com.fengjx.modules.common.constants.AppConfig;
 import org.apache.commons.lang3.StringUtils;
 

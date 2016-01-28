@@ -2,14 +2,17 @@
 package com.fengjx.commons.plugin.db;
 
 import com.fengjx.commons.plugin.IPlugin;
+import com.fengjx.commons.plugin.db.annotation.Mapper;
 import com.fengjx.commons.plugin.db.dialect.Dialect;
 import com.fengjx.commons.plugin.db.dialect.MysqlDialect;
+import com.fengjx.commons.plugin.db.dialect.OracleDialect;
 import com.fengjx.commons.utils.ClassUtil;
 import com.fengjx.commons.utils.LogUtil;
+import com.fengjx.commons.utils.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -23,35 +26,33 @@ public class TableMappingPlugin implements IPlugin {
 
     private static final Logger LOG = LoggerFactory.getLogger(TableMappingPlugin.class);
 
-    private DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
+
     private String[] packages;
+
+    // 数据库方言
+    private String dialect;
+
+    // 主键生成器
+    private IdGenerator idGenerator = new IdDefaultGen();
+
+    // 是否自动生成ID
+    private boolean autoId = true;
 
     @Override
     public void start() {
-        setConfig(new MysqlDialect());
+        Config config = new Config(getDialect(), getIdGenerator(), isAutoId(), getJdbcTemplate());
         try {
             Set<Class<? extends BaseBean>> classSet = getModelClasses();
             for (Class<? extends BaseBean> cls : classSet) {
                 Table table = new Table(cls);
-                bind(table);
+                bind(table, config);
                 TableMapping.me().putTable(table);
             }
         } catch (Exception e) {
             LogUtil.error(LOG, "Can not init table mapping", e);
             throw new MyDbException("Can not init table mapping");
         }
-    }
-
-    /**
-     * 设置配置
-     *
-     * @param dialect
-     */
-    private void setConfig(Dialect dialect) {
-        if (null == dialect) {
-            dialect = new MysqlDialect();
-        }
-        Config.init(dialect);
     }
 
     /**
@@ -78,13 +79,13 @@ public class TableMappingPlugin implements IPlugin {
         }
     }
 
-    private void bind(Table table) throws SQLException {
+    private void bind(Table table, Config config) throws SQLException {
         Connection conn = null;
         Statement stm = null;
         ResultSet rs = null;
-        String sql = Config.dialect.forTableBuilderDoBuild(table.getName());
+        String sql = config.getDialect().forTableBuilderDoBuild(table.getName());
         try {
-            conn = dataSource.getConnection();
+            conn = config.getJdbcTemplate().getDataSource().getConnection();
             stm = conn.createStatement();
             rs = stm.executeQuery(sql);
             LogUtil.debug(LOG, "executeQuery sql ==>" + sql);
@@ -161,6 +162,7 @@ public class TableMappingPlugin implements IPlugin {
                 columnsStr.append(" , ").append(colName);
             }
             table.setColumnsStr(columnsStr.delete(0, 2).toString());
+            table.setConfig(config);
         } finally {
             if (null != rs) {
                 rs.close();
@@ -174,8 +176,15 @@ public class TableMappingPlugin implements IPlugin {
         }
     }
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public JdbcTemplate getJdbcTemplate() {
+        if (null == jdbcTemplate) {
+            throw new RuntimeException("jdbcTemplate in TableMappingPlugin must be not null");
+        }
+        return jdbcTemplate;
+    }
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public String[] getPackages() {
@@ -186,8 +195,38 @@ public class TableMappingPlugin implements IPlugin {
         this.packages = packages;
     }
 
-    public DataSource getDataSource() {
-        return dataSource;
+    public Dialect getDialect() {
+        if (StrUtil.isBlank(dialect)) {
+            return new MysqlDialect();
+        }
+        if ("mysql".equals(dialect)) {
+            return new MysqlDialect();
+        } else if ("oracle".equals(dialect)) {
+            return new OracleDialect();
+        }
+        throw new RuntimeException("unkonw dialect type: " + dialect);
     }
 
+    public void setDialect(String dialect) {
+        this.dialect = dialect;
+    }
+
+    public IdGenerator getIdGenerator() {
+        if (null == idGenerator) {
+            idGenerator = new IdDefaultGen();
+        }
+        return idGenerator;
+    }
+
+    public void setIdGenerator(IdGenerator idGenerator) {
+        this.idGenerator = idGenerator;
+    }
+
+    public boolean isAutoId() {
+        return autoId;
+    }
+
+    public void setAutoId(boolean autoId) {
+        this.autoId = autoId;
+    }
 }

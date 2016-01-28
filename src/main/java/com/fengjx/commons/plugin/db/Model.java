@@ -5,7 +5,6 @@ import com.fengjx.commons.web.page.PageContext;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -23,10 +22,6 @@ import java.util.Map;
  */
 public abstract class Model<B extends BaseBean> {
 
-    // 注入jdbcTemplate
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     private Class<B> beanClazz;
 
     public boolean save(B bean) {
@@ -39,19 +34,20 @@ public abstract class Model<B extends BaseBean> {
 
     @Deprecated
     public boolean insert(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
-        Table table = TableUtil.getTable(cls);
-        if (Config.autoId) {
+        Table table = getTable(cls);
+        Config config = table.getConfig();
+        if (config.isAutoId()) {
             String[] pk = table.getPrimaryKey();
             for (String id : pk) {
                 if (StringUtils.isBlank((String) attrs.get(id))) {
-                    attrs.put(id, Config.idGenerator.createId());
+                    attrs.put(id, config.getIdGenerator().createId());
                 }
             }
         }
         StringBuilder sql = new StringBuilder();
         List<Object> params = new ArrayList<>();
-        Config.dialect.forModelSave(table, attrs, sql, params);
-        return jdbcTemplate.update(sql.toString(), params.toArray()) >= 1;
+        config.getDialect().forModelSave(table, attrs, sql, params);
+        return config.getJdbcTemplate().update(sql.toString(), params.toArray()) >= 1;
     }
 
     @Deprecated
@@ -92,16 +88,18 @@ public abstract class Model<B extends BaseBean> {
 
     @Deprecated
     public boolean deleteById(Class<? extends BaseBean> cls, Object id) {
-        Table table = TableUtil.getTable(cls);
-        String sql = Config.dialect.forModelDeleteById(table);
-        return jdbcTemplate.update(sql, id) >= 1;
+        Table table = getTable(cls);
+        Config config = table.getConfig();
+        String sql = config.getDialect().forModelDeleteById(table);
+        return config.getJdbcTemplate().update(sql, id) >= 1;
     }
 
     @Deprecated
     public boolean deleteById(Class<? extends BaseBean> cls, Object... id) {
-        Table table = TableUtil.getTable(cls);
-        String sql = Config.dialect.forModelDeleteById(table);
-        return jdbcTemplate.update(sql, id) >= 1;
+        Table table = getTable(cls);
+        Config config = table.getConfig();
+        String sql = config.getDialect().forModelDeleteById(table);
+        return config.getJdbcTemplate().update(sql, id) >= 1;
     }
 
     /**
@@ -116,21 +114,23 @@ public abstract class Model<B extends BaseBean> {
      */
     @Deprecated
     public boolean update(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
-        Table table = TableUtil.getTable(cls);
+        Table table = getTable(cls);
+        Config config = table.getConfig();
         String[] pKeys = table.getPrimaryKey();
         for (String pKey : pKeys) {
             Object id = attrs.get(pKey);
-            if (id == null)
+            if (id == null) {
                 throw new MyDbException("You can't update model without Primary Key, " + pKey
                         + " can not be null.");
+            }
         }
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<>();
-        Config.dialect.forModelUpdate(table, attrs, sql, paras);
+        config.getDialect().forModelUpdate(table, attrs, sql, paras);
         if (paras.size() <= 1) { // Needn't update
             return false;
         }
-        int result = jdbcTemplate.update(sql.toString(), paras.toArray());
+        int result = config.getJdbcTemplate().update(sql.toString(), paras.toArray());
         return result >= 1;
     }
 
@@ -141,7 +141,8 @@ public abstract class Model<B extends BaseBean> {
         if (bean.getModifyFlag().isEmpty()) {
             return false;
         }
-        Table table = TableUtil.getTable(getUsefulClass());
+        Table table = getTable();
+        Config config = table.getConfig();
         String[] pKeys = table.getPrimaryKey();
         Map<String, Object> attrs = bean.getColumns();
         for (String pKey : pKeys) {
@@ -153,12 +154,12 @@ public abstract class Model<B extends BaseBean> {
         }
         StringBuilder sql = new StringBuilder();
         List<Object> paras = Lists.newArrayList();
-        Config.dialect.forModelUpdate(table, attrs, bean.getModifyFlag(), sql, paras);
+        config.getDialect().forModelUpdate(table, attrs, bean.getModifyFlag(), sql, paras);
         // Needn't update
         if (paras.size() <= 1) {
             return false;
         }
-        int result = jdbcTemplate.update(sql.toString(), paras.toArray());
+        int result = config.getJdbcTemplate().update(sql.toString(), paras.toArray());
         if (result >= 1) {
             bean.getModifyFlag().clear();
             return true;
@@ -227,12 +228,13 @@ public abstract class Model<B extends BaseBean> {
      * @param columns the specific columns to load
      */
     public B findByIdLoadColumns(Object[] idValues, String columns) {
-        Table table = TableUtil.getTable(getUsefulClass());
+        Table table = getTable();
+        Config config = table.getConfig();
         if (table.getPrimaryKey().length != idValues.length) {
             throw new IllegalArgumentException(
                     "id values error, need " + table.getPrimaryKey().length + " id value");
         }
-        String sql = Config.dialect.forModelFindById(table, columns);
+        String sql = config.getDialect().forModelFindById(table, columns);
         return findFirst(sql, idValues);
     }
 
@@ -266,10 +268,11 @@ public abstract class Model<B extends BaseBean> {
      */
     @Deprecated
     public Record findOne(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
-        Table table = TableUtil.getTable(cls);
+        Table table = getTable(cls);
+        Config config = table.getConfig();
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<>();
-        Config.dialect.forModelFind(table, sql, "*", null, attrs, paras);
+        config.getDialect().forModelFind(table, sql, "*", null, attrs, paras);
         return findOne(sql.toString(), paras.toArray());
     }
 
@@ -281,10 +284,11 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public B findFirst(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
-        Table table = TableUtil.getTable(cls);
+        Table table = getTable(cls);
+        Config config = table.getConfig();
         StringBuilder sql = new StringBuilder();
         List<Object> paras = Lists.newArrayList();
-        Config.dialect.forModelFind(table, sql, "*", null, attrs, paras);
+        config.getDialect().forModelFind(table, sql, "*", null, attrs, paras);
         return findFirst(sql.toString(), paras.toArray());
     }
 
@@ -383,19 +387,21 @@ public abstract class Model<B extends BaseBean> {
     @Deprecated
     public List<Map<String, Object>> findList(Class<? extends BaseBean> cls,
             Map<String, Object> attrs, String orderby) {
-        Table table = TableUtil.getTable(cls);
+        Table table = getTable(cls);
+        Config config = table.getConfig();
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<>();
-        Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
+        config.getDialect().forModelFind(table, sql, "*", orderby, attrs, paras);
         return findList(sql.toString(), paras.toArray());
     }
 
     public <T extends BaseBean> List<T> find(Class<T> cls, Map<String, Object> attrs,
             String orderby) {
-        Table table = TableUtil.getTable(cls);
+        Table table = getTable(cls);
+        Config config = table.getConfig();
         StringBuilder sql = new StringBuilder();
         List<Object> paras = Lists.newArrayList();
-        Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
+        config.getDialect().forModelFind(table, sql, "*", orderby, attrs, paras);
         return find(cls, sql.toString(), paras.toArray());
     }
 
@@ -407,7 +413,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public List<Map<String, Object>> findList(String sql, Object... params) {
-        return jdbcTemplate.queryForList(sql, params);
+        return getJdbcTemplate().queryForList(sql, params);
     }
 
     /**
@@ -418,7 +424,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public <T extends Record> List<T> find(final Class<T> cls, String sql, Object... params) {
-        return jdbcTemplate.query(sql, new RowMapper<T>() {
+        return getJdbcTemplate().query(sql, new RowMapper<T>() {
             @Override
             public T mapRow(ResultSet rs, int rowNum) throws SQLException {
                 T bean;
@@ -495,19 +501,21 @@ public abstract class Model<B extends BaseBean> {
     @Deprecated
     public Page<Map<String, Object>> paginate(Class<? extends BaseBean> cls,
             Map<String, Object> attrs, String orderby) {
-        Table table = TableUtil.getTable(cls);
+        Table table = getTable(cls);
+        Config config = table.getConfig();
         StringBuilder sql = new StringBuilder();
-        List<Object> paras = new ArrayList<>();
-        Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
+        List<Object> paras = Lists.newArrayList();
+        config.getDialect().forModelFind(table, sql, "*", orderby, attrs, paras);
         return paginate(PageContext.getPageNumber(), PageContext.getPageSize(), sql.toString(),
                 paras.toArray());
     }
 
     public Page<B> page(Class<? extends BaseBean> cls, Map<String, Object> attrs, String orderby) {
-        Table table = TableUtil.getTable(cls);
+        Table table = getTable(cls);
+        Config config = table.getConfig();
         StringBuilder sql = new StringBuilder();
         List<Object> paras = new ArrayList<>();
-        Config.dialect.forModelFind(table, sql, "*", orderby, attrs, paras);
+        config.getDialect().forModelFind(table, sql, "*", orderby, attrs, paras);
         return page(sql.toString(), paras.toArray());
     }
 
@@ -544,6 +552,7 @@ public abstract class Model<B extends BaseBean> {
      */
     public Page<Map<String, Object>> paginate(int pageNumber, int pageSize, String sql,
             Object... paras) {
+        Config config = getConfig();
         if (pageNumber < 1 || pageSize < 1) {
             throw new MyDbException("pageNumber and pageSize must be more than 0");
         }
@@ -558,12 +567,13 @@ public abstract class Model<B extends BaseBean> {
         if (totalRow % pageSize != 0) {
             totalPage++;
         }
-        String pageSql = Config.dialect.forPaginate(pageNumber, pageSize, sql);
+        String pageSql = config.getDialect().forPaginate(pageNumber, pageSize, sql);
         List<Map<String, Object>> list = findList(pageSql, paras);
         return new Page<>(list, pageNumber, pageSize, totalPage, totalRow);
     }
 
     public Page<B> page(int pageNumber, int pageSize, String sql, Object... paras) {
+        Config config = getConfig();
         if (pageNumber < 1 || pageSize < 1) {
             throw new MyDbException("pageNumber and pageSize must be more than 0");
         }
@@ -577,7 +587,7 @@ public abstract class Model<B extends BaseBean> {
         if (totalRow % pageSize != 0) {
             totalPage++;
         }
-        String pageSql = Config.dialect.forPaginate(pageNumber, pageSize, sql);
+        String pageSql = config.getDialect().forPaginate(pageNumber, pageSize, sql);
         List<B> list = find(getUsefulClass(), pageSql, paras);
         return new Page<>(list, pageNumber, pageSize, totalPage, totalRow);
     }
@@ -590,9 +600,10 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public int getCount(String sql, Object... paras) {
+        Config config = getConfig();
         StringBuilder countSql = new StringBuilder();
-        Config.dialect.forCount(countSql, sql);
-        return jdbcTemplate.queryForObject(countSql.toString(), paras, Integer.class);
+        config.getDialect().forCount(countSql, sql);
+        return config.getJdbcTemplate().queryForObject(countSql.toString(), paras, Integer.class);
     }
 
     /**
@@ -616,7 +627,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public int execute(String sql, Object... args) {
-        return jdbcTemplate.update(sql, args);
+        return getJdbcTemplate().update(sql, args);
     }
 
     /**
@@ -627,7 +638,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public int[] batchExecute(String sql, BatchPreparedStatementSetter bpss) {
-        return jdbcTemplate.batchUpdate(sql, bpss);
+        return getJdbcTemplate().batchUpdate(sql, bpss);
     }
 
     /**
@@ -638,7 +649,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public int[] batchExecute(String sql, List<Object[]> batchArgs) {
-        return jdbcTemplate.batchUpdate(sql, batchArgs);
+        return getJdbcTemplate().batchUpdate(sql, batchArgs);
     }
 
     /**
@@ -648,7 +659,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public int[] batchExecute(String... sqls) {
-        return jdbcTemplate.batchUpdate(sqls);
+        return getJdbcTemplate().batchUpdate(sqls);
     }
 
     /**
@@ -677,7 +688,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public String getColumnsStr(Class<? extends BaseBean> cls) {
-        Table t = TableUtil.getTable(cls);
+        Table t = getTable(cls);
         return t.getColumnsStr();
     }
 
@@ -688,7 +699,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public String getColumnsStr(Class<? extends BaseBean> cls, String alias) {
-        Table t = TableUtil.getTable(cls);
+        Table t = getTable(cls);
         StringBuilder columnsStr = new StringBuilder();
         String[] columns = t.getColumns();
         for (String col : columns) {
@@ -705,7 +716,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public String getTableName(Class<? extends BaseBean> cls) {
-        Table t = TableUtil.getTable(cls);
+        Table t = getTable(cls);
         return t.getName();
     }
 
@@ -725,7 +736,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public String getPrimaryKey(Class<? extends BaseBean> cls) {
-        Table t = TableUtil.getTable(cls);
+        Table t = getTable(cls);
         return t.getPrimaryKey()[0];
     }
 
@@ -736,7 +747,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public String[] getPrimaryKeys(Class<? extends BaseBean> cls) {
-        Table t = TableUtil.getTable(cls);
+        Table t = getTable(cls);
         return t.getPrimaryKey();
     }
 
@@ -756,7 +767,7 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public String getParentId(Class<? extends BaseBean> cls) {
-        Table t = TableUtil.getTable(cls);
+        Table t = getTable(cls);
         return t.getParentId();
     }
 
@@ -824,11 +835,24 @@ public abstract class Model<B extends BaseBean> {
         return this.beanClazz;
     }
 
-    public JdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
+    private Config getConfig(Class<? extends BaseBean> cls) {
+        return getTable(cls).getConfig();
     }
 
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    private Config getConfig() {
+        return getConfig(getUsefulClass());
     }
+
+    private Table getTable(Class<? extends BaseBean> cls) {
+        return TableUtil.getTable(cls);
+    }
+
+    private Table getTable() {
+        return getTable(getUsefulClass());
+    }
+
+    public JdbcTemplate getJdbcTemplate() {
+        return getConfig().getJdbcTemplate();
+    }
+
 }

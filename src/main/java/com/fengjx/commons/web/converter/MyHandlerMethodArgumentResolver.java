@@ -3,14 +3,12 @@ package com.fengjx.commons.web.converter;
 
 import com.fengjx.commons.plugin.db.BaseBean;
 import com.fengjx.commons.plugin.db.Injector;
-import org.apache.commons.lang3.ClassUtils;
+import com.fengjx.commons.plugin.db.annotation.BindBean;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-
-import java.util.List;
 
 /**
  * 自定义参数解析器
@@ -22,13 +20,7 @@ public class MyHandlerMethodArgumentResolver implements HandlerMethodArgumentRes
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        List<Class<?>> superclasses = ClassUtils.getAllSuperclasses(parameter.getParameterType());
-        for (Class<?> cls : superclasses) {
-            if (ClassUtils.isAssignable(cls, BaseBean.class)) {
-                return true;
-            }
-        }
-        return false;
+        return parameter.hasParameterAnnotation(BindBean.class);
     }
 
     @SuppressWarnings("unchecked")

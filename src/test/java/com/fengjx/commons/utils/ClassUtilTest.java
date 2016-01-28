@@ -1,7 +1,7 @@
 
 package com.fengjx.commons.utils;
 
-import com.fengjx.commons.plugin.db.Mapper;
+import com.fengjx.commons.plugin.db.annotation.Mapper;
 
 import org.junit.Test;
 

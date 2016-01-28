@@ -283,7 +283,4 @@ public class OracleDialect extends Dialect {
 		}
 	}
 	
-	public String getDefaultPrimaryKey() {
-		return "ID";
-	}
 }

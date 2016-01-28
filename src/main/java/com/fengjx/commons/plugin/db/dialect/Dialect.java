@@ -39,8 +39,11 @@ public abstract class Dialect {
     // Methods for common
     public abstract String forTableBuilderDoBuild(String tableName);
 
-	public abstract String froSelectSql(Table table, String columns);
-    public abstract String forPaginate(int pageNumber, int pageSize, String select, String sqlExceptSelect);
+    public abstract String froSelectSql(Table table, String columns);
+
+    public abstract String forPaginate(int pageNumber, int pageSize, String select,
+            String sqlExceptSelect);
+
     public abstract String forPaginate(int pageNumber, int pageSize, String sql);
 
     // Methods for Model
@@ -57,9 +60,8 @@ public abstract class Dialect {
     public abstract void forModelUpdate(Table table, Map<String, Object> attrs, StringBuilder sql,
             List<Object> paras);
 
-	public abstract void forModelFind(Table table, StringBuilder sql, String columns,
-									  String orderby,
-									  Map<String, Object> attrs, List<Object> paras);
+    public abstract void forModelFind(Table table, StringBuilder sql, String columns,
+            String orderby, Map<String, Object> attrs, List<Object> paras);
 
     // Methods for DbPro. Do not delete the String[] pKeys parameter, the
     // element of pKeys needs to trim()
@@ -121,10 +123,6 @@ public abstract class Dialect {
         for (int i = 0; i < paras.length; i++) {
             pst.setObject(i + 1, paras[i]);
         }
-    }
-
-    public String getDefaultPrimaryKey() {
-        return "id";
     }
 
     public boolean isPrimaryKey(String colName, String[] pKeys) {

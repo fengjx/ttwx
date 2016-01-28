@@ -1,7 +1,7 @@
 package com.fengjx.modules.portal.bean;
 
 import com.fengjx.commons.plugin.db.BaseBean;
-import com.fengjx.commons.plugin.db.Mapper;
+import com.fengjx.commons.plugin.db.annotation.Mapper;
 
 /**
  * Autu Generated, do not modify this file.

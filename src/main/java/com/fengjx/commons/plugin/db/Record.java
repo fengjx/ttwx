@@ -2,7 +2,6 @@
 package com.fengjx.commons.plugin.db;
 
 import com.fengjx.commons.utils.JsonUtil;
-
 import com.fengjx.commons.utils.TypeConverter;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -13,7 +12,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -22,7 +20,9 @@ import java.util.Set;
 public class Record implements Serializable {
 
     private static final long serialVersionUID = 905784513600884082L;
+
     private Map<String, Object> columns;
+
     // 有修改的字段
     private Set<String> modifyFlag;
 
@@ -59,8 +59,8 @@ public class Record implements Serializable {
             for (Map.Entry<String, String> e : columns.entrySet()) {
                 String colName = e.getKey();
                 if (table.hasColumnLabel(colName)) {
-                    Object value = TypeConverter
-                            .convert(table.getColumnType(colName), e.getValue());
+                    Object value = TypeConverter.convert(table.getColumnType(colName),
+                            e.getValue());
                     set(colName, value);
                 } else {
                     set(e.getKey(), e.getValue());
@@ -239,22 +239,7 @@ public class Record implements Serializable {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(super.toString()).append(" {");
-        boolean first = true;
-        for (Entry<String, Object> e : getColumns().entrySet()) {
-            if (first)
-                first = false;
-            else
-                sb.append(", ");
-
-            Object value = e.getValue();
-            if (value != null)
-                value = value.toString();
-            sb.append(e.getKey()).append(":").append(value);
-        }
-        sb.append("}");
-        return sb.toString();
+        return JsonUtil.toJson(getColumns());
     }
 
     public boolean equals(Object o) {
