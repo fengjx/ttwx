@@ -115,7 +115,7 @@
         $("#btn-search-app${current}").click(function () {
             if(!$table${current}){
                 $table${current} = $('#table${current}').jqGrid({
-                    url: adminPath + '/sys/ext/pageList',
+                    url: adminPath + '/wechat/ext/pageList',
                     colModel: [{
                         name: 'id',
                         hidden: true,

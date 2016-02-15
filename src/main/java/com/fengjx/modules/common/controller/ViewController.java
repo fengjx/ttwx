@@ -1,13 +1,10 @@
 
 package com.fengjx.modules.common.controller;
 
-import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.sys.service.SysMenuService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -24,20 +21,6 @@ public class ViewController extends MyController {
     @RequestMapping(value = "${adminPath}")
     public String admin() {
         return "/common/admin";
-    }
-
-    /**
-     * 各模块后台首页
-     *
-     * @param module
-     * @return
-     */
-    @RequestMapping(value = "${adminPath}/{module}")
-    public String view(@PathVariable("module") String module) {
-        if (StringUtils.isBlank(module)) {
-            return "/common/admin";
-        }
-        return "/" + module + AppConfig.ADMIN_PATH + "/index";
     }
 
     /**

@@ -11,7 +11,7 @@ $(function () {
     });
 
     $table = $('#data-table').jqGrid({
-        url: adminPath + '/sys/ext/pageList',
+        url: adminPath + '/wechat/ext/pageList',
         colModel: [{
             name: 'id',
             hidden: true,
@@ -249,7 +249,7 @@ function deleteData(id) {
     var row = $table.jqGrid('getRowData', id);
     app.confirmModal("你要删除应用【" + row.name + "】吗？", function () {
         $.ajax({
-            url: adminPath + '/sys/ext/delete',
+            url: adminPath + '/wechat/ext/delete',
             data: {
                 id: id,
                 app_type: row.app_type
@@ -356,7 +356,7 @@ function submitData() {
     };
 
     $.ajax({
-        url: adminPath + '/sys/ext/save',
+        url: adminPath + '/wechat/ext/save',
         type: 'post',
         data: data,
         dataType: "json",

@@ -17,16 +17,12 @@ $(function () {
             success: function (res) {
                 app.closeDialog();
                 if (res && '1' == res.code) {
-                    app.alertModal("保存成功！", {
-                        ok: function () {
-                            window.location.reload();
-                        }
+                    app.alertModal("保存成功！", function () {
+                        window.location.reload();
                     });
                 } else {
-                    app.alertModal(res.msg ? res.msg : "保存失败！", {
-                        ok: function () {
-                            app.closeDialog();
-                        }
+                    app.alertModal(res.msg ? res.msg : "保存失败！", function () {
+                        app.closeDialog();
                     });
                 }
             }

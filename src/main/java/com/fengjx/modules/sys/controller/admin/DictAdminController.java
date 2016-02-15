@@ -2,6 +2,7 @@
 package com.fengjx.modules.sys.controller.admin;
 
 import com.fengjx.commons.plugin.cache.ehcache.EhCacheUtil;
+import com.fengjx.commons.plugin.db.annotation.BindBean;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.common.controller.MyController;
 import com.fengjx.modules.sys.bean.SysDict;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -30,15 +30,14 @@ public class DictAdminController extends MyController {
     private SysDictService dictService;
 
     @RequestMapping(value = "")
-    public ModelAndView view() {
-        ModelAndView mv = new ModelAndView("sys/admin/dict");
-        return mv;
+    public String view() {
+        return "sys/admin/dict";
     }
 
     @RequestMapping("pageList")
     @ResponseBody
-    public Object pageList(HttpServletRequest request) {
-        return dictService.page(getRecord(SysDict.class, request));
+    public Object pageList(@BindBean SysDict dict) {
+        return dictService.findPage(dict);
     }
 
     @RequestMapping("save")

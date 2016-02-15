@@ -28,7 +28,7 @@ public class SettingController extends MyController {
     public ModelAndView view(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("wechat/admin/setting");
         mv.addObject("wechatAccount",
-                publicAccountService.getAccountByUserId(getLoginSysUserId()).getColumns());
+                publicAccountService.getAccountByUserId(getLoginSysUserId())._getColumns());
         return mv;
     }
 

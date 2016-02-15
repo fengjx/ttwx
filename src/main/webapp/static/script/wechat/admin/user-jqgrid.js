@@ -113,15 +113,6 @@ $(function() {
 		}
 	);
 
-	//$(".inner_menu_link").live('click', function() {
-	//	var groupId = $(this).attr("data-id");
-	//	$(".inner_menu_item").removeClass("selected");
-	//	$(this).parent().addClass("selected");
-	//	curGroupId = groupId;
-	//	searchDatagrid();
-	//});
-    //
-
 	// 修改分组名称
 	$(".inner_menu").on('click',".edit_gray", function() {
 		editGroup($(this).attr("data-gid"),$(this).attr("data-gname"));

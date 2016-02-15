@@ -47,6 +47,7 @@
                 }
             });
         })(top.app, jQuery);
+
         /**
          * 页面初始化
          */
@@ -65,11 +66,8 @@
     </script>
     <sitemesh:head/>
 </head>
-<body class="no-skin">
-<div class="main-container">
-    <sitemesh:body/>
-</div>
-<script src="${resourceUrl}/script/common/leftMenu.js?v=2015082001" type="text/javascript"></script>
+<body style="background-color:#FFF">
+<sitemesh:body/>
 </body>
 </html>
 

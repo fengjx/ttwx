@@ -1,8 +1,8 @@
 
 package com.fengjx.modules.wechat.controller.admin;
 
+import com.fengjx.commons.plugin.db.Page;
 import com.fengjx.commons.utils.JsonUtil;
-import com.fengjx.commons.web.page.PageContext;
 import com.fengjx.modules.common.controller.MyController;
 import com.fengjx.modules.sys.bean.SysUser;
 import com.fengjx.modules.wechat.service.WechatMaterialService;
@@ -60,9 +60,10 @@ public class MaterialController extends MyController {
     @ResponseBody
     public Object pageList(HttpServletRequest request, String msg_type, int pageNumber,
             int pageSize) {
-        PageContext.setAutoConvert(false);
-        return materialService.getListPageByType(pageNumber, pageSize, msg_type,
-                getLoginSysUserId());
+        Page<Map<String, Object>> page = materialService.getListPageByType(pageNumber, pageSize,
+                msg_type, getLoginSysUserId());
+        page.setConvert(false);
+        return page;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)

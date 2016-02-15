@@ -17,20 +17,6 @@ public class PageContext {
     // 当前页
     private static ThreadLocal<Integer> pageNumber = new ThreadLocal<>();
 
-    private static ThreadLocal<Boolean> autoConvert = new ThreadLocal<>();
-
-    static {
-        autoConvert.set(true);
-    }
-
-    public static boolean isAutoConvert() {
-        return autoConvert.get();
-    }
-
-    public static void setAutoConvert(boolean autoConvert) {
-        PageContext.autoConvert.set(autoConvert);
-    }
-
     public static int getPageSize() {
         Integer _pagesize = pageSize.get();
         if (_pagesize == null) {
@@ -63,6 +49,5 @@ public class PageContext {
     public static void removeAll() {
         pageNumber.remove();
         pageSize.remove();
-        autoConvert.remove();
     }
 }

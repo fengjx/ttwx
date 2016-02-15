@@ -11,8 +11,7 @@
 <body>
     <div class="breadcrumbs">
         <ol class="breadcrumb">
-            <li><a href="${adminPath}">后台管理</a></li>
-            <li><a href="${adminPath}/wechat">平台管理</a></li>
+            <li>微信管理</li>
             <li class="active">地理位置消息规则</li>
         </ol>
     </div>

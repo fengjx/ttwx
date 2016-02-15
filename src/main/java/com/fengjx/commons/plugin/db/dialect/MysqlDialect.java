@@ -209,7 +209,7 @@ public class MysqlDialect extends Dialect {
         StringBuilder temp = new StringBuilder();
         temp.append(") values(");
 
-        for (Entry<String, Object> e : record.getColumns().entrySet()) {
+        for (Entry<String, Object> e : record._getColumns().entrySet()) {
             if (paras.size() > 0) {
                 sql.append(", ");
                 temp.append(", ");
@@ -227,7 +227,7 @@ public class MysqlDialect extends Dialect {
         trimPrimaryKeys(pKeys);
 
         sql.append("update `").append(tableName).append("` set ");
-        for (Entry<String, Object> e : record.getColumns().entrySet()) {
+        for (Entry<String, Object> e : record._getColumns().entrySet()) {
             String colName = e.getKey();
             if (!isPrimaryKey(colName, pKeys)) {
                 if (paras.size() > 0) {

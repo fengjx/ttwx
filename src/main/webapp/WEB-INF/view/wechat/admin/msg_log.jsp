@@ -10,8 +10,7 @@
 <body>
     <div class="breadcrumbs">
         <ol class="breadcrumb">
-            <li><a href="${adminPath}">后台管理</a></li>
-            <li><a href="${adminPath}/wechat">平台管理</a></li>
+            <li>微信管理</li>
             <li class="active">消息记录</li>
         </ol>
     </div>
@@ -24,12 +23,14 @@
                             <label class="control-label">关 键 字：</label>
                             <input name="qry_key_word" class="form-control" type="text" placeholder="用户发送的文字">
                             <label class="control-label">消息类型：</label>
-                            <select data-type="dict" data-group="req_type" name="qry_req_type" id="qry_req_type" class="app-element">
+                            <select name="qry_req_type" id="qry_req_type">
                                 <option value="">全部</option>
+                                <myform:options items="${fns:getDictList('req_type')}" itemValue="value" itemLabel="label"></myform:options>
                             </select>
                             <label class="control-label">事件类型：</label>
-                            <select data-type="dict" data-group="event_type" name="qry_event_type" id="qry_event_type" class="app-element">
+                            <select name="qry_event_type" id="qry_event_type">
                                 <option value="">全部</option>
+                                <myform:options items="${fns:getDictList('event_type')}" itemValue="value" itemLabel="label"></myform:options>
                             </select>
                         </div>
                         <div class="control-group">

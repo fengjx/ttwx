@@ -9,8 +9,7 @@
 <body>
 	<div class="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="${adminPath}">后台管理</a></li>
-			<li><a href="${adminPath}/portal">门户</a></li>
+			<li>门户</li>
 			<li class="active">留言反馈</li>
 		</ol>
 	</div>

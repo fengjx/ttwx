@@ -164,7 +164,7 @@ public class RespMsgActionController extends MyController {
     private Map<String, Object> getWechatMenu(Map<String, Object> reqMap) {
         Map<String, Object> menuMap = new HashMap<>();
         if (MapUtils.isNotEmpty(reqMap) && StringUtils.isNotBlank((String) reqMap.get("menuId"))) {
-            menuMap = menuService.findById(reqMap.get("menuId")).getColumns();
+            menuMap = menuService.findById(reqMap.get("menuId"))._getColumns();
             menuMap.put("type", reqMap.get("menuType"));
             menuMap.put("url", reqMap.get("menuUrl"));
         }
@@ -183,7 +183,7 @@ public class RespMsgActionController extends MyController {
             return materialMap;
         }
         if (StringUtils.isNotBlank((String) reqMap.get("material_id"))) {
-            materialMap = materialService.findById(reqMap.get("material_id")).getColumns();
+            materialMap = materialService.findById(reqMap.get("material_id"))._getColumns();
         }
         if (StringUtils.isNotBlank((String) reqMap.get("materiaContent"))) {
             materialMap = new HashMap<>();

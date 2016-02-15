@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%@include file="/WEB-INF/view/common/inc/path.jsp" %>
+<%@include file="/WEB-INF/view/common/inc/url.jsp" %>
 <c:set var="menus" value="${fns:getMenus()}"></c:set>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -8,7 +8,32 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>后台管理</title>
-  <jsp:include page="/WEB-INF/view/common/inc/admin.jsp"></jsp:include>
+  <link href="${resourceUrl}/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="${resourceUrl}/artDialog/css/ui-dialog.css" rel="stylesheet" type="text/css"/>
+  <link href="${resourceUrl}/scojs/css/scojs.css" rel="stylesheet" type="text/css"/>
+  <link href="${resourceUrl}/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+  <link href="${resourceUrl}/nprogress/nprogress.css" rel="stylesheet" type="text/css"/>
+  <link href="${resourceUrl}/theme/ace/css/ace.min.css" rel="stylesheet" type="text/css"/>
+  <link href="${resourceUrl}/css/common.css" rel="stylesheet" type="text/css"/>
+  <script src="${resourceUrl}/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+  <script src="${resourceUrl}/js/jquery.cookie.js" type="text/javascript"></script>
+  <script src="${resourceUrl}/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="${resourceUrl}/scojs/js/sco.message.js" type="text/javascript"></script>
+  <script src="${resourceUrl}/artDialog/dist/dialog-plus-min.js" type="text/javascript"></script>
+  <script src="${resourceUrl}/nprogress/nprogress.js" type="text/javascript"></script>
+  <script src="${resourceUrl}/js/jquery.json-2.4.min.js" type="text/javascript" charset="UTF-8"></script>
+  <script src="${resourceUrl}/js/jquery.xml2json.js" type="text/javascript" charset="UTF-8"></script>
+  <script src="${resourceUrl}/script/common/app.js?v=2016012801" type="text/javascript"></script>
+  <script src="${resourceUrl}/script/common/init.js?v=2016021501" type="text/javascript"></script>
+  <!--[if lte IE 8]>
+  <script src="${resourceUrl}/js/excanvas.min.js" type="text/javascript"></script>
+  <![endif]-->
+  <!-- HTML5 shim and Respond.
+  js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
 <body class="no-skin">
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">

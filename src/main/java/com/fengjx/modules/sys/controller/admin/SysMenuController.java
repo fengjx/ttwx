@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +52,7 @@ public class SysMenuController extends MyController {
             model.addAttribute("parent_name", parent.getStr("name"));
             model.addAttribute("parent_level", parent.getInt("level"));
         } else if (StringUtils.isNotBlank(id)) { // 修改菜单
-            model.addAllAttributes(sysMenuService.get(id).getColumns());
+            model.addAllAttributes(sysMenuService.get(id)._getColumns());
         }
         return "sys/admin/menu_form";
     }

@@ -33,7 +33,7 @@ public class ValidExecutor extends BaseServiceExecutor {
         String valid_code = accountRecord.getStr("valid_code");
         // 文字消息与验证码相同
         if (valid_code.equals(inMessage.getContent())) {
-            Map<String, Object> attrs = accountRecord.getColumns();
+            Map<String, Object> attrs = accountRecord._getColumns();
             // 更新账号状态为激活
             attrs.put("valid_state", WechatPublicAccount.VALID_STATE_ACTIVATE);
             attrs.put("account_id", inMessage.getToUserName());

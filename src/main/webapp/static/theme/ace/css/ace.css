@@ -1972,6 +1972,7 @@ pre.prettyprint {
   position: static;
   padding-left: 0;
   padding-right: 0;
+  margin-top: 45px;
 }
 .sidebar:before {
   content: "";
@@ -4054,6 +4055,7 @@ body.mob-safari .sidebar.sidebar-fixed {
 .main-content-inner {
   float: left;
   width: 100%;
+  margin-top: 45px;
 }
 .main-content .sidebar:before {
   top: 150px;
@@ -18774,9 +18776,6 @@ input.typeahead.scrollable ~ .tt-dropdown-menu {
   body {
     overflow-x: hidden;
   }
-}
-.navbar-fixed-top + .main-container {
-  padding-top: 45px;
 }
 @media (max-width: 479px) {
   .navbar-fixed-top + .main-container {

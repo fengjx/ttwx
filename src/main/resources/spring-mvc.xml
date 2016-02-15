@@ -19,12 +19,6 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <mvc:annotation-driven>
-        <mvc:argument-resolvers>
-            <bean class="com.fengjx.commons.web.converter.MyHandlerMethodArgumentResolver"/>
-        </mvc:argument-resolvers>
-    </mvc:annotation-driven>
-
     <!-- 添加注解驱动 -->
     <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
         <mvc:message-converters register-defaults="true">
@@ -33,6 +27,7 @@
                 <constructor-arg value="UTF-8"/>
             </bean>
             <bean class="com.fengjx.commons.web.converter.MyFastJsonHttpMessageConverter">
+                <property name="adapterPageName" value="${adapterPageName}"/>
                 <property name="supportedMediaTypes" value="application/json;charset=UTF-8"/>
                 <property name="features">
                     <array>
@@ -52,6 +47,10 @@
                 -->
             </bean>
         </mvc:message-converters>
+        <mvc:argument-resolvers>
+            <!--自定义参数封装-->
+            <bean class="com.fengjx.commons.web.converter.MyHandlerMethodArgumentResolver"/>
+        </mvc:argument-resolvers>
     </mvc:annotation-driven>
 
     <!-- REST中根据URL后缀自动判定Content-Type及相应的View -->

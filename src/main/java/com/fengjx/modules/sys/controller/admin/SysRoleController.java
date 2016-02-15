@@ -64,7 +64,7 @@ public class SysRoleController extends MyController {
     @RequestMapping("form")
     public String form(String id, Model model) {
         if (StringUtils.isNotBlank(id)) {
-            model.addAllAttributes(sysRoleService.findById(id).getColumns());
+            model.addAllAttributes(sysRoleService.findById(id)._getColumns());
             model.addAttribute("menuIds", sysRoleService.getMenuIds(id));
         }
         return "sys/admin/role_form";

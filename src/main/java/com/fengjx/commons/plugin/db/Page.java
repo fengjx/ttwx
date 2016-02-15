@@ -31,6 +31,7 @@ public class Page<T> implements Serializable {
     private int pageSize;				// result amount of this page
     private int totalPage;				// total page
     private int totalRow;				// total row
+    private boolean convert = true;			// 转型标记（是否需要，默认是true）
 
     /**
      * Constructor.
@@ -89,6 +90,14 @@ public class Page<T> implements Serializable {
 
     public boolean isLastPage() {
         return pageNumber == totalPage;
+    }
+
+    public boolean isConvert() {
+        return convert;
+    }
+
+    public void setConvert(boolean convert) {
+        this.convert = convert;
     }
 }
 

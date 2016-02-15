@@ -240,7 +240,7 @@ public class WechatRespMsgActionService extends Model<WechatRespMsgAction> {
         }
         final String _ids[] = ids.split(",");
         for (String id : _ids) {
-            removeCache(findById(id).getColumns());
+            removeCache(findById(id)._getColumns());
         }
         final StringBuilder sql = new StringBuilder("delete from ");
         sql.append(getTableName());

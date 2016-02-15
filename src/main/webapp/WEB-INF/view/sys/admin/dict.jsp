@@ -9,8 +9,7 @@
 <body>
 	<div class="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="${adminPath}">后台管理</a></li>
-			<li><a href="${adminPath}/sys">系统管理</a></li>
+			<li>系统管理</li>
 			<li class="active">字典管理</li>
 		</ol>
 	</div>
@@ -25,10 +24,10 @@
 							<label class="control-label">字典描述：</label>
 							<input name="qry_dict_desc" class="form-control" type="text" placeholder="字典描述">
 							<label class="control-label">启用：</label>
-							<select data-type="dict" data-group="yesNo" name="qry_is_valid" id="qry_is_valid" class="app-element">
+							<select name="qry_is_valid" id="qry_is_valid">
 								<option value="">全部</option>
+								<myform:options items="${fns:getDictList('yesNo')}" itemValue="value" itemLabel="label"></myform:options>
 							</select>
-
 							<span class="columns-right pull-right">
 								<button onclick="searchDatagrid();" type="button" class="btn btn-white btn-primary">
 									<i class="icon-search"></i>

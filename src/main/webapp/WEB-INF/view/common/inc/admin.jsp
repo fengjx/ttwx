@@ -1,25 +1,22 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/view/common/inc/url.jsp" %>
 <link href="${resourceUrl}/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="${resourceUrl}/artDialog/css/ui-dialog.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/scojs/css/scojs.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/nprogress/nprogress.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/jqGrid/css/ui.jqgrid-bootstrap.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
-<link href="${resourceUrl}/artDialog/css/ui-dialog.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/zTree/css/metroStyle/metroStyle.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/jquery-treegrid/0.3.0/css/jquery.treegrid.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/bootstrap-duallistbox/bootstrap-duallistbox.min.css" rel="stylesheet" type="text/css"/>
+<link href="${resourceUrl}/chosen/1.5.0/chosen.min.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/theme/ace/css/ace.min.css" rel="stylesheet" type="text/css"/>
 <link href="${resourceUrl}/css/common.css" rel="stylesheet" type="text/css"/>
 <script src="${resourceUrl}/js/jquery-2.1.1.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/js/jquery.cookie.js" type="text/javascript"></script>
-<script src="${resourceUrl}/js/vue.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/scojs/js/sco.message.js" type="text/javascript"></script>
 <script src="${resourceUrl}/scojs/js/sco.valid.js" type="text/javascript"></script>
-<script src="${resourceUrl}/artDialog/dist/dialog-plus-min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/nprogress/nprogress.js" type="text/javascript"></script>
 <script src="${resourceUrl}/My97DatePicker/WdatePicker.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${resourceUrl}/jqGrid/js/jquery.jqGrid.min.js" type="text/javascript" charset="UTF-8"></script>
@@ -36,7 +33,7 @@
 <script src="${resourceUrl}/jquery-treegrid/0.3.0/js/jquery.treegrid.min.js" type="text/javascript"></script>
 <script src="${resourceUrl}/jquery-treegrid/0.3.0/js/jquery.treegrid.bootstrap3.js" type="text/javascript"></script>
 <script src="${resourceUrl}/bootstrap-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
-<script src="${resourceUrl}/script/common/app.js?v=2016012801" type="text/javascript"></script>
+<script src="${resourceUrl}/chosen/1.5.0/chosen.jquery.min.js"></script>
 <!--[if lte IE 8]>
 <script src="${resourceUrl}/js/excanvas.min.js" type="text/javascript"></script>
 <![endif]-->

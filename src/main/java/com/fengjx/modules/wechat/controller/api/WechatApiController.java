@@ -42,7 +42,7 @@ public class WechatApiController extends MyController {
     @ResponseBody
     public String valid(HttpServletRequest request) {
         // 拦截器里已经做了消息签名校验，这里直接返回就可以了
-        Map<String, Object> attrs = WechatContext.getInMessageRecord().getColumns();
+        Map<String, Object> attrs = WechatContext.getInMessageRecord()._getColumns();
         attrs.put("valid_state", WechatPublicAccount.VALID_STATE_EXCESS);
         // 更新接口为已接入状态
         publicAccountService.update(attrs);

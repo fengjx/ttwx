@@ -14,9 +14,8 @@
 <body>
     <div class="breadcrumbs" id="breadcrumbs">
         <ol class="breadcrumb">
-          <li><a href="${adminPath}">后台管理</a></li>
-          <li><a href="${adminPath}/wechat">平台管理</a></li>
-          <li><a href="${adminPath}/wechat/action/keyword">关键字回复</a></li>
+          <li>微信管理</li>
+          <li>关键字回复</li>
           <li class="active">添加规则</li>
         </ol>
     </div>

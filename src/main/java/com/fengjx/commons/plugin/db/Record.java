@@ -53,7 +53,7 @@ public class Record implements Serializable {
     public <T extends BaseBean> Record(Class<T> beanClass, Map<String, String> columns)
             throws ParseException {
         if (null == beanClass) {
-            getColumns().putAll(columns);
+            _getColumns().putAll(columns);
         } else {
             Table table = TableUtil.getTable(beanClass);
             for (Map.Entry<String, String> e : columns.entrySet()) {
@@ -70,13 +70,13 @@ public class Record implements Serializable {
     }
 
     public boolean isEmpty() {
-        return MapUtils.isEmpty(getColumns());
+        return MapUtils.isEmpty(_getColumns());
     }
 
     /**
      * Return columns map.
      */
-    public Map<String, Object> getColumns() {
+    public Map<String, Object> _getColumns() {
         if (MapUtils.isEmpty(columns)) {
             columns = initColumns();
         }
@@ -99,7 +99,7 @@ public class Record implements Serializable {
      * @param column the column name of the record
      */
     public Record remove(String column) {
-        getColumns().remove(column);
+        _getColumns().remove(column);
         return this;
     }
 
@@ -111,7 +111,7 @@ public class Record implements Serializable {
     public Record remove(String... columns) {
         if (columns != null)
             for (String c : columns)
-                this.getColumns().remove(c);
+                this._getColumns().remove(c);
         return this;
     }
 
@@ -122,8 +122,8 @@ public class Record implements Serializable {
      * @param value the value of the column
      */
     public Record set(String column, Object value) {
-        getColumns().put(column, value);
-        getModifyFlag().add(column);
+        _getColumns().put(column, value);
+        _getModifyFlag().add(column);
         return this;
     }
 
@@ -132,7 +132,7 @@ public class Record implements Serializable {
      */
     @SuppressWarnings("unchecked")
     public <T> T get(String column) {
-        return (T) getColumns().get(column);
+        return (T) _getColumns().get(column);
     }
 
     /**
@@ -140,7 +140,7 @@ public class Record implements Serializable {
      */
     @SuppressWarnings("unchecked")
     public <T> T get(String column, Object defaultValue) {
-        Object result = getColumns().get(column);
+        Object result = _getColumns().get(column);
         return (T) (result != null ? result : defaultValue);
     }
 
@@ -149,7 +149,7 @@ public class Record implements Serializable {
      * mediumtext, longtext
      */
     public String getStr(String column) {
-        return (String) getColumns().get(column);
+        return (String) _getColumns().get(column);
     }
 
     /**
@@ -157,70 +157,70 @@ public class Record implements Serializable {
      * mediumint
      */
     public Integer getInt(String column) {
-        return (Integer) getColumns().get(column);
+        return (Integer) _getColumns().get(column);
     }
 
     /**
      * Get column of mysql type: bigint
      */
     public Long getLong(String column) {
-        return (Long) getColumns().get(column);
+        return (Long) _getColumns().get(column);
     }
 
     /**
      * Get column of mysql type: unsigned bigint
      */
     public java.math.BigInteger getBigInteger(String column) {
-        return (java.math.BigInteger) getColumns().get(column);
+        return (java.math.BigInteger) _getColumns().get(column);
     }
 
     /**
      * Get column of mysql type: date, year
      */
     public java.util.Date getDate(String column) {
-        return (java.util.Date) getColumns().get(column);
+        return (java.util.Date) _getColumns().get(column);
     }
 
     /**
      * Get column of mysql type: time
      */
     public java.sql.Time getTime(String column) {
-        return (java.sql.Time) getColumns().get(column);
+        return (java.sql.Time) _getColumns().get(column);
     }
 
     /**
      * Get column of mysql type: timestamp, datetime
      */
     public java.sql.Timestamp getTimestamp(String column) {
-        return (java.sql.Timestamp) getColumns().get(column);
+        return (java.sql.Timestamp) _getColumns().get(column);
     }
 
     /**
      * Get column of mysql type: real, double
      */
     public Double getDouble(String column) {
-        return (Double) getColumns().get(column);
+        return (Double) _getColumns().get(column);
     }
 
     /**
      * Get column of mysql type: float
      */
     public Float getFloat(String column) {
-        return (Float) getColumns().get(column);
+        return (Float) _getColumns().get(column);
     }
 
     /**
      * Get column of mysql type: bit, tinyint(1)
      */
     public Boolean getBoolean(String column) {
-        return (Boolean) getColumns().get(column);
+        return (Boolean) _getColumns().get(column);
     }
 
     /**
      * Get column of mysql type: decimal, numeric
      */
     public java.math.BigDecimal getBigDecimal(String column) {
-        return (java.math.BigDecimal) getColumns().get(column);
+        return (java.math.BigDecimal) _getColumns().get(column);
     }
 
     /**
@@ -228,18 +228,18 @@ public class Record implements Serializable {
      * longblob I have not finished the test.
      */
     public byte[] getBytes(String column) {
-        return (byte[]) getColumns().get(column);
+        return (byte[]) _getColumns().get(column);
     }
 
     /**
      * Get column of any type that extends from Number
      */
     public Number getNumber(String column) {
-        return (Number) getColumns().get(column);
+        return (Number) _getColumns().get(column);
     }
 
     public String toString() {
-        return JsonUtil.toJson(getColumns());
+        return JsonUtil.toJson(_getColumns());
     }
 
     public boolean equals(Object o) {
@@ -247,26 +247,26 @@ public class Record implements Serializable {
             return false;
         if (o == this)
             return true;
-        return this.getColumns().equals(((Record) o).getColumns());
+        return this._getColumns().equals(((Record) o)._getColumns());
     }
 
     public int hashCode() {
-        return getColumns() == null ? 0 : getColumns().hashCode();
+        return _getColumns() == null ? 0 : _getColumns().hashCode();
     }
 
     /**
      * Return column names of this record.
      */
-    public String[] getColumnNames() {
-        Set<String> attrNameSet = getColumns().keySet();
+    public String[] _getColumnNames() {
+        Set<String> attrNameSet = _getColumns().keySet();
         return attrNameSet.toArray(new String[attrNameSet.size()]);
     }
 
     /**
      * Return column values of this record.
      */
-    public Object[] getColumnValues() {
-        java.util.Collection<Object> attrValueCollection = getColumns().values();
+    public Object[] _getColumnValues() {
+        java.util.Collection<Object> attrValueCollection = _getColumns().values();
         return attrValueCollection.toArray(new Object[attrValueCollection.size()]);
     }
 
@@ -274,13 +274,13 @@ public class Record implements Serializable {
      * Return json string of this record.
      */
     public String toJson() {
-        if (MapUtils.isEmpty(getColumns())) {
+        if (MapUtils.isEmpty(_getColumns())) {
             return "{}";
         }
-        return JsonUtil.toJson(getColumns());
+        return JsonUtil.toJson(_getColumns());
     }
 
-    public Set<String> getModifyFlag() {
+    public Set<String> _getModifyFlag() {
         if (this.modifyFlag == null) {
             modifyFlag = Sets.newHashSet();
         }
@@ -292,7 +292,7 @@ public class Record implements Serializable {
     }
 
     public void setModify(String modifyColumn) {
-        getModifyFlag().add(modifyColumn);
+        _getModifyFlag().add(modifyColumn);
     }
 
     /**
@@ -309,7 +309,7 @@ public class Record implements Serializable {
         T t;
         try {
             t = bean.newInstance();
-            BeanUtils.populate(t, getColumns());
+            BeanUtils.populate(t, _getColumns());
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }

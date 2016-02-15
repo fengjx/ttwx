@@ -65,10 +65,8 @@ function deleteById(id, okCallback) {
                 } else {
                     if (res && '1' === res.code) {
                         clearData();
-                        app.alertModal('刪除成功', {
-                            ok: function () {
-                                window.location.reload();
-                            }
+                        app.alertModal('刪除成功', function () {
+                            window.location.reload();
                         });
                     } else {
                         app.alertModal(res.msg ? res.msg : '刪除失败');

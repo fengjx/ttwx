@@ -9,8 +9,7 @@
 <body>
 	<div class="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="${adminPath}">后台管理</a></li>
-			<li><a href="${adminPath}/sys">系统管理</a></li>
+			<li>系统管理</li>
 			<li class="active">用户管理</li>
 		</ol>
 	</div>
@@ -26,8 +25,9 @@
 							<label class="control-label">邮箱：</label>
 							<input name="qry_email" class="form-control" type="text" placeholder="模糊匹配">
 							<label class="control-label">启用：</label>
-							<select data-type="dict" data-group="yesNo" name="qry_is_valid" id="qry_is_valid" class="app-element">
+							<select name="qry_is_valid" id="qry_is_valid">
 								<option value="">全部</option>
+								<myform:options items="${fns:getDictList('yesNo')}" itemValue="value" itemLabel="label"></myform:options>
 							</select>
 							<label class="control-label">更新时间：</label>
 							<div class="input-group">

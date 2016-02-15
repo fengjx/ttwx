@@ -17,12 +17,10 @@ $(function(){
 					    }
 					});
 				}else{
-					app.alert("注册失败",{
-						ok: function () {
-							$("#btn-register").button('reset');
-							app.closeDialog();
-					        return false;
-					    }
+					app.alert("注册失败",function () {
+						$("#btn-register").button('reset');
+						app.closeDialog();
+						return false;
 					});
 				}
 	        } 

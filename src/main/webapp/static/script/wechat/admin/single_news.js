@@ -160,10 +160,8 @@ function toSubmit() {
                     app.alert("预览成功，请留意微信消息！");
                 } else {
                     var msg = msgFlag == '2' ? "群发成功!" : "保存成功!";
-                    app.alertModal(msg, {
-                        ok: function () {
-                            window.location.href = adminPath + '/wechat/material';
-                        }
+                    app.alertModal(msg, function () {
+                        window.location.href = adminPath + '/wechat/material';
                     });
                 }
             } else {

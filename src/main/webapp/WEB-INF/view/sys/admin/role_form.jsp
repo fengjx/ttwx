@@ -9,8 +9,7 @@
 <body>
 	<div class="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="${adminPath}">后台管理</a></li>
-			<li><a href="${adminPath}/sys">系统管理</a></li>
+			<li>系统管理</li>
 			<li class="active">${not empty id?'修改':'添加'}角色</li>
 		</ol>
 	</div>

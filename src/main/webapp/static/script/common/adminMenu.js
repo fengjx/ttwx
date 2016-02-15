@@ -8,9 +8,9 @@ $(function () {
         cmainFrame();
     });
 
-    //$(window).resize(function(){
-    //    cmainFrame();
-    //});
+    $(window).resize(function(){
+        cmainFrame();
+    });
 
     $(".first-menu").click(function () {
         $(".first-menu").css("color", "");

@@ -10,10 +10,8 @@ $(function(){
 	        beforeSubmit : validForm,
 	        success : function(res){
 	        	if(res && "1" == res.code){
-		   			app.alert(res.msg?res.msg:'发送成功，我们会在第一时间查看',{
-						ok: function () {
-				   			window.location.reload();
-						}
+		   			app.alert(res.msg?res.msg:'发送成功，我们会在第一时间查看', function () {
+						window.location.reload();
 					});
 				}else{
 					app.alert(res.msg?res.msg:'发送失败，请稍后再试！');

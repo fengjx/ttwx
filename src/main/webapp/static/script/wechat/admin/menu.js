@@ -106,7 +106,7 @@ function createMenuTree(data) {
             '<a href="javascript:void(0);" title="添加" class="sorted">' +
             '<i class="pull-right glyphicon glyphicon-plus"></i>' +
             '</a>' +
-            '</div>'
+            '</div>';
         if (row.children) {
             html += '<ol class="dd-list">';
             $.each(row.children, function (j, cRow) {

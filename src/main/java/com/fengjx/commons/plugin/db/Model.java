@@ -25,7 +25,7 @@ public abstract class Model<B extends BaseBean> {
     private Class<B> beanClazz;
 
     public boolean save(B bean) {
-        return insert(bean.getColumns());
+        return insert(bean._getColumns());
     }
 
     public boolean insert(Map<String, Object> attrs) {
@@ -52,7 +52,7 @@ public abstract class Model<B extends BaseBean> {
 
     @Deprecated
     public boolean insert(Class<? extends BaseBean> cls, Record record) {
-        return insert(cls, record.getColumns());
+        return insert(cls, record._getColumns());
     }
 
     @Deprecated
@@ -138,13 +138,13 @@ public abstract class Model<B extends BaseBean> {
      * Update model.
      */
     public boolean update(B bean) {
-        if (bean.getModifyFlag().isEmpty()) {
+        if (bean._getModifyFlag().isEmpty()) {
             return false;
         }
         Table table = getTable();
         Config config = table.getConfig();
         String[] pKeys = table.getPrimaryKey();
-        Map<String, Object> attrs = bean.getColumns();
+        Map<String, Object> attrs = bean._getColumns();
         for (String pKey : pKeys) {
             Object id = attrs.get(pKey);
             if (id == null) {
@@ -154,14 +154,14 @@ public abstract class Model<B extends BaseBean> {
         }
         StringBuilder sql = new StringBuilder();
         List<Object> paras = Lists.newArrayList();
-        config.getDialect().forModelUpdate(table, attrs, bean.getModifyFlag(), sql, paras);
+        config.getDialect().forModelUpdate(table, attrs, bean._getModifyFlag(), sql, paras);
         // Needn't update
         if (paras.size() <= 1) {
             return false;
         }
         int result = config.getJdbcTemplate().update(sql.toString(), paras.toArray());
         if (result >= 1) {
-            bean.getModifyFlag().clear();
+            bean._getModifyFlag().clear();
             return true;
         }
         return false;
@@ -469,6 +469,11 @@ public abstract class Model<B extends BaseBean> {
         return paginate(getUsefulClass(), attrs, orderby);
     }
 
+    /**
+     * @param attrs
+     * @param orderby
+     * @return
+     */
     public Page<B> page(Map<String, Object> attrs, String orderby) {
         return page(getUsefulClass(), attrs, orderby);
     }
@@ -488,6 +493,14 @@ public abstract class Model<B extends BaseBean> {
 
     public Page<B> page(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
         return page(cls, attrs, null);
+    }
+
+    public Page<B> page(B bean) {
+        return page(bean, null);
+    }
+
+    public Page<B> page(B bean, String orderBy) {
+        return page(bean.getClass(), bean._getColumns(), orderBy);
     }
 
     /**

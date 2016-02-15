@@ -16,9 +16,8 @@
 <body class="no-skin">
     <div class="breadcrumbs" id="breadcrumbs">
         <ol class="breadcrumb">
-            <li><a href="${adminPath}">后台管理</a></li>
-            <li><a href="${adminPath}/wechat">平台管理</a></li>
-            <li><a href="${adminPath}/wechat/material">素材管理</a></li>
+            <li>微信管理</li>
+            <li>素材管理</li>
             <li class="active">添加素材</li>
         </ol>
     </div>

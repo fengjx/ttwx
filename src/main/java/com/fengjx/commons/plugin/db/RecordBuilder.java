@@ -40,7 +40,7 @@ public class RecordBuilder {
         int[] types = new int[columnCount + 1];
         buildLabelNamesAndTypes(rsmd, labelNames, types);
         T ar = modelClass.newInstance();
-        Map<String, Object> attrs = ar.getColumns();
+        Map<String, Object> attrs = ar._getColumns();
         for (int i = 1; i <= columnCount; i++) {
             Object value;
             if (types[i] < Types.BLOB) {

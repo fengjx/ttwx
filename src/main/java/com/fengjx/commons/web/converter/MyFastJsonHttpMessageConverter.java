@@ -9,10 +9,8 @@ package com.fengjx.commons.web.converter;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.fengjx.commons.plugin.db.Page;
 import com.fengjx.commons.web.page.AdapterPage;
-import com.fengjx.commons.web.page.PageContext;
 import com.fengjx.commons.web.page.adapter.BootstrapPage;
 import com.fengjx.commons.web.page.adapter.JqGridPage;
-import com.fengjx.modules.common.constants.AppConfig;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
@@ -26,29 +24,39 @@ import java.io.IOException;
  */
 public class MyFastJsonHttpMessageConverter extends FastJsonHttpMessageConverter {
 
-    private static final String ADAPTER_PAGE_NAME = AppConfig.getConfig("adapterPageName");
+    private String adapterPageName;
 
     @Override
     protected void writeInternal(Object obj, HttpOutputMessage outputMessage)
             throws IOException, HttpMessageNotWritableException {
-        if (PageContext.isAutoConvert() && obj instanceof Page) {
-            // 分页适配
-            AdapterPage page = getPage((Page) obj);
-            super.writeInternal(page, outputMessage);
-        } else {
-            super.writeInternal(obj, outputMessage);
+        if (obj != null && obj instanceof Page) {
+            Page target = (Page) obj;
+            if (target.isConvert()) {
+                // 分页适配
+                AdapterPage page = getPage(target);
+                super.writeInternal(page, outputMessage);
+                return;
+            }
         }
+        super.writeInternal(obj, outputMessage);
     }
 
     @SuppressWarnings("unchecked")
     private AdapterPage getPage(Page page) {
-        if (JqGridPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(ADAPTER_PAGE_NAME)) {
+        if (JqGridPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(getAdapterPageName())) {
             return new JqGridPage<>(page);
-        } else if (BootstrapPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(ADAPTER_PAGE_NAME)) {
+        } else if (BootstrapPage.ADAPTER_PAGE_NAME.equalsIgnoreCase(getAdapterPageName())) {
             return new BootstrapPage<>(page);
         } else {
-            throw new RuntimeException("unknown adapterPage type " + ADAPTER_PAGE_NAME);
+            throw new RuntimeException("unknown adapterPage type " + getAdapterPageName());
         }
     }
 
+    public String getAdapterPageName() {
+        return adapterPageName;
+    }
+
+    public void setAdapterPageName(String adapterPageName) {
+        this.adapterPageName = adapterPageName;
+    }
 }

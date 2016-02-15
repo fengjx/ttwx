@@ -36,7 +36,7 @@
         <property name="maxPoolPreparedStatementPerConnectionSize"
                   value="20"/>
         <!-- 配置监控统计拦截的filters -->
-        <property name="filters" value="stat"/>
+        <property name="filters" value="stat,wall"/>
     </bean>
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">

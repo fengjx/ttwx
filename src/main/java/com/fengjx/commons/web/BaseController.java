@@ -50,20 +50,6 @@ public abstract class BaseController {
      */
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        // String类型转换，将所有传递进来的String进行HTML编码，防止XSS攻击
-        binder.registerCustomEditor(String.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                setValue(text == null ? null : StringEscapeUtils
-                        .escapeHtml4(text.trim()));
-            }
-
-            @Override
-            public String getAsText() {
-                Object value = getValue();
-                return value != null ? value.toString() : "";
-            }
-        });
         // Date 类型转换
         binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
             @Override
@@ -93,10 +79,6 @@ public abstract class BaseController {
 
     protected HttpSession getSession(HttpServletRequest request) {
         return request.getSession();
-    }
-
-    protected Record getRecord(HttpServletRequest request) {
-        return new Record(getRequestMap(request));
     }
 
     protected <T extends BaseBean> Record getRecord(Class<T> modelCls, HttpServletRequest request) {

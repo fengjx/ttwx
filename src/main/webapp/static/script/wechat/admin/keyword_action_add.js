@@ -18,10 +18,8 @@ $(function () {
             },
             success: function (res) {
                 if (res && '1' == res.code) {
-                    app.alertModal("保存成功！", {
-                        ok: function () {
-                            window.location.href = adminPath + "/wechat/action/keyword";
-                        }
+                    app.alertModal("保存成功！", function () {
+                        window.location.href = adminPath + "/wechat/action/keyword";
                     });
                 } else {
                     app.alertModal(res.msg ? res.msg : "保存失败！", {

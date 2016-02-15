@@ -10,10 +10,8 @@ $(function () {
             beforeSubmit: validForm,
             success: function (res) {
                 if (res && "1" == res.code) {
-                    app.alertModal("更新成功！", {
-                        ok: function () {
-                            window.location.href = adminPath + '/wechat/setting';
-                        }
+                    app.alertModal("更新成功！", function () {
+                        window.location.href = adminPath + '/wechat/setting';
                     });
                 } else {
                     app.alert(res.msg ? res.msg : '授权失败');
@@ -34,10 +32,8 @@ $(function () {
                 dataType: "json",
                 success: function (data) {
                     if (data && "1" == data.code) {
-                        app.alertModal("重置成功，请登录公众平台重新配置！", {
-                            ok: function () {
-                                window.location.href = adminPath + '/wechat/setting';
-                            }
+                        app.alertModal("重置成功，请登录公众平台重新配置！", function () {
+                            window.location.href = adminPath + '/wechat/setting';
                         });
                     } else {
                         app.alert(data.msg ? data.msg : '重置失败');
@@ -46,8 +42,6 @@ $(function () {
             });
         });
     });
-
-
     //改变当前状态
     changeState(valid_state);
 });

@@ -9,8 +9,7 @@
 <body>
 	<div class="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="${adminPath}">后台管理</a></li>
-			<li><a href="${adminPath}/sys">系统管理</a></li>
+			<li>微信管理</li>
 			<li class="active">接口配置</li>
 		</ol>
 	</div>
@@ -78,7 +77,9 @@
 							<div class="control-group" >
 								<label class="control-label">应用类型：</label>
 								<div class="controls">
-									<select data-type="dict" data-group="app_type" id="app_type" data-default="web" name="app_type" class="app-element"></select>
+									<select name="app_type" id="app_type">
+										<myform:options items="${fns:getDictList('app_type')}" itemValue="value" itemLabel="label" value="web"></myform:options>
+									</select>
 								</div>
 							</div>
 							<div class="control-group">
@@ -146,6 +147,6 @@
 		</div><!-- /.modal -->
 	</div>
 
-<script src="${resourceUrl}/script/sys/extapp.js?v=2015090501" type="text/javascript" charset="UTF-8"></script>
+<script src="${resourceUrl}/script/wechat/admin/extapp.js?v=2015090501" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>

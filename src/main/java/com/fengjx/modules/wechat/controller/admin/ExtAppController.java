@@ -27,7 +27,7 @@ public class ExtAppController extends MyController {
 
     @RequestMapping("")
     public String view() {
-        return "sys/admin/extapp";
+        return "wechat/admin/extapp";
     }
 
     @RequestMapping("pageList")

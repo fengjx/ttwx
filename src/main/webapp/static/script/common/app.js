@@ -12,7 +12,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
      */
     app.serialiJson = function (jsonStr) {
         return eval('(' + jsonStr + ')');
-    }
+    };
 
     /**
      * 得到url路径 /开头标识本项目路径，其他表示外部系统路径（直接返回）
@@ -31,7 +31,22 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             return domain + targetUrl;
         }
         return targetUrl;
-    }
+    };
+
+    // 获取URL地址参数
+    app.getQueryString = function (name, url) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        if (!url || url == ""){
+            url = window.location.search;
+        }else{
+            url = url.substring(url.indexOf("?"));
+        }
+        r = url.substr(1).match(reg)
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
 
     // 验证手机号码合法性
     app.validateMobile = function (value) {
@@ -42,7 +57,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             return true;
         }
         return false;
-    }
+    };
 
     // 验证邮箱合法性
     app.validateMail = function (value) {
@@ -51,7 +66,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             return true;
         }
         return false;
-    }
+    };
 
     // 验证固话合法性
     app.validateTel = function (value) {
@@ -60,7 +75,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             return true;
         }
         return false;
-    }
+    };
 
     // 验证邮编合法性
     app.validatePostal = function (value) {
@@ -69,7 +84,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             return true;
         }
         return false;
-    }
+    };
 
     /**
      * 时间戳转换时间
@@ -89,7 +104,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
                 " ").replace(/\//g, "-");
         }
         return tt;
-    }
+    };
 
     /**
      * 时间戳转换时间
@@ -106,7 +121,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             tt = new Date(parseInt(tm) * 1000).toLocaleString().replace(/\//g, "-");
         }
         return tt;
-    }
+    };
 
     app.art = undefined;
     app.artZindex = 10240;
@@ -120,7 +135,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
         }, opt || {});
         app.art = dialog(_opt);
         app.art.showModal();
-    }
+    };
 
     app.loading = function (title, opt) {
         app.closeDialog();
@@ -144,7 +159,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             zIndex: 10240,
             cancel: false,
             ok: function () {
-                if(okCallBack && $.isFunction(okCallBack)){
+                if (okCallBack && $.isFunction(okCallBack)) {
                     okCallBack();
                 }
             }
@@ -163,7 +178,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             fixed: true,
             cancel: false,
             ok: function () {
-                if(okCallBack && $.isFunction(okCallBack)){
+                if (okCallBack && $.isFunction(okCallBack)) {
                     okCallBack();
                 }
             }
@@ -183,7 +198,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             okValue: '确定',
             cancelValue: '取消',
             ok: function () {
-                if(okCallBack && $.isFunction(okCallBack)){
+                if (okCallBack && $.isFunction(okCallBack)) {
                     okCallBack();
                 }
             },
@@ -206,7 +221,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             okValue: '确定',
             cancelValue: '取消',
             ok: function () {
-                if(okCallBack && $.isFunction(okCallBack)){
+                if (okCallBack && $.isFunction(okCallBack)) {
                     okCallBack();
                 }
             },
@@ -281,7 +296,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
                 app.closeDialog();
             }, time * 1000)
         }
-    }
+    };
 
     /**
      * 自动消失的提示框
@@ -305,7 +320,7 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
                 app.closeDialog();
             }, time * 1000)
         }
-    }
+    };
 
     /**
      * 自动消失的提示框
@@ -472,9 +487,8 @@ document.write('<script src="' + dictjs + '" type="text/javascript" charset="UTF
             if (type === "json") {
                 var _data = $.parseJSON(data);
                 if (_data && "-1" == _data.code) { // -1表示登陆超时
-                    app.alertModal("登陆超时，请重新登陆！", function () {
-                        window.location.href = domain + "/login";
-                    });
+                    alert("登陆超时，请重新登陆！");
+                    window.location.href = domain + "/login";
                     return false;
                 }
             }

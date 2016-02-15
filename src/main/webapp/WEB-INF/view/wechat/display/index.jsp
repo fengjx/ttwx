@@ -13,7 +13,7 @@
 	<div class="jumbotron masthead">
 		<div class="container text-center">
 			<h2>${appName}</h2>
-			<h3>免费、开源、支持二次开发扩展的微信发布平台，让你在微信开发中更专注于业务。</h3>
+			<h3>${description}</h3>
 			<p class="masthead-button-links">
 				<a class="btn btn-lg btn-primary btn-shadow" href="http://git.oschina.net/fengjx/ttwx" target="_blank" role="button">程序下载(v2.0.0)</a>
 			</p>

@@ -44,7 +44,7 @@ public class SysDictService extends Model<SysDict> {
         attrs.put("dict_value", value);
         attrs.put("group_code", group);
         Record record = findOne(attrs);
-        if(record.isEmpty()){
+        if (record.isEmpty()) {
             return "";
         }
         return StringUtils.defaultIfEmpty(record.getStr("dict_name"), "");
@@ -79,24 +79,24 @@ public class SysDictService extends Model<SysDict> {
     /**
      * 分页查询
      *
-     * @param record 查询参数
+     * @param dict 查询参数
      * @return
      */
-    public Page<Map<String,Object>> page(Record record) {
+    public Page<Map<String, Object>> findPage(SysDict dict) {
         StringBuilder sql = new StringBuilder(getSelectSql("a"));
         sql.append(" where 1 = 1");
         List<Object> qryParams = new ArrayList<>();
-        if (StringUtils.isNoneBlank(record.getStr("group_code"))) {
+        if (StringUtils.isNoneBlank(dict.getGroupCode())) {
             sql.append(" and group_code like CONCAT('%',?,'%')");
-            qryParams.add(record.get("group_code"));
+            qryParams.add(dict.getGroupCode());
         }
-        if (StringUtils.isNoneBlank(record.getStr("dict_desc"))) {
+        if (StringUtils.isNoneBlank(dict.getDictDesc())) {
             sql.append(" and dict_desc like CONCAT('%',?,'%')");
-            qryParams.add(record.get("dict_desc"));
+            qryParams.add(dict.getDictDesc());
         }
-        if (null != record.get("is_valid")) {
+        if (null != dict.getIsValid()) {
             sql.append(" and is_valid = ?");
-            qryParams.add(record.get("is_valid"));
+            qryParams.add(dict.getIsValid());
         }
         sql.append(ORDER_BY);
         return paginate(sql.toString(), qryParams.toArray());
@@ -132,6 +132,5 @@ public class SysDictService extends Model<SysDict> {
         sql.append(" where group_code = ? ").append(" order by order_no , in_time desc");
         return sql.toString();
     }
-
 
 }

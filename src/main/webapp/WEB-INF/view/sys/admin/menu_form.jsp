@@ -9,8 +9,7 @@
 <body>
 	<div class="breadcrumbs">
 		<ol class="breadcrumb">
-			<li><a href="${adminPath}">后台管理</a></li>
-			<li><a href="${adminPath}/sys">系统管理</a></li>
+			<li>系统管理</li>
 			<li class="active">${not empty id?'修改':'添加'}菜单</li>
 		</ol>
 	</div>
@@ -25,7 +24,7 @@
 				<div class="control-group" >
 					<label class="control-label" for="parent_id">父级菜单:</label>
 					<div class="controls">
-						<sys:treeselect id="parent_id" name="parent_id" value="${parent_id}" parentIds="${parent_ids}" labelValue="${parent_name}" treeLevel="${parent_level}" url="${adminPath}/sys/menu/treeNode" allowClear="true" />
+						<sys:treebox id="parent_id" name="parent_id" value="${parent_id}" parentIds="${parent_ids}" labelValue="${parent_name}" treeLevel="${parent_level}" url="${adminPath}/sys/menu/treeNode" allowClear="true" />
 					</div>
 				</div>
 				<div class="control-group" >
