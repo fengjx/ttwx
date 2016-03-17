@@ -256,7 +256,12 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public B findFirst(Map<String, Object> attrs) {
-        return findFirst(getUsefulClass(), attrs);
+        Table table = getTable(getUsefulClass());
+        Config config = table.getConfig();
+        StringBuilder sql = new StringBuilder();
+        List<Object> paras = Lists.newArrayList();
+        config.getDialect().forModelFind(table, sql, "*", null, attrs, paras);
+        return findFirst(sql.toString(), paras.toArray());
     }
 
     /**
@@ -277,26 +282,10 @@ public abstract class Model<B extends BaseBean> {
     }
 
     /**
-     * 查询单条记录
-     *
-     * @param cls
-     * @param attrs
-     * @return
-     */
-    public B findFirst(Class<? extends BaseBean> cls, Map<String, Object> attrs) {
-        Table table = getTable(cls);
-        Config config = table.getConfig();
-        StringBuilder sql = new StringBuilder();
-        List<Object> paras = Lists.newArrayList();
-        config.getDialect().forModelFind(table, sql, "*", null, attrs, paras);
-        return findFirst(sql.toString(), paras.toArray());
-    }
-
-    /**
      * 根据sql查询单条记录
      *
-     * @param sql
-     * @param params
+     * @param sql 查询sql
+     * @param params 查询参数
      * @return
      */
     public Record findOne(String sql, Object... params) {
@@ -317,7 +306,19 @@ public abstract class Model<B extends BaseBean> {
      * @return
      */
     public B findFirst(String sql, Object... params) {
-        List<B> list = find(sql, params);
+        return findFirst(getUsefulClass(), sql, params);
+    }
+
+    /**
+     * 根据sql查询单条记录
+     *
+     * @param cls 返回值类型
+     * @param sql 查询sql
+     * @param params 查询参数
+     * @return
+     */
+    public <T extends Record> T findFirst(Class<T> cls, String sql, Object... params) {
+        List<T> list = find(cls, sql, params);
         if (CollectionUtils.isEmpty(list)) {
             return null;
         } else if (list.size() > 1) {
@@ -555,6 +556,19 @@ public abstract class Model<B extends BaseBean> {
     }
 
     /**
+     * 分页查询，此查询依赖PageContext
+     *
+     * @param cls 返回值类型
+     * @param sql 查询sql
+     * @param paras 查询参数
+     * @param <T>
+     * @return
+     */
+    public <T extends Record> Page<T> page(Class<T> cls, String sql, Object... paras) {
+        return page(cls, PageContext.getPageNumber(), PageContext.getPageSize(), sql, paras);
+    }
+
+    /**
      * 分页查询
      *
      * @param pageNumber
@@ -586,6 +600,11 @@ public abstract class Model<B extends BaseBean> {
     }
 
     public Page<B> page(int pageNumber, int pageSize, String sql, Object... paras) {
+        return page(getUsefulClass(), pageNumber, pageSize, sql, paras);
+    }
+
+    public <T extends Record> Page<T> page(Class<T> cls, int pageNumber, int pageSize, String sql,
+            Object... paras) {
         Config config = getConfig();
         if (pageNumber < 1 || pageSize < 1) {
             throw new MyDbException("pageNumber and pageSize must be more than 0");
@@ -594,14 +613,14 @@ public abstract class Model<B extends BaseBean> {
         int totalPage;
         totalRow = getCount(sql, paras);
         if (totalRow < 1) {
-            return new Page<>(Lists.<B> newArrayList(), pageNumber, pageSize, 0, 0);
+            return new Page<>(Lists.<T> newArrayList(), pageNumber, pageSize, 0, 0);
         }
         totalPage = totalRow / pageSize;
         if (totalRow % pageSize != 0) {
             totalPage++;
         }
         String pageSql = config.getDialect().forPaginate(pageNumber, pageSize, sql);
-        List<B> list = find(getUsefulClass(), pageSql, paras);
+        List<T> list = find(cls, pageSql, paras);
         return new Page<>(list, pageNumber, pageSize, totalPage, totalRow);
     }
 
@@ -827,6 +846,36 @@ public abstract class Model<B extends BaseBean> {
      */
     public String getSelectSql() {
         return getSelectSql(getUsefulClass());
+    }
+
+    /**
+     * 根据class拼装查询sql语句
+     *
+     * @param sql 拼装后的sql语句
+     * @param cls 对应表映射的bean
+     * @param attrs key:表字段，value:参数值
+     * @param paras 查询参数值
+     * @param orderby 排序：order by ...
+     */
+    public void forSqlFind(Class<? extends BaseBean> cls, StringBuilder sql,
+            Map<String, Object> attrs,
+            List<Object> paras, String orderby) {
+        Table table = getTable(cls);
+        Config config = table.getConfig();
+        config.getDialect().forModelFind(table, sql, "*", orderby, attrs, paras);
+    }
+
+    /**
+     * 拼装当前bean的查询sql语句
+     *
+     * @param sql 拼装后的sql语句
+     * @param attrs key:表字段，value:参数值
+     * @param paras 查询参数值
+     * @param orderby 排序：order by ...
+     */
+    public void forSqlFind(StringBuilder sql, Map<String, Object> attrs, List<Object> paras,
+            String orderby) {
+        forSqlFind(getUsefulClass(), sql, attrs, paras, orderby);
     }
 
     /**

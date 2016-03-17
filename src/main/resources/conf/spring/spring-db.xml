@@ -36,8 +36,18 @@
         <property name="maxPoolPreparedStatementPerConnectionSize"
                   value="20"/>
         <!-- 配置监控统计拦截的filters -->
-        <property name="filters" value="stat,wall"/>
+        <property name="filters" value="stat,wall,Slf4j"/>
+        <property name="proxyFilters">
+            <list>
+                <ref bean="logFilter"/>
+            </list>
+        </property>
     </bean>
+
+    <bean id="logFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+        <property name="statementExecutableSqlLogEnable" value="true"/>
+    </bean>
+
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
@@ -50,7 +60,8 @@
                 com.fengjx.modules.wechat.bean,
                 com.fengjx.modules.common.bean,
                 com.fengjx.modules.sys.bean,
-                com.fengjx.modules.portal.bean
+                com.fengjx.modules.portal.bean,
+                com.fengjx.modules.mall.bean
             </value>
         </property>
     </bean>
@@ -83,9 +94,26 @@
                         execution(* com.fengjx.modules.wechat.service..*.*(..)) ||
                         execution(* com.fengjx.modules.sys.service..*.*(..))
                         execution(* com.fengjx.modules.portal.service..*.*(..))
+                        execution(* com.fengjx.modules.mall.service..*.*(..))
                        "/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" order="1"/>
     </aop:config>
     <!-- 事务定义 end -->
+
+    <!--Spring监控配置-->
+    <bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+    </bean>
+    <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
+        <property name="patterns">
+            <list>
+                <value>com.fengjx.commons.plugin.db.*</value>
+                <value>com.fengjx.modules.*.service.*</value>
+            </list>
+        </property>
+    </bean>
+    <aop:config proxy-target-class="true">
+        <aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut"/>
+    </aop:config>
+    <!--Spring监控配置 end-->
 
 </beans>

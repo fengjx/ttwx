@@ -28,6 +28,24 @@
         </encoder>
     </appender>
 
+    <appender name="sqlFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/sql.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天按日期生成一个文件 -->
+            <fileNamePattern>${LOG_HOME}/sql.%d{yyyy-MM-dd-HH}-%i.log</fileNamePattern>
+            <!-- 30天自动删除旧日志文件 -->
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>20MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!-- 格式及编码 -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread][%logger{0}]#%method %m%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
 
     <!-- 本地调试 使用 -->
     <logger name="java.sql.PreparedStatement">
@@ -42,11 +60,19 @@
     <logger name="java.sql.ResultSet">
         <level value="DEBUG"/>
     </logger>
-    <logger name="org.springframework">
-        <level value="INFO"/>
-    </logger>
+    <!--JdbcTemplate的日志输出器 -->
     <logger name="org.springframework.jdbc.core">
         <level value="DEBUG"/>
+    </logger>
+    <logger name="org.springframework.jdbc.core.StatementCreatorUtils" additivity="true" level="TRACE">
+        <appender-ref ref="sqlFile"/>
+    </logger>
+    <logger name="org.springframework.jdbc.core" additivity="true">
+        <level value="DEBUG"/>
+        <appender-ref ref="sqlFile"/>
+    </logger>
+    <logger name="org.springframework">
+        <level value="INFO"/>
     </logger>
     <logger name="com.alibaba.druid.sql">
         <level value="DEBUG"/>

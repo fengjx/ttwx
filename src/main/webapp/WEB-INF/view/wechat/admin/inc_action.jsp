@@ -32,7 +32,9 @@
 	<div class="control-group">
 		<label class="control-label" for="msgKeyWord">关键字：</label>
 		<input id="msgKeyWord" name="key_word" value="" class="form-control" type="text" placeholder="用户发送的文字">
-		<select data-type="dict" data-group="keywordFuzzy" name="fuzzy" id="fuzzy" class="app-element">
+		<select name="fuzzy" id="fuzzy">
+			<option value="">全部</option>
+			<myform:options items="${fns:getDictList('keywordFuzzy')}" itemValue="value" itemLabel="label"></myform:options>
 		</select>
 		<input id="orderNo" name="order_no" value="" class="form-control" type="number" placeholder="优先级" style="width: 80px;">
 		<span>数字越小，优先级越高</span>

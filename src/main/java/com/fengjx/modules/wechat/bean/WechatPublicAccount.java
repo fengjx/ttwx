@@ -11,10 +11,6 @@ import com.fengjx.commons.plugin.db.annotation.Mapper;
 @SuppressWarnings("serial")
 public class WechatPublicAccount extends BaseBean {
 
-	public static final String VALID_STATE_NONACTIVATED = "0"; // 0：未激活
-	public static final String VALID_STATE_EXCESS = "1"; // 1：已配置到公众平台
-	public static final String VALID_STATE_ACTIVATE = "2"; // 2：已通过客户端校验验证码
-
 	public void setId(java.lang.String id) {
 		set("id", id);
 	}
@@ -133,6 +129,22 @@ public class WechatPublicAccount extends BaseBean {
 
 	public java.lang.String getEncodingAESKey() {
 		return get("encodingAESKey");
+	}
+
+	public void setMerchantId(java.lang.String merchantId) {
+		set("merchant_id", merchantId);
+	}
+
+	public java.lang.String getMerchantId() {
+		return get("merchant_id");
+	}
+
+	public void setPayKey(java.lang.String payKey) {
+		set("pay_key", payKey);
+	}
+
+	public java.lang.String getPayKey() {
+		return get("pay_key");
 	}
 
 }

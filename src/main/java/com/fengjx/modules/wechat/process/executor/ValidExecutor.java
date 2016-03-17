@@ -4,7 +4,7 @@ package com.fengjx.modules.wechat.process.executor;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.modules.common.constants.MsgTemplateConstants;
-import com.fengjx.modules.wechat.bean.WechatPublicAccount;
+import com.fengjx.modules.wechat.constants.WechatConst;
 import me.chanjar.weixin.common.session.WxSession;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
@@ -35,13 +35,14 @@ public class ValidExecutor extends BaseServiceExecutor {
         if (valid_code.equals(inMessage.getContent())) {
             Map<String, Object> attrs = accountRecord._getColumns();
             // 更新账号状态为激活
-            attrs.put("valid_state", WechatPublicAccount.VALID_STATE_ACTIVATE);
+            attrs.put("valid_state", WechatConst.PublicAccount.VALID_STATE_ACTIVATE);
             attrs.put("account_id", inMessage.getToUserName());
             publicAccountService.update(attrs);
             return doAction(msgTemplateService
                     .getTemplateContentByKey(MsgTemplateConstants.API_VALID_SUCCESS));
         }
-        return doAction(msgTemplateService.getTemplateContentByKey(MsgTemplateConstants.API_VALID_FAIL));
+        return doAction(
+                msgTemplateService.getTemplateContentByKey(MsgTemplateConstants.API_VALID_FAIL));
     }
 
     @Override

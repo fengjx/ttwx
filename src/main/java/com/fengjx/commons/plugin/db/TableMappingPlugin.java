@@ -9,6 +9,7 @@ import com.fengjx.commons.plugin.db.dialect.OracleDialect;
 import com.fengjx.commons.utils.ClassUtil;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.commons.utils.StrUtil;
+import org.apache.commons.lang3.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -67,7 +68,8 @@ public class TableMappingPlugin implements IPlugin {
             for (String pkg : packages) {
                 Set<Class<?>> getCls = ClassUtil.getClasses(pkg, true, Mapper.class);
                 for (Class<?> cls : getCls) {
-                    if (cls.getSuperclass() == BaseBean.class) {
+                    // 判断是否可以转型（即是够是BaseBean的子类）
+                    if (ClassUtils.isAssignable(cls.getSuperclass(), BaseBean.class)) {
                         classSet.add((Class<? extends BaseBean>) cls);
                     }
                 }

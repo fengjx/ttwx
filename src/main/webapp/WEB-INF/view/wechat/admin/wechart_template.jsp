@@ -21,7 +21,6 @@
 		$.jqtab("#tabs", ".tab_con");
 	});
 </script>
-
 <script language="javascript">
 	function showPic(sUrl) {
 		document.getElementById("Layer1").innerHTML = "<img src=\"" + sUrl + "\">";

@@ -100,8 +100,7 @@ public class MysqlDialect extends Dialect {
         String[] pKeys = table.getPrimaryKey();
         for (Entry<String, Object> e : attrs.entrySet()) {
             String colName = e.getKey();
-            if (!isPrimaryKey(colName, pKeys)
-                    && table.hasColumnLabel(colName)) {
+            if (!isPrimaryKey(colName, pKeys) && table.hasColumnLabel(colName)) {
                 if (paras.size() > 0) {
                     sql.append(", ");
                 }
@@ -119,15 +118,15 @@ public class MysqlDialect extends Dialect {
         }
     }
 
-    public void forModelFind(Table table, StringBuilder sql, String columns,
-                                      String orderby,
-                                      Map<String, Object> attrs, List<Object> paras){
+    public void forModelFind(Table table, StringBuilder sql, String columns, String orderby,
+            Map<String, Object> attrs, List<Object> paras) {
         sql.append(froSelectSql(table, columns));
         sql.append(" where 1 = 1 ");
         if (!MapUtils.isEmpty(attrs)) {
             for (Entry<String, Object> e : attrs.entrySet()) {
                 String colName = e.getKey();
-                if (table.hasColumnLabel(colName)) {
+                if (StringUtils.isNotBlank(e.getValue().toString())
+                        && table.hasColumnLabel(colName)) {
                     sql.append("and ").append(colName).append(" = ? ");
                     paras.add(e.getValue());
                 }

@@ -1,20 +1,20 @@
 
 package com.fengjx.modules.wechat.service;
 
-import com.fengjx.commons.plugin.cache.IDataLoader;
-import com.fengjx.commons.plugin.cache.SimpleCache;
 import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Record;
+import com.fengjx.commons.system.exception.MyRuntimeException;
 import com.fengjx.commons.utils.AesUtil;
 import com.fengjx.commons.utils.CommonUtils;
 import com.fengjx.commons.utils.StrUtil;
 import com.fengjx.modules.common.constants.AppConfig;
+import com.fengjx.modules.wechat.bean.WechatPublicAccount;
+import com.fengjx.modules.wechat.constants.WechatConst;
 import com.fengjx.modules.wechat.process.utils.WxMpUtil;
+import com.google.common.collect.Maps;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.fengjx.modules.wechat.bean.WechatPublicAccount;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,34 +28,49 @@ import java.util.Map;
 @Component
 public class WechatPublicAccountService extends Model<WechatPublicAccount> {
 
-    @Autowired
-    private SimpleCache simpleCache;
-
     /**
      * 根据userid获得公众账号信息
      *
      * @param userId
      * @return
      */
-    public Record getAccountByUserId(String userId) {
-        Map<String, Object> attrs = new HashMap<>();
+    public WechatPublicAccount getAccountByUserId(String userId) {
+        Map<String, Object> attrs = Maps.newHashMap();
         attrs.put("sys_user_id", userId);
-        return findOne(attrs);
+        return findFirst(attrs);
+    }
+
+    /**
+     * 根据公众号原始ID获得公众账号信息
+     *
+     * @param accountId
+     * @return
+     */
+    public WechatPublicAccount getAccountByAccountId(String accountId) {
+        Map<String, Object> attrs = Maps.newHashMap();
+        attrs.put("account_id", accountId);
+        return findFirst(attrs);
     }
 
     /**
      * 更新公众号信息设置
      *
-     * @param attrs
+     * @param publicAccount
      * @param userId
      * @return
      */
-    public Record updateAccount(Map<String, Object> attrs, String userId) {
-        attrs.put("sys_user_id", userId);
-        update(attrs);
-        Record record = findById(attrs.get(getPrimaryKey()));
-        simpleCache.remove(record.getStr("ticket"));
-        return record;
+    public WechatPublicAccount updateAccount(WechatPublicAccount publicAccount, String userId) {
+        validAccount(publicAccount.getId(), userId);
+        update(publicAccount);
+        return findById(publicAccount.getId());
+    }
+
+    private void validAccount(String accountId, String userId) {
+        String sql = "select count(1) from " + getTableName() + " where id = ? and sys_user_id = ?";
+        int count = getCount(sql, accountId, userId);
+        if (count != 1) {
+            throw new MyRuntimeException("操作失败，数据错误！");
+        }
     }
 
     /**
@@ -70,7 +85,6 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
         Map<String, Object> attrs = resetAttrs(id, userId);
         update(attrs);
         Record record = findById(id);
-        simpleCache.remove(record.getStr("ticket"));
         return record;
     }
 
@@ -90,10 +104,9 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
         attrs.put("in_time", new Date());
         attrs.put("token", token);
         attrs.put("ticket", ticket);
-        attrs.put("url",
-                AppConfig.DOMAIN_PAGE + AppConfig.API_PATH + "?ticket=" + AesUtil.encrypt(ticket));
+        attrs.put("url", AppConfig.API_PATH + "?ticket=" + AesUtil.encrypt(ticket));
         attrs.put("valid_code", StrUtil.getRandomNum(5));
-        attrs.put("valid_state", WechatPublicAccount.VALID_STATE_NONACTIVATED);
+        attrs.put("valid_state", WechatConst.PublicAccount.VALID_STATE_NONACTIVATED);
         return attrs;
     }
 
@@ -115,15 +128,9 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
      * @return
      */
     public Record findByTicket(final String encryptTicket) {
-        return simpleCache.get(AesUtil.decrypt(encryptTicket), new IDataLoader<Record>() {
-            @Override
-            public Record load() {
-                Map<String, Object> attrs = new HashMap<>();
-                attrs.put("ticket", AesUtil.decrypt(encryptTicket));
-                Record account = findOne(attrs);
-                return account;
-            }
-        });
+        Map<String, Object> attrs = new HashMap<>();
+        attrs.put("ticket", AesUtil.decrypt(encryptTicket));
+        return findOne(attrs);
     }
 
     /**
@@ -144,6 +151,16 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
      */
     public WxMpService getWxMpService(String userId) {
         return WxMpUtil.getWxMpServiceByConfig(getWxMpConfigStorageByUserId(userId));
+    }
+
+    /**
+     * 通过公众号ID，获得公众号接口
+     *
+     * @param accountId
+     * @return
+     */
+    public WxMpService getWxMpServiceByAccountId(String accountId) {
+        return WxMpUtil.getWxMpService(getAccountByAccountId(accountId));
     }
 
     /**

@@ -3,7 +3,7 @@ package com.fengjx.modules.wechat.process;
 
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.utils.LogUtil;
-import com.fengjx.modules.wechat.bean.WechatPublicAccount;
+import com.fengjx.modules.wechat.constants.WechatConst;
 import com.fengjx.modules.wechat.process.bean.WechatContext;
 import com.fengjx.modules.wechat.process.executor.ServiceExecutorFactory;
 import me.chanjar.weixin.mp.api.WxMpConfigStorage;
@@ -48,7 +48,8 @@ public class ServiceEngineImpl implements ServiceEngine {
                 return "";
             }
             // 已激活状态，同时fromUserName与公众号ID不符，视为无效请求
-            if (WechatPublicAccount.VALID_STATE_ACTIVATE.equals(accountRecord.getStr("valid_state"))
+            if (WechatConst.PublicAccount.VALID_STATE_ACTIVATE
+                    .equals(accountRecord.getStr("valid_state"))
                     && !inMessage.getToUserName().equals(accountRecord.getStr("account_id"))) {
                 LogUtil.warn(LOG, "ToUserName[" + inMessage.getToUserName() + "]无效，返回空不做响应");
                 return "";

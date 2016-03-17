@@ -10,6 +10,8 @@ import java.util.Map;
  */
 public abstract class BaseBean extends Record implements Ibean{
 
+    private static final long serialVersionUID = -8525287891605547216L;
+
     public BaseBean() {
     }
 

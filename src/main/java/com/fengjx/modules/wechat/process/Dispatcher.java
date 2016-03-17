@@ -2,7 +2,7 @@
 package com.fengjx.modules.wechat.process;
 
 import com.fengjx.commons.plugin.db.Record;
-import com.fengjx.modules.wechat.bean.WechatPublicAccount;
+import com.fengjx.modules.wechat.constants.WechatConst;
 import com.fengjx.modules.wechat.process.bean.WechatContext;
 import com.fengjx.modules.wechat.process.executor.ValidExecutor;
 import com.fengjx.modules.wechat.process.utils.ExecutorNameUtil;
@@ -32,9 +32,9 @@ public class Dispatcher {
         Record accountRecord = WechatContext.getInMessageRecord();
         // 验证状态
         String valid_state = accountRecord.getStr("valid_state");
-        if (WechatPublicAccount.VALID_STATE_ACTIVATE.equals(valid_state)) {
+        if (WechatConst.PublicAccount.VALID_STATE_ACTIVATE.equals(valid_state)) {
             return ExecutorNameUtil.buildName(msgType, inMessage.getEvent());
-        } else if (WechatPublicAccount.VALID_STATE_EXCESS.equals(valid_state)
+        } else if (WechatConst.PublicAccount.VALID_STATE_EXCESS.equals(valid_state)
                 && WxConsts.XML_MSG_TEXT.equals(msgType)) {// 消息类型是文本，当前账号状态是1，已配置URL到公众平台
             return ValidExecutor.EXECUTOR_NAME;
         }

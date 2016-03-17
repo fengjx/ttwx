@@ -59,7 +59,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
             String code = (String) session
                     .getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
             // 校验验证码
-            if (token.getCaptcha() == null || !token.getCaptcha().toUpperCase().equals(code)) {
+            if (token.getCaptcha() == null || !token.getCaptcha().equalsIgnoreCase(code)) {
                 throw new AuthenticationException("msg:验证码错误, 请重试.");
             }
         }

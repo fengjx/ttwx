@@ -2,14 +2,15 @@
 package com.fengjx.modules.wechat.controller.api.interceptor;
 
 import com.fengjx.commons.plugin.db.Record;
+import com.fengjx.commons.utils.DateUtils;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.modules.common.constants.AppConfig;
+import com.fengjx.modules.wechat.bean.WechatReqMsgLog;
 import com.fengjx.modules.wechat.process.bean.WechatContext;
 import com.fengjx.modules.wechat.process.utils.WxMpUtil;
 import com.fengjx.modules.wechat.service.WechatPublicAccountService;
-import me.chanjar.weixin.mp.api.WxMpConfigStorage;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
+import com.fengjx.modules.wechat.service.WechatReqMsgLogService;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,19 +19,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.ByteArrayInputStream;
+import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
+
+import me.chanjar.weixin.mp.api.WxMpConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.util.xml.XStreamTransformer;
 
 public class WechatInterceptor implements HandlerInterceptor {
+
+    private static final Logger LOG = LoggerFactory.getLogger(WechatInterceptor.class);
+
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(3);
 
     @Autowired
     private WechatPublicAccountService publicAccountService;
 
-    private static final Logger LOG = LoggerFactory.getLogger(WechatInterceptor.class);
+    @Autowired
+    private WechatReqMsgLogService msgLogService;
 
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
             Object handler, Exception e) throws Exception {
+        // 微信发送的参数
+        WxMpXmlMessage inMessage = WechatContext.getInMessage();
+        WechatReqMsgLog log = new WechatReqMsgLog();
+        log.setReqType(inMessage.getMsgType());
+        log.setEventType(inMessage.getEvent());
+        log.setToUserName(inMessage.getToUserName());
+        log.setFromUserName(inMessage.getFromUserName());
+        log.setCreateTime(new Date(inMessage.getCreateTime() * 1000L));
+        log.setMsgId(inMessage.getMsgId());
+        log.setInTime(new Date(WechatContext.getRequestTime()));
+        log.setPublicAccountId(WechatContext.getInMessageRecord().getStr("id"));
+        log.setReqXml(XStreamTransformer.toXml(WxMpXmlMessage.class, WechatContext.getInMessage()));
+        WxMpXmlOutMessage outMessage = WechatContext.getOutMessage();
+        log.setRespXml(outMessage == null ? "" : outMessage.toXml());
+        log.setRespTime(new Date());
+        executorService.execute(() -> {
+            msgLogService.save(log);
+        });
         WechatContext.removeAll();
     }
 
@@ -66,6 +100,7 @@ public class WechatInterceptor implements HandlerInterceptor {
                 LogUtil.info(LOG, "ticket无效，找不到对应公众号信息");
                 return false;
             }
+            WechatContext.setRequestTime(DateUtils.currentTimeMillis());
             WechatContext.setInMessageRecord(record);
             WxMpConfigStorage wxMpConfig = WxMpUtil.buildConfigStorage(record);
             // 非测试环境做签名校验

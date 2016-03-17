@@ -26,8 +26,9 @@ public final class JsonUtil {
     public static final SerializerFeature[] DEFAULT_FORMAT = {
             SerializerFeature.WriteDateUseDateFormat, SerializerFeature.WriteEnumUsingToString,
             SerializerFeature.WriteNonStringKeyAsString, SerializerFeature.QuoteFieldNames,
-            SerializerFeature.SkipTransientField,
-            SerializerFeature.SortField, SerializerFeature.PrettyFormat
+            SerializerFeature.SkipTransientField, SerializerFeature.WriteNullStringAsEmpty,
+            SerializerFeature.SortField, SerializerFeature.PrettyFormat,
+            SerializerFeature.DisableCircularReferenceDetect
     };
 
     private JsonUtil() {

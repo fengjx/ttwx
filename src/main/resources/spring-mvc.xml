@@ -35,6 +35,8 @@
                         <value>WriteNullStringAsEmpty</value>
                         <value>WriteDateUseDateFormat</value>
                         <value>WriteEnumUsingToString</value>
+                        <value>DisableCircularReferenceDetect</value>
+                        <value>SortField</value>
                     </array>
                 </property>
                 <!--

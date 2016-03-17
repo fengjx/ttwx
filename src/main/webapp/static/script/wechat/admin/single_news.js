@@ -64,7 +64,7 @@ $(function () {
 
     //实例化编辑器
     editor = UE.getEditor('container', {
-        initialFrameHeight: 400,
+        initialFrameHeight: 600,
         initialFrameWidth: 'auto'
     });
     uploader = UE.getEditor('upload_container', {});

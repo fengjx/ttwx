@@ -1,7 +1,9 @@
 
 package com.fengjx.modules.wechat.controller.admin;
 
+import com.fengjx.commons.plugin.db.annotation.BindBean;
 import com.fengjx.modules.common.controller.MyController;
+import com.fengjx.modules.wechat.bean.WechatPublicAccount;
 import com.fengjx.modules.wechat.service.WechatPublicAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,21 +29,20 @@ public class SettingController extends MyController {
     @RequestMapping(value = "")
     public ModelAndView view(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("wechat/admin/setting");
-        mv.addObject("wechatAccount",
-                publicAccountService.getAccountByUserId(getLoginSysUserId())._getColumns());
+        mv.addObject("wechatAccount", publicAccountService.getAccountByUserId(getLoginSysUserId()));
         return mv;
     }
 
     /**
      * 更新授权信息
      *
-     * @param request
+     * @param publicAccount
      * @return
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public String update(final HttpServletRequest request) {
-        publicAccountService.updateAccount(getRequestMap(request), getLoginSysUserId());
+    public String update(@BindBean WechatPublicAccount publicAccount) {
+        publicAccountService.updateAccount(publicAccount, getLoginSysUserId());
         return retSuccess();
     }
 

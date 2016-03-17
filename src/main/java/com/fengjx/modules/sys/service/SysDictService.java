@@ -1,7 +1,6 @@
 
 package com.fengjx.modules.sys.service;
 
-import com.fengjx.commons.plugin.cache.IDataLoader;
 import com.fengjx.commons.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Page;
@@ -40,7 +39,10 @@ public class SysDictService extends Model<SysDict> {
      * @return
      */
     public String getDictLabel(String value, String group) {
-        Map<String, Object> attrs = new HashMap<>();
+        if (StringUtils.isBlank(value)) {
+            return "";
+        }
+        Map<String, Object> attrs = Maps.newHashMap();
         attrs.put("dict_value", value);
         attrs.put("group_code", group);
         Record record = findOne(attrs);
@@ -103,28 +105,24 @@ public class SysDictService extends Model<SysDict> {
     }
 
     public String jsTemplate() {
-        return EhCacheUtil.get(AppConfig.EhcacheName.DICT_CACHE, DICT_JSON_MAP,
-                new IDataLoader<String>() {
-                    @Override
-                    public String load() {
-                        StringBuilder groupSql = new StringBuilder(
-                                "select distinct(group_code) group_code from ");
-                        groupSql.append(getTableName());
-                        List<Map<String, Object>> groupList = findList(groupSql.toString());
-                        if (CollectionUtils.isEmpty(groupList)) {
-                            return "{}";
-                        }
-                        Map<String, Object> res = Maps.newHashMap();
-                        for (Map<String, Object> group : groupList) {
-                            String groupCode = (String) group.get("group_code");
-                            List<Map<String, Object>> dataList = findList(createSql(), groupCode);
-                            res.put(groupCode, dataList);
-                        }
-                        Map<String, String> attr = Maps.newHashMap();
-                        attr.put("data", StrUtil.replaceBlank(JsonUtil.toJson(res)));
-                        return FreemarkerUtil.process(attr, FtlFilenameConstants.DICT_JS);
-                    }
-                });
+        return EhCacheUtil.get(AppConfig.EhcacheName.DICT_CACHE, DICT_JSON_MAP, () -> {
+            StringBuilder groupSql = new StringBuilder(
+                    "select distinct(group_code) group_code from ");
+            groupSql.append(getTableName());
+            List<Map<String, Object>> groupList = findList(groupSql.toString());
+            if (CollectionUtils.isEmpty(groupList)) {
+                return "{}";
+            }
+            Map<String, Object> res = Maps.newHashMap();
+            for (Map<String, Object> group : groupList) {
+                String groupCode = (String) group.get("group_code");
+                List<Map<String, Object>> dataList = findList(createSql(), groupCode);
+                res.put(groupCode, dataList);
+            }
+            Map<String, String> attr = Maps.newHashMap();
+            attr.put("data", StrUtil.replaceBlank(JsonUtil.toJson(res)));
+            return FreemarkerUtil.process(attr, FtlFilenameConstants.DICT_JS);
+        });
     }
 
     private String createSql() {

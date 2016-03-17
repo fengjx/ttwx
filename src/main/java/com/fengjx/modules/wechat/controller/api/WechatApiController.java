@@ -3,7 +3,7 @@ package com.fengjx.modules.wechat.controller.api;
 
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.modules.common.controller.MyController;
-import com.fengjx.modules.wechat.bean.WechatPublicAccount;
+import com.fengjx.modules.wechat.constants.WechatConst;
 import com.fengjx.modules.wechat.process.ServiceEngine;
 import com.fengjx.modules.wechat.process.bean.WechatContext;
 import com.fengjx.modules.wechat.service.WechatPublicAccountService;
@@ -21,8 +21,7 @@ import java.util.Map;
 /**
  * 微信消息请求网关
  *
- * @author fengjx.
- * @date：2015/6/21 0021
+ * @author fengjx. @date：2015/6/21 0021
  */
 @Controller
 public class WechatApiController extends MyController {
@@ -43,7 +42,7 @@ public class WechatApiController extends MyController {
     public String valid(HttpServletRequest request) {
         // 拦截器里已经做了消息签名校验，这里直接返回就可以了
         Map<String, Object> attrs = WechatContext.getInMessageRecord()._getColumns();
-        attrs.put("valid_state", WechatPublicAccount.VALID_STATE_EXCESS);
+        attrs.put("valid_state", WechatConst.PublicAccount.VALID_STATE_EXCESS);
         // 更新接口为已接入状态
         publicAccountService.update(attrs);
         return request.getParameter("echostr");

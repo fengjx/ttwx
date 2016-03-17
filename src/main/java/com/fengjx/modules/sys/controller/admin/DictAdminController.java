@@ -45,9 +45,6 @@ public class DictAdminController extends MyController {
     public String save(HttpServletRequest request) {
         SysDict sysDict = getModel(SysDict.class, request);
         sysDict.set("in_time", new Date());
-        if (StringUtils.isBlank(sysDict.getStr("is_valid"))) {
-            sysDict.set("is_valid", 0);
-        }
         if (StringUtils.isBlank(sysDict.getId())) {
             dictService.save(sysDict);
         } else {

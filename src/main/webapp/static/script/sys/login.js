@@ -17,12 +17,7 @@ $(function () {
             success: function (res) {
                 if (res && "1" == res.code) {
                     var last_uri = app.getUrl($.cookie("last_uri"), domain);
-                    if(last_uri && '' !== last_uri){
-                        $.removeCookie('last_uri', { path: '/' });
-                        window.location.href = last_uri;
-                    }else{
-                        window.location.href = domain;
-                    }
+                    window.location.href = adminPath;
                 } else {
                     app.error(res.msg ? res.msg : '登录失败');
                     $("#btn-login").button('reset');
