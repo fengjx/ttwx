@@ -1,0 +1,161 @@
+.span4 {
+    width: 280px;
+}
+
+.form-horizontal .control-group {
+    margin-bottom: 20px;
+}
+
+.controls {
+    width: 800px;
+}
+
+.form-horizontal .controls {
+    margin-left: 180px;
+}
+
+.form-horizontal .control-label {
+    float: left;
+    width: 160px;
+    padding-top: 5px;
+    text-align: right;
+}
+
+.form-search input, .form-inline input, .form-horizontal input, .form-search textarea, .form-inline textarea, .form-horizontal textarea, .form-search select, .form-inline select, .form-horizontal select, .form-search .help-inline, .form-inline .help-inline, .form-horizontal .help-inline, .form-search .uneditable-input, .form-inline .uneditable-input, .form-horizontal .uneditable-input, .form-search .input-prepend, .form-inline .input-prepend, .form-horizontal .input-prepend, .form-search .input-append, .form-inline .input-append, .form-horizontal .input-append {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.input-min {
+    width: 30px;
+}
+
+.input-mini {
+    width: 90px;
+}
+
+.input-small {
+    width: 120px;
+}
+
+.input-medium {
+    width: 163px;
+}
+
+.input-xxlarge {
+    width: 460px;
+}
+
+.form-search label {
+    margin-left: 10px;
+}
+
+.form-search span label {
+    margin-left: 0;
+}
+
+.form-search .ul-form {
+    margin: 0;
+    overflow: hidden;
+}
+
+.form-search .ul-form li {
+    float: left;
+    list-style: none;
+    /*height: 35px;*/
+    line-height: 35px;
+}
+
+.form-search .ul-form li label {
+    width: 80px;
+    text-align: right;
+}
+
+.form-search .ul-form li span label {
+    width: auto;
+}
+
+.form-search .ul-form li.clearfix {
+    float: none;
+}
+
+.form-search .ul-form li.btns {
+    padding-left: 10px;
+}
+
+.form-search .ul-form li.btns .btn {
+    margin-right: 5px;
+}
+
+
+.huge {
+    font-size: 40px;
+}
+
+.panel-green {
+    border-color: #5cb85c;
+}
+
+.panel-green .panel-heading {
+    border-color: #5cb85c;
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.panel-green a {
+    color: #5cb85c;
+}
+
+.panel-green a:hover {
+    color: #3d8b3d;
+}
+
+.panel-red {
+    border-color: #d9534f;
+}
+
+.panel-red .panel-heading {
+    border-color: #d9534f;
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.panel-red a {
+    color: #d9534f;
+}
+
+.panel-red a:hover {
+    color: #b52b27;
+}
+
+.panel-yellow {
+    border-color: #f0ad4e;
+}
+
+.panel-yellow .panel-heading {
+    border-color: #f0ad4e;
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.panel-yellow a {
+    color: #f0ad4e;
+}
+
+.panel-yellow a:hover {
+    color: #df8a13;
+}
+
+form.cmxform label.error, label.error {
+    color: red;
+    font-style: italic
+}
+
+div.error {
+    display: none;
+}
+
+input.error {
+    border: 1px dotted red;
+}

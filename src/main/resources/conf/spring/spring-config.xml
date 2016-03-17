@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+
+    <!-- 加载配置属性文件 -->
+    <!--   <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties" /> -->
+
+    <!-- VM 参数 -DENV_MODE=dev/release/test 转换各环境配置文件  -->
+    <bean class="com.fengjx.commons.config.ConfigPropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:env/${ENV_MODE}/app.properties</value>
+        </property>
+        <property name="fileEncoding" value="UTF-8"/>
+        <property name="printConfigOut" value="false"/>
+        <property name="order" value="1"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+
+    <bean class="com.fengjx.commons.config.ConfigPropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:app.properties</value>
+        </property>
+        <property name="fileEncoding" value="UTF-8"/>
+        <property name="printConfigOut" value="false"/>
+        <property name="order" value="2"/>
+        <property name="ignoreUnresolvablePlaceholders" value="false"/>
+    </bean>
+
+
+</beans>

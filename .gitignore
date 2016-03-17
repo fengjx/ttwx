@@ -3,8 +3,11 @@
 # Package Files #
 *.war
 *.ear
-/config/sae
-/config/aliyun
-/build
-/aliyun
-/build_aliyun.xml
+*/classes/*
+/catalina.base_IS_UNDEFINED
+/target
+/src/main/resources/env/my
+/*.iml
+/*.classpath
+/.settings
+/*.project

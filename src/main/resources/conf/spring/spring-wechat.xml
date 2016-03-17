@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       ">
+
+    <bean id="serviceEngine" class="com.fengjx.modules.wechat.process.ServiceEngineImpl"/>
+
+    <!-- 微信->商户 请求服务处理工厂 -->
+    <bean id="serviceExecutorFactory" class="com.fengjx.modules.wechat.process.executor.ServiceExecutorFactory">
+        <property name="executorList">
+            <list>
+                <ref bean="defaultExecutor"/>
+                <ref bean="eventSubscribeExecutor"/>
+                <ref bean="ImageExecutor"/>
+                <ref bean="locationExecutor"/>
+                <ref bean="memuClickExecutor"/>
+                <ref bean="textExecutor"/>
+                <ref bean="validExecutor"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="defaultExecutor" class="com.fengjx.modules.wechat.process.executor.DefaultExecutor"/>
+    <bean id="eventSubscribeExecutor" class="com.fengjx.modules.wechat.process.executor.EventSubscribeExecutor"/>
+    <bean id="ImageExecutor" class="com.fengjx.modules.wechat.process.executor.ImageExecutor"/>
+    <bean id="locationExecutor" class="com.fengjx.modules.wechat.process.executor.LocationExecutor"/>
+    <bean id="memuClickExecutor" class="com.fengjx.modules.wechat.process.executor.MemuClickExecutor"/>
+    <bean id="textExecutor" class="com.fengjx.modules.wechat.process.executor.TextExecutor"/>
+    <bean id="validExecutor" class="com.fengjx.modules.wechat.process.executor.ValidExecutor"/>
+
+
+    <!-- 天气预报接口-->
+    <bean id="weather" class="com.fengjx.modules.wechat.process.ext.impl.WeatherExtService"></bean>
+
+
+
+
+</beans>

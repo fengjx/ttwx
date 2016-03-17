@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    <!-- 加载配置属性文件 -->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:app.properties"/>
+
+    <!-- 使用Annotation自动注册Bean,只扫描@Controller -->
+    <context:component-scan base-package="com.fengjx" use-default-filters="false"><!-- base-package 如果多个，用“,”分隔 -->
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 添加注解驱动 -->
+    <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+        <mvc:message-converters register-defaults="true">
+            <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+            <bean class="com.fengjx.commons.web.converter.MyFastJsonHttpMessageConverter">
+                <property name="adapterPageName" value="${adapterPageName}"/>
+                <property name="supportedMediaTypes" value="application/json;charset=UTF-8"/>
+                <property name="features">
+                    <array>
+                        <value>WriteMapNullValue</value>
+                        <value>WriteNullStringAsEmpty</value>
+                        <value>WriteDateUseDateFormat</value>
+                        <value>WriteEnumUsingToString</value>
+                        <value>DisableCircularReferenceDetect</value>
+                        <value>SortField</value>
+                    </array>
+                </property>
+                <!--
+                    QuoteFieldNames         输出key时是否使用双引号,默认为true
+                    WriteMapNullValue       是否输出值为null的字段,默认为false
+                    WriteNullNumberAsZero   数值字段如果为null,输出为0,而非null
+                    WriteNullListAsEmpty    List字段如果为null,输出为[],而非null
+                    WriteNullStringAsEmpty  字符类型字段如果为null,输出为"",而非null
+                    WriteNullBooleanAsFalse Boolean字段如果为null,输出为false,而非null
+                -->
+            </bean>
+        </mvc:message-converters>
+        <mvc:argument-resolvers>
+            <!--自定义参数封装-->
+            <bean class="com.fengjx.commons.web.converter.MyHandlerMethodArgumentResolver"/>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+
+    <!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
+    <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+        <property name="mediaTypes">
+            <map>
+                <entry key="xml" value="application/xml"/>
+                <entry key="json" value="application/json"/>
+            </map>
+        </property>
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="favorPathExtension" value="true"/>
+    </bean>
+
+
+
+
+    <!-- 对静态资源文件的访问， 将无法mapping到Controller的path交给default servlet handler处理 -->
+    <mvc:default-servlet-handler />
+
+    <!-- 静态资源的访问 -->
+    <mvc:resources location="/static/" mapping="/static/**" cache-period="31536000"/>
+    <mvc:resources location="/upload/" mapping="/upload/**"/>
+    <mvc:resources location="/plugin/ueditor/" mapping="/plugin/ueditor/**" cache-period="31536000"/>
+
+    <!-- jsp定义视图解析器-->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="${web.view.prefix}"/>
+        <property name="suffix" value="${web.view.suffix}"/>
+    </bean>
+
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="defaultErrorView">
+            <value>forward:/common/error</value>
+            <!-- 表示当抛出异常但没有在exceptionMappings里面找到对应的异常时 返回名叫error的视图-->
+        </property>
+        <!-- 定义异常处理页面用来获取异常信息的变量名，默认名为exception -->
+        <property name="exceptionAttribute" value="${http.error.key}"></property>
+        <property name="exceptionMappings">
+            <props>
+                <!-- 表示当抛出Exception的时候就返回名叫/common/error的视图-->
+                <prop key="java.lang.Throwable">forward:/common/error</prop>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">common/error/error-403</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 上传文件拦截，设置最大上传文件大小   10M=10*1024*1024(B)=10485760 bytes -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="${web.maxUploadSize}"/>
+    </bean>
+
+    <import resource="conf/spring/mvc/spring-mvc-interceptor.xml"/>
+
+</beans>

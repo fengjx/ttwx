@@ -1,0 +1,229 @@
+.w_left {
+	float: left;
+	margin-left: 10px;
+	width: 535px;
+}
+
+.w_right {
+	margin-right: 10px;
+	margin-left: 540px;
+	width: 530px;
+}
+
+.font {
+	font-size: 14px;
+}
+
+#tabbox {
+	float: left;
+	overflow: hidden;
+	width: 535px;
+	margin: 0px 0 10px 0px;
+}
+
+.element-list {
+	overflow-x: hidden;
+	float: left;
+	width: 515px;
+}
+
+.element-item {
+	padding: 7px;
+	margin: 0 10px 10px 10px;
+	cursor: pointer;
+}
+
+.element-item .content {
+	width: 440px;
+}
+
+.element-item:hover {
+	padding: 6px;
+	border: 1px solid #d4d4d4;
+}
+
+.element-item.selected {
+	padding: 6px;
+	border: 2px solid #51930D;
+}
+
+.element-item>img {
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: none;
+}
+
+.element-item.selected>img {
+	display: block;
+}
+
+.element-picker {
+	border: 1px solid rgb(212, 212, 212);
+	float: right;
+	width: 195px;
+	height: 195px;
+	padding: 15px 10px;
+	margin-top: 10px;
+}
+
+.element-preview {
+	border: 1px solid rgb(212, 212, 212);
+	float: left;
+	width: 310px;
+	height: 195px;
+	padding: 15px 0;
+	margin-top: 10px;
+}
+
+.adbox {
+	overflow: hidden;
+	margin: 10px;
+}
+
+.tab_conbox {
+	border: 1px solid #999;
+	border-top: none;
+}
+
+.tab_con {
+	display: none;
+	height: 475px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background: white;
+	border: 1px solid #d4d4d4;
+	padding-top: 10px;
+	width: 515px;
+	float: left;
+}
+
+.tabs {
+	height: 32px;
+	border-bottom: 1px solid #999;
+	border-left: 1px solid #999;
+	width: 100%;
+}
+
+.yl {
+	float: right;
+	height: 82px;
+	border: 1px solid #999;
+	width: 370px;
+	margin: 10px 10px 10px 0;
+}
+
+#Layer1 {
+	float: left;
+	width: 370px;
+	height: 82px;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.tabs li {
+	height: 31px;
+	line-height: 31px;
+	float: left;
+	border: 1px solid #999;
+	border-left: none;
+	margin-bottom: -1px;
+	background: #e0e0e0;
+	overflow: hidden;
+	position: relative;
+}
+
+.tabs li .ttitle {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.tabs li a {
+	display: block;
+	padding: 0 20px;
+	border: 1px solid #fff;
+	outline: none;
+}
+
+.tabs li a:hover {
+	background: #ccc;
+	color: #000;
+}
+
+.tabs .thistab, .tabs .thistab a:hover {
+	background: #fff;
+	border-bottom: 1px solid #fff;
+}
+
+.tab_con {
+	padding: 10px 10px 0 10px;
+	font-size: 14px;
+	line-height: 175%;
+}
+
+.tab_con input {
+	display: inline-block;
+	line-height: 20px;
+	padding: 0 5px;
+	margin: 0 0 10px 0;
+	text-align: center;
+	color: #666666;
+	background: #e0e0e0;
+	border-radius: 2px;
+	border: 1px solid;
+	font-family: '微软雅黑';
+	border-color: #666666;
+}
+
+.tab_con input:hover {
+	background: #CCCCCC;
+	color: #333333;
+}
+
+ 
+
+#tabbox li span.img {
+	display: none;
+}
+
+#tabbox li a {
+	
+}
+
+#tabbox li a:hover {
+	position: relative;
+}
+
+#tabbox li a:hover span.img {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 30px;
+}
+
+.STYLE1 {
+	color: #FFFFFF
+}
+
+.footer {
+	width: 1103px;
+	margin: auto;
+	padding-top: 10px;
+	background: #fff;
+}
+
+.flink {
+	width: 1103px;
+	color: #999;
+	line-height: 26px;
+	padding-left: 10px;
+}
+
+.flink a {
+	color: #999;
+}
+
+.flink a:hover {
+	color: #999;
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
+       ">
+
+    <bean init-method="init" id="plugins" class="com.fengjx.commons.plugin.Plugins">
+        <property name="pluginList">
+            <list>
+                <ref bean="tableMappingPlugin"/>
+                <ref bean="ehCachePlugin"/>
+                <ref bean="dictPlugin"/>
+                <ref bean="freemarkerPlugin"/>
+                <ref bean="emailPlugin"/>
+            </list>
+        </property>
+    </bean>
+
+    <cache:annotation-driven/>
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehcache"/>
+    </bean>
+    <!-- EhCache library setup -->
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:conf/ehcache/ehcache.xml"/>
+    </bean>
+
+    <bean id="ehCachePlugin" class="com.fengjx.commons.plugin.cache.ehcache.EhCachePlugin">
+        <property name="cacheManager" ref="ehcache"/>
+    </bean>
+
+    <!-- 数据字典-->
+    <bean id="dictService" class="com.fengjx.modules.sys.service.DictServiceImpl">
+    </bean>
+    <bean id="dictPlugin" class="com.fengjx.commons.plugin.dict.DictPlugin">
+        <property name="service" ref="dictService"/>
+    </bean>
+
+    <!-- freemarker的配置 -->
+    <bean id="freemarkerConfigurer"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/ftl"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">10</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="number_format">#.##</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="freemarkerPlugin" class="com.fengjx.commons.plugin.freemarker.FreemarkerPlugin">
+        <property name="configurer" ref="freemarkerConfigurer"/>
+    </bean>
+
+    <bean id="simpleCache" class="com.fengjx.commons.plugin.cache.ehcache.SimpleEhCache"/>
+
+</beans>

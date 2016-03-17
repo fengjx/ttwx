@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/view">
+
+	<!-- 默认装饰页面, 在需要装饰的页面增加<meta name="decorator" content="default"/> -->
+	<decorator name="display" page="common/layout/display_layout.jsp" />
+	<decorator name="admin" page="common/layout/admin_layout.jsp" />
+	<decorator name="blank" page="common/layout/blank_layout.jsp" />
+	<decorator name="wechat" page="common/layout/admin_wechat_layout.jsp" />
+	<decorator name="sys" page="common/layout/admin_sys_layout.jsp" />
+	<decorator name="portal" page="common/layout/admin_portal_layout.jsp" />
+
+
+</decorators>

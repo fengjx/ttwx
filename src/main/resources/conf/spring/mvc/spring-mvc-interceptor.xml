@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    <mvc:interceptors>
+        <!-- 全局接口拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.fengjx.modules.common.controller.interceptor.GlobalInterceptor"></bean>
+        </mvc:interceptor>
+        <!-- 后台管理拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="${adminPath}"/>
+            <mvc:mapping path="${adminPath}/**"/>
+            <bean class="com.fengjx.modules.sys.controller.admin.interceptor.AdminInterceptor"></bean>
+        </mvc:interceptor>
+        <!-- 分页请求拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**/pageList"/>
+            <mvc:mapping path="/**/*PageList"/>
+            <mvc:mapping path="/**/pageList/**"/>
+            <bean class="com.fengjx.modules.common.controller.interceptor.PageInterceptor"></bean>
+        </mvc:interceptor>
+        <!-- 拦截匹配微信请求接口 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/wechat/api"/>
+            <bean class="com.fengjx.modules.wechat.controller.api.interceptor.WechatInterceptor"></bean>
+        </mvc:interceptor>
+
+      <!--<mvc:interceptor>
+           <mvc:mapping path="${mallPath}/cart**"/>
+           <mvc:mapping path="${mallPath}/order**"/>
+           <mvc:mapping path="${mallPath}/addr**"/>
+           <mvc:mapping path="${mallPath}/user**"/>
+           <bean class="com.fengjx.modules.mall.interceptor.UserLoginInterceptor"></bean>
+        </mvc:interceptor>-->
+        
+    </mvc:interceptors>
+
+</beans>

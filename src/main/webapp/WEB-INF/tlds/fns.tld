@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <description>JSTL 1.1 functions library</description>
+    <display-name>JSTL functions sys</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>fns</short-name>
+    <uri>http://java.sun.com/jsp/jstl/functionss</uri>
+
+    <function>
+        <description>获取配置</description>
+        <name>getConfig</name>
+        <function-class>com.fengjx.modules.common.constants.AppConfig</function-class>
+        <function-signature>java.lang.String getConfig(java.lang.String)</function-signature>
+        <example>${fns:getConfig(key)}</example>
+    </function>
+    <function>
+        <description>获取常量</description>
+        <name>getConst</name>
+        <function-class>com.fengjx.modules.common.constants.AppConfig</function-class>
+        <function-signature>java.lang.Object getConst(java.lang.String)</function-signature>
+        <example>${fns:getConst(key)}</example>
+    </function>
+
+    <!-- DictUtils -->
+    <function>
+        <description>获取字典标签</description>
+        <name>getDictLabel</name>
+        <function-class>com.fengjx.commons.plugin.dict.DictUtil</function-class>
+        <function-signature>java.lang.String getDictLabel(java.lang.String, java.lang.String)</function-signature>
+        <example>${fns:getDictLabel(value, type)}</example>
+    </function>
+    <function>
+        <description>获取字典值</description>
+        <name>getDictValue</name>
+        <function-class>com.fengjx.commons.plugin.dict.DictUtil</function-class>
+        <function-signature>java.lang.String getDictValue(java.lang.String, java.lang.String)</function-signature>
+        <example>${fns:getDictValue(label, type)}</example>
+    </function>
+    <function>
+        <description>获取字典对象列表</description>
+        <name>getDictList</name>
+        <function-class>com.fengjx.commons.plugin.dict.DictUtil</function-class>
+        <function-signature>java.util.List findDictList(java.lang.String)</function-signature>
+        <example>${fns:findDictList(type)}</example>
+    </function>
+
+    <!-- Encodes -->
+    <function>
+        <description>URL编码</description>
+        <name>urlEncode</name>
+        <function-class>com.fengjx.commons.utils.Encodes</function-class>
+        <function-signature>java.lang.String urlEncode(java.lang.String)</function-signature>
+        <example>${fns:urlEncode(part)}</example>
+    </function>
+    <function>
+        <description>URL解码</description>
+        <name>urlDecode</name>
+        <function-class>com.fengjx.commons.utils.Encodes</function-class>
+        <function-signature>java.lang.String urlDecode(java.lang.String)</function-signature>
+        <example>${fns:urlDecode(part)}</example>
+    </function>
+
+    <!-- StringUtils -->
+    <function>
+        <description>从后边开始截取字符串</description>
+        <name>substringAfterLast</name>
+        <function-class>org.apache.commons.lang3.StringUtils</function-class>
+        <function-signature>java.lang.String substringAfterLast(java.lang.String, java.lang.String)</function-signature>
+        <example>${fns:substringAfterLast(str,separator)}</example>
+    </function>
+    <function>
+        <description>判断字符串是否以某某开头</description>
+        <name>startsWith</name>
+        <function-class>org.apache.commons.lang3.StringUtils</function-class>
+        <function-signature>boolean startsWith(java.lang.CharSequence, java.lang.CharSequence)</function-signature>
+        <example>${fns:startsWith(str,prefix)}</example>
+    </function>
+
+    <function>
+        <description>判断字符串是否以某某结尾</description>
+        <name>endsWith</name>
+        <function-class>org.apache.commons.lang3.StringUtils</function-class>
+        <function-signature>boolean endsWith(java.lang.CharSequence, java.lang.CharSequence)</function-signature>
+        <example>${fns:endsWith(str,suffix)}</example>
+    </function>
+
+    <function>
+        <description>缩写字符串，超过最大宽度用“...”表示</description>
+        <name>abbr</name>
+        <function-class>com.fengjx.commons.utils.StrUtil</function-class>
+        <function-signature>java.lang.String abbr(java.lang.String, int)</function-signature>
+        <example>${fns:abbr(str,length)}</example>
+    </function>
+
+    <function>
+        <description>替换掉HTML标签</description>
+        <name>replaceHtml</name>
+        <function-class>com.fengjx.commons.utils.StrUtil</function-class>
+        <function-signature>java.lang.String replaceHtml(java.lang.String)</function-signature>
+        <example>${fns:replaceHtml(html)}</example>
+    </function>
+
+    <function>
+        <description>判断集合里是否包含对象</description>
+        <name>contains</name>
+        <function-class>com.google.common.collect.Iterables</function-class>
+        <function-signature>boolean contains(java.lang.Iterable, java.lang.Object)</function-signature>
+        <example>${fns:contains(iterable, value)}</example>
+    </function>
+
+    <!-- JsonUtil -->
+    <function>
+        <description>对象转换JSON字符串</description>
+        <name>toJson</name>
+        <function-class>com.fengjx.commons.utils.JsonUtil</function-class>
+        <function-signature>java.lang.String toJson(T)(java.lang.Object)</function-signature>
+        <example>${fns:toJson(object)}</example>
+    </function>
+
+    <function>
+        <description>获取当前时间戳</description>
+        <name>currentTimeMillis</name>
+        <function-class>com.fengjx.commons.utils.DateUtils</function-class>
+        <function-signature>long currentTimeMillis()</function-signature>
+        <example>${fns:currentTimeMillis()}</example>
+    </function>
+
+    <function>
+        <description>getMenus</description>
+        <name>getMenus</name>
+        <function-class>com.fengjx.modules.sys.utils.UserUtil</function-class>
+        <function-signature>java.util.List getMenus()</function-signature>
+        <example>${fns:getMenus()}</example>
+    </function>
+
+    <function>
+        <description>获取当前用户对象</description>
+        <name>getUser</name>
+        <function-class>com.fengjx.modules.sys.utils.UserUtil</function-class>
+        <function-signature>com.fengjx.modules.sys.entity.SysUserEntity getUser()</function-signature>
+        <example>${fns:getUser()}</example>
+    </function>
+
+</taglib>
