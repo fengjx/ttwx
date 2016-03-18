@@ -43,7 +43,6 @@
         <property name="filterChainDefinitions">
             <value>
                 /static/** = anon
-                /mall/** = anon
                 /common/verification_code.jpg = anon
                 /login/cas = cas
                 /login = authc

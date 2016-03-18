@@ -31,15 +31,6 @@
             <mvc:mapping path="/wechat/api"/>
             <bean class="com.fengjx.modules.wechat.controller.api.interceptor.WechatInterceptor"></bean>
         </mvc:interceptor>
-
-      <!--<mvc:interceptor>
-           <mvc:mapping path="${mallPath}/cart**"/>
-           <mvc:mapping path="${mallPath}/order**"/>
-           <mvc:mapping path="${mallPath}/addr**"/>
-           <mvc:mapping path="${mallPath}/user**"/>
-           <bean class="com.fengjx.modules.mall.interceptor.UserLoginInterceptor"></bean>
-        </mvc:interceptor>-->
-        
     </mvc:interceptors>
 
 </beans>

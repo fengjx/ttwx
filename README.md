@@ -1,4 +1,4 @@
-#说明
+#说明（文档有时间再补上，QQ:466516623，Email:xd-fjx@qq.com）
 启动项目 <br>
 mvn tomcat7:run <br>
 
