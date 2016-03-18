@@ -3,6 +3,7 @@ package com.fengjx.modules.wechat.model;
 
 import com.fengjx.commons.utils.CommonUtils;
 
+import com.fengjx.modules.wechat.service.WechatUserGroupService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import java.util.Map;
 public class UserGroupTest {
 
     @Autowired
-    private UserGroup userGroup;
+    private WechatUserGroupService wechatUserGroupService;
 
     @Test
     public void testInsert() {
@@ -30,7 +31,7 @@ public class UserGroupTest {
         attrs.put("id", CommonUtils.getPrimaryKey());
         attrs.put("name", "ssss");
         attrs.put("in_time", new Date());
-        userGroup.insert(attrs);
+        wechatUserGroupService.insert(attrs);
     }
 
 }

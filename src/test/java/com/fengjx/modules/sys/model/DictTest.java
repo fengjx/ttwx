@@ -1,6 +1,7 @@
 
 package com.fengjx.modules.sys.model;
 
+import com.fengjx.modules.sys.service.SysDictService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class DictTest {
 
     @Autowired
-    private Dict dict;
+    private SysDictService dictService;
 
     @Test
     public void testJsTemplate() {
-        System.out.println(dict.jsTemplate());
+        System.out.println(dictService.jsTemplate());
     }
 
 }
