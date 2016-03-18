@@ -11,83 +11,83 @@ import com.fengjx.commons.plugin.db.annotation.Mapper;
 @SuppressWarnings("serial")
 public class SysDict extends BaseBean {
 
-	public void setId(java.lang.String id) {
+	public void setId(String id) {
 		set("id", id);
 	}
 
-	public java.lang.String getId() {
+	public String getId() {
 		return get("id");
 	}
 
-	public void setDictDesc(java.lang.String dictDesc) {
+	public void setDictDesc(String dictDesc) {
 		set("dict_desc", dictDesc);
 	}
 
-	public java.lang.String getDictDesc() {
+	public String getDictDesc() {
 		return get("dict_desc");
 	}
 
-	public void setDictName(java.lang.String dictName) {
+	public void setDictName(String dictName) {
 		set("dict_name", dictName);
 	}
 
-	public java.lang.String getDictName() {
+	public String getDictName() {
 		return get("dict_name");
 	}
 
-	public void setDictValue(java.lang.String dictValue) {
+	public void setDictValue(String dictValue) {
 		set("dict_value", dictValue);
 	}
 
-	public java.lang.String getDictValue() {
+	public String getDictValue() {
 		return get("dict_value");
 	}
 
-	public void setGroupCode(java.lang.String groupCode) {
+	public void setGroupCode(String groupCode) {
 		set("group_code", groupCode);
 	}
 
-	public java.lang.String getGroupCode() {
+	public String getGroupCode() {
 		return get("group_code");
 	}
 
-	public void setInTime(java.lang.String inTime) {
+	public void setInTime(java.util.Date inTime) {
 		set("in_time", inTime);
 	}
 
-	public java.lang.String getInTime() {
+	public java.util.Date getInTime() {
 		return get("in_time");
 	}
 
-	public void setIsValid(java.lang.Integer isValid) {
+	public void setIsValid(Integer isValid) {
 		set("is_valid", isValid);
 	}
 
-	public java.lang.Integer getIsValid() {
+	public Integer getIsValid() {
 		return get("is_valid");
 	}
 
-	public void setOrderNo(java.lang.Integer orderNo) {
+	public void setOrderNo(Integer orderNo) {
 		set("order_no", orderNo);
 	}
 
-	public java.lang.Integer getOrderNo() {
+	public Integer getOrderNo() {
 		return get("order_no");
 	}
 
-	public void setParentId(java.lang.String parentId) {
+	public void setParentId(String parentId) {
 		set("parent_id", parentId);
 	}
 
-	public java.lang.String getParentId() {
+	public String getParentId() {
 		return get("parent_id");
 	}
 
-	public void setGroupName(java.lang.String groupName) {
+	public void setGroupName(String groupName) {
 		set("group_name", groupName);
 	}
 
-	public java.lang.String getGroupName() {
+	public String getGroupName() {
 		return get("group_name");
 	}
 
