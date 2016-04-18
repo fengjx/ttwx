@@ -1,6 +1,7 @@
 
 package com.fengjx.modules.sys.service;
 
+import com.fengjx.commons.plugin.cache.IDataLoader;
 import com.fengjx.commons.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Page;
@@ -11,6 +12,7 @@ import com.fengjx.commons.utils.StrUtil;
 import com.fengjx.modules.common.constants.AppConfig;
 import com.fengjx.modules.common.constants.FtlFilenameConstants;
 import com.fengjx.modules.sys.bean.SysDict;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +28,8 @@ import java.util.Map;
  */
 @Component
 public class SysDictService extends Model<SysDict> {
+
+    public static final String DICT_MAP = "dict_map";
 
     public static final String DICT_JSON_MAP = "dictJsonMap";
 
@@ -63,7 +67,7 @@ public class SysDictService extends Model<SysDict> {
         Map<String, Object> attrs = new HashMap<>();
         attrs.put("dict_name", label);
         attrs.put("group_code", group);
-        return findOne(attrs).getStr("dict_name");
+        return findOne(attrs).getStr("dict_value");
     }
 
     /**
@@ -76,6 +80,28 @@ public class SysDictService extends Model<SysDict> {
         Map<String, Object> attrs = new HashMap<>();
         attrs.put("group_code", group);
         return findList(attrs, ORDER_BY);
+    }
+
+    public Map<String, List<SysDict>> dictMapList(){
+        return EhCacheUtil.get(AppConfig.EhcacheName.DICT_CACHE, DICT_MAP, new IDataLoader<Map<String, List<SysDict>>>() {
+            @Override
+            public Map<String, List<SysDict>> load() {
+                Map<String, List<SysDict>> resMap = Maps.newHashMap();
+                List<SysDict> dictList = find(null);
+                if(CollectionUtils.isNotEmpty(dictList)){
+                    for(SysDict dict : dictList){
+                        List<SysDict> list = resMap.get(dict.getGroupCode());
+                        if(null == list){
+                            list = Lists.newArrayList();
+                        }
+                    }
+
+                }
+
+
+                return resMap;
+            }
+        });
     }
 
     /**
@@ -103,6 +129,9 @@ public class SysDictService extends Model<SysDict> {
         sql.append(ORDER_BY);
         return paginate(sql.toString(), qryParams.toArray());
     }
+
+
+
 
     public String jsTemplate() {
         return EhCacheUtil.get(AppConfig.EhcacheName.DICT_CACHE, DICT_JSON_MAP, () -> {

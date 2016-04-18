@@ -1,6 +1,7 @@
 
 package com.fengjx.modules.wechat.service;
 
+import com.fengjx.commons.plugin.cache.ehcache.EhCacheUtil;
 import com.fengjx.commons.plugin.db.Model;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.system.exception.MyRuntimeException;
@@ -35,9 +36,13 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
      * @return
      */
     public WechatPublicAccount getAccountByUserId(String userId) {
-        Map<String, Object> attrs = Maps.newHashMap();
-        attrs.put("sys_user_id", userId);
-        return findFirst(attrs);
+        return EhCacheUtil.get(AppConfig.EhcacheName.WECHAT_PUBLIC_ACCOUNT, userId, () -> {
+            Map<String, Object> attrs = Maps.newHashMap();
+            attrs.put("sys_user_id", userId);
+            WechatPublicAccount publicAccount = findFirst(attrs);
+            buildCache(publicAccount);
+            return publicAccount;
+        });
     }
 
     /**
@@ -47,9 +52,12 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
      * @return
      */
     public WechatPublicAccount getAccountByAccountId(String accountId) {
-        Map<String, Object> attrs = Maps.newHashMap();
-        attrs.put("account_id", accountId);
-        return findFirst(attrs);
+        return EhCacheUtil.get(AppConfig.EhcacheName.WECHAT_PUBLIC_ACCOUNT, accountId, () -> {
+            Map<String, Object> attrs = Maps.newHashMap();
+            attrs.put("account_id", accountId);
+            return findFirst(attrs);
+        });
+
     }
 
     /**
@@ -62,6 +70,7 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
     public WechatPublicAccount updateAccount(WechatPublicAccount publicAccount, String userId) {
         validAccount(publicAccount.getId(), userId);
         update(publicAccount);
+        removeCache();
         return findById(publicAccount.getId());
     }
 
@@ -84,8 +93,8 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
     public Record reset(String id, String userId) {
         Map<String, Object> attrs = resetAttrs(id, userId);
         update(attrs);
-        Record record = findById(id);
-        return record;
+        removeCache();
+        return findById(id);
     }
 
     /**
@@ -116,7 +125,7 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
      * @param userId
      * @return
      */
-    public WxMpConfigStorage getWxMpConfigStorageByUserId(final String userId) {
+    public WxMpConfigStorage getWxMpConfigStorageByUserId(String userId) {
         Record record = getAccountByUserId(userId);
         return WxMpUtil.buildConfigStorage(record);
     }
@@ -127,10 +136,14 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
      * @param encryptTicket 加密后的ticket
      * @return
      */
-    public Record findByTicket(final String encryptTicket) {
-        Map<String, Object> attrs = new HashMap<>();
-        attrs.put("ticket", AesUtil.decrypt(encryptTicket));
-        return findOne(attrs);
+    public WechatPublicAccount findByTicket(String encryptTicket) {
+        return EhCacheUtil.get(AppConfig.EhcacheName.WECHAT_PUBLIC_ACCOUNT, encryptTicket, () -> {
+            Map<String, Object> attrs = new HashMap<>();
+            attrs.put("ticket", AesUtil.decrypt(encryptTicket));
+            WechatPublicAccount publicAccount = findFirst(attrs);
+            buildCache(publicAccount);
+            return publicAccount;
+        });
     }
 
     /**
@@ -171,6 +184,29 @@ public class WechatPublicAccountService extends Model<WechatPublicAccount> {
      */
     public WxMpService getWxMpServiceByTicket(String ticket) {
         return WxMpUtil.getWxMpServiceByConfig(getWxMpConfigStorageByTicket(ticket));
+    }
+
+    /**
+     * 删除公众号缓存
+     */
+    private void removeCache() {
+        EhCacheUtil.removeAll(AppConfig.EhcacheName.WECHAT_PUBLIC_ACCOUNT);
+    }
+
+    /**
+     * 添加缓存
+     *
+     * @param publicAccount
+     */
+    private void buildCache(WechatPublicAccount publicAccount) {
+        EhCacheUtil.put(AppConfig.EhcacheName.WECHAT_PUBLIC_ACCOUNT, publicAccount.getId(),
+                publicAccount);
+        EhCacheUtil.put(AppConfig.EhcacheName.WECHAT_PUBLIC_ACCOUNT, publicAccount.getTicket(),
+                publicAccount);
+        EhCacheUtil.put(AppConfig.EhcacheName.WECHAT_PUBLIC_ACCOUNT, publicAccount.getAccountId(),
+                publicAccount);
+        EhCacheUtil.put(AppConfig.EhcacheName.WECHAT_PUBLIC_ACCOUNT, publicAccount.getSysUserId(),
+                publicAccount);
     }
 
 }

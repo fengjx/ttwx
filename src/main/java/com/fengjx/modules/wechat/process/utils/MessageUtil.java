@@ -6,16 +6,14 @@ import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
-import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -39,20 +37,13 @@ public final class MessageUtil {
     /**
      * 解析微信发来的请求（XML）
      * 
-     * @param request
      * @return
-     * @throws java.io.IOException
-     * @throws org.dom4j.DocumentException
-     * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    public static Map<String, String> parseXml(HttpServletRequest request) {
+    public static Map<String, String> parseXml(InputStream inputStream) {
         // 将解析结果存储在HashMap中
         Map<String, String> map = new HashMap<String, String>();
-        // 从request中取得输入流
-        InputStream inputStream = null;
         try {
-            inputStream = request.getInputStream();
             if (null != inputStream) {
                 // 读取输入流
                 SAXReader reader = new SAXReader();
@@ -67,12 +58,41 @@ public final class MessageUtil {
                 }
                 map.put("xml", document.asXML());
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } catch (DocumentException e) {
             throw new RuntimeException(e);
         } finally {
             IOUtils.closeQuietly(inputStream);
+        }
+        return map;
+    }
+
+    /**
+     * xml字符串转Map
+     *
+     * @param xmlStr
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static Map<String, String> parseXml(String xmlStr) {
+        // 将解析结果存储在HashMap中
+        Map<String, String> map = new HashMap<String, String>();
+        if (StringUtils.isNotBlank(xmlStr)) {
+            try {
+                // 读取输入流
+                Document document = DocumentHelper.parseText(xmlStr);
+                ;
+                // 得到xml根元素
+                Element root = document.getRootElement();
+                // 得到根元素的所有子节点
+                List<Element> elementList = root.elements();
+                // 遍历所有子节点
+                for (Element e : elementList) {
+                    map.put(e.getName(), e.getText());
+                }
+                map.put("xml", document.asXML());
+            } catch (DocumentException e) {
+                throw new RuntimeException(e);
+            }
         }
         return map;
     }
@@ -126,82 +146,6 @@ public final class MessageUtil {
     }
 
     /**
-     * 替换响应消息中的参数
-     * 
-     * @param msg
-     * @param reqMsgMap
-     * @return
-     */
-    public static String replaceMsgParam(String msg, Map<String, String> reqMsgMap) {
-        if (StringUtils.isBlank(msg)) {
-            return "";
-        }
-        String res = "";
-        res = StringUtils.replaceEach(msg,
-                new String[] {
-                        "{#ToUserName#}",
-                        "{#FromUserName#}",
-                        "{#CreateTime#}"
-                },
-                new String[] {
-                        reqMsgMap.get("FromUserName"),
-                        reqMsgMap.get("ToUserName"),
-                        new Date().getTime() + ""
-                });
-
-        return res;
-    }
-
-    /**
-     * 替换响应消息中的参数(正在表达式来处理)
-     * 
-     * @param msg
-     * @param reqMsgMap
-     * @return
-     */
-    public static String replaceMsgByReg(String msg, Map<String, String> reqMsgMap) {
-        if (StringUtils.isBlank(msg)) {
-            return "";
-        }
-        String res = "";
-        res = msg
-                .replaceAll(
-                        "\\<ToUserName>(.*?)\\</ToUserName>",
-                        "<ToUserName><![CDATA[" + reqMsgMap.get("FromUserName")
-                                + "]]></ToUserName>")
-                .replaceAll(
-                        "\\<FromUserName>(.*?)\\</FromUserName>",
-                        "<FromUserName><![CDATA[" + reqMsgMap.get("ToUserName")
-                                + "]]></FromUserName>")
-                .replaceAll("\\<CreateTime>(.*?)\\</CreateTime>",
-                        "<CreateTime><![CDATA[" + new Date().getTime() + "]]></CreateTime>");
-        return res;
-    }
-
-    /**
-     * 替换响应消息中的参数(正在表达式来处理)
-     *
-     * @param msg
-     * @param inMessage
-     * @return
-     */
-    public static String replaceMsgByReg(String msg, WxMpXmlMessage inMessage) {
-        if (StringUtils.isBlank(msg)) {
-            return "";
-        }
-        String res = msg
-                .replaceAll(
-                        "\\<ToUserName>(.*?)\\</ToUserName>",
-                        "<ToUserName><![CDATA[" + inMessage.getFromUserName() + "]]></ToUserName>")
-                .replaceAll(
-                        "\\<FromUserName>(.*?)\\</FromUserName>",
-                        "<FromUserName><![CDATA[" + inMessage.getToUserName() + "]]></FromUserName>")
-                .replaceAll("\\<CreateTime>(.*?)\\</CreateTime>",
-                        "<CreateTime><![CDATA[" + new Date().getTime() + "]]></CreateTime>");
-        return res;
-    }
-
-    /**
      * emoji表情转换(hex -> utf-16)
      * 
      * @param hexEmoji
@@ -241,4 +185,29 @@ public final class MessageUtil {
         }
         throw new RuntimeException("msgType unkonwn");
     }
+
+    public static boolean IsNumeric(String str) {
+        return str.matches("\\d *");
+    }
+
+    public static String mapToXml(Map<String, String> params) {
+        String xml = "<xml>";
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            String key = entry.getKey();
+            String val = entry.getValue();
+            if (IsNumeric(val)) {
+                xml += "<" + key + ">" + val + "</" + key + ">";
+
+            } else
+                xml += "<" + key + "><![CDATA[" + val + "]]></" + key + ">";
+        }
+
+        xml += "</xml>";
+        return xml;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(emoji(0x1F6B9));
+    }
+
 }

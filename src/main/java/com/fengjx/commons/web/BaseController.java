@@ -3,15 +3,14 @@ package com.fengjx.commons.web;
 
 import com.fengjx.commons.config.AjaxTemplate;
 import com.fengjx.commons.plugin.db.BaseBean;
+import com.fengjx.commons.plugin.db.Injector;
 import com.fengjx.commons.plugin.db.Record;
 import com.fengjx.commons.system.exception.ValidateException;
-import com.fengjx.commons.plugin.db.Injector;
 import com.fengjx.commons.utils.DateUtils;
 import com.fengjx.commons.utils.LogUtil;
 import com.fengjx.commons.utils.WebUtil;
 import com.google.common.collect.Maps;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +43,26 @@ import java.util.regex.Pattern;
 public abstract class BaseController {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseController.class);
+
+    /**
+     * 客户端重定向
+     *
+     * @param url
+     * @return
+     */
+    protected String redirect(String url) {
+        return "redirect:" + url;
+    }
+
+    /**
+     * 服务端重定向
+     *
+     * @param url
+     * @return
+     */
+    protected String forward(String url) {
+        return "forward:" + url;
+    }
 
     /**
      * 初始化数据绑定 1. 将所有传递进来的String进行HTML编码，防止XSS攻击 2. 将字段中Date类型转换为String类型

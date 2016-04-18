@@ -62,6 +62,10 @@ public final class WxMpUtil {
         config.setToken(accountRecord.getStr("token"));
         // 设置微信公众号的EncodingAESKey
         config.setAesKey(accountRecord.getStr("encodingAESKey"));
+        // 设置微信支付商户ID
+        config.setPartnerId(accountRecord.getStr("merchant_id"));
+        // 设置微信支付api秘钥
+        config.setPartnerKey(accountRecord.getStr("pay_key"));
         return config;
     }
 

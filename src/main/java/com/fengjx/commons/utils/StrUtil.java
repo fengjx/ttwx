@@ -2,11 +2,13 @@
 package com.fengjx.commons.utils;
 
 import com.google.common.base.Joiner;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -112,7 +114,21 @@ public class StrUtil extends StringUtils {
      */
     public static String join(Object[] src, String separator) {
         if (null == src || src.length == 0) {
-            return "";
+            return null;
+        }
+        return Joiner.on(separator).join(src);
+    }
+
+    /**
+     * 将list数据转成字符串，并用分隔符隔开
+     *
+     * @param src
+     * @param separator
+     * @return
+     */
+    public static String join(List<Object> src, String separator) {
+        if (CollectionUtils.isEmpty(src)) {
+            return null;
         }
         return Joiner.on(separator).join(src);
     }

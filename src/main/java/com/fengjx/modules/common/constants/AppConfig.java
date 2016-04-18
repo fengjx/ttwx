@@ -131,6 +131,8 @@ public final class AppConfig {
         public static final String WECHAT_ACTION_CACHE = "wechatActionCache";
 
         public static final String WECHAT_KEYWORD_ACTION_CACHE = "wechatKeywordActionCache";
+
+        public static final String WECHAT_PUBLIC_ACCOUNT = "wechatPublicAccount";
     }
 
 }

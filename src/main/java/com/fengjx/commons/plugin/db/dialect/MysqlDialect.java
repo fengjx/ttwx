@@ -125,7 +125,7 @@ public class MysqlDialect extends Dialect {
         if (!MapUtils.isEmpty(attrs)) {
             for (Entry<String, Object> e : attrs.entrySet()) {
                 String colName = e.getKey();
-                if (StringUtils.isNotBlank(e.getValue().toString())
+                if (null != e.getValue() && StringUtils.isNotEmpty(e.getValue().toString())
                         && table.hasColumnLabel(colName)) {
                     sql.append("and ").append(colName).append(" = ? ");
                     paras.add(e.getValue());

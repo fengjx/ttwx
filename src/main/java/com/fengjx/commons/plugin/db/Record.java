@@ -5,11 +5,9 @@ import com.fengjx.commons.utils.JsonUtil;
 import com.fengjx.commons.utils.TypeConverter;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.MapUtils;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.Map;
 import java.util.Set;
@@ -90,6 +88,19 @@ public class Record implements Serializable {
      */
     public Record setColumns(Map<String, Object> columns) {
         this.columns = columns;
+        return this;
+    }
+
+    /**
+     * Set attributes with Map.
+     * 
+     * @param attrs attributes of this model
+     * @return this Model
+     */
+    public Record setAttrs(Map<String, Object> attrs) {
+        for (Map.Entry<String, Object> e : attrs.entrySet()) {
+            set(e.getKey(), e.getValue());
+        }
         return this;
     }
 
@@ -293,27 +304,6 @@ public class Record implements Serializable {
 
     public void setModify(String modifyColumn) {
         _getModifyFlag().add(modifyColumn);
-    }
-
-    /**
-     * 转成实体
-     *
-     * @param bean
-     * @param <T>
-     * @return
-     */
-    public <T> T toBean(Class<T> bean) {
-        if (this.isEmpty()) {
-            return null;
-        }
-        T t;
-        try {
-            t = bean.newInstance();
-            BeanUtils.populate(t, _getColumns());
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
-        return t;
     }
 
 }

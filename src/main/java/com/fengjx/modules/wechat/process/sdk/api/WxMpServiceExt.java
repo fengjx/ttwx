@@ -17,6 +17,6 @@ public interface WxMpServiceExt extends WxMpService {
 	 * @return
 	 * @throws WxErrorException
 	 */
-	  public WxMpMassSendResult massPreviewMessage(WxMpMassOpenIdsMessage message) throws WxErrorException;
+	WxMpMassSendResult massPreviewMessage(WxMpMassOpenIdsMessage message) throws WxErrorException;
 
 }

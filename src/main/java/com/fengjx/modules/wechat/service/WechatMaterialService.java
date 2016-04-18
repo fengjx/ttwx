@@ -58,7 +58,7 @@ public class WechatMaterialService extends Model<WechatMaterial> {
      * @return
      */
     public Page<Map<String, Object>> getListPageByType(int pageNumber, int pageSize, String type,
-                                                       String userId) {
+            String userId) {
         StringBuilder sql = new StringBuilder(getSelectSql());
         sql.append(" where msg_type = ? and user_id = ? order by in_time desc");
         return paginate(pageNumber, pageSize, sql.toString(), type, userId);
@@ -72,7 +72,7 @@ public class WechatMaterialService extends Model<WechatMaterial> {
      * @param userId
      */
     public void saveOrUpdate(Map<String, Object> params, List<Map<String, Object>> contents,
-                             String userId) {
+            String userId) {
         if (MapUtils.isEmpty(params)) {
             throw new RuntimeException("添加素材失败，提交的数据为空");
         }
@@ -90,7 +90,7 @@ public class WechatMaterialService extends Model<WechatMaterial> {
                     String htmlUrl = STORE_PREFIX + targetFileName + ".html";
                     Map<String, Object> content = contents.get(i);
                     content.put("app_name", AppConfig.APP_NAME);
-                    content.put("date", DateUtils.formatDate(now_date));
+                    content.put("date", DateUtils.formatDate(now_date, "yyyy-MM-dd"));
                     content.put("email", AppConfig.SUPPORT_EMAIL);
                     // 生成html文件
                     createHtml(targetFileName, htmlUrl, content);
@@ -167,7 +167,7 @@ public class WechatMaterialService extends Model<WechatMaterial> {
     }
 
     public void previewMsg(final List<Map<String, Object>> contents, String xmlData, String userId,
-                           String wxUserId) throws WxErrorException {
+            String wxUserId) throws WxErrorException {
         WxMpMassUploadResult uploadResult = uploadMedia(contents, xmlData, userId);
         WxMpServiceExt mpService = (WxMpServiceExt) publicAccountService.getWxMpService(userId);
         WxMpMassOpenIdsMessage massMessage = new WxMpMassOpenIdsMessage();
@@ -179,7 +179,7 @@ public class WechatMaterialService extends Model<WechatMaterial> {
     }
 
     private WxMpMassUploadResult uploadMedia(final List<Map<String, Object>> contents,
-                                             String xmlData, String userId) throws WxErrorException {
+            String xmlData, String userId) throws WxErrorException {
         WxMpXmlOutNewsMessage outNewsMessage = XStreamTransformer
                 .fromXml(WxMpXmlOutNewsMessage.class, xmlData);
         outNewsMessage.setCreateTime(System.currentTimeMillis());
