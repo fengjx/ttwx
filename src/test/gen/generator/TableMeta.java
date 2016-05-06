@@ -31,12 +31,13 @@ public class TableMeta {
 	
 	// ---------
 	
-	public String baseName;		//
-	public String baseModelName;		// 生成的 base model 名
-	public String baseModelContent;		// 生成的 base model 内容
-	
-	public String modelName;			// 生成的 model 名
-	public String modelContent;			// 生成的 model 内容
+	public String beanName;		//
+	public String beanContent;		    // 生成的 bean 内容
+	public String baseBeanName;		// 生成的 base bean 名
+	public String baseBeanContent;		// 生成的 base bean 内容
+
+	public String serviceName;			// 生成的 service 名
+	public String serviceContent;			// 生成的 service 内容
 	
 	// ---------
 	

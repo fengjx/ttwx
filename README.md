@@ -1,4 +1,17 @@
-#说明（文档有时间再补上，QQ:466516623，Email:xd-fjx@qq.com）
+## 天天微信平台
+- 文档有时间再补上，有疑问联系，QQ:466516623，Email:xd-fjx@qq.com
+- 因为只有我一个人维护，所以关于项目的维护，得看我工作时间忙不忙了
+
+我的个人微信
+![](http://fengjx-cdn.oss-cn-shenzhen.aliyuncs.com/my/images/wechat.png =300)
+
+
+
+### 技术栈
+
+
+
+<br>
 启动项目 <br>
 mvn tomcat7:run <br>
 

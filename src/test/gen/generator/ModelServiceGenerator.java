@@ -81,9 +81,8 @@ public class ModelServiceGenerator {
 		genPackage(ret);
 		genImport(tableMeta, ret);
 		genClassDefine(tableMeta, ret);
-		genDao(tableMeta, ret);
 		ret.append(String.format("}%n"));
-		tableMeta.modelContent = ret.toString();
+		tableMeta.serviceContent = ret.toString();
 	}
 	
 	protected void genPackage(StringBuilder ret) {
@@ -91,21 +90,15 @@ public class ModelServiceGenerator {
 	}
 	
 	protected void genImport(TableMeta tableMeta, StringBuilder ret) {
-		ret.append(String.format(importTemplate, baseModelPackageName, tableMeta.baseModelName));
+		ret.append(String.format(importTemplate, baseModelPackageName, tableMeta.beanName));
 	}
 	
 	protected void genClassDefine(TableMeta tableMeta, StringBuilder ret) {
 		ret.append(String.format(classDefineTemplate,
-				tableMeta.modelName, tableMeta.baseModelName));
+				tableMeta.serviceName, tableMeta.beanName));
 	}
 	
-	protected void genDao(TableMeta tableMeta, StringBuilder ret) {
-		if (generateDaoInModel)
-			ret.append(String.format(daoTemplate, tableMeta.modelName, tableMeta.modelName));
-		else
-			ret.append(String.format("\t%n"));
-	}
-	
+
 	protected void wirtToFile(List<TableMeta> tableMetas) {
 		try {
 			for (TableMeta tableMeta : tableMetas)
@@ -123,7 +116,7 @@ public class ModelServiceGenerator {
 		if (!dir.exists())
 			dir.mkdirs();
 		
-		String target = modelOutputDir + File.separator + tableMeta.modelName + ".java";
+		String target = modelOutputDir + File.separator + tableMeta.serviceName + ".java";
 		
 		File file = new File(target);
 		if (file.exists()) {
@@ -132,7 +125,7 @@ public class ModelServiceGenerator {
 		
 		FileWriter fw = new FileWriter(file);
 		try {
-			fw.write(tableMeta.modelContent);
+			fw.write(tableMeta.serviceContent);
 		}
 		finally {
 			fw.close();

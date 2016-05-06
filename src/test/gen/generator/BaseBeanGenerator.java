@@ -31,13 +31,11 @@ public class BaseBeanGenerator {
 	protected String packageTemplate =
 		"%npackage %s;%n%n";
 	protected String importTemplate =
-		"import com.fengjx.commons.plugin.db.BaseBean;%n"+
-		"import com.fengjx.commons.plugin.db.Mapper;%n%n";
+		"import com.fengjx.commons.plugin.db.BaseBean;%n%n";
 	protected String classDefineTemplate =
 		"/**%n" +
 		" * Autu Generated, do not modify this file.%n" +
 		" */%n" +
-		"@Mapper(table=\"%s\", id = \"%s\")%n" +
 		"@SuppressWarnings(\"serial\")%n" +
 		"public class %s extends BaseBean {%n%n";
 	protected String setterTemplate =
@@ -83,7 +81,7 @@ public class BaseBeanGenerator {
 			genGetMethodName(columnMeta, ret);
 		}
 		ret.append(String.format("}%n"));
-		tableMeta.baseModelContent = ret.toString();
+		tableMeta.baseBeanContent = ret.toString();
 	}
 	
 	protected void genPackage(StringBuilder ret) {
@@ -95,8 +93,7 @@ public class BaseBeanGenerator {
 	}
 	
 	protected void genClassDefine(TableMeta tableMeta, StringBuilder ret) {
-		ret.append(String.format(classDefineTemplate,
-				tableMeta.name, tableMeta.primaryKey, tableMeta.baseModelName, tableMeta.baseModelName));
+		ret.append(String.format(classDefineTemplate, tableMeta.baseBeanName));
 	}
 	
 	protected void genSetMethodName(ColumnMeta columnMeta, StringBuilder ret) {
@@ -130,10 +127,10 @@ public class BaseBeanGenerator {
 		if (!dir.exists())
 			dir.mkdirs();
 		
-		String target = baseModelOutputDir + File.separator + tableMeta.baseModelName + ".java";
+		String target = baseModelOutputDir + File.separator + tableMeta.baseBeanName + ".java";
 		FileWriter fw = new FileWriter(target);
 		try {
-			fw.write(tableMeta.baseModelContent);
+			fw.write(tableMeta.baseBeanContent);
 		}
 		finally {
 			fw.close();

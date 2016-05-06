@@ -142,7 +142,7 @@
         <description>获取当前用户对象</description>
         <name>getUser</name>
         <function-class>com.fengjx.modules.sys.utils.UserUtil</function-class>
-        <function-signature>com.fengjx.modules.sys.entity.SysUserEntity getUser()</function-signature>
+        <function-signature>com.fengjx.modules.sys.bean.SysUser getUser()</function-signature>
         <example>${fns:getUser()}</example>
     </function>
 

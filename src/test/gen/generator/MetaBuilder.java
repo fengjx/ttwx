@@ -146,7 +146,7 @@ public class MetaBuilder {
 	 * 使用 modelName 构建 baseModelName
 	 */
 	protected String buildBaseModelName(String baseName) {
-		return baseName;
+		return "Base" + baseName;
 	}
 	
 	/**
@@ -180,9 +180,9 @@ public class MetaBuilder {
 			tableMeta.name = tableName;
 			tableMeta.remarks = rs.getString("REMARKS");
 			
-			tableMeta.baseName = buildBaseName(tableName);
-			tableMeta.modelName = buildModelName(tableMeta.baseName);
-			tableMeta.baseModelName = buildBaseModelName(tableMeta.baseName);
+			tableMeta.beanName = buildBaseName(tableName);
+			tableMeta.serviceName = buildModelName(tableMeta.beanName);
+			tableMeta.baseBeanName = buildBaseModelName(tableMeta.beanName);
 			ret.add(tableMeta);
 		}
 		rs.close();
