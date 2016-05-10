@@ -13,6 +13,7 @@
 - spring
 - spring mvc
 - spring jdbc
+- ehcache
 - shiro
 - druid
 
@@ -26,8 +27,8 @@
 
 打包项目：`mvn clean package`
 
-以上命令均可以使用参数来指定环境，如
-`mvn -Prelease clean package` （生产包）
+以上命令均可以使用参数来指定环境，如<br>
+`mvn -Prelease clean package` （生产包）<br>
 `mvn -Ptest tomcat7:run` （测试环境启动）
 
 导入数据 <br>
