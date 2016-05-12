@@ -1,6 +1,6 @@
 {
   "name": "天天微信平台",
   "tagline": "免费、开源、支持二次开发扩展的微信发布平台，让你在微信开发中更专注于业务。支持多公众账号管理。",
-  "body": "##说明（文档有时间再补上，QQ:466516623，Email:xd-fjx@qq.com）\r\n启动项目 <br>\r\nmvn tomcat7:run <br>\r\n\r\n打包项目 <br>\r\nmvn clean package\r\n\r\n以上命令均可以使用参数来指定环境，如\r\nmvn -Prelease clean package （生产包）\r\nmvn -Ptest tomcat7:run （测试环境启动）\r\n\r\n导入数据 <br>\r\ndoc/db/new_install.sql (mysql)\r\n\r\n",
+  "body": "### 说明 \r\n- 文档有时间再补上，有疑问联系，QQ:466516623，Email:xd-fjx@qq.com\r\n- 因为只有我一个人维护，所以关于项目的维护，得看我工作时间忙不忙了\r\n\r\n----\r\n### 技术栈\r\n#### 前端\r\n- jquery\r\n- bootstrap3\r\n- 各种插件\r\n\r\n#### 后端\r\n- spring\r\n- spring mvc\r\n- spring jdbc\r\n- ehcache\r\n- shiro\r\n- druid\r\n\r\n#### 数据库支持\r\n- mysql\r\n\r\n----\r\n#### quick start\r\n\r\n执行命令：`mvn tomcat7:run`\r\n\r\n打包项目：`mvn clean package`\r\n\r\n以上命令均可以使用参数来指定环境，如<br>\r\n`mvn -Prelease clean package` （生产包）<br>\r\n`mvn -Ptest tomcat7:run` （测试环境启动）\r\n\r\n导入数据 <br>\r\ndoc/db/new_install.sql (mysql)\r\n\r\n我的个人微信\r\n![](http://fengjx-cdn.oss-cn-shenzhen.aliyuncs.com/my/images/wechat1.png)\r\n\r\n我的个人公众号\r\n![](http://fengjx-cdn.oss-cn-shenzhen.aliyuncs.com/my/images/qrcode_for_gh_d7680c37887b_258.jpg)",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
