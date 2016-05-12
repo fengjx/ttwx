@@ -34,8 +34,8 @@
 导入数据 <br>
 doc/db/new_install.sql (mysql)
 
-我的个人微信
+我的个人微信<br>
 ![](http://fengjx-cdn.oss-cn-shenzhen.aliyuncs.com/my/images/wechat1.png)
 
-我的个人公众号
+我的个人公众号<br>
 ![](http://fengjx-cdn.oss-cn-shenzhen.aliyuncs.com/my/images/qrcode_for_gh_d7680c37887b_258.jpg)
